@@ -1,0 +1,69 @@
+.finish_logo {
+    position: absolute;
+    width: 100px;
+    height: 122px;
+    top: 80px;
+}
+
+.animation {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: #f6f7f8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 1;
+    animation: 1.5s ease-in-out forwards;
+}
+
+.d_none {
+    display: none;
+}
+
+.header {
+    display: flex;
+    padding-left: 1000px;
+    padding-top: 64px;
+    gap: 32px;
+    font-size: 24px;
+    align-items: center;
+}
+
+.show_button {
+    border: none;
+    background-color: #2A3647;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 700;
+    padding: 15px 16px;
+    border-radius: 8px;
+}
+
+.show_button:hover {
+    background-color: #29abe2;
+    box-shadow: 0 5px 4px rgba(0, 0, 0, 0.2);
+}
+
+.footer_content {
+    display: flex;
+    margin-bottom: 32px;
+    gap: 32px;
+    align-items: center;
+    justify-content: center;
+}
+
+.footer_content a:hover {
+    font-weight: bold;
+    color: #29abe2;
+}
+
+.alert {
+    color: #ffa1ac;
+    position: relative;
+    bottom: 30px;
+}

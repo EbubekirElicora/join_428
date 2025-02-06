@@ -1,0 +1,172 @@
+/* Join section styling */
+.join {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    flex: 1;
+}
+
+/* Join logo container styling */
+#signup-logoContainer {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 3000;
+    animation: move-logo 1.5s ease forwards;
+}
+
+/* Join logo image styling */
+.joinLogo img {
+    width: 120px;
+    height: 120px;
+}
+
+/* Keyframe animation for moving the logo */
+@keyframes move-logo {
+    0% {
+        transform: translate(-50%, -50%) scale(3);
+    }
+
+    100% {
+        transform: translate(-45vw, -40vh) scale(1);
+        /* Move to near top-left */
+    }
+}
+
+/* Signup container styling */
+.signup-joinContainer {
+    position: relative;
+    background-color: white;
+    padding: 50px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+    /* Responsive width */
+    height: auto; 
+
+}
+
+/* Signup title styling */
+.signup-joinContainer h1 {
+    margin-top: 3px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 50px;
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 18px;
+    text-decoration-color: #3498db;
+    text-decoration-thickness: 2px;
+}
+
+/* Positioning the back to login button */
+.go-to-login {
+    position: absolute;
+    top: 50px;
+    right: 5%;
+}
+.go-to-login {
+    position: absolute;
+    top: 70px; /* Adjust as needed to fit within padding */
+    left: 20px; /* Aligns to top left */
+}
+
+.go-to-login img {
+    width: 24px; /* Adjust icon size if needed */
+    height: auto;
+}
+
+/* Input group styling */
+.input-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;  /* Reduce the space between input fields */
+    position: relative;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 10px 15px;  /* Adjust padding */
+    margin: 0;  /* Remove any default margin */
+    border: 2px solid #ccc;  /* Optional, just ensure border is consistent */
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+/* Icon inside input group */
+.input-group .icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/* Styling for the signup button */
+.signup-button {
+    display: flex;
+    justify-content: center;
+    
+    
+}
+
+.signup-button button {
+    border: 2px solid #2a2a2a;
+    background-color: #2A3647;
+    border-radius: 8px;
+    color: white;
+    padding: 10px 20px;
+    font-size: medium;
+    font-weight: 600;
+    transition: background-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.signup-button button:hover {
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    border-color: #3498db;
+    background-color: #3498db;
+    color: white;
+    cursor: pointer;
+}
+.legalPolicy {
+    display: flex;
+    justify-content: center; /* Center the items horizontally */
+    align-items: center; /* Center the items vertically if needed */
+    gap: 20px; /* Space between the links */
+    margin-top: 20px;
+    margin-bottom: 80px;
+}
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px; /* Add space below */
+    gap: 10px;
+}
+
+/* Checkbox input styling */
+.checkbox-group input{
+    cursor: pointer;
+}
+
+
+/* Span styling for the label */
+.checkbox-group span {
+    font-size: 14px;
+    color: #333;
+}
+
+.checkbox-group span a {
+    color: #3498db; /* Link color for "Terms and Conditions" */
+    text-decoration: none;
+}
+
+.checkbox-group span a:hover {
+    text-decoration: underline; /* Hover effect for link */
+    cursor: pointer;
+}

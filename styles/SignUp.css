@@ -8,6 +8,8 @@
     height: 100vh;
     overflow: hidden;
     flex: 1;
+    flex-direction: column;
+    margin-top: 30px;
 }
 
 /* Join logo container styling */
@@ -42,7 +44,7 @@
 .signup-joinContainer {
     position: relative;
     background-color: white;
-    padding: 50px;
+    padding: 60px;
     border-radius: 15px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     width: 100%;
@@ -86,7 +88,7 @@
 .input-group {
     display: flex;
     align-items: center;
-    margin-bottom: 5px;  /* Reduce the space between input fields */
+    margin-bottom: 10px;  /* Reduce the space between input fields */
     position: relative;
 }
 

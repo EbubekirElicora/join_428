@@ -62,7 +62,7 @@ header p {
     z-index: 10000;
 }
 
-.mobile_headerNav {
+.mobileMenu {
     position: fixed;
     /* Absolute Positionierung */
     display: flex;
@@ -78,7 +78,7 @@ header p {
     border-radius: 20px;
     border-top-right-radius: 0;
     margin: 6px;
-    width: 150px;
+    width: 130px;
     max-height: 140px;
     height: 130px;
     justify-content: space-evenly;
@@ -92,7 +92,7 @@ header p {
     opacity: 1;
 }
 
-.mobile_headerNav a {
+.mobileMenu a {
     text-decoration: none;
     color: #CDCDCD;
     padding: 5px 8px;
@@ -110,6 +110,6 @@ header p {
   width: 70px;
 }
 
-.mobile_headerNav a:hover {
+.mobileMenu a:hover {
     background-color: #2A3D59;
 }

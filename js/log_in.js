@@ -6,6 +6,10 @@ function toSignUp() {
     window.location.href = "./sign_up.html"
 }
 
+function guestLogIn() {
+    window.location.href = "../summery.html";
+}
+
 function logoMuve() {
     setTimeout(() => {
         document.getElementById('animation').style.display = "none";

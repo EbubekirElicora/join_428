@@ -5,12 +5,7 @@ function HeaderMenu() {
     menu.classList.toggle('active');
 
     // Add an event listener to close the menu when clicking outside of it
-    document.addEventListener('click', function closeClickOutside(event) {
-        if (!menu.contains(event.target) && !userIcon.contains(event.target)) {
-            menu.classList.remove('active'); // Close the menu if clicked outside
-            document.removeEventListener('click', closeClickOutside); // Remove listener once the menu is closed
-        }
-    });
+    
 }
 
 
@@ -20,3 +15,5 @@ function logout(){
 function pageBack(){
     window.history.back();
 }
+
+

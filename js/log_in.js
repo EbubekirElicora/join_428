@@ -7,7 +7,7 @@ function toSignUp() {
 }
 
 function guestLogIn() {
-    window.location.href = "../summary.html";
+    window.location.href = "./summary.html";
 }
 
 function logoMuve() {

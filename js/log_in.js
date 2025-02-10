@@ -7,7 +7,7 @@ function toSignUp() {
 }
 
 function guestLogIn() {
-    window.location.href = "../summery.html";
+    window.location.href = "../summary.html";
 }
 
 function logoMuve() {

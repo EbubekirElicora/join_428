@@ -1,15 +1,14 @@
 header {
-    background-color: white;
-    text-align: center;
-    height: 95px;
     display: flex;
-    padding-left: 120px;
     justify-content: space-between;
     align-items: center;
     position: fixed;
-    left: 232px;
+    background-color: white;
+    text-align: center;
+    height: 95px;
     top: 0;
     right: 0;
+    left: 0;
     box-shadow: 0px 4px 4px 0px #0000001A;
     z-index: 999;
 }
@@ -22,14 +21,12 @@ header {
 }
 
 .user-icon {
-    position: absolute;
-    right: 5px;
     color: #29ABE2;
     font-size: 20px;
     min-width: 42px;
     height: 42px;
     border-radius: 100%;
-    border: solid 2px rgb(0, 0, 0);
+    border: 2px solid rgb(42, 54, 71);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -38,8 +35,12 @@ header {
     cursor: pointer;
 }
 
+.user-icon:hover {
+    background-color: rgb(0, 0, 0, 0.1);
+}
+
 header p {
-    font-size: 24px;
+    font-size: 22px;
 }
 
 .ser-icon {
@@ -49,11 +50,6 @@ header p {
 
 .join_logo_mobile {
     display: none;
-}
-
-.helpme-icon {
-    position: absolute;
-    right: 55px;
 }
 
 .header_overlay {
@@ -78,9 +74,8 @@ header p {
     border-radius: 20px;
     border-top-right-radius: 0;
     margin: 6px;
-    width: 130px;
-    max-height: 140px;
-    height: 130px;
+    width: 160px;
+    height: 160px;
     justify-content: space-evenly;
     transform: translateX(100%);
     opacity: 0;
@@ -101,15 +96,60 @@ header p {
     text-align: left;
     cursor: pointer;
 }
-.headerImg{
+
+.headerImg {
     display: none;
 
 }
-.headerImg img{
-  height: 60px;
-  width: 70px;
+
+.headerImg img {
+    height: 60px;
+    width: 70px;
 }
 
 .mobileMenu a:hover {
     background-color: #2A3D59;
+}
+
+.headline_txt {
+    font-weight: 400;
+    font-size: 22px;
+    padding-right: 40px;
+}
+
+.header_txt_position,
+.user_class {
+    display: flex;
+    align-items: center;
+}
+
+.pos_cont_head_left {
+    display: flex;
+    width: 50%;
+    justify-content: flex-end;
+}
+
+.pos_cont_head_right {
+    display: flex;
+    width: 50%;
+    justify-content: flex-end;
+    padding-right: 32px;
+}
+
+.help_user_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+}
+
+.help_icon {
+    display: flex;
+    align-items: center;
+    align-content: center;
+}
+
+.help_icon img {
+    height: 20px;
+    width: 20px;
 }

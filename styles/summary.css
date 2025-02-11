@@ -84,62 +84,10 @@
     background-color: rgb(0, 0, 0, 0.1);
 }
 
-.mobileMenu {
-    position: fixed;
-    /* Absolute Positionierung */
-    display: flex;
-    flex-direction: column;
-    top: 90px;
-    /* Direkt unter dem Header */
-    right: 0 !important;
-    /* for the animation */
-    background-color: #2A3647;
-    z-index: 1000;
-    /* Höherer Z-Index, damit das Menü über anderen Inhalten liegt */
-    padding: 16px;
-    border-radius: 20px;
-    border-top-right-radius: 0;
-    margin: 6px;
-    width: 130px;
-    max-height: 140px;
-    height: 130px;
-    justify-content: space-evenly;
-    transform: translateX(100%);
-    opacity: 0;
-    transition: transform 0.5s ease, opacity 0.5s ease;
-}
 
-.mobileMenu a {
-    text-decoration: none;
-    color: #CDCDCD;
-    padding: 5px 8px;
-    font-size: 16px;
-    font-weight: 100;
-    text-align: left;
-    cursor: pointer;
-}
 
-.mobileMenu a:hover {
-    background-color: #2A3D59;
-}
 
-.user-icon {
-    position: absolute;
-    right: 5px;
-    color: #29ABE2;
-    font-size: 20px;
-    min-width: 42px;
-    height: 42px;
-    border-radius: 100%;
-    border: solid 2px rgb(0, 0, 0);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-weight: bold;
-    margin-bottom: 2px;
-    cursor: pointer;
 
-}
 
 
 

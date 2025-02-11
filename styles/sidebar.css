@@ -5,19 +5,17 @@
 }
 #sidebar {
     background-color: #2A3647;
-    
-    
     align-items: center;
     flex-direction: column;
     height: 100vh;
     width: 232px;
     position: fixed;
     z-index: 1000;
-    
     top: 0;
-    left: 0;
-    
-    
+    left: 0;    
+    display: flex; /* Make sidebar a flex container */
+    justify-content: space-between; /* Push sidefoot to the bottom */
+    padding-bottom: 20px; /* Add some spacing at the bottom */
 }
 
 .sidebarlogo {
@@ -31,14 +29,14 @@
     padding: 64px;
 }
 
-.sidebarimg {
+.sidebarimg img{
     height: 20px;
-    width: 30px;
+    width: 40px;
     margin-right: 8px;
 }
 
 #widget_1, #widget_2, #widget_3, #widget_4 {
-    /* width: 100%;  */
+   /*  width: 100%; */
     /* Make widgets span full sidebar width */
     box-sizing: border-box; /* Reset box-sizing to include padding/border */
     padding: 8px 12px; /* Adjust padding for more spacing control */
@@ -48,6 +46,7 @@
     gap: 12px;
     font-size: 16px;
     cursor: pointer;
+    width: 232px;
 }
 
 
@@ -61,33 +60,27 @@
 }
 
 .sidelinks {
+    margin-top: 20px;
     display: flex;
-    justify-content: center;
-    text-align: center;
     flex-direction: column;
     gap: 5px;
-    /* height: 229px; */
+    flex-grow: 1; /* Allows widgets to take available space */
 }
 
 
+/* Hover Effect */
+.widget.active {
+    background: red !important; /* TEST: Should turn red */
+    border: 5px solid yellow !important; /* TEST: Adds yellow border */
+}
+.widget.active {
+    background-color: #1A1F2E !important; /* Darker color */
+    color: white !important; /* Text remains readable */
+    font-weight: bold;
+}
 
 .widget:hover {
-    background: #2A3D59;  /* Hover background color */
-    /* width: 100%;         */
-     /* Ensure the hover width spans the sidebar */
-    box-sizing: border-box; /* Include padding in width calculation */
-}
-
-
-/* Hover and active state for the widget */
- 
-.widget.active{
-    background: #2A3D59;  /* Retain hover background color */
-}
-
-/* Active state using :target */
-.widget:target {
-    background: #2A3D59;  /* Active background color */
+    background-color: #2A3D59 !important; /* Lighter than active */
 }
 
 /* Other styles remain unchanged */
@@ -101,9 +94,12 @@
 #sidefoot {
     display: flex;
     flex-direction: column;
-    gap: 0px; /* Reduce gap between the footer links */
+    gap: 5px;
     width: 100%;
+    margin-top: auto; /* Pushes footer to bottom */
+    padding-bottom: 20px; /* Extra space at bottom */
 }
+
 
 #sidefoot a {
     text-decoration: none;
@@ -139,5 +135,9 @@
     text-decoration: none;
     display: flex;
     align-items: center;
+    justify-content: center;
     padding-left: 50px;
+    margin-top: 10px;
+    gap: 10px;
+    
 }

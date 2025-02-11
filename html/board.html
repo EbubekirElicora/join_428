@@ -3,26 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/x-icon" href="./assets/img/Capa 2.png">
+    <link rel="icon" type="image/x-icon" href="../assets/img/Capa 2.png">
     <link rel="stylesheet" href="../styles/header.css">
     <link rel="stylesheet" href="../styles/sidebar.css">
-    <link rel="stylesheet" href="../styles/template.css">
     <link rel="stylesheet" href="../styles/board.css">
+    <link rel="stylesheet" href="../styles/standart.css">
     <script src="../js/template.js"></script>
     <script src="../js/header.js"></script>
-    <script src="../js/template.js"></script>
-    <script src="../js/addTask.js"></script>
     <script src="../js/board.js"></script>
     <script src="../js/contacts.js"></script>
-    <script src="../js/summery.js"></script>
-    <script src="../script.js"></script>
     <title>Join</title>
 </head>
 <body>
     <div w3-include-html="../Templates/sidebar.html"></div> 
     <div w3-include-html="../Templates/header.html"></div>
-    <main class="boardPage">
-        <h1>Hallo! This is Board site</h1>
+    <main class="board_main">
+        <div class="header_board">
+            <div class="content_h1">
+                <h1>Board</h1>
+            </div>
+            <div class="input_button">
+                <div class="input_img">
+                    <input class="find_task" type="text" placeholder="Find Task" id="find_task" oninput="taskFilter()">
+                    <div class="shadow"></div>
+                    <img src="../assets/icons/search.png" alt="">
+                </div>
+                <button onclick="addTask()" class="task_btn">Add Task
+                    <img src="../assets/icons/add.png" alt="">
+                </button>
+            </div>
+        </div>
+
+        <div class="content_board">
+            <div></div>
+        </div>
 
 
 

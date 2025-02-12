@@ -34,7 +34,7 @@
 
 
 
-/* Left column (fixed) */
+/* contact list section */
 .left-column {
     position: fixed; /* Fix the left column */
     width: 290px; /* Fixed width */
@@ -47,7 +47,7 @@
     cursor: pointer;
 }
 
-/* Right column (scrollable) */
+/* contact display section(scrollable) */
 .right-column {
     margin-left: 340px; /* Offset by the width of the left column */
     padding: 20px; /* Optional: Add some padding */
@@ -95,6 +95,7 @@
     display: flex;
     height: 100%;
     position: relative; /* Required for absolute positioning of the close button */
+    width: 900px;
 }
 
 /* Close button styles */
@@ -166,35 +167,25 @@
     gap: 40px;
     position: relative;
 }
-.right-section-fle img {
-    width: 110px; /* Increase width */
-    height: 110px; /* Increase height */
-    border-radius: 100%; /* Make the image circular */
-    padding: 15px; /* Increase padding to enlarge the circular border */
-    border: 3px solid white; /* Slightly thicker border */
-    box-sizing: border-box; /* Ensures padding and border don’t change image size */
+
+.contact-persona img {
+    width: 110px; 
+    height: 110px; 
+    border-radius: 100%; 
+    padding: 15px; 
+    border: 3px solid white; 
+    box-sizing: border-box; 
     background-color: lightgrey;
     display: block;
     
     
 }
-
-
 /* Form Styles */
-/* Form Styles */
-
 #contact-form {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%; /* Makes form take up full width of right section */
-    border: none; /* Removes any border on the form */
-    background-color: transparent; /* Removes background color if any */
-    padding: 0;
+    flex-direction: column;   
 }
-
-/* Input Styles */
-#contact-form input {
+.input-container input {
     width: 300px;
     padding: 10px; /* Adjust for the desired padding inside the input */
     margin-bottom: 15px; /* Space between each input */
@@ -202,26 +193,29 @@
     border: 1px solid #ccc; /* Optional: subtle border */
     border-radius: 5px; /* Optional: rounded corners */
 }
-
-
-#add-contact-button {
-    border: 2px solid #2a2a2a;
-    background-color: #2A3647;
-    border-radius: 8px;
-    color: white;
-    padding: 10px;
-    font-size: 14px;
-    font-weight: 100;
-    box-shadow: none;
-    width: 100%;
+.input-container .input-icon {
+    position: absolute;
+    margin-top: 10px;
+    right:12px; /* Adjust icon position */
+    width: 20px; /* Adjust icon size */
+    height: 20px;
+    pointer-events: none; /* Prevents the icon from blocking input interaction */
+    opacity: 0.7; /* Make it slightly transparent */
 }
+.input-container input:focus {
+    border-color: #3498db;
+    outline: none;
+}
+
+
+
 .button-container {
     display: flex;
     gap: 10px; /* Space between buttons */
     justify-content: center; /* Center-align buttons */
     margin-top: 15px; /* Add space above buttons */
 }
-#cancel-button{
+#create-contact{
     
     background-color:#1a2b47;
     color:white; 
@@ -233,35 +227,30 @@
     transition: background-color 0.25s ease, color 0.25s ease;
     border: none;
 }  
-#cancel-button:hover{
+#create-contact:hover{
     background-color: #3498db;
     border: none;
 }
 
 
 
-#add-contact-button:hover
-{
-    background-color: #3498db;
-    /* Darker shade on hover */
-    border: none;
-    cursor: pointer;
-}
-#create-contact-button{
+
+#cancel{
     background-color:white;
     border-radius: 10px;
     border:1px solid #1a2b47;
     padding: 10px;
     color:#1a2b47;
+    cursor: pointer;
 }
-#create-contact-button:hover{
+#cancel:hover{
   color: #3498db;
   border:1px solid #3498db;
 }
 .close-button {
     position: absolute;
-    top: 0%;
-    right: 3%;
+    top: 6%;
+    right: 4%;
     
     color:black;
     

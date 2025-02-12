@@ -1,4 +1,272 @@
 .contactsPage{
-    margin-top: 120px;
-    margin-left: 320px;
+    margin-top: 90px;
+    margin-left: 230px;    
+}
+
+.cursorPointer{
+    cursor: pointer;
+}
+
+.contact {
+    display: flex;    
+    align-items: center;
+    justify-content: center;
+    padding-top: 20px;       
+}
+
+.contact h1 {
+    margin: 0;
+    font-size: 54px;
+}
+
+.contact h3 {
+    margin: 0;
+    font-size: 24;
+}
+
+.separator {
+    width: 3px;
+    height: 30px;
+    background-color: #3498db;
+    margin: 0 15px;
+}
+
+
+
+
+/* Left column (fixed) */
+.left-column {
+    position: fixed; /* Fix the left column */
+    width: 230px; /* Fixed width */
+    height: 100vh; /* Full viewport height */
+    background-color: #fff; /* Light gray background */
+    border-right: 2px solid #ccc; /* Border on the right */
+    box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1,0); /* Shadow on the right */
+    padding: 20px; /* Optional: Add some padding */
+    overflow-y: auto; /* Enable scrolling if content overflows */
+    cursor: pointer;
+}
+
+/* Right column (scrollable) */
+.right-column {
+    margin-left: 340px; /* Offset by the width of the left column */
+    padding: 20px; /* Optional: Add some padding */
+     /* White background */
+}
+.header-content{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    background-color: #2A3647;
+    border-radius: 5px;
+    font-size: 20px;
+    gap: 10px;
+    padding: 8px;
+}
+.header-content:hover{
+    background-color: #3498db;
+}
+
+
+/* Overlay styles */
+.overlay {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 900px;
+    height: 500px;
+    max-height: 100vh;
+    background-color: #fff;
+    z-index: 1001;
+    border-radius: 20px;
+    box-sizing: border-box;
+    border: none;
+}
+
+.overlay.active {
+    display: flex; /* Show the overlay */
+}
+
+/* Overlay content styles */
+.overlay-content {
+    display: flex;
+    height: 100%;
+    position: relative; /* Required for absolute positioning of the close button */
+}
+
+/* Close button styles */
+.close-button {
+    position: absolute; /* Position the button absolutely */
+    top: 10px; /* Distance from the top */
+    right: 10px; /* Distance from the right */
+    font-size: 20px; /* Adjust font size */
+    color: #000; /* Button text color */
+    text-decoration: none; /* Remove underline */
+    cursor: pointer; /* Add pointer cursor */
+    z-index: 1002; /* Ensure it's above other content */
+}
+
+.left-section {
+    background-color: #2A3647;
+    padding: 20px;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    width: 300px;
+}
+
+.left-section img {
+    padding-left: 10px;
+}
+
+.left-section h2 {
+    font-size: 54px;
+    color: #fff;
+    position: relative;
+}
+
+.left-section p {
+    position: relative;
+    margin: 0;
+    color: #fff;
+    font-size: 24px;
+}
+
+.left-section p::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -5px;
+    width: 30%;
+    border-bottom: 4px solid #3498db;
+}
+
+/* Right Section Styles */
+.right-section {
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    width: 100%;
+}
+
+.right-section-flex {
+    display: flex;
+    gap: 40px;
+    position: relative;
+}
+.right-section-fle img {
+    width: 110px; /* Increase width */
+    height: 110px; /* Increase height */
+    border-radius: 100%; /* Make the image circular */
+    padding: 15px; /* Increase padding to enlarge the circular border */
+    border: 3px solid white; /* Slightly thicker border */
+    box-sizing: border-box; /* Ensures padding and border don’t change image size */
+    background-color: lightgrey;
+    display: block;
+    
+    
+}
+
+
+/* Form Styles */
+/* Form Styles */
+
+#contact-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%; /* Makes form take up full width of right section */
+    border: none; /* Removes any border on the form */
+    background-color: transparent; /* Removes background color if any */
+    padding: 0;
+}
+
+/* Input Styles */
+#contact-form input {
+    width: 300px;
+    padding: 10px; /* Adjust for the desired padding inside the input */
+    margin-bottom: 15px; /* Space between each input */
+    box-sizing: border-box; /* Ensures padding is included in the total width */
+    border: 1px solid #ccc; /* Optional: subtle border */
+    border-radius: 5px; /* Optional: rounded corners */
+}
+
+
+#add-contact-button {
+    border: 2px solid #2a2a2a;
+    background-color: #2A3647;
+    border-radius: 8px;
+    color: white;
+    padding: 10px;
+    font-size: 14px;
+    font-weight: 100;
+    box-shadow: none;
+    width: 100%;
+}
+.button-container {
+    display: flex;
+    gap: 10px; /* Space between buttons */
+    justify-content: center; /* Center-align buttons */
+    margin-top: 15px; /* Add space above buttons */
+}
+#cancel-button{
+    
+    background-color:#1a2b47;
+    color:white; 
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: medium;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.25s ease, color 0.25s ease;
+    border: none;
+}  
+#cancel-button:hover{
+    background-color: #3498db;
+    border: none;
+}
+
+
+
+#add-contact-button:hover
+{
+    background-color: #3498db;
+    /* Darker shade on hover */
+    border: none;
+    cursor: pointer;
+}
+#create-contact-button{
+    background-color:white;
+    border-radius: 10px;
+    border:1px solid #1a2b47;
+    padding: 10px;
+    color:#1a2b47;
+}
+#create-contact-button:hover{
+  color: #3498db;
+  border:1px solid #3498db;
+}
+.close-button {
+    position: absolute;
+    top: 0%;
+    right: 3%;
+    
+    color:black;
+    
+    border-radius: 50%;
+}
+.close-button:hover {
+    background-color: lightgray;
 }

@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="../styles/contacts.css">
     <script src="../js/template.js"></script>
     <script src="../js/header.js"></script>
+    <script src="../js/contacts.js"></script>
     
     <title>Join</title>
 </head>
@@ -17,20 +18,67 @@
     <div w3-include-html="../Templates/header.html"></div>
 
     <main class="contactsPage">
-        <h1>Contacts list</h1>
+        <div class="container">
+            <div class="left-column">
+                <!-- Add onclick="showOverlay()" to the header-content div -->
+                <div class="header-content" id="addContact" onclick="showOverlay()">
+                    <span>Add New Contacts</span>
+                    <img src="../assets/img/personAdd.svg" alt="Add Contact Icon">
+                </div>   
+            </div>
+            
+            <div class="right-column">
+                <!-- Content for the right column -->
+                <div class="contact">
+                    <h1>Contacts</h1>
+                    <div class="separator"></div>
+                    <h3>Better with Team</h3>
+                </div>
+            </div>
+        </div>
 
+        <!-- Overlay -->
+        <div id="overlay" class="overlay">
+            <div class="overlay-content">
+                <div class="left-section">
+                    <img class="left-sectionImg" src="../Assets/JoinLogoWhite.svg" alt="">
+                    <h2>Add Contact</h2>
+                    <p>Tasks are easier with a team!</p>
+                </div>
+                <div class="right-section">
+                    <!-- Close button -->
+                    <a href="" id="close-overlay" class="close-button" onclick="hideOverlay()">X</a> 
+                    <!-- New Flex Container -->
+                    <div class="right-section-flex">
+                        <img src="../Assets/person.svg" class="centered-image" alt="">
+                        <form id="contact-form" class="contact-form">
+                            <!-- Name input with icon -->
+                            <div class="input-container">
+                                <input type="text" id="name" placeholder="Name" required />
+                                <img src="../Assets/name-icon.svg" class="input-icon" alt="Name Icon">
+                            </div>
+                            <!-- Email input with icon -->
+                            <div class="input-container">                               
+                                <input type="email" id="email" placeholder="Email" required/>
+                                <img src="../Assets/email-icon.svg" class="input-icon" alt="Email Icon">
+                            </div>
+                            <!-- Phone input with icon -->
+                            <div class="input-container">                               
+                                <input type="tel" id="phone" placeholder="Phone" required/>
+                                <img src="../Assets/phone-icon.svg" class="input-icon" alt="Phone Icon">
+                            </div>
+                            <div class="button-container">
+                                <!-- Add onclick="hideOverlay()" to the cancel button -->
+                                <button type="submit" id="create-contact-button" class="form-button">Cancel</button>
+                                <button id="cancel-button" class="form-button" onclick="hideOverlay()">Create contact</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>    
 
-
-
-
-
-    </main>
-
-
-
-
-
-    
     <script src="https://www.w3schools.com/lib/w3.js"></script>
     <script>includeHTML();</script> 
 </body>

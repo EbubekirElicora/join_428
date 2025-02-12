@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,88 +8,88 @@
     <link rel="stylesheet" href="../styles/sidebar.css">
     <link rel="stylesheet" href="../styles/header.css">
     <link rel="stylesheet" href="../styles/summary.css">
+    <link rel="stylesheet" href="../styles/standart.css">
     <script src="../js/template.js"></script>
     <script src="../js/header.js"></script>
 </head>
+
 <body>
-    <div w3-include-html="../Templates/sidebar.html"></div> 
+    <div w3-include-html="../Templates/sidebar.html"></div>
     <div w3-include-html="../Templates/header.html"></div>
 
-   
-            <section class="memory_container">
-                <div class="button_container">
-                    <div class="txt_container">
-                        <h1 class="headline">Join 428
-                            <span class="dividing_line">|</span>
-                            <span class="headline_span">Key Metrics at a Glance</span>
-                        </h1>
+
+    <section class="memory_container">
+        <div class="button_container">
+            <div class="txt_container">
+                <h1 class="headline">Join 428
+                    <span class="dividing_line">|</span>
+                    <span class="headline_span">Key Metrics at a Glance</span>
+                </h1>
+            </div>
+            <div class="d-flex">
+                <button class="to_do_container">
+                    <img class="to_do_icon" src="../assets/icons/to-do-icon.png">
+                    <div class="position_headline_span">
+                        <h1 class="button_h1"> 1 </h1>
+                        <span class="to_do">To-do </span>
                     </div>
-                    <div class="d-flex">
-                        <button class="to_do_container">
-                            <img class="to_do_icon" src="../assets/icons/to-do-icon.png">
-                            <div class="position_headline_span">
-                                <h1 class="button_h1"> 1 </h1>
-                                <span class="to_do">To-do </span>
-                            </div>
-                        </button>
-                        <button class="done_container">
-                            <img class="done_icon" src="../assets/icons/done-icon.png">
-                            <div class="position_headline_span">
-                                <h1 class="button_h1"> 1 </h1>
-                                <span class="done">Done</span>
-                            </div>
-                        </button>
+                </button>
+                <button class="done_container">
+                    <img class="done_icon" src="../assets/icons/done-icon.png">
+                    <div class="position_headline_span">
+                        <h1 class="button_h1"> 1 </h1>
+                        <span class="done">Done</span>
                     </div>
-                    <div class="d-flex">
-                        <button class="urgent_container">
-                            <div class="container_position">
-                                <img class="urgent_icon" src="../assets/icons/urgent-icon.png">
-                                <div class="position_headline_span">
-                                    <h1 class="button_h1"> 1 </h1>
-                                    <span class="urgent">Urgent</span>
-                                </div>
-                            </div>
-                            <div class="container_position">
-                                <span class="dividing_line_urgent">|</span>
-                            </div>
-                            <div class="container_position">
-                                <div class="date_info_container">
-                                    <span class="date_txt">December 20, 2024</span>
-                                    <span class="info_txt">Upcoming Deadline</span>
-                                </div>
-                            </div>
-                        </button>
-                        <section class="greets_container">
-                            <div class="greets_text">Good morning,</div>
-                            <div class="greeted_user">Max Mustermann</div>
-                        </section>
+                </button>
+            </div>
+            <div class="d-flex">
+                <button class="urgent_container">
+                    <div class="container_position">
+                        <img class="urgent_icon" src="../assets/icons/urgent-icon.png">
+                        <div class="position_headline_span">
+                            <h1 class="button_h1"> 1 </h1>
+                            <span class="urgent">Urgent</span>
+                        </div>
                     </div>
-                    <div class="tasks_container">
-                        <button class="tasks_in_board_container">
-                            <h1 class="button_h1"> 3 </h1>
-                            <span class="tasks_in_board">Tasks in<br>Board</span>
-                        </button>
-                        <button class="tasks_in_progress_container">
-                            <h1 class="button_h1"> 3 </h1>
-                            <span class="tasks_in_progress">Tasks in<br>Progress</span>
-                        </button>
-                        <button class="tasks_in_awaiting_container">
-                            <h1 class="button_h1"> 3 </h1>
-                            <span class="tasks_in_awaiting_feedback">Awaiting<br>Feedback</span>
-                        </button>
+                    <div class="container_position">
+                        <span class="dividing_line_urgent">|</span>
                     </div>
-                </div>
-            </section>
-        </section>
+                    <div class="container_position">
+                        <div class="date_info_container">
+                            <span class="date_txt">December 20, 2024</span>
+                            <span class="info_txt">Upcoming Deadline</span>
+                        </div>
+                    </div>
+                </button>
+                <section class="greets_container">
+                    <div class="greets_text">Good morning,</div>
+                    <div class="greeted_user">Max Mustermann</div>
+                </section>
+            </div>
+            <div class="tasks_container">
+                <button class="tasks_in_board_container">
+                    <h1 class="button_h1"> 3 </h1>
+                    <span class="tasks_in_board">Tasks in<br>Board</span>
+                </button>
+                <button class="tasks_in_progress_container">
+                    <h1 class="button_h1"> 3 </h1>
+                    <span class="tasks_in_progress">Tasks in<br>Progress</span>
+                </button>
+                <button class="tasks_in_awaiting_container">
+                    <h1 class="button_h1"> 3 </h1>
+                    <span class="tasks_in_awaiting_feedback">Awaiting<br>Feedback</span>
+                </button>
+            </div>
+        </div>
     </section>
-</main>
 
 
 
 
 
 
-        <script src="https://www.w3schools.com/lib/w3.js"></script>
-    <script>includeHTML();</script> 
+    <script src="https://www.w3schools.com/lib/w3.js"></script>
+    <script>includeHTML();</script>
 </body>
+
 </html>

@@ -37,7 +37,7 @@
 /* Left column (fixed) */
 .left-column {
     position: fixed; /* Fix the left column */
-    width: 230px; /* Fixed width */
+    width: 290px; /* Fixed width */
     height: 100vh; /* Full viewport height */
     background-color: #fff; /* Light gray background */
     border-right: 2px solid #ccc; /* Border on the right */

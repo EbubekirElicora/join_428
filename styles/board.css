@@ -64,3 +64,47 @@ h1 {
     background-color: gray;
     margin: 0 8px;
 }
+
+.content_board {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 48px;
+}
+
+.board_text_img {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav_board {
+    width: 250px;
+}
+
+.board_tasks {
+    background-color: #e7e7e7;
+    color: #a0a0a0;
+    border: 2px dashed #d1d1d1;
+    border-radius: 8px;
+    text-align: center;
+    padding: 16px 0;
+    margin-top: 24px;
+    margin-bottom: 24px;
+}
+
+.text_board {
+    font-weight: 700;
+    font-size: 24px;
+}
+
+.img_board {
+    cursor: pointer;
+    border-radius: 10px;
+    transition: border-color 0.3s ease, filter 0.3s ease;
+}
+
+.img_board:hover {
+    border-color: #29abe2;
+    filter: brightness(0) saturate(100%) invert(58%) sepia(93%) saturate(339%) hue-rotate(158deg) brightness(95%) contrast(88%);
+}
+

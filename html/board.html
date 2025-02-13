@@ -7,16 +7,19 @@
     <link rel="stylesheet" href="../styles/header.css">
     <link rel="stylesheet" href="../styles/sidebar.css">
     <link rel="stylesheet" href="../styles/board.css">
+    <link rel="stylesheet" href="../styles/board_template.css">
     <link rel="stylesheet" href="../styles/standart.css">
     <script src="../js/template.js"></script>
     <script src="../js/header.js"></script>
     <script src="../js/board.js"></script>
     <script src="../js/contacts.js"></script>
+    <script src="../js/board_template.js"></script>
     <title>Join</title>
 </head>
 <body>
     <div w3-include-html="../Templates/sidebar.html"></div> 
     <div w3-include-html="../Templates/header.html"></div>
+
     <main class="board_main">
         <div class="header_board">
             <div class="content_h1">
@@ -34,13 +37,48 @@
             </div>
         </div>
 
+        <div id="overlay" class="overlay"></div>
+
         <div class="content_board">
-            <div></div>
+            <div class="nav_board">
+                <div class="board_text_img">
+                    <p class="text_board">To do</p>
+                    <img class="img_board" onclick="addTask()" src="../assets/icons/plus button.png" alt="">
+                </div>
+                <div class="board_tasks">
+                    <div class="tasks show">No tasks To do</div>
+                </div>
+            </div>
+            <div class="nav_board">
+                <div class="board_text_img">
+                    <p class="text_board">In Progress</p>
+                    <img class="img_board" onclick="addTask()" src="../assets/icons/plus button.png" alt="">
+                </div>
+                <div class="board_tasks">
+                    <div class="tasks">No tasks In Progress</div>
+                </div>
+            </div>
+            <div class="nav_board">
+                <div class="board_text_img">
+                    <p class="text_board">Await Feetback</p>
+                    <img class="img_board" onclick="addTask()" src="../assets/icons/plus button.png" alt="">
+                </div>
+                <div class="board_tasks">
+                    <div class="tasks">No tasks Await Feetback</div>
+                </div>
+            </div>
+            <div class="nav_board">
+                <div class="board_text_img">
+                    <p class="text_board">Done</p>
+                    <img class="img_board" onclick="addTask()" src="../assets/icons/plus button.png" alt="">
+                </div>
+                <div class="board_tasks">
+                    <div class="tasks">No tasks Done</div>
+                </div>
+            </div>
         </div>
-
-
-
     </main> 
+
     <script src="https://www.w3schools.com/lib/w3.js"></script>
     <script>
         includeHTML();

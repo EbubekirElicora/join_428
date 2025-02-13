@@ -1,8 +1,11 @@
 .contactsPage{
     margin-top: 90px;
-    margin-left: 230px;    
+    margin-left: 230px; 
+     
 }
+body{
 
+}
 .cursorPointer{
     cursor: pointer;
 }

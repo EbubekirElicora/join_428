@@ -14,7 +14,7 @@
     
     <title>Join</title>
 </head>
-<body>
+<body onload="render()">
     <div w3-include-html="../Templates/sidebar.html"></div> 
     <div w3-include-html="../Templates/header.html"></div>
 
@@ -25,7 +25,8 @@
                 <div class="header-content" id="addContact" onclick="showOverlay()">
                     <span>Add New Contacts</span>
                     <img src="../assets/img/personAdd.svg" alt="Add Contact Icon">
-                </div>   
+                </div> 
+                <div id="content"></div>  
             </div>
             
             <div class="right-column">
@@ -55,7 +56,7 @@
                             <img src="../Assets/person.svg" class="centered-image" alt="">
                         </div>
                         <div>
-                            <form id="contact-form" class="contact-form">
+                            <form id="contact-form" class="contact-form" onsubmit="createContact(event)">
                                 <!-- Name input with icon -->
                                 <div class="input-container">
                                     <img src="../assets/person.svg" class="input-icon" alt="Name Icon">
@@ -75,7 +76,7 @@
                                 <div class="button-container">
                                     <!-- Add onclick="hideOverlay()" to the cancel button -->
                                     <button type="submit" id="cancel" class="form-button cancel"onclick="hideOverlay()">Cancel</button>
-                                    <button id="create-contact" class="form-button create-contact" >Create contact</button>
+                                    <button id="create-contact" class="form-button create-contact"  onclick="start()">Create contact</button>
                                 </div>
                             </form>
                         </div>

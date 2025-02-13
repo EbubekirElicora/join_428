@@ -17,8 +17,6 @@
         transform: translate(0, 0) scale(1);
     }
 }
-
-
 .animation_logo {
     position: fixed;
     top: 50%;
@@ -28,7 +26,6 @@
     transform: translate(-50%, -50%) scale(3);
     animation: logoMove 1.5s ease-in-out forwards;
 }
-
 
 .animation {
     position: fixed;

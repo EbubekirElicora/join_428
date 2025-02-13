@@ -3,9 +3,6 @@
     src: url(../assets/fonts/Figtree-VariableFont_wght.ttf);
 }
 
-* {
-    box-sizing: border-box;
-}
 
 body {
   margin: 0;

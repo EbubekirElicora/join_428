@@ -1,4 +1,364 @@
 .contactsPage{
-    margin-top: 120px;
-    margin-left: 320px;
+    margin-top: 90px;
+    margin-left: 230px;    
+}
+
+.cursorPointer{
+    cursor: pointer;
+}
+
+.contact {
+    display: flex;    
+    align-items: center;
+    justify-content: center;
+    padding-top: 20px;       
+}
+
+.contact h1 {
+    margin: 0;
+    font-size: 54px;
+}
+
+.contact h3 {
+    margin: 0;
+    font-size: 24;
+}
+
+.separator {
+    width: 3px;
+    height: 30px;
+    background-color: #3498db;
+    margin: 0 15px;
+}
+
+
+
+
+/* contact list section */
+.left-column {
+    position: fixed; /* Fix the left column */
+    width: 290px; /* Fixed width */
+    height: 100vh; /* Full viewport height */
+    background-color: #fff; /* Light gray background */
+    border-right: 2px solid #ccc; /* Border on the right */
+    box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1,0); /* Shadow on the right */
+    padding: 20px; /* Optional: Add some padding */
+    overflow-y: auto; /* Enable scrolling if content overflows */
+    cursor: pointer;
+}
+
+/* contact display section(scrollable) */
+.right-column {
+    margin-left: 340px; /* Offset by the width of the left column */
+    padding: 20px; /* Optional: Add some padding */
+     /* White background */
+}
+.header-content{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    background-color: #2A3647;
+    border-radius: 5px;
+    font-size: 20px;
+    gap: 10px;
+    padding: 8px;
+}
+.header-content:hover{
+    background-color: #3498db;
+}
+
+
+/* create contacts Overlay styles */
+.overlay {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 900px;
+    height: 500px;
+    max-height: 100vh;
+    background-color: #fff;
+    z-index: 1001;
+    border-radius: 20px;
+    box-sizing: border-box;
+    border: none;
+}
+
+.overlay.active {
+    display: flex; /* Show the overlay */
+}
+
+.overlay-content {
+    display: flex;
+    height: 100%;
+    position: relative; /* Required for absolute positioning of the close button */
+    width: 900px;
+}
+
+/* Close button styles */
+.close-button {
+    position: absolute; /* Position the button absolutely */
+    top: 10px; /* Distance from the top */
+    right: 10px; /* Distance from the right */
+    font-size: 20px; /* Adjust font size */
+    color: #000; /* Button text color */
+    text-decoration: none; /* Remove underline */
+    cursor: pointer; /* Add pointer cursor */
+    z-index: 1002; /* Ensure it's above other content */
+}
+
+.left-section {
+    background-color: #2A3647;
+    padding: 20px;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    width: 300px;
+}
+
+.left-section img {
+    padding-left: 10px;
+}
+
+.left-section h2 {
+    font-size: 54px;
+    color: #fff;
+    position: relative;
+}
+
+.left-section p {
+    position: relative;
+    margin: 0;
+    color: #fff;
+    font-size: 24px;
+}
+
+.left-section p::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -5px;
+    width: 30%;
+    border-bottom: 4px solid #3498db;
+}
+
+/* Right Section Styles */
+.right-section {
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    width: 100%;
+}
+
+.right-section-flex {
+    display: flex;
+    gap: 40px;
+    position: relative;
+}
+
+.contact-persona img {
+    width: 110px; 
+    height: 110px; 
+    border-radius: 100%; 
+    padding: 15px; 
+    border: 3px solid white; 
+    box-sizing: border-box; 
+    background-color: lightgrey;
+    display: block;
+    
+    
+}
+/* Form Styles */
+#contact-form {
+    display: flex;
+    flex-direction: column;   
+}
+.input-container input {
+    width: 300px;
+    padding: 10px; /* Adjust for the desired padding inside the input */
+    margin-bottom: 15px; /* Space between each input */
+    box-sizing: border-box; /* Ensures padding is included in the total width */
+    border: 1px solid #ccc; /* Optional: subtle border */
+    border-radius: 5px; /* Optional: rounded corners */
+}
+.input-container .input-icon {
+    position: absolute;
+    margin-top: 10px;
+    right:12px; /* Adjust icon position */
+    width: 20px; /* Adjust icon size */
+    height: 20px;
+    pointer-events: none; /* Prevents the icon from blocking input interaction */
+    opacity: 0.7; /* Make it slightly transparent */
+}
+.input-container input:focus {
+    border-color: #3498db;
+    outline: none;
+}
+
+
+
+.button-container {
+    display: flex;
+    gap: 10px; /* Space between buttons */
+    justify-content: center; /* Center-align buttons */
+    margin-top: 15px; /* Add space above buttons */
+}
+.create-contact{
+    
+    background-color:#1a2b47;
+    color:white; 
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: medium;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.25s ease, color 0.25s ease;
+    border: none;
+}  
+.create-contact:hover{
+    background-color: #3498db;
+    border: none;
+}
+
+
+
+
+.cancel{
+    background-color:white;
+    border-radius: 8px;
+    border:1px solid #1a2b47;
+    padding: 10px;
+    color:#1a2b47;
+    cursor: pointer;
+}
+.cancel:hover{
+  color: #3498db;
+  border:1px solid #3498db;
+}
+.close-button {
+    position: absolute;
+    top: 6%;
+    right: 4%;
+    
+    color:black;
+    
+    border-radius: 50%;
+}
+.close-button:hover {
+    background-color: lightgray;
+}
+#contact-overlay {
+    display: noe;    
+    position: fixed;
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%);
+    width: 900px; /* Full width */
+    height: 500px; /* Full height */
+    background-color: rgba(255, 255, 255, 1); 
+    z-index: 1001;     
+    box-sizing: border-box;
+      
+    border-radius: 20px;
+    
+}
+.contact-overlay-content{
+    display: flex;
+    width: 900px;
+    height: 500px;
+    border-radius: 20px;
+}
+.contactOverlayLeft{
+    background-color: #2A3647;
+    width: 40%;    
+    padding: 20px;
+    
+    flex-direction: column;    
+    justify-content:center;    
+    align-items: center;   
+    border-top-left-radius: 20px; 
+    border-bottom-left-radius: 20px;
+
+}
+.contactOverlayLeft h2 {
+    font-size: 54px;    
+    color: #fff;    
+    position: relative;
+    margin-top: 10%;
+    
+}
+.contactOverlayLeft img{
+    margin-left:10px;
+    margin-top: 30%;
+}
+.contactOverlayLeft h2::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -5px;
+    width: 30%;
+    border-bottom: 4px solid #3498db;
+}
+    
+
+.contactOverlayRight{
+    
+    flex: 1;
+    padding: 20px;    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;    
+    align-items: center;    
+    background-color: #f9f9f9;     
+    box-shadow: 0 2px 5px rgba(73, 25, 25, 0.1);   
+    gap: 40px; 
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    
+}
+.edit-input {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 80%;
+    box-sizing: border-box;
+    margin-bottom: 15px; /* Adds space below each input field */
+}
+
+.edit-input:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+.contact-details-row {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+.contact-initials-overlay {
+    width: 180px;
+    height: 80px;
+    border-radius: 50%; /* Ensures a circular shape */
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    margin-right: 15px;
+    
+    overflow: hidden; /* Ensures any overflow is hidden within the circle */
+    
 }

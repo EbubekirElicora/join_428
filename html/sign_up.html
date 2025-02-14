@@ -6,6 +6,7 @@
     <link rel="icon" type="image/x-icon" href="../assets/img/Capa 2.png">
     <link rel="stylesheet" href="../styles/standart.css">
     <link rel="stylesheet" href="../styles/SignUp.css">
+    <script src="../js/sidn_up.js"></script>
     <title>Join</title>
 </head>
 <body>
@@ -49,13 +50,14 @@
                         <img class="cursorPointer" src="../Assets/visibility_off - Copy.svg" alt="Show Password" style="cursor: pointer;">
                     </span>
                 </div>
+                <p id="alert" class="alert">Check your information. Please try again.</p>
                 <div class="checkbox-group">
                     <input type="checkbox" id="terms-checkbox" name="terms-checkbox" required>
                     <span for="terms-checkbox">  I accept the <a href="./privacypolicy.html" target="_blank">Privacy Policy</a></span>
                 </div>
                 
                 <div class="signup-button">
-                    <button type="submit" id="signup-btn" class="btn" disabled>Sign up</button>
+                    <button onclick="signUp()" type="submit" id="signup-btn" class="btn" disabled>Sign up</button>
                     <p id="response-message" class="response-message"></p>
                 </div>
                 

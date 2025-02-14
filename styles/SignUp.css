@@ -94,8 +94,6 @@
 .signup-button {
     display: flex;
     justify-content: center;
-    
-    
 }
 
 .signup-button button {
@@ -157,4 +155,8 @@
 .sidebartext:hover {
     font-weight: bold;
     color: #29abe2;
+}
+
+.alert {
+    color: #ffa1ac;
 }

@@ -11,6 +11,7 @@ body {
   height: 100vh;
   background-color: #f6f7f8;
   scroll-behavior: smooth;
+  overflow: hidden;
 }
 
 .max_width {

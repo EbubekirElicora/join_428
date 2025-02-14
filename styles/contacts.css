@@ -35,6 +35,7 @@
 
 
 
+
 /* contact list section */
 .left-column {
     position: fixed; /* Fix the left column */
@@ -271,10 +272,15 @@
     background-color: rgba(255, 255, 255, 1); 
     z-index: 1001;     
     box-sizing: border-box;
-      
+    transition: left 0.5s ease-in-out; 
+    
+    display: flex;
+    justify-content: flex-start; /* Align content to the left */
+    align-items: center;
     border-radius: 20px;
     
 }
+
 .contact-overlay-content{
     display: flex;
     width: 900px;
@@ -350,20 +356,40 @@
     gap: 40px;
 }
 
-.contact-initials-overlay {
-    width: 180px;
+.contact-initials {
+    width: 80px;
     height: 80px;
-    border-radius: 50%; /* Ensures a circular shape */
+     /* Ensures a circular shape */
     color: #fff;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 24px;
     margin-right: 15px;
+    border-radius:100%;
     
     overflow: hidden; /* Ensures any overflow is hidden within the circle */
     
 }
+.contact-initials-overlay {
+    width: 80px;
+    height: 80px;
+     /* Ensures a circular shape */
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    margin-right: 15px;
+    border-radius:100%;
+    
+    overflow: hidden; /* Ensures any overflow is hidden within the circle */
+    
+}
+#contact-overlay.open {
+    left: 0; /* Slide into view */
+}
+
 /*contact details section*/
 
 .contact-item {
@@ -388,26 +414,32 @@
 }
 
 
-.contact-initials {
-    width: 40px;
-    height: 40px;
-    background-color: #007bff;
-    color: white;
+.hidden {
+    display: none;
+}
+#showDetails {
+    margin-top: 20px;
+    padding: 20px;
+    
+    border-radius: 5px;
+}
+#showDetails h3 {
+    margin-top: 0;
     display: flex;
     align-items: center;
-    justify-content: center;
-    border-radius: 50%;
+    gap: 10px;
+}
+#showDetails .details-columns {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+}
+#showDetails a {
     margin-right: 10px;
-    font-weight: bold;
+    text-decoration: none;
+    color: #007bff;
 }
-
-.contact-details h3 {
-    margin: 0;
-    font-size: 16px;
-}
-
-.contact-details p {
-    margin: 5px 0;
-    font-size: 14px;
-    color: #666;
+#showDetails a:hover {
+    text-decoration: underline;
 }

@@ -36,6 +36,19 @@
                     <div class="separator"></div>
                     <h3>Better with Team</h3>
                 </div>
+                <div id="showDetails" class="hidden">
+                    <h3>
+                        <div id="contactInitials" class="contact-initials"></div>
+                        <span id="contactName"></span>
+                        <a href="#" id="editLink">✏️ Edit</a>
+                    <a href="#" id="deleteLink">🗑️ Delete</a>
+                    </h3>
+                    <div class="details-columns">
+                        <p><strong>Email:</strong> <span id="contactEmail"></span></p>
+                        <p><strong>Phone:</strong> <span id="contactPhone"></span></p>
+                    </div>
+                   
+                </div>
             </div>
         </div>
 
@@ -86,33 +99,31 @@
                 </div>
             </div>
         </div>
-         
-    <div id="contact-overlay" class="" style="display: none;">
-        <div class="contact-overlay-content">
-            <div class="contactOverlayLeft ">
-                <img class="left-sectionImg" src="../Assets/JoinLogoWhite.svg" alt="">
-                <h2>Edit Contact</h2>
-            </div>
-            <div class="contactOverlayRight ">
-                <a href="#" id="close-contact-overlay" class="close-button" onclick="hideOverlay()">X</a>
-                <div class="contact-details-row">
-                    <div class="contact-initials-overlay" id="contact-initials-overlay"></div>
-                    <div class="contact-details-inputs">
-                        <input type="text" id="edit-contact-name" class="edit-input" placeholder="Enter Name">
-                        <input type="email" id="edit-contact-email" class="edit-input" placeholder="Enter Email">
-                        <input type="tel" id="edit-contact-phone" class="edit-input" placeholder="Enter Phone">
+        <div id="contact-overlay" class="" style="display: none;">
+            <div class="contact-overlay-content">
+                <div class="contactOverlayLeft">
+                    <img class="left-sectionImg" src="../Assets/JoinLogoWhite.svg" alt="">
+                    <h2>Edit Contact</h2>
+                </div>
+                <div class="contactOverlayRight">
+                    <a href="#" id="close-contact-overlay" class="close-button" onclick="hideOverlay()">X</a>
+                    <div class="contact-details-row">
+                        <div class="contact-initials-overlay" id="contact-initials-overlay"></div>
+                        <div class="contact-details-inputs">
+                            <input type="text" id="edit-contact-name" class="edit-input" placeholder="Enter Name">
+                            <input type="email" id="edit-contact-email" class="edit-input" placeholder="Enter Email">
+                            <input type="tel" id="edit-contact-phone" class="edit-input" placeholder="Enter Phone">
+                        </div>
+                    </div>
+                    <div class="contact-details-buttons">
+                        <button id="delete-contact-button" class="contact-button cancel">Delete</button>
+                        <button id="save-contact-button" class="contact-button create-contact">Save</button>
                     </div>
                 </div>
-                <div class="contact-details-buttons">
-                    <button id="delete-contact-butto" class="contact-button cancel">Delete</button>
-                    <button id="save-contact-button" class="contact-button create-contact">Save</button>
-                    
-                </div>
             </div>
-            
         </div>
-
-    </div>
+         
+    
     </main>    
 
     <script src="https://www.w3schools.com/lib/w3.js"></script>

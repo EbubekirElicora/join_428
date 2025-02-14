@@ -12,32 +12,13 @@
     margin-top: 30px;
 }
 
-/* Join logo container styling */
-#signup-logoContainer {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 3000;
-    animation: move-logo 1.5s ease forwards;
-}
-
 /* Join logo image styling */
 .joinLogo img {
+    position: fixed;
     width: 120px;
-    height: 120px;
-}
-
-/* Keyframe animation for moving the logo */
-@keyframes move-logo {
-    0% {
-        transform: translate(-50%, -50%) scale(3);
-    }
-
-    100% {
-        transform: translate(-45vw, -40vh) scale(1);
-        /* Move to near top-left */
-    }
+    height: auto;
+    top: 100px;
+    left: 100px;
 }
 
 /* Signup container styling */
@@ -171,4 +152,9 @@
 .checkbox-group span a:hover {
     text-decoration: underline; /* Hover effect for link */
     cursor: pointer;
+}
+
+.sidebartext:hover {
+    font-weight: bold;
+    color: #29abe2;
 }

@@ -271,8 +271,8 @@
     height: 500px; /* Full height */
     background-color: rgba(255, 255, 255, 1); 
     z-index: 1001;     
-    box-sizing: border-box;
-    transition: left 0.5s ease-in-out; 
+    box-sizing: border-box;  
+
     
     display: flex;
     justify-content: flex-start; /* Align content to the left */
@@ -280,7 +280,6 @@
     border-radius: 20px;
     
 }
-
 .contact-overlay-content{
     display: flex;
     width: 900px;
@@ -423,11 +422,16 @@
     
     border-radius: 5px;
 }
-#showDetails h3 {
+#showDetails h1 {
     margin-top: 0;
     display: flex;
     align-items: center;
     gap: 10px;
+    font-size: 54px;
+}
+.links{
+    margin-left: 17%;
+    margin-top: -40px;
 }
 #showDetails .details-columns {
     display: flex;

@@ -304,6 +304,7 @@ document.addEventListener('DOMContentLoaded', () => {
             console.log('Contact updated successfully!');
             renderContacts(); // Refresh the contact list
             hideOverlay(); // Hide the overlay
+            document.getElementById('showDetails').classList.add('hidden'); // Hide details section
         })
         .catch(error => {
             console.error('Error updating contact:', error);
@@ -318,7 +319,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Function to delete a contact
     function deleteContact(contact) {
-        if (confirm('Are you sure you want to delete this contact?')) {
+        
             fetch(`${BASE_URL}/contacts/${contact.id}.json`, {
                 method: 'DELETE',
             })
@@ -330,7 +331,7 @@ document.addEventListener('DOMContentLoaded', () => {
             .catch(error => {
                 console.error('Error deleting contact:', error);
             });
-        }
+        
     }
 
     // Function to handle form submission
@@ -366,6 +367,8 @@ document.addEventListener('DOMContentLoaded', () => {
             .catch(error => {
                 console.error('Error saving contact:', error);
             });
+            hideOverlay();
+
     }
 
     // Attach form submission handler

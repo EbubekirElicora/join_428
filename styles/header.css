@@ -98,7 +98,7 @@ header p {
 }
 
 .headerImg {
-    display: none;
+    display:none;
 
 }
 
@@ -152,4 +152,49 @@ header p {
 .help_icon img {
     height: 20px;
     width: 20px;
+}
+@media (max-width: 1080px) {
+    
+
+    .mobile_headerNav {
+        height: 204px;
+    }
+
+    .headerNavHelp {
+        display: block !important;
+    }
+
+    header {
+        height: 100px;
+        left: 0;
+        padding: 0px 12px;
+    }
+
+    .mobile_headerNav {
+        top: 51px;
+    }
+
+    .headline_txt {
+        display: none;
+    }
+
+    .headerImg {
+        display: block;
+    }
+
+    .user-info img {
+        display: none;
+    }
+    .help_icon img {
+        display: none;
+    }
+   
+
+   
+
+    
+
+    
+
+    
 }

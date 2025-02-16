@@ -277,7 +277,7 @@ if (closeContactOverlayButton) {
             })
             .then(() => {
                 console.log('Contact deleted successfully!');
-                hideOverlay();
+                hideContactOverlay();
                 renderContacts(); // Refresh the contact list
                 document.getElementById('showDetails').classList.add('hidden'); // Hide details section
             })

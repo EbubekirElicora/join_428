@@ -4,6 +4,7 @@ body{
 .container {
     display: flex;
     justify-content: center;
+    align-items: flex-start;
     
     
 
@@ -15,7 +16,7 @@ body{
     background-color: white;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items:center;
     border-radius: 24px;
     width: 650px;
     height: 500px;
@@ -122,4 +123,41 @@ body{
     color: #29abe2;
     border: solid 1px #29abe2 ;
     box-shadow: 0 5px 4px rgba(0, 0, 0, 0.2);
+}
+
+  
+.toast {
+    position: fixed;
+    bottom: -100px; /* Start off-screen */
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 14px 20px;
+    color: #fff;
+    font-size: 16px;
+    border-radius: 6px;
+    text-align: center;
+    z-index: 1000;
+    opacity: 1;
+    
+    transition: bottom 0.8s ease-out,  0.8s ease-in-out;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    width: 300px;
+    text-align: center;
+}
+.toast-success {
+    background-color: #2A3647;
+}
+
+.toast-error {
+    background-color: #2A3647;
+}
+
+/* Class to slide the toast in */
+.toast.show {
+    bottom: 250px; /* Move it up to 20px from the bottom */
+}
+
+/* Class to slide the toast out */
+.toast.hide {
+    bottom: -100px; /* Move it back off-screen */
 }

@@ -43,18 +43,29 @@ button {
 }
 
 button:hover,
-.to_do:hover,
-.done:hover,
 .urgent:hover,
 .tasks_in_board:hover,
 .tasks_in_progress:hover,
 .tasks_in_awaiting_feedback:hover,
 .info_txt:hover,
-.button_h1:hover {
+.button_h1:hover{
     background-color: rgb(42, 54, 71);
     color: white;
 }
 
+.urgent_container:hover .dividing_line_urgent{
+    background-color: white;
+}
+
+.to_do_container:hover .to_do_icon,
+.done_container:hover .done_icon{
+    display: none !important;
+}
+
+.to_do_container:hover .to_do_icon_white,
+.done_container:hover .done_icon_white{
+    display: inline;
+}
 
 .to_do_container {
     display: flex;
@@ -194,7 +205,9 @@ button:hover,
 }
 
 .to_do_icon,
-.done_icon {
+.done_icon,
+.to_do_icon_white,
+.done_icon_white {
     width: 64px;
     height: 64px;
 }

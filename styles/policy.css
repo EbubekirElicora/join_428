@@ -2,20 +2,22 @@
 
 body {
     overflow: auto; /* Allow body to scroll if content exceeds the viewport */
-    
-    
+    font-family: 'Inter', sans-serif !important;
   }
   
   .policy-content {
-    margin-left: 270px;
+    margin-left: 262px;
     margin-top: 120px;
-    margin-right: 20px;
+    margin-right: 30px;
     overflow: auto; /* Enable scrolling within this container */
     max-height: calc(100vh - 120px); /* Ensure .policy-content doesn't overflow the screen */
     
   }
  
-  
+  h1 {
+    font-weight: 700;
+    font-size: 56px;
+  }
   
     @media (max-width: 990px) {
       .policy-content {
@@ -32,6 +34,7 @@ body {
         margin-bottom: 120px;
       }
     }
+    
   #policy {
     display: flex;
     flex-direction: column;

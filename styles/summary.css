@@ -1,3 +1,25 @@
+@font-face {
+    font-family: "Figtree";
+    src: url(../assets/fonts/Figtree-VariableFont_wght.ttf);
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: "Figtree";
+    box-sizing: border-box;
+    height: 100vh;
+    background-color: #f6f7f8;
+    scroll-behavior: smooth;
+    overflow: hidden;
+}
+
+.max_width {
+    max-width: 1440px;
+    margin: auto;
+}
+
+
 .container_position {
     display: flex;
     justify-content: center;
@@ -48,22 +70,23 @@ button:hover,
 .tasks_in_progress:hover,
 .tasks_in_awaiting_feedback:hover,
 .info_txt:hover,
-.button_h1:hover{
+.button_h1:hover,
+button:hover a {
     background-color: rgb(42, 54, 71);
     color: white;
 }
 
-.urgent_container:hover .dividing_line_urgent{
+.urgent_container:hover .dividing_line_urgent {
     background-color: white;
 }
 
 .to_do_container:hover .to_do_icon,
-.done_container:hover .done_icon{
+.done_container:hover .done_icon {
     display: none !important;
 }
 
 .to_do_container:hover .to_do_icon_white,
-.done_container:hover .done_icon_white{
+.done_container:hover .done_icon_white {
     display: inline;
 }
 
@@ -234,4 +257,26 @@ button:hover,
     font-weight: 700;
     font-size: 54px;
     color: rgb(29, 164, 238);
+}
+
+.go_to_board {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: black;
+}
+
+.go_to_board_urgent_btn {
+    display: flex;
+    color: black;
+    justify-content: space-evenly;
+    width: 100%;
+}
+
+.go_to_board_task {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: black;
 }

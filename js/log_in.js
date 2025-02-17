@@ -57,9 +57,13 @@ async function logIn() {
     try {
         const user = await authenticateUser(email, password);
         if (user) {
+            // Store user initials in local storage
+            const initials = getInitials(user.name);
+            localStorage.setItem("userInitials", initials);
+
             showToast("Login successful!", "success");
             setTimeout(() => {
-                window.location.href = "./summary.html";
+                window.location.href = "./summary.html"; // Redirect to summary page
             }, 2000);
         } else {
             showToast("Invalid email or password.", "error");
@@ -69,6 +73,14 @@ async function logIn() {
         showToast("An error occurred. Please try again later.", "error");
     }
 }
+function getInitials(name) {
+    return name
+        .split(" ") // Split the name into an array of words
+        .map((word) => word[0]) // Get the first letter of each word
+        .join("") // Join the letters into a single string
+        .toUpperCase(); // Convert to uppercase
+}
+
 // Function to authenticate user
 async function authenticateUser(email, password) {
     try {
@@ -109,16 +121,23 @@ function showAlert(message) {
 function showToast(message, type) {
     // Create toast container
     const toast = document.createElement("div");
-    toast.className = `toast toast-${type}`;
+    toast.className = `toast toast-${type}`; // Add the type class (e.g., toast-success)
     toast.innerText = message;
     document.body.appendChild(toast);
 
-    // Apply 'show' class after a short delay to trigger animation
-    setTimeout(() => toast.classList.add("show"), 100);
+    // Trigger reflow to apply the initial styles
+    toast.offsetHeight;
 
-    // Hide toast after 2.5 seconds
+    // Slide the toast in
+    toast.style.bottom = "20px"; // Move it up to 20px from the bottom
+
+    // Slide the toast out after 2.5 seconds
     setTimeout(() => {
-        toast.classList.add("hide"); // Slide up slightly
-        setTimeout(() => toast.remove(), 500); // Remove from DOM
+        toast.style.bottom = "-100px"; // Move it back off-screen
+
+        // Remove the toast from the DOM after the slide-out animation completes
+        setTimeout(() => {
+            toast.remove();
+        }, 500); // Match this duration with the CSS transition duration
     }, 2500);
 }

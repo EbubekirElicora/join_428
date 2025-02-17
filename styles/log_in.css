@@ -1,8 +1,13 @@
+body{
+    overflow: hidden;
+}
 .container {
     display: flex;
     justify-content: center;
-    align-items: center;
-    height: 80vh;
+    align-items: flex-start;
+    
+    
+
 
 }
 
@@ -11,10 +16,10 @@
     background-color: white;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items:center;
     border-radius: 24px;
     width: 650px;
-    height: 600px;
+    height: 500px;
 }
 
 .content_header h1 {
@@ -119,3 +124,5 @@
     border: solid 1px #29abe2 ;
     box-shadow: 0 5px 4px rgba(0, 0, 0, 0.2);
 }
+
+  

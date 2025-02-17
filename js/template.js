@@ -25,3 +25,4 @@ function includeHTML() {
       }
     }
   }
+  // Function to display initials in the header

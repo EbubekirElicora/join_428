@@ -9,12 +9,18 @@
 }
 
 .contact {
-    display: flex;    
-    align-items: center;
-    justify-content: center;
-    padding-top: 20px;       
+    display: flex;
+    justify-content: space-between; /* Space between header and back button */
+    align-items: center; /* Vertically center the content */
+    padding: 20px; /* Add some padding */
 }
 
+.contact-header {
+    display: flex;
+    align-items: center; /* Vertically center the header content */
+    gap: 10px; /* Space between h1, separator, and h3 */
+    margin: 0 auto; /* Center the header content on larger screens */
+}
 .contact h1 {
     margin: 0;
     font-size: 54px;
@@ -31,6 +37,21 @@
     background-color: #3498db;
     margin: 0 15px;
 }
+.mobileEdit-button{
+    background-color: #2A3647;
+    display: flex;
+    justify-content: center;
+    height: 80px;
+    width: 80px;
+    border-radius: 50%;
+    transform: translateY(-120px);
+    position: fixed;
+    left: 70%;
+    display: none;
+    cursor: pointer;
+    position: relative;
+}
+
 
 
 
@@ -48,13 +69,6 @@
     cursor: pointer;
     margin-bottom: 10px;
 }
-
-/* contact display section(scrollable) */
-.right-column {
-    margin-left: 340px; /* Offset by the width of the left column */
-    padding: 20px; /* Optional: Add some padding */
-     /* White background */
-}
 .header-content{
     display: flex;
     align-items: center;
@@ -70,10 +84,93 @@
     background-color: #3498db;
 }
 
+/* New Circular Add Contact Button */
+.add-contact-circle {
+    display: none; /* Hidden by default */
+    position: fixed;
+    align-items: center;
+    justify-content: center;
+    bottom: 50px;
+    left: 24%;
+    transform: translateY(-80%);
+    width: 70px;
+    height: 70px;
+    background-color: #2A3647; /* Match the original button's background color */
+    color: white;
+    border-radius: 50%; /* Makes it circular */
+    text-align: center;
+    line-height: 80px; /* Vertically center the "+" */
+    font-size: 24px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Optional: Add a shadow */
+    z-index: 1000; /* Ensure it's above other content */
+}
+.contact-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 6px;
+    padding: 10px;
+
+}
+.letter-header {
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    color: #333;
+    border-bottom: 2px solid lightgray;
+    padding-bottom: 5px;
+}
+.contact-item:last-child {
+    border-bottom: none; /* Remove border for the last item */
+    margin-bottom: 100px; /* Add 10px bottom margin for the last item */
+}
+
+/* contact display section(scrollable) */
+.right-column {
+    margin-left: 340px; /* Offset by the width of the left column */
+    padding: 20px; /* Optional: Add some padding */
+     /* White background */
+}
+
+.hidden {
+    display: none;
+}
+#showDetails {
+    margin-top: 20px;
+    padding: 20px;
+    
+    border-radius: 5px;
+}
+#showDetails h1 {
+    margin-top: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 54px;
+}
+.links{
+    margin-left: 17%;
+    margin-top: -40px;
+}
+#showDetails .details-columns {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+}
+#showDetails a {
+    margin-right: 10px;
+    text-decoration: none;
+    color: #007bff;
+}
+#showDetails a:hover {
+    text-decoration: underline;
+}
 
 /* create contacts Overlay styles */
 .overlay {
-    display: none;
+    display: none ;
     position: fixed;
     top: 50%;
     left: 50%;
@@ -200,8 +297,8 @@
     right:12px; /* Adjust icon position */
     width: 20px; /* Adjust icon size */
     height: 20px;
-    pointer-events: none; /* Prevents the icon from blocking input interaction */
-    opacity: 0.7; /* Make it slightly transparent */
+    pointer-events: none;
+    opacity: 0.7; 
 }
 .input-container input:focus {
     border-color: #3498db;
@@ -232,10 +329,6 @@
     background-color: #3498db;
     border: none;
 }
-
-
-
-
 .cancel{
     background-color:white;
     border-radius: 8px;
@@ -251,17 +344,16 @@
 .close-button {
     position: absolute;
     top: 6%;
-    right: 4%;
-    
-    color:black;
-    
+    right: 4%;    
+    color:black;    
     border-radius: 50%;
 }
 .close-button:hover {
     background-color: lightgray;
 }
+/*edit overlay section*/
 #contact-overlay {
-    display: noe;    
+    display: none;    
     position: fixed;
     top: 50%; 
     left: 50%; 
@@ -270,11 +362,17 @@
     height: 500px; /* Full height */
     background-color: rgba(255, 255, 255, 1); 
     z-index: 1001;     
-    box-sizing: border-box;
-      
-    border-radius: 20px;
-    
+    box-sizing: border-box;      
+    display: flex;
+    justify-content: flex-start; /* Align content to the left */
+    align-items: center;
+    border-radius: 20px;    
 }
+#contact-overlay.active {
+    display: flex; /* or block depending on your layout */
+}
+
+
 .contact-overlay-content{
     display: flex;
     width: 900px;
@@ -284,14 +382,12 @@
 .contactOverlayLeft{
     background-color: #2A3647;
     width: 40%;    
-    padding: 20px;
-    
+    padding: 20px;    
     flex-direction: column;    
     justify-content:center;    
     align-items: center;   
     border-top-left-radius: 20px; 
     border-bottom-left-radius: 20px;
-
 }
 .contactOverlayLeft h2 {
     font-size: 54px;    
@@ -312,8 +408,6 @@
     width: 30%;
     border-bottom: 4px solid #3498db;
 }
-    
-
 .contactOverlayRight{
     
     flex: 1;
@@ -350,64 +444,40 @@
     gap: 40px;
 }
 
-.contact-initials-overlay {
-    width: 180px;
+.contact-initials {
+    width: 80px;
     height: 80px;
-    border-radius: 50%; /* Ensures a circular shape */
+     /* Ensures a circular shape */
     color: #fff;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 24px;
     margin-right: 15px;
-    
+    border-radius:100%;    
     overflow: hidden; /* Ensures any overflow is hidden within the circle */
     
 }
-/*contact details section*/
-
-.contact-item {
-    display: flex;
-    align-items: center;
-    margin-bottom: 6px;
-    padding: 10px;
-
-}
-.letter-header {
-    font-size: 24px;
-    font-weight: bold;
-    margin-top: 20px;
-    margin-bottom: 10px;
-    color: #333;
-    border-bottom: 2px solid lightgray;
-    padding-bottom: 5px;
-}
-.contact-item:last-child {
-    border-bottom: none; /* Remove border for the last item */
-    margin-bottom: 100px; /* Add 10px bottom margin for the last item */
-}
-
-
-.contact-initials {
-    width: 40px;
-    height: 40px;
-    background-color: #007bff;
-    color: white;
+.contact-initials-overlay {
+    width: 80px;
+    height: 80px;
+     /* Ensures a circular shape */
+    color: #fff;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 50%;
-    margin-right: 10px;
-    font-weight: bold;
+    font-size: 24px;
+    margin-right: 15px;
+    border-radius:100%;    
+    overflow: hidden; /* Ensures any overflow is hidden within the circle */    
+}
+#contact-overlay.open {
+    left: 0;
 }
 
-.contact-details h3 {
-    margin: 0;
-    font-size: 16px;
-}
 
-.contact-details p {
-    margin: 5px 0;
-    font-size: 14px;
-    color: #666;
-}
+
+
+
+
+

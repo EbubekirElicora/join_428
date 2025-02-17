@@ -10,10 +10,38 @@ function HeaderMenu() {
 
 
 function logout(){
+    localStorage.removeItem("userInitials");
     window.location.href="../html/log_in.html"
 }
 function pageBack(){
     window.history.back();
 }
 
+document.addEventListener("DOMContentLoaded", function () {
+    console.log("DOM fully loaded"); // Debugging
 
+    const observer = new MutationObserver(function (mutationsList, observer) {
+        console.log("DOM changed"); // Debugging
+
+        const nameMenuElement = document.getElementById("name_menu");
+        if (nameMenuElement) {
+            console.log("Element with id 'name_menu' found!"); // Debugging
+            observer.disconnect();
+            displayInitials();
+        }
+    });
+
+    observer.observe(document.body, { childList: true, subtree: true });
+});
+
+function displayInitials() {
+    const nameMenuElement = document.getElementById("name_menu");
+    if (nameMenuElement) {
+        const initials = localStorage.getItem("userInitials");
+        if (initials) {
+            nameMenuElement.textContent = initials;
+        }
+    } else {
+        console.error("Element with id 'name_menu' not found!");
+    }
+}

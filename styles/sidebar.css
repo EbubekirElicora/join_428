@@ -1,3 +1,4 @@
+/* Default styles for larger screens */
 #sidebar {
     background-color: #2A3647;
     align-items: center;
@@ -9,9 +10,7 @@
     top: 0;
     left: 0;
     display: flex;
-    /* Make sidebar a flex container */
     justify-content: space-between;
-    /* Push sidefoot to the bottom */
 }
 
 .sidebar_size {
@@ -27,15 +26,10 @@
 #widget_2,
 #widget_3,
 #widget_4 {
-    /*  width: 100%; */
-    /* Make widgets span full sidebar width */
     box-sizing: border-box;
-    /* Reset box-sizing to include padding/border */
     padding: 8px 12px;
-    /* Adjust padding for more spacing control */
     display: flex;
     justify-self: center;
-    /* Center content within the sidebar */
     align-items: center;
     gap: 12px;
     font-size: 16px;
@@ -47,6 +41,7 @@
     display: flex;
     flex-direction: column;
     gap: 64px;
+    padding: 0px;
 }
 
 .sidebar_img_container {
@@ -65,23 +60,18 @@
 
 /* Hover Effect */
 .widget.active {
-    background: red !important;
-    /* TEST: Should turn red */
+    
     border: 5px solid yellow !important;
-    /* TEST: Adds yellow border */
 }
 
 .widget.active {
     background-color: #1A1F2E !important;
-    /* Darker color */
     color: white !important;
-    /* Text remains readable */
     font-weight: bold;
 }
 
 .widget:hover {
     background-color: #2A3D59 !important;
-    /* Lighter than active */
 }
 
 .nav_position_button {
@@ -110,5 +100,70 @@
     padding-left: 50px;
     margin-top: 10px;
     gap: 10px;
+}
 
+/* Media query for smaller screens */
+@media (max-width: 1080px) {
+    #sidebar {
+        display: flex;
+        width: 100%;
+        height: 62px;
+        bottom: 0;
+        flex-direction: row;
+        top: unset;
+        justify-content: center; /* Horizontally center the items */
+        align-items: center; /* Vertically center the items */
+    }
+
+    .sidebar_size {
+        flex-direction: row; /* Change to row layout */
+        padding-block: 0; /* Remove vertical padding */
+        justify-content: space-around; /* Space items evenly */
+        width: 100%; /* Full width */
+    }
+
+    .sidelinks {
+        display: flex; /* Ensure flexbox is applied */
+        flex-direction: row; /* Change to row layout */
+        gap: 40px; /* Increased gap between links */
+        padding: 20px 50px; /* Add horizontal padding for better spacing */
+        align-items: center; /* Center links vertically */
+    }
+
+    #widget_1,
+    #widget_2,
+    #widget_3,
+    #widget_4 {
+        width: auto; /* Allow widgets to shrink */
+        padding: 8px; /* Reduce padding */
+    }
+
+    .sidebar_img_container {
+        flex-direction: row; /* Change to row layout */
+        gap: 10px; /* Add gap between items */
+    }
+
+    .menu_bar,
+    .privacy_and_noticy_container {
+        flex-direction: row; /* Change to row layout */
+        align-items: center; /* Center items vertically */
+    }
+
+    .nav_position_button {
+        padding-left: 0; /* Remove left padding */
+    }
+
+    .sidelinks a {
+        padding-left: 0; /* Remove left padding */
+        margin-top: 0; /* Remove top margin */
+        white-space: nowrap; /* Prevent text from wrapping */
+    }
+
+    #sidefoot {
+        display: none;
+    }
+
+    .sidebarlogo {
+        display: none;
+    }
 }

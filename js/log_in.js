@@ -23,9 +23,16 @@ function toSignUp() {
  * @returns {void} - Keine Rückgabe.
  */
 function guestLogIn() {
+    // Clear any previous user data
+    localStorage.removeItem("userInitials");
+    localStorage.removeItem("userName");
+
+    // Set the user as a guest
+    localStorage.setItem("isGuest", "true");
+
+    // Redirect to the summary page
     window.location.href = "./summary.html";
 }
-
 /**
  * Steuert die Anzeige des Logos nach der Animation.
  * Versteckt die Animation und zeigt das Logo nach einer Verzögerung von 1,5 Sekunden.
@@ -44,7 +51,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const logInButton = document.querySelector(".btn_log_in button");
     logInButton.addEventListener("click", logIn);
 });
-
 async function logIn() {
     const email = document.getElementById("email").value.trim();
     const password = document.getElementById("password").value.trim();
@@ -57,9 +63,10 @@ async function logIn() {
     try {
         const user = await authenticateUser(email, password);
         if (user) {
-            // Store user initials in local storage
+            // Store user initials and full name in local storage
             const initials = getInitials(user.name);
             localStorage.setItem("userInitials", initials);
+            localStorage.setItem("userName", user.name); // Store the full name
 
             showToast("Login successful!", "success");
             setTimeout(() => {

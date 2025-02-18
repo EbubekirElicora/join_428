@@ -6,12 +6,13 @@
     <link rel="icon" type="image/x-icon" href="../assets/img/Capa 2.png">
     <link rel="stylesheet" href="../styles/header.css">
     <link rel="stylesheet" href="../styles/sidebar.css">
+    <link rel="stylesheet" href="../styles/addTask.css">
     <link rel="stylesheet" href="../styles/board.css">
     <link rel="stylesheet" href="../styles/standart.css">
-    <link rel="stylesheet" href="../styles/board_overlay.css">
     <script src="../js/template.js"></script>
     <script src="../js/header.js"></script>
     <script src="../js/board.js"></script>
+    <script src="../js/addTask.js"></script>
     <!-- <script src="../js/contacts.js"></script> -->
     <title>Join</title>
 </head>
@@ -36,7 +37,8 @@
             </div>
         </div>
 
-        <div onclick="addTask()" id="overlay" class="overlay d_none"></div>
+        <div onclick="closeOverlay()" id="overlay" class="overlay d_none"></div>
+        <div id="popupContainer" class="popup_container d_none"></div>
 
         <div class="content_board">
             <div id="todo" class="nav_board">

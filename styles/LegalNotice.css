@@ -1,10 +1,16 @@
 /* Reset */
-body,
-html {
-
-  box-sizing: border-box;
-  height: 100%;
+body {
+  overflow: auto; /* Allow body to scroll if content exceeds the viewport */
   font-family: 'Inter', sans-serif !important;
+}
+
+.main-content {
+  margin-left: 262px;
+  margin-top: 120px;
+  margin-right: 30px;
+  overflow: auto; /* Enable scrolling within this container */
+  max-height: calc(100vh - 140px); /* Ensure .policy-content doesn't overflow the screen */
+  
 }
 
 .impressum-header {

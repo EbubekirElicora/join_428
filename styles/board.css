@@ -52,12 +52,10 @@ h1 {
     background-color: white;
 }
 
-input[type=text] {
+.find_task {
     border: none;
     outline: none;
     font-size: 20px;
-    border-radius: 0;
-    box-shadow: none;
 }
 
 .shadow {

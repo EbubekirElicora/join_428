@@ -1,29 +1,46 @@
 
+
 /**
- * Öffnet das Popup-Fenster für das Hinzufügen einer Aufgabe.
- * Entfernt die "d_none"-Klassen von Overlay und Popup-Container,
- * um sie sichtbar zu machen. Lädt den Inhalt von 'addTask.html'
- * und fügt den entsprechenden Teil des HTML in den Popup-Container ein.
- *
- * @function
- * @async
+ * Öffnet das Overlay und das Popup-Container, indem die Klasse 'd_none' entfernt wird.
+ * 
+ * @returns {void}
+ */
+function openOverlay() {
+    document.getElementById('overlay').classList.remove('d_none');
+    document.getElementById('popupContainer').classList.remove('d_none');
+}
+
+/**
+ * Lädt den HTML-Inhalt aus addTask.html und fügt ihn in den Popup-Container ein.
+ * 
+ * @returns {Promise<void>} - Ein Promise, das aufgelöst wird, wenn der Inhalt geladen und eingefügt wurde.
+ */
+async function loadAddTaskContent() {
+    try {
+        const response = await fetch('../html/addTask.html');
+        if (!response.ok) throw new Error('Failed to load addTask.html');
+        const html = await response.text();
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, 'text/html');
+        const addTaskContent = doc.querySelector('.content_container_size');
+        if (addTaskContent) {
+            document.getElementById('popupContainer').innerHTML = addTaskContent.outerHTML;
+        }
+    } catch (error) {
+        console.error('Error loading addTask.html:', error);
+    }
+}
+
+/**
+ * Öffnet das Overlay und lädt den Aufgabeninhalt in den Popup-Container.
+ * 
  * @returns {void}
  */
 function addTask() {
-    document.getElementById('overlay').classList.remove('d_none');
-    document.getElementById('popupContainer').classList.remove('d_none');
-    fetch('../html/addTask.html')
-        .then(response => response.text())
-        .then(html => {
-            const parser = new DOMParser();
-            const doc = parser.parseFromString(html, 'text/html');
-            const addTaskContent = doc.querySelector('.content_container_size');
-            if (addTaskContent) {
-                document.getElementById('popupContainer').innerHTML = addTaskContent.outerHTML;
-            }
-        })
-        .catch(error => console.error('Error loading addTask.html:', error));
+    openOverlay();
+    loadAddTaskContent();
 }
+
 
 /**
  * Schließt das Overlay und das Popup-Fenster.

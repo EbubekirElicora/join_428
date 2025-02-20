@@ -6,8 +6,12 @@
  * @returns {void}
  */
 function openOverlay() {
-    document.getElementById('overlay').classList.remove('d_none');
-    document.getElementById('popupContainer').classList.remove('d_none');
+    const overlay = document.getElementById('overlay');
+    const popupContainer = document.getElementById('popupContainer');
+    const closeImg = document.getElementById('close_img');
+    overlay.classList.remove('d_none');
+    popupContainer.classList.remove('d_none');
+    closeImg.classList.remove('d_none');
 }
 
 /**

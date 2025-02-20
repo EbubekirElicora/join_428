@@ -90,6 +90,8 @@ h1 {
     padding: 16px 0;
     margin-top: 24px;
     margin-bottom: 24px;
+    display: flex;
+    flex-direction: column;
 }
 
 .text_board {
@@ -134,3 +136,10 @@ h1 {
     display: none;
 }
 
+.close_img {
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    cursor: pointer;
+    z-index: 1002;
+}

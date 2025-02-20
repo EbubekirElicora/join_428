@@ -1,17 +1,13 @@
 
-
 /**
  * Öffnet das Overlay und das Popup-Container, indem die Klasse 'd_none' entfernt wird.
  * 
  * @returns {void}
  */
 function openOverlay() {
-    const overlay = document.getElementById('overlay');
-    const popupContainer = document.getElementById('popupContainer');
-    const closeImg = document.getElementById('close_img');
-    overlay.classList.remove('d_none');
-    popupContainer.classList.remove('d_none');
-    closeImg.classList.remove('d_none');
+    document.getElementById('overlay').classList.remove('d_none');
+    document.getElementById('popupContainer').classList.remove('d_none');
+    document.getElementById('close_img').classList.remove('d_none');
 }
 
 /**
@@ -44,7 +40,6 @@ function addTask() {
     openOverlay();
     loadAddTaskContent();
 }
-
 
 /**
  * Schließt das Overlay und das Popup-Fenster.

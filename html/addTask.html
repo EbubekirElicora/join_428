@@ -54,12 +54,28 @@
                             </div>
                             <div class="assigned_container">
                                 <div>
-                                    <label for="country">Assigned to</label>
+                                    <span class="assigned_headline">Assigned to</span>
                                 </div>
-                                <div>
-                                    <select id="country" name="country">
-                                        <option value="userlist">Select contacts to assign</option>
-                                    </select>
+                                <div class="assigned_position">
+                                    <div>
+                                        <div class="assigned_select">Select contacts to assign</div>
+                                    </div>
+                                    <div class="drop_down_img_container">
+                                        <img class="rotate" src="../assets/icons/arrow_drop_down_icon.png">
+                                    </div>
+                                </div>
+                                <div class="drop_down_main_container">
+                                    <div class="select_contacts_container">
+                                        <div class="contact_container">
+                                            <div class="contact_icon">G</div>
+                                            <div>
+                                                <span class="contact_name">Guest(You)</span>
+                                            </div>
+                                        </div>
+                                        <div>
+                                         
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </form>
@@ -72,7 +88,8 @@
                     <div class="datepicker_container">
                         <label for="due_date">Due Date</label>
                         <span class="required_icon">*</span>
-                        <input onclick="getDateToday()" type="date" id="date" class="datepicker-input" placeholder="yyyy-MM-dd">
+                        <input onclick="getDateToday()" type="date" id="date" class="datepicker-input"
+                            placeholder="yyyy-MM-dd">
                     </div>
 
                     <section class="prio_container">

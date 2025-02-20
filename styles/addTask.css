@@ -5,9 +5,9 @@ body {
   background-color: #f6f7f8;
   scroll-behavior: smooth;
   overflow: hidden;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Inter', sans-serif !important;
   height: 100vh;
-  max-width: 1420px;
+  max-width: 1420px !important;
 }
 
 a {
@@ -27,6 +27,7 @@ a {
 
 .content_container_size {
   width: 1000px;
+  margin-left: 24px;
 }
 
 .headline_addTask_position {
@@ -107,7 +108,8 @@ textarea {
 
 
 
-label {
+label,
+.assigned_headline {
   font-size: 20px;
   font-weight: 400;
   padding: 8px 0 8px 0;
@@ -308,6 +310,9 @@ select {
   -moz-appearance: none;
   /* for Chrome */
   -webkit-appearance: none;
+  background-image: url(/assets/icons/arrow_drop_down_icon.png);
+  background-position: 98% 50%;; /*Positioning*/
+  background-repeat: no-repeat; /*Prevent showing multiple background images*/
 }
 
 /* For IE10 */
@@ -315,6 +320,9 @@ select::-ms-expand {
   display: none;
 }
 
+option:hover{
+  background-color: rgb(0, 0, 0,0.2);
+}
 .category_container {
   display: flex;
   flex-direction: column;
@@ -375,7 +383,101 @@ input[type="date"],
   color: #D1D1D1;
 }
 
-.taskPage{
+.taskPage {
   margin-top: 120px;
   margin-left: 320px;
+}
+
+
+.assigned_container {
+  position: relative;
+  width: 100%;
+  margin-block-end: 32px;
+}
+
+.assigned_position {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 48px;
+  border: 1px solid #d1d1d1;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  font-size: 20px;
+  font-weight: 400;
+  background-color: white;
+  cursor: pointer;
+}
+
+.assigned_select {
+  font-size: 20px;
+  font-weight: 400;
+  padding-left: 10px;
+}
+
+.drop_down_img_container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.drop_down_img_container img {
+  padding-right: 8px;
+}
+
+.drop_down_main_container {
+  display: none;
+  background-color: #fff;
+  max-height: 201px;
+  overflow-y: auto;
+  z-index: 1000;
+  width: 100%;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  position: absolute;
+  left: 0;
+  z-index: 999;
+}
+
+.select_contacts_container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 12px;
+  height: 48px;
+  font-size: 20px;
+  font-weight: 400;
+  margin-bottom: 3px;
+  cursor: pointer;
+}
+
+.contact_container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.contact_icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: solid 2px rgb(255, 255, 255);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 12px;
+  font-weight: 400;
+  margin-right: 5px;
+  background-color: #FF745E;
+}
+
+
+.rotate eeee {
+  transform: rotate(180deg);
+  transition: transform 0.2sease;
+  padding-top: 4px;
 }

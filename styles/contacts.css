@@ -3,7 +3,9 @@
     margin-left: 230px; 
      
 }
-
+.d-none{
+    display: none;
+}
 .cursorPointer{
     cursor: pointer;
 }

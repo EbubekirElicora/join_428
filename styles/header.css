@@ -125,13 +125,13 @@ header p {
 
 .pos_cont_head_left {
     display: flex;
-    width: 50%;
+    width:50%;
     justify-content: flex-end;
 }
 
 .pos_cont_head_right {
     display: flex;
-    width: 50%;
+    width: 348px;
     justify-content: flex-end;
     padding-right: 32px;
 }

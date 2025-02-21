@@ -13,10 +13,11 @@
     <script src="../js/header.js"></script>
     <script src="../js/board.js"></script>
     <script src="../js/addTask.js"></script>
+    <script src="../js/firebase.js"></script>
     <!-- <script src="../js/contacts.js"></script> -->
     <title>Join</title>
 </head>
-<body>
+<body onload="init()">
     <div w3-include-html="../Templates/sidebar.html"></div> 
     <div w3-include-html="../Templates/header.html"></div>
 
@@ -40,7 +41,7 @@
         <div onclick="closeOverlay()" id="overlay" class="overlay d_none">
             <div class="popup_container">
                 <img id="close_img" onclick="closeOverlay()" class="close_img" src="../assets/icons/close.png" alt="Close">
-                <div id="popupContainer" class="d_none" onclick="event.stopPropagation()"></div>
+                <div id="popup_container" class="d_none" onclick="event.stopPropagation()"></div>
             </div>
         </div>
         
@@ -51,7 +52,7 @@
                     <p class="text_board">To do</p>
                     <img class="img_board" onclick="addTask()" src="../assets/icons/plus button.png" alt="">
                 </div>
-                <div id="todo_task" class="board_tasks">
+                <div id="todo_task" class="board_tasks drag_area" ondrop="moveTo('todo')" ondragleave="removeHighlight('todo_task')" ondragover="allowDrop(event); highlight('todo_task')">
                     <div class="tasks show">No tasks To do</div>
                 </div>
             </div>
@@ -60,7 +61,7 @@
                     <p class="text_board">In Progress</p>
                     <img class="img_board" onclick="addTask()" src="../assets/icons/plus button.png" alt="">
                 </div>
-                <div id="progress_task" class="board_tasks">
+                <div id="progress_task" class="board_tasks drag_area" ondrop="moveTo('progress')" ondragleave="removeHighlight('progress_task')" ondragover="allowDrop(event); highlight('progress_task')">
                     <div class="tasks">No tasks In Progress</div>
                 </div>
             </div>
@@ -69,7 +70,7 @@
                     <p class="text_board">Await Feetback</p>
                     <img class="img_board" onclick="addTask()" src="../assets/icons/plus button.png" alt="">
                 </div>
-                <div id="feetback_task" class="board_tasks">
+                <div id="feetback_task" class="board_tasks drag_area" ondrop="moveTo('feetback')" ondragleave="removeHighlight('feetback_task')" ondragover="allowDrop(event); highlight('feetback_task')">
                     <div class="tasks">No tasks Await Feetback</div>
                 </div>
             </div>
@@ -78,7 +79,7 @@
                     <p class="text_board">Done</p>
                     <img class="img_board" onclick="addTask()" src="../assets/icons/plus button.png" alt="">
                 </div>
-                <div id="done_task" class="board_tasks">
+                <div id="done_task" class="board_tasks drag_area" ondrop="moveTo('done')" ondragleave="removeHighlight('done_task')" ondragover="allowDrop(event); highlight('done_task')">
                     <div class="tasks">No tasks Done</div>
                 </div>
             </div>

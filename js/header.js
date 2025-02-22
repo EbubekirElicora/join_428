@@ -5,15 +5,14 @@ function HeaderMenu() {
     menu.classList.toggle('active');
 
     // Add an event listener to close the menu when clicking outside of it
-    
 }
 
-
-function logout(){
+function logout() {
     localStorage.removeItem("userInitials");
-    window.location.href="../html/log_in.html"
+    window.location.href = "../html/log_in.html";
 }
-function pageBack(){
+
+function pageBack() {
     window.history.back();
 }
 
@@ -38,8 +37,12 @@ function displayInitials() {
     const nameMenuElement = document.getElementById("name_menu");
     if (nameMenuElement) {
         const initials = localStorage.getItem("userInitials");
+        console.log("Initials from localStorage:", initials); // Debugging
         if (initials) {
             nameMenuElement.textContent = initials;
+            console.log("Updated name_menu with initials:", initials); // Debugging
+        } else {
+            console.error("No initials found in localStorage!"); // Debugging
         }
     } else {
         console.error("Element with id 'name_menu' not found!");

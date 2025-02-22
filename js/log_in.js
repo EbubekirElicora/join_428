@@ -51,10 +51,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const logInButton = document.querySelector(".btn_log_in button");
     logInButton.addEventListener("click", logIn);
 });
-async function logIn(event) {
-    event.preventDefault(); // Prevent default form submission
-    console.log("Log in function called"); // Debugging
-
+async function logIn() {
     const email = document.getElementById("email").value.trim();
     const password = document.getElementById("password").value.trim();
 
@@ -66,13 +63,14 @@ async function logIn(event) {
     try {
         const user = await authenticateUser(email, password);
         if (user) {
+            // Store user initials in local storage
             const initials = getInitials(user.name);
+            console.log("Setting userInitials in localStorage:", initials); // Debugging
             localStorage.setItem("userInitials", initials);
-            localStorage.setItem("userName", user.name);
-            localStorage.removeItem("isGuest"); // Clear the isGuest flag
+
             showToast("Login successful!", "success");
             setTimeout(() => {
-                window.location.href = "./summary.html";
+                window.location.href = "./summary.html"; // Redirect to summary page
             }, 2000);
         } else {
             showToast("Invalid email or password.", "error");
@@ -81,6 +79,13 @@ async function logIn(event) {
         console.error("Error during login:", error);
         showToast("An error occurred. Please try again later.", "error");
     }
+}
+
+function guestLogIn() {
+    // Store "G" in local storage for guest login
+    console.log("Setting userInitials in localStorage: G"); // Debugging
+    localStorage.setItem("userInitials", "G");
+    window.location.href = "./summary.html"; // Redirect to summary page
 }
 function getInitials(name) {
     return name

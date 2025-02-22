@@ -129,9 +129,10 @@ header p {
     width: 50%;
 }
 
+
 .pos_cont_head_right {
     display: flex;
-    width: 50%;
+    width: 348px;
     justify-content: flex-end;
     padding-right: 32px;
 }

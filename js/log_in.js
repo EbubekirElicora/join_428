@@ -51,7 +51,10 @@ document.addEventListener("DOMContentLoaded", function () {
     const logInButton = document.querySelector(".btn_log_in button");
     logInButton.addEventListener("click", logIn);
 });
-async function logIn() {
+async function logIn(event) {
+    event.preventDefault(); // Prevent default form submission
+    console.log("Log in function called"); // Debugging
+
     const email = document.getElementById("email").value.trim();
     const password = document.getElementById("password").value.trim();
 
@@ -63,14 +66,13 @@ async function logIn() {
     try {
         const user = await authenticateUser(email, password);
         if (user) {
-            // Store user initials and full name in local storage
             const initials = getInitials(user.name);
             localStorage.setItem("userInitials", initials);
-            localStorage.setItem("userName", user.name); // Store the full name
-
+            localStorage.setItem("userName", user.name);
+            localStorage.removeItem("isGuest"); // Clear the isGuest flag
             showToast("Login successful!", "success");
             setTimeout(() => {
-                window.location.href = "./summary.html"; // Redirect to summary page
+                window.location.href = "./summary.html";
             }, 2000);
         } else {
             showToast("Invalid email or password.", "error");
@@ -147,4 +149,16 @@ function showToast(message, type) {
             toast.remove();
         }, 500); // Match this duration with the CSS transition duration
     }, 2500);
+}
+function togglePasswordVisibility(inputId, toggleIconId) {
+    const passwordInput = document.getElementById(inputId);
+    const toggleIcon = document.getElementById(toggleIconId);
+
+    if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        toggleIcon.src = '/Assets/visibility.svg'; // Show password icon
+    } else {
+        passwordInput.type = 'password';
+        toggleIcon.src = '/Assets/visibility_off - Copy.svg'; // Hide password icon
+    }
 }

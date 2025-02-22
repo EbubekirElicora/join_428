@@ -52,6 +52,7 @@
                                         placeholder="Enter a Description"></textarea>
                                 </div>
                             </div>
+
                             <div class="assigned_container">
                                 <div>
                                     <span class="assigned_headline">Assigned to</span>
@@ -60,7 +61,7 @@
                                     <div>
                                         <div class="assigned_select">Select contacts to assign</div>
                                     </div>
-                                    <div class="drop_down_img_container">
+                                    <div class="drop_down_img_assigned_container">
                                         <img class="rotate" src="../assets/icons/arrow_drop_down_icon.png">
                                     </div>
                                 </div>
@@ -71,9 +72,6 @@
                                             <div>
                                                 <span class="contact_name">Guest(You)</span>
                                             </div>
-                                        </div>
-                                        <div>
-                                         
                                         </div>
                                     </div>
                                 </div>
@@ -111,27 +109,30 @@
                         </div>
                     </section>
 
-                    <section class="category_container">
-                        <label for="select">
-                            Category
-                            <span class="required_icon">*</span>
-                        </label>
-                        <div class="select_wrapper">
-                            <select class="select_option" id="select" name="select">
-                                <option value disabled selected>Select task category</option>
-                                <option value="technical_tasks">Technical Tasks</option>
-                                <option value="user_story">User Story</option>
-                            </select>
+                    <div class="category_container">
+                        <div>
+                            <span class="category_headline">Category
+                                <span class="required_icon">*</span>
+                        </span>
                         </div>
-                    </section>
+                        <div class="category_position">
+                            <div>
+                                <div class="category_select">Select task category</div>
+                            </div>
+                            <div class="drop_down_img_category_container">
+                                <img id="dropDownImgCategory" class="rotate" src="../assets/icons/arrow_drop_down_icon.png">
+                            </div>
+                        </div>
+                            <div class="select_category_container">
+                              <div class="select_category">Technical Task</div>
+                              <div class="select_category">User Story</div>
+                            </div>
+                    </div>
 
                     <section class="subtasks_container">
                         <label for="subtasks">Subtasks</label>
                         <div class="subtask_input">
                             <input type="text" id="subtasks" name="subtasks" placeholder="Add new subtask">
-                            <button type="button" class="add_subtask_btn" id="add_subtask_btn">
-                                <img class="add_subtask_img d-none" src="../assets/icons/Subtasks_add.png">
-                            </button>
                         </div>
                     </section>
                 </section>

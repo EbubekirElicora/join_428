@@ -36,9 +36,14 @@
                 </button>
             </div>
         </div>
-
-        <div onclick="closeOverlay()" id="overlay" class="overlay d_none"></div>
-        <div id="popupContainer" class="popup_container d_none"></div>
+        
+        <div onclick="closeOverlay()" id="overlay" class="overlay d_none">
+            <div class="popup_container">
+                <img id="close_img" onclick="closeOverlay()" class="close_img" src="../assets/icons/close.png" alt="Close">
+                <div id="popupContainer" class="d_none" onclick="event.stopPropagation()"></div>
+            </div>
+        </div>
+        
 
         <div class="content_board">
             <div id="todo" class="nav_board">

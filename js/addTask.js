@@ -23,15 +23,32 @@ function setPrio(prio) {
 }
 document.addEventListener('DOMContentLoaded', function () {
     const BASE_URL = "https://join-428-default-rtdb.europe-west1.firebasedatabase.app/";
-    const CONTACTS_ENDPOINT = "contacts.json"; 
+    const CONTACTS_ENDPOINT = "contacts.json"; //
 
     const contactInput = document.getElementById('contactInput');
     const dropdownContent = document.getElementById('dropdownContent');
     const dropdownIcon = document.getElementById('dropdownIcon');
     const dropdownIconUp = document.getElementById('dropdownIconUp');
-    let selectedContacts = [];
+    let selectedContacts = []; 
 
-        async function fetchContacts() {
+    
+    function getInitials(name) {
+        const names = name.split(' ');
+        const initials = names.map(n => n[0]).join('');
+        return initials.toUpperCase();
+    }
+    
+    function getRandomColor() {
+        const letters = '0123456789ABCDEF';
+        let color = '#';
+        for (let i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    }
+
+   
+    async function fetchContacts() {
         try {
             const response = await fetch(`${BASE_URL}${CONTACTS_ENDPOINT}`);
             if (!response.ok) {
@@ -54,7 +71,6 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
 
-        
         dropdownContent.innerHTML = '';
 
         
@@ -62,17 +78,38 @@ document.addEventListener('DOMContentLoaded', function () {
             const contact = contacts[key];
             const contactItem = document.createElement('div');
 
-            
+            // Create a container for the contact info (name and initials)
+            const contactInfo = document.createElement('div');
+            contactInfo.className = 'contact-info';
+
+            // Create a span for the contact name
             const contactName = document.createElement('span');
             contactName.textContent = contact.name;
 
-            
+            const initialsContainer = document.createElement('div');
+            initialsContainer.className = 'initials-container';
+            initialsContainer.style.backgroundColor = getRandomColor();
+
+            // Create a div for the initials
+            const initialsDiv = document.createElement('div');
+            initialsDiv.className = 'initials';
+            initialsDiv.textContent = getInitials(contact.name);
+
+            // Append initials to the background container
+            initialsContainer.appendChild(initialsDiv);
+
+            // Append name and initials to the contact info container
+            contactInfo.appendChild(initialsContainer);
+            contactInfo.appendChild(contactName);
+
+            // Create a checkbox for the contact
             const checkbox = document.createElement('input');
             checkbox.type = 'checkbox';
             checkbox.value = contact.email;
             checkbox.id = `contact-${key}`;
+
             
-            contactItem.appendChild(contactName);
+            contactItem.appendChild(contactInfo);
             contactItem.appendChild(checkbox);
 
             
@@ -94,7 +131,7 @@ document.addEventListener('DOMContentLoaded', function () {
         contactInput.value = selectedContacts.join(', '); 
     }
 
-    
+    // Toggle dropdown visibility
     function toggleDropdown() {
         if (dropdownContent.style.display === 'block') {
             dropdownContent.style.display = 'none';
@@ -120,6 +157,5 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // Call the function to populate the dropdown
     populateDropdown();
 });

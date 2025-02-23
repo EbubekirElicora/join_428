@@ -39,7 +39,7 @@ body {
     flex-wrap: wrap;
     flex-direction: row;
     align-content: center;
-    max-width: 1920px;
+    max-width: 1440px;
     height: 100%;
 }
 
@@ -53,8 +53,7 @@ body {
     flex-wrap: wrap;
     flex-direction: column;
     align-content: space-around;
-    width: 100%;
-    margin-left: 232px;
+    margin-left: 348px;
 }
 
 button {
@@ -251,7 +250,7 @@ button:hover a {
 .greets_text {
     font-weight: 500;
     font-size: 32px;
-    
+
 }
 
 .greeted_user {
@@ -280,4 +279,11 @@ button:hover a {
     align-items: center;
     flex-direction: column;
     color: black;
+}
+
+@media (max-width: 1440px) {
+
+    .button_container {
+        margin-left: 332px;
+    }
 }

@@ -98,7 +98,7 @@ header p {
 }
 
 .headerImg {
-    display:none;
+    display: none;
 
 }
 
@@ -125,9 +125,10 @@ header p {
 
 .pos_cont_head_left {
     display: flex;
-    width:50%;
-    justify-content: flex-end;
+    padding-left: 348px;
+    width: 50%;
 }
+
 
 .pos_cont_head_right {
     display: flex;
@@ -153,8 +154,20 @@ header p {
     height: 20px;
     width: 20px;
 }
+
+
+@media (max-width: 1440px) {
+
+    .pos_cont_head_left {
+        display: flex;
+        width: 50%;
+        justify-content: flex-end;
+        padding-left: 0;
+    }
+}
+
 @media (max-width: 1080px) {
-    
+
 
     .mobile_headerNav {
         height: 204px;
@@ -185,16 +198,9 @@ header p {
     .user-info img {
         display: none;
     }
+
     .help_icon img {
         display: none;
     }
-   
-
-   
-
-    
-
-    
-
-    
 }
+

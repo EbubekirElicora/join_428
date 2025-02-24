@@ -1,4 +1,3 @@
-
 document.addEventListener('DOMContentLoaded', function () {
     const isGuest = localStorage.getItem("isGuest");
 
@@ -28,3 +27,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
     greetText.textContent = greeting;
 });
+
+
+
+
+function loadUserInfo() {
+    const userName = localStorage.getItem("userName") || "Guest";
+    document.getElementById("greeted_user").textContent = userName;
+}
+document.addEventListener("DOMContentLoaded", loadUserInfo);

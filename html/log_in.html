@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="../styles/standart.css">
     <script src="../js/log_in.js"></script>
     <script src="../js/header.js"></script>
+    <script src="../js/firebase.js"></script>
     <title>Join</title>
 </head>
 
@@ -43,15 +44,11 @@
                                      placeholder="Password" required>
                                  <img src="../assets/icons/lock.png" alt="">
                              </label>
-                             
+                             <div id="alert" class="alert"></div>
                          </div>
                          <div class="checkbox">
-                             <div class="checkbox_main">
-                                 <input type="checkbox">
-                                 <p>Remember my</p>
-                             </div>
                              <button class="btn_none">Forgot password?</button>
-                         </div>
+                            </div>
                      </form>
                      <div class="btn_log_in">
                          <button onclick="logIn()" class="show_button">Log in</button>
@@ -61,7 +58,7 @@
              </div>
      
          </section>
-         
+
          <footer class="max_width">
              <div class="footer_content">
                  <a href="./privacypolicy.html">Privacy Policy</a>

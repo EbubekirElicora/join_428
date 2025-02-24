@@ -193,5 +193,10 @@
     bottom: 55%;
     transition: opacity 0.5s ease-in-out, bottom 0.5s ease-in-out;
 }
+.error-message {
+    color: red;
+    font-size: 14px;
+    margin-top: 4px;
+}
 
 

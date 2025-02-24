@@ -408,6 +408,28 @@ document.addEventListener('DOMContentLoaded', function () {
         console.error('Cancel button not found!'); // Debugging
     }
 });
+
+
+function toggleOverlay() {
+    const overlay = document.getElementById('mobileEditOverlay');
+    overlay.classList.toggle('active'); // Toggle the 'active' class
+}
+
+// Close the overlay when clicking outside of it
+document.addEventListener('click', function(event) {
+    const overlay = document.getElementById('mobileEditOverlay');
+    const threeDotsButton = document.querySelector('.mobileEdit-button img'); // The button that opens the overlay
+
+    // Check if the click is outside the overlay and not on the three dots button
+    if (!overlay.contains(event.target) && event.target !== threeDotsButton) {
+        overlay.classList.remove('active'); // Close the overlay
+    }
+});
+
+// Prevent clicks inside the overlay from closing it
+document.getElementById('mobileEditOverlay').addEventListener('click', function(event) {
+    event.stopPropagation(); // Stop the click event from propagating to the document
+});
 // Close the overlay when clicking outside of it
 // Function to hide the overlay
 
@@ -444,9 +466,9 @@ document.addEventListener('DOMContentLoaded', function () {
 // Helper function to get initials from a name
 function getInitials(name) {
     return name.split(' ').map(part => part[0]).join('').toUpperCase();
-}
+}*/
 
-// Function to generate a random color
+/*/ Function to generate a random color
 function getRandomColor() {
     const letters = '0123456789ABCDEF';
     let color = '#';

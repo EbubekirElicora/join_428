@@ -42,27 +42,49 @@ function logoMuve() {
     }, 1500);
 }
 
+/**
+ * Startet den Login-Prozess und überprüft die Benutzereingaben.
+ * @async
+ */
 async function logIn() {
-    const email = getInputValue("email");
-    const password = getInputValue("password");
-    const alertBox = getAlertBox();
+    let email = getInputValue("email");
+    let password = getInputValue("password");
+    let alertBox = getAlertBox();
+    let emailLabel = document.getElementById("label_input");
+    let passwordLabel = document.getElementById("label_password");
+    resetErrorStyles(emailLabel, passwordLabel, alertBox);
     if (!email || !password) {
-        showAlert(alertBox, "Check your email and password. Please try again.");
+        showError(emailLabel, passwordLabel, alertBox);
         return;
     }
-    const users = await fetchUsers(alertBox);
+    let users = await fetchUsers(alertBox);
     if (!users) return;
-    validateUser(users, email, password, alertBox);
+    validateUser(users, email, password, alertBox, emailLabel, passwordLabel);
 }
 
+/**
+ * Holt den Wert eines Eingabefeldes und entfernt führende und nachfolgende Leerzeichen.
+ * @param {string} id - Die ID des Eingabefeldes.
+ * @returns {string} Der bereinigte Wert des Eingabefeldes.
+ */
 function getInputValue(id) {
     return document.getElementById(id).value.trim();
 }
 
+/**
+ * Holt das Alert-Element.
+ * @returns {HTMLElement} Das Alert-Element.
+ */
 function getAlertBox() {
     return document.getElementById("alert");
 }
 
+/**
+ * Lädt die Benutzerdaten aus der Datenbank.
+ * @async
+ * @param {HTMLElement} alertBox - Das Alert-Element zur Anzeige von Fehlern.
+ * @returns {Promise<Object|null>} Die Benutzerdaten oder `null`, falls ein Fehler auftritt.
+ */
 async function fetchUsers(alertBox) {
     let users = await loadData("users");
     if (!users) {
@@ -71,31 +93,81 @@ async function fetchUsers(alertBox) {
     return users;
 }
 
-function validateUser(users, email, password, alertBox, emailField, passwordField) {
+/**
+ * Überprüft, ob die eingegebenen Benutzerdaten korrekt sind.
+ * @param {Object} users - Die Liste aller Benutzer.
+ * @param {string} email - Die eingegebene E-Mail-Adresse.
+ * @param {string} password - Das eingegebene Passwort.
+ * @param {HTMLElement} alertBox - Das Alert-Element zur Fehleranzeige.
+ * @param {HTMLElement} emailLabel - Das Label für das E-Mail-Eingabefeld.
+ * @param {HTMLElement} passwordLabel - Das Label für das Passwort-Eingabefeld.
+ */
+function validateUser(users, email, password, alertBox, emailLabel, passwordLabel) {
     let user = Object.values(users).find(u => u.email === email && u.password === password);
     if (user) {
         saveUserData(user);
         redirectToSummary();
     } else {
-        showAlert(alertBox, "Check your email and password. Please try again.");
-        setFieldError(emailField, passwordField);
+        showError(emailLabel, passwordLabel, alertBox);
     }
 }
 
+/**
+ * Zeigt eine Fehlermeldung an und hebt die Eingabefelder hervor.
+ * @param {HTMLElement} emailLabel - Das Label für das E-Mail-Eingabefeld.
+ * @param {HTMLElement} passwordLabel - Das Label für das Passwort-Eingabefeld.
+ * @param {HTMLElement} alertBox - Das Alert-Element zur Fehleranzeige.
+ */
+function showError(emailLabel, passwordLabel, alertBox) {
+    let errorMessage = "Check your email and password. Please try again.";
+    showAlert(alertBox, errorMessage);
+    emailLabel.classList.add("label_user_red");
+    passwordLabel.classList.add("label_user_red");
+}
+
+/**
+ * Setzt die Fehlerstile für die Eingabefelder zurück.
+ * @param {HTMLElement} emailLabel - Das Label für das E-Mail-Eingabefeld.
+ * @param {HTMLElement} passwordLabel - Das Label für das Passwort-Eingabefeld.
+ * @param {HTMLElement} alertBox - Das Alert-Element.
+ */
+function resetErrorStyles(emailLabel, passwordLabel, alertBox) {
+    emailLabel.classList.remove("label_user_red");
+    passwordLabel.classList.remove("label_user_red");
+    alertBox.style.display = "none";
+}
+
+/**
+ * Speichert die Benutzerdaten im lokalen Speicher.
+ * @param {Object} user - Das Benutzerobjekt.
+ */
 function saveUserData(user) {
     localStorage.setItem("userName", user.name);
     localStorage.setItem("userInitials", getInitials(user.name));
 }
 
+/**
+ * Leitet den Benutzer zur Übersichtsseite weiter.
+ */
 function redirectToSummary() {
     window.location.href = "../html/summary.html";
 }
 
+/**
+ * Zeigt eine Fehlermeldung im Alert-Feld an.
+ * @param {HTMLElement} alertBox - Das Alert-Element.
+ * @param {string} message - Die anzuzeigende Nachricht.
+ */
 function showAlert(alertBox, message) {
     alertBox.textContent = message;
     alertBox.style.display = "block";
 }
 
+/**
+ * Erstellt Initialen aus einem vollständigen Namen.
+ * @param {string} name - Der vollständige Name des Benutzers.
+ * @returns {string} Die Initialen des Benutzers.
+ */
 function getInitials(name) {
     let words = name.split(" ");  
     return words[0][0].toUpperCase() + (words[1] ? words[1][0].toUpperCase() : "");
@@ -109,115 +181,4 @@ function getInitials(name) {
 
 
 
-
-// const BASE_URL = "https://join-428-default-rtdb.europe-west1.firebasedatabase.app/";
-
-// document.addEventListener("DOMContentLoaded", function () {
-//     const logInButton = document.querySelector(".btn_log_in button");
-//     logInButton.addEventListener("click", logIn);
-// });
-// async function logIn() {
-//     const email = document.getElementById("email").value.trim();
-//     const password = document.getElementById("password").value.trim();
-
-//     if (!email || !password) {
-//         showToast("Please fill in all fields.", "error");
-//         return;
-//     }
-
-//     try {
-//         const user = await authenticateUser(email, password);
-//         if (user) {
-//             // Store user initials in local storage
-//             const initials = getInitials(user.name);
-//             console.log("Setting userInitials in localStorage:", initials); // Debugging
-//             localStorage.setItem("userInitials", initials);
-
-//             showToast("Login successful!", "success");
-//             setTimeout(() => {
-//                 window.location.href = "./summary.html"; // Redirect to summary page
-//             }, 2000);
-//         } else {
-//             showToast("Invalid email or password.", "error");
-//         }
-//     } catch (error) {
-//         console.error("Error during login:", error);
-//         showToast("An error occurred. Please try again later.", "error");
-//     }
-// }
-
-// function guestLogIn() {
-//     // Store "G" in local storage for guest login
-//     console.log("Setting userInitials in localStorage: G"); // Debugging
-//     localStorage.setItem("userInitials", "G");
-//     window.location.href = "./summary.html"; // Redirect to summary page
-// }
-// function getInitials(name) {
-//     return name
-//         .split(" ") // Split the name into an array of words
-//         .map((word) => word[0]) // Get the first letter of each word
-//         .join("") // Join the letters into a single string
-//         .toUpperCase(); // Convert to uppercase
-// }
-
-// // Function to authenticate user
-// async function authenticateUser(email, password) {
-//     try {
-//         const response = await fetch(`${BASE_URL}users.json`);
-//         if (!response.ok) throw new Error("Failed to fetch users");
-
-//         const users = await response.json();
-//         if (!users) return null;
-
-//         // Find the user with matching email and password
-//         const user = Object.values(users).find(
-//             (user) => user.email === email && user.password === password
-//         );
-//         return user || null;
-//     } catch (error) {
-//         console.error("Error authenticating user:", error);
-//         throw error;
-//     }
-// }
-
-// // Function to validate email format
-// function validateEmail(email) {
-//     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-//     return emailRegex.test(email);
-// }
-
-// // Function to show alert message
-// function showAlert(message) {
-//     const alertDiv = document.getElementById("alert");
-//     alertDiv.textContent = message;
-//     alertDiv.style.display = "block";
-//     setTimeout(() => {
-//         alertDiv.style.display = "none";
-//     }, 3000);
-// }
-
-// // Function to show toast notification
-// function showToast(message, type) {
-//     // Create toast container
-//     const toast = document.createElement("div");
-//     toast.className = `toast toast-${type}`; // Add the type class (e.g., toast-success)
-//     toast.innerText = message;
-//     document.body.appendChild(toast);
-
-//     // Trigger reflow to apply the initial styles
-//     toast.offsetHeight;
-
-//     // Slide the toast in
-//     toast.style.bottom = "20px"; // Move it up to 20px from the bottom
-
-//     // Slide the toast out after 2.5 seconds
-//     setTimeout(() => {
-//         toast.style.bottom = "-100px"; // Move it back off-screen
-
-//         // Remove the toast from the DOM after the slide-out animation completes
-//         setTimeout(() => {
-//             toast.remove();
-//         }, 500); // Match this duration with the CSS transition duration
-//     }, 2500);
-// }
 

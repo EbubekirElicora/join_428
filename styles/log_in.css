@@ -56,6 +56,10 @@
     border: 1px solid rgb(29, 164, 238);
 }
 
+.label_user_red {
+    border: solid 1px #f73131 !important;
+}
+
 .input_user {
     border: none;
     outline: none;

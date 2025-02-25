@@ -9,49 +9,51 @@
 .back-button {
     cursor: pointer;
     font-size: 18px;
-    margin-bottom: 20px;
-    color: #2A3647; /* Match your design */
-    display: none;
+    color: #2A3647; 
+    display: none; 
+    position: fixed; 
+    right: 20px;
+    top: 20px; 
+    z-index: 1000; 
 }
-
 .back-button:hover {
     text-decoration: underline;
 }
 /* Mobile Edit Button */
 .mobileEdit-button {
-    position: relative; /* Required for absolute positioning of the overlay */
+    position: relative; 
     cursor: pointer;
 }
 
 /* Overlay */
-/* Overlay */
+
 .mobileEdit-overlay {
-    display: none; /* Hidden by default */
+    display: none; 
     position: absolute;
-    bottom: 100%; /* Position above the button */
-    right: 0; /* Align to the right */
-    background-color: white; /* White background */
-    border: 1px solid #ddd; /* Light border */
-    border-radius: 8px; /* Rounded corners */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-    z-index: 1000; /* Ensure it's above other content */
-    padding: 10px; /* Add some padding */
+    bottom: 100%; 
+    right: 0; 
+    background-color: white; 
+    border: 1px solid #ddd; 
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    z-index: 1000; 
+    padding: 10px; 
 }
 
 /* Links inside the overlay */
 .mobileEdit-overlay a {
     display: flex;
     align-items: center;
-    gap: 8px; /* Space between icon and text */
-    padding: 8px 12px; /* Padding for clickable area */
-    text-decoration: none; /* Remove underline */
-    color: #333; /* Text color */
-    font-size: 14px; /* Font size */
+    gap: 8px; 
+    padding: 8px 12px; 
+    text-decoration: none; 
+    color: #333; 
+    font-size: 14px; 
 }
 
 .mobileEdit-overlay a:hover {
-    background-color: #f5f5f5; /* Light background on hover */
-    border-radius: 4px; /* Rounded corners on hover */
+    background-color: #f5f5f5; 
+    border-radius: 4px; 
 }
 
 /* Show the overlay when active */
@@ -126,14 +128,14 @@
 @media (max-width: 960px) {
     .right-column {
         margin-left:10px;
-        padding: 20px; /* Optional: Add some padding */
+        padding: 20px; 
          
     }
     .contact-header {
-        margin: 0; /* Remove centering on smaller screens */
-        align-items: flex-start; /* Align content to the left */
-        flex-direction: column; /* Stack h1 and h3 vertically */
-        gap: 5px; /* Reduce gap between elements */
+        margin: 0; 
+        align-items: flex-start; 
+        flex-direction: column; 
+        gap: 5px; 
     }
     .links{
         display: none;
@@ -145,9 +147,9 @@
     }
     
     .contact h3 {
-        position: relative; /* Required for absolute positioning of ::after */
-        font-size: 18px; /* Example font size */
-        color: #333; /* Example text color */
+        position: relative; 
+        font-size: 18px; 
+        color: #333;
     }
     
     .contact h3::after {
@@ -155,70 +157,70 @@
         position: absolute;
         
         left: 0;
-        bottom: -5px; /* Adjust this value to position the line */
-        width: 60px; /* Adjust the width of the line */
-        border-bottom: 2px solid #3498db; /* Style of the line */
+        bottom: -5px; 
+        width: 60px; 
+        border-bottom: 2px solid #3498db; 
     }
     
     .separator {
         display: none;
     }
     .left-column {
-        width: 100%; /* Take full width */
-        padding: 20px; /* Add padding for better spacing */
-        box-sizing: border-box; /* Include padding in width calculation */
+        width: 100%; 
+        padding: 20px; 
+        box-sizing: border-box; 
         display: flex;
         flex-direction: column;
-        align-items: flex-start; /* Align content to the left */
+        align-items: flex-start; 
         height: 77.5vh;
     }
 
     .left-column #content {
-        width: 100%; /* Ensure content takes full width */
+        width: 100%; 
     }
 
     .left-column .header-content,
     .left-column .add-contact-circle {
-        align-self: flex-start; /* Align buttons to the left */
+        align-self: flex-start; 
     }
 
     .right-column {
-        display: none; /* Hide the right column by default */
+        display: none; 
     }
 
     .right-column.active {
-        display: block; /* Show the right column */
+        display: block; 
     }
 
     .left-column.hidden {
-        display: none; /* Hide the left column */
+        display: none; 
     }
 
     .back-button {
-        display: block; /* Show the back button */
+        display: block; 
     }
 
     .right-column {
-        display: none; /* Hide the right column by default */
+        display: none;
     }
 
     /* Show the right column and hide the left column when a contact is clicked */
     .right-column.active {
-        display: block; /* Show the right column */
+        display: block;
     }
 
     .left-column.hidden {
-        display: none; /* Hide the left column */
-    }
+        display: none;
+     }
     .back-button {
         cursor: pointer;
         font-size: 18px;
         margin-bottom: 20px;
-        color: #2A3647; /* Match your design */
+        color: #2A3647;
         display:block;
     }
     .add-contact-circle {
-        display: block; /* Show the circular button */
+        display: block; 
         left: 70%;
         
     }
@@ -227,13 +229,14 @@
         background-color: #2A3647;
         display: flex;
         justify-content: center;
-        height: 80px;
-        width: 80px;
+        height: 70px;
+        width: 70px;
         border-radius: 50%;
-        transform: translateY(-120px);
+        transform: translateY(-140px);
         position: fixed;
         left: 70%;
     }
+    
 }
 @media(max-width:780px){
     .overlay {
@@ -290,7 +293,7 @@
     .contact-item {
         width: 100%;
         padding: 10px 0;
-        margin-left: 70px; /* Add left margin */
+        margin-left: 70px; 
         border-width: 100%;
         margin-top: 10px;
         display:flex;
@@ -341,15 +344,15 @@
         top: 0;
         left: 0;
         width: 100%;
-        background: #fff; /* Background color for overlay */
-        z-index: 1000; /* Ensure it's above the contact list */
+        background: #fff; 
+        z-index: 1000; 
         padding: 20px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     }
     
 }
 @media (max-width: 780px) {
-    /* Adjust overlay for mobile */
+   
     .overlay{
         width: 70%;
         height: 550px;
@@ -376,7 +379,7 @@
     .overlay-content::before {
         content: '';
         position: absolute;
-        top: 40%; /* Centers pseudo-image across sections */
+        top: 40%; 
         left: 50%;
         transform: translate(-50%, -50%);
         background-image: url('../Assets/person.svg');
@@ -386,12 +389,12 @@
 
         z-index: 2;
         display: block;
-        width: 110px; /* Increase width */
-        height: 110px; /* Increase height */
-        border-radius: 50%; /* Make the image circular */
-        padding: 15px; /* Increase padding to enlarge the circular border */
-        border: 3px solid white; /* Slightly thicker border */
-        box-sizing: border-box; /* Ensures padding and border don’t change image size */
+        width: 110px; 
+        height: 110px;
+        border-radius: 50%; 
+        padding: 15px; 
+        border: 3px solid white; 
+        box-sizing: border-box;
         background-color: lightgrey;
     }
     
@@ -400,14 +403,14 @@
     
     .right-section {
         width: 100%;
-        height: 60%; /* Half height */
+        height: 60%; 
         padding: 20px;
         box-sizing: border-box;
         overflow: hidden;
     }
     .left-section{
         width: 100%;
-        height: 40%; /* Half height */
+        height: 40%; 
         padding: 20px;
         box-sizing: border-box;
         overflow: hidden;
@@ -422,12 +425,12 @@
 
     /* Image positioning */
     .right-section img.centered-image {
-        position: absolute; /* Free the image from normal layout */
-        top: 25%; /* Adjusted to vertically center across both sections */
-        left: 50%; /* Center horizontally */
-        transform: translate(-50%, -50%); /* Keep image centered */
+        position: absolute; 
+        top: 25%; 
+        left: 50%; 
+        transform: translate(-50%, -50%); 
         max-height: 150px;
-        z-index: 2; /* Ensure it appears on top of content */
+        z-index: 2; 
         display: none;
     }
 
@@ -486,9 +489,12 @@
         cursor: pointer;
         margin-bottom: 0;
     }
-    #back-arrow {
-        display: block;
-        /* Show back arrow for smaller screens */
+    .back-button {
+        
+        position: fixed;
+        right: 20px;
+        top: 20px;
+        margin-bottom: 0; 
     }
     .dots-icon{
         display: block;
@@ -528,7 +534,7 @@
 
     .contactOverlayLeft {
         width: 100%;
-        height: 40%; /* Half height */
+        height: 40%; 
         padding: 20px;
         box-sizing: border-box;
         overflow: hidden;
@@ -536,7 +542,7 @@
 
     .contactOverlayRight {
         width: 100%;
-        height: 60%; /* Half height */
+        height: 60%; 
         padding: 20px;
         box-sizing: border-box;
         overflow: hidden;
@@ -546,7 +552,7 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        gap: 15px; /* Adds space between input fields */
+        gap: 15px; 
     }
     .contact-details-inputs{
         margin-top: 50px;
@@ -556,8 +562,8 @@
     .contactOverlayRight input[type="text"],
     .contactOverlayRight input[type="email"],
     .contactOverlayRight input[type="tel"] {
-        width: 100%; /* Adjust as needed */
-        max-width: 300px; /* For smaller screens */
+        width: 100%; 
+        max-width: 300px; 
         padding: 5px;
         font-size: 16px;
         border: 1px solid #ccc;
@@ -584,9 +590,9 @@
     }
 
     .contact-initials-overlay {
-        position: absolute; /* Remove from normal flow */
-        top: calc(100% - 330px); /* Place between sections */
-        left: 50%; /* Center horizontally */
+        position: absolute; 
+        top: calc(100% - 330px); 
+        left: 50%; 
         transform: translate(-50%, -50%);
         width: 90px;
         height: 90px;
@@ -598,28 +604,27 @@
         justify-content: center;
         align-items: center;
         
-        z-index: 2; /* Ensure it stays above both sections */
+        z-index: 2; 
     }
     .contact {
         display: flex;
-        flex-direction: column; /* Stack items vertically */
-        align-items:flex-start;
-         /* Center-align text */
-        position: relative;
+        
+        align-items:flex-start;         
+        position:relative;
         padding-top: 0;
     }
 
     .separator {
-        width: 30px; /* Keep vertical width */
-        height: 2px; /* Make it horizontal */
+        width: 30px; 
+        height: 2px; 
         background-color: #3498db;
-        margin: 10px auto; /* Center and add spacing below h3 */
-        position: absolute; /* Take it out of the normal flow */
-        bottom: -20px; /* Move it below h3 dynamically */
+        margin: 10px auto; 
+        position: absolute; 
+        bottom: -20px; 
     }
 
     h3 {
-        margin-bottom: 30px; /* Add spacing to accommodate separator */
+        margin-bottom: 30px; 
         font-size: 16px;
     }
     h1{
@@ -651,8 +656,8 @@
     .contactOverlayRight input[type="text"],
     .contactOverlayRight input[type="email"],
     .contactOverlayRight input[type="tel"] {
-        width: 100%; /* Adjust as needed */
-        max-width: 200px; /* For smaller screens */
+        width: 100%; 
+        max-width: 200px; 
         padding: 5px;
         font-size: 16px;
         border: 1px solid #ccc;

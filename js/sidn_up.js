@@ -131,9 +131,9 @@ function togglePasswordVisibility(inputId, iconId) {
 
     if (passwordInput.type === "password") {
         passwordInput.type = "text";
-        icon.src = "../Assets/visibility_on.svg";
+        icon.src = "../assets/visibility_on.svg";
     } else {
         passwordInput.type = "password";
-        icon.src = "../Assets/visibility_off - Copy.svg";
+        icon.src = "../assets/visibility_off - Copy.svg";
     }
 }

@@ -44,12 +44,16 @@
 .label_user {
     display: flex;
     width: 400px;
-    height:48px;
+    height:24px;
     padding: 12px 21px;
     border: solid 1px #d1d1d1;
     justify-content: space-between;
     border-radius: 8px;
     align-items: center;
+}
+
+.label_user:hover {
+    border: 1px solid rgb(29, 164, 238);
 }
 
 .input_user {

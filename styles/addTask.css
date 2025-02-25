@@ -412,8 +412,6 @@ input[type="date"],
   margin-top: 120px;
   margin-left: 320px;
 }
-
-
 .assigned_container {
   position: relative;
   width: 100%;
@@ -723,3 +721,96 @@ input[type="date"],
 .subTaskSaveButton {
   padding-right: 16px;
 }
+
+/*new design for assign contact*/
+
+.dropdown {
+  position: relative;
+  width: 100%;
+}
+.input-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+#contactInput {
+  flex: 1;
+  padding: 10px 40px 10px 10px;
+  border: 1px solid #ccc;
+  background-color: white;
+  font-size: 16px;
+  cursor: pointer;
+  outline: none;
+}
+#contactInput:focus{
+  border-color: rgb(41, 171, 226);
+  outline: none;
+  box-shadow: none;
+}
+.icons {
+  position: absolute;
+  right: 10px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.icons:hover{
+border-radius: 50%;
+background-color:#f0f0f0;
+}
+.dropdownimg {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+.d-none {
+  display: none;
+}
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 100%;
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 1;
+  margin-top: px;
+}
+.dropdown-content div {
+  padding: 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.contact-info {
+  display: flex;
+  align-items: center;
+  gap: 10px; 
+}
+
+.initials-container {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #ccc;
+  position: relative; 
+}
+.initials {
+  position: absolute; 
+  top: 50%; 
+  left: 50%; 
+  transform: translate(-50%, -50%); 
+  font-size: 14px;
+  font-weight: bold;
+  color: white; 
+}
+.dropdown-content input[type="checkbox"] {
+  margin-left: 10px; 
+  cursor: pointer;
+}
+
+
+

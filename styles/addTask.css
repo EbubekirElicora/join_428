@@ -110,7 +110,8 @@ textarea {
 
 label,
 .assigned_headline,
-.category_headline {
+.category_headline,
+.subtasks_headline {
   font-size: 20px;
   font-weight: 400;
   padding: 8px 0 8px 0;
@@ -306,30 +307,75 @@ label select {
   margin-block-end: 26px;
 }
 
-.subtasks_container {
-  display: flex;
-  flex-direction: column;
+.subtask_input_container {
+  margin-bottom: 20px;
 }
 
 .subtask_input {
+  display: flex;
+  align-items: center;
+  position: relative;
   width: 100%;
 }
 
-.add_subtask_btn {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: none;
-  padding-right: 14px;
-  border: none;
-  right: -3%;
-  cursor: pointer;
+.divider_line_subtask {
+  display: inline-block;
+  border-left: 1px solid #ccc;
+  margin: 0 8px;
+  height: 44px;
 }
 
-.add_subtask_img {
+.add_subtask_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: -37px;
   width: 25px;
   height: 25px;
 }
+
+.add_delete_container {
+  display: none;
+}
+
+.add_subtask_container:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+}
+
+.add_subtask_img {
+  cursor: pointer;
+}
+
+.delete_btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: -37px;
+  width: 25px;
+  height: 25px;
+}
+
+.delete_btn:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  transition: opacity 0.3s ease;
+}
+
+.add_btn:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  transition: opacity 0.3s ease;
+}
+
+.add_btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 25px;
+  height: 25px;
+}
+
 
 .divider_line {
   display: inline-block;
@@ -337,6 +383,8 @@ label select {
   margin: 0 56px;
   height: 432px;
 }
+
+
 
 .required_container {
   display: flex;
@@ -422,6 +470,23 @@ input[type="date"],
   font-weight: 400;
   margin-bottom: 3px;
   cursor: pointer;
+}
+
+.close_btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: -37px;
+  width: 25px;
+  height: 25px;
+}
+
+.add_btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 25px;
+  height: 25px;
 }
 
 .contact_container {
@@ -514,8 +579,147 @@ input[type="date"],
   border-radius: 10px;
 }
 
-.rotate eeee {
+.rotate180 {
   transform: rotate(180deg);
   transition: transform 0.2sease;
   padding-top: 4px;
+}
+
+.show {
+  display: block;
+}
+
+.added_text {
+  max-height: 150px;
+  overflow-y: auto;
+  margin-top: 10px;
+  scrollbar-width: none;
+  border-radius: 10px;
+}
+
+.visible {
+  display: flex;
+  align-items: center;
+  margin-right: 12px;
+}
+
+.no-hover {
+  background-color: transparent !important;
+}
+
+.subTaskEditInput {
+  width: 350px !important;
+  padding-left: 8px !important;
+  font-size: 16px !important;
+  border: none !important;
+  outline: none !important;
+  background-color: transparent !important;
+  display: inline-block !important;
+  box-shadow: none !important;
+}
+
+.subTaskInputContainer {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  position: relative;
+}
+
+.inputSubTaksClickContainer {
+  display: none;
+}
+
+.inputSubTaksClickContainer.visible {
+  display: flex;
+  align-items: center;
+  margin-right: 12px;
+}
+
+.subTaskList {
+  max-height: 150px;
+  overflow-y: auto;
+  margin-top: 10px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.subTaskList::-webkit-scrollbar {
+  display: none;
+}
+
+.subTaskListContainer {
+  padding-left: 10px;
+  border-radius: 10px;
+  position: relative;
+  margin-block-start: 8px;
+  margin-block-end: 8px;
+}
+
+.listSubTask {
+  font-size: 16px;
+  width: 100%;
+  text-align: start;
+  white-space: normal;
+  overflow-wrap: break-word;
+  word-break: normal;
+}
+
+.subTask {
+  width: 100%;
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 16px;
+  border-radius: 10px;
+}
+
+.subTaskButtons {
+  border-radius: 10px;
+  padding-right: 8px;
+
+}
+
+.subTask .subTaskButtons {
+  display: none;
+}
+
+.subTask:hover .subTaskButtons {
+  display: flex;
+}
+
+.subTask:hover {
+  cursor: pointer;
+  background-color: #d3d3d354;
+}
+
+.subTaskEdit {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  background-color: #d3d3d354;
+  border-bottom: 2px solid #29ABE2;
+  border-radius: 10px;
+}
+
+.rightContainerSubTask {
+  display: flex;
+}
+
+.partingLine {
+  height: 24px;
+  width: 2px;
+  background-color: #D1D1D1;
+  margin-right: 5px;
+  margin-left: 5px;
+}
+
+.subTaskDeleteButton {
+  padding-right: 24px;
+}
+
+.subTaskSaveButton {
+  padding-right: 16px;
 }

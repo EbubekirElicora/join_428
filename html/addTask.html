@@ -12,6 +12,7 @@
     <script src="../js/template.js"></script>
     <script src="../js/header.js"></script>
     <script src="../js/addTask.js"></script>
+    <script src="../js/addTaskTemplates.js"></script>
     <script src="../js/board.js"></script>
     <!-- <script src="../js/contacts.js"></script> -->
     <script src="../script.js"></script>
@@ -113,27 +114,44 @@
                         <div>
                             <span class="category_headline">Category
                                 <span class="required_icon">*</span>
-                        </span>
+                            </span>
                         </div>
-                        <div class="category_position">
+                        <div id="category_select" class="category_position" onclick="to_open_category_dropdown()">
                             <div>
-                                <div class="category_select">Select task category</div>
+                                <div id="select_txt" class="category_select">Select task category</div>
                             </div>
                             <div class="drop_down_img_category_container">
-                                <img id="dropDownImgCategory" class="rotate" src="../assets/icons/arrow_drop_down_icon.png">
+                                <img id="drop_down_img_category" src="../assets/icons/arrow_drop_down_icon.png">
                             </div>
                         </div>
-                            <div class="select_category_container">
-                              <div class="select_category">Technical Task</div>
-                              <div class="select_category">User Story</div>
-                            </div>
+                        <div class="select_category_container" id="category_dropdown">
+                            <div class="select_category">Technical Task</div>
+                            <div class="select_category">User Story</div>
+                        </div>
                     </div>
 
-                    <section class="subtasks_container">
-                        <label for="subtasks">Subtasks</label>
+                    <section class="subtask_container">
+                        <div class="subtask_input_container">
+                        <span class="subtasks_headline">Subtasks</span>
                         <div class="subtask_input">
-                            <input type="text" id="subtasks" name="subtasks" placeholder="Add new subtask">
+                            <div style="width: 100%;">
+                                <input onclick="show_subtask_container()" onkeydown="if(event.key== 'Enter') addNewSubtask()" id="subtask_input" class="input_subtask" type="text"  name="subtasks"
+                                    placeholder="Add new subtask"></div>
+                            <div id="add_subtask_container" class="add_subtask_container">
+                                <img onclick="show_subtask_container()" id="show_subtask_container" class="add_subtask_img" src="../assets/icons/Subtasks_add.png">
+                                <div id="add_delete_container" class="add_delete_container">
+                                    <div class="delete_btn">
+                                        <img onclick="delete_text()" src="../assets/icons/subtask=close.png">
+                                    </div>
+                                    <div class="divider_line_subtask"></div>
+                                    <div class="add_btn">
+                                        <img onclick="add_new_text(event)" id="add_new_text_button" src="../assets/icons/subtask=check.png">
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+                        <div class="added_text" id="added_text"></div>
+                    </div>
                     </section>
                 </section>
             </section>

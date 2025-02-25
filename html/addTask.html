@@ -59,10 +59,14 @@
                                 </div>
                                 <div class="dropdown">
                                     <div class="input-container">
-                                        <input type="text" id="contactInput" placeholder="Select contacts to assign" readonly>
+                                        <input type="text" id="contactInput" placeholder="Select contacts to assign"
+                                            readonly>
                                         <div class="icons">
-                                            <img src=" ../assets/arrow_drop_down_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg" id="dropdownIcon" class="cursorPointer dropdownimg" onclick="toggleDropdown()">
-                                            <img src="../assets/arrow-drop-up.svg" id="dropdownIconUp" class="cursorPointer dropdownimg d-none" onclick="toggleDropdown()">
+                                            <img src=" ../assets/arrow_drop_down_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
+                                                id="dropdownIcon" class="cursorPointer dropdownimg"
+                                                onclick="toggleDropdown()">
+                                            <img src="../assets/arrow-drop-up.svg" id="dropdownIconUp"
+                                                class="cursorPointer dropdownimg d-none" onclick="toggleDropdown()">
                                         </div>
                                     </div>
                                     <div class="dropdown-content" id="dropdownContent">
@@ -71,9 +75,9 @@
                                 </div>
                             </div>
 
-                           
-                            
-                           <!--<div class="assigned_container">
+
+
+                            <!--<div class="assigned_container">
                                 <div>
                                     <span class="assigned_headline">Assigned to</span>
                                 </div>
@@ -144,33 +148,35 @@
                             </div>
                         </div>
                         <div class="select_category_container" id="category_dropdown">
-                            <div class="select_category">Technical Task</div>
-                            <div class="select_category">User Story</div>
                         </div>
                     </div>
 
                     <section class="subtask_container">
                         <div class="subtask_input_container">
-                        <span class="subtasks_headline">Subtasks</span>
-                        <div class="subtask_input">
-                            <div style="width: 100%;">
-                                <input onclick="show_subtask_container()" onkeydown="if(event.key== 'Enter') addNewSubtask()" id="subtask_input" class="input_subtask" type="text"  name="subtasks"
-                                    placeholder="Add new subtask"></div>
-                            <div id="add_subtask_container" class="add_subtask_container">
-                                <img onclick="show_subtask_container()" id="show_subtask_container" class="add_subtask_img" src="../assets/icons/Subtasks_add.png">
-                                <div id="add_delete_container" class="add_delete_container">
-                                    <div class="delete_btn">
-                                        <img onclick="delete_text()" src="../assets/icons/subtask=close.png">
-                                    </div>
-                                    <div class="divider_line_subtask"></div>
-                                    <div class="add_btn">
-                                        <img onclick="add_new_text(event)" id="add_new_text_button" src="../assets/icons/subtask=check.png">
+                            <span class="subtasks_headline">Subtasks</span>
+                            <div class="subtask_input">
+                                <div style="width: 100%;">
+                                    <input onclick="show_subtask_container()"
+                                        onkeydown="if(event.key== 'Enter') addNewSubtask()" id="subtask_input"
+                                        class="input_subtask" type="text" name="subtasks" placeholder="Add new subtask">
+                                </div>
+                                <div id="add_subtask_container" class="add_subtask_container">
+                                    <img onclick="show_subtask_container()" id="show_subtask_container"
+                                        class="add_subtask_img" src="../assets/icons/Subtasks_add.png">
+                                    <div id="add_delete_container" class="add_delete_container">
+                                        <div class="delete_btn">
+                                            <img onclick="delete_text()" src="../assets/icons/subtask=close.png">
+                                        </div>
+                                        <div class="divider_line_subtask"></div>
+                                        <div class="add_btn">
+                                            <img onclick="add_new_text(event)" id="add_new_text_button"
+                                                src="../assets/icons/subtask=check.png">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+                            <div class="added_text" id="added_text"></div>
                         </div>
-                        <div class="added_text" id="added_text"></div>
-                    </div>
                     </section>
                 </section>
             </section>
@@ -208,12 +214,10 @@
 
 </html>
 <div class="input-group">
-    <label for="assignTask" class="add-task-label fonts font_2A3647">Assigned to<span
-            class="required">*</span></label>
+    <label for="assignTask" class="add-task-label fonts font_2A3647">Assigned to<span class="required">*</span></label>
     <div class="input-with-icon">
-        <input type="text" name="assigned" class="add-task-title add-task-assigned-to cursorPointer"
-            id="assigned-to" placeholder="Selected contacts to assign" autocomplete="off" readonly
-            onclick="toggleDropdown()">
+        <input type="text" name="assigned" class="add-task-title add-task-assigned-to cursorPointer" id="assigned-to"
+            placeholder="Selected contacts to assign" autocomplete="off" readonly onclick="toggleDropdown()">
         <div>
             <img src="../Assets/addTask/arrow_drop_downaa.svg" id="dropdown"
                 class="cursorPointer margin-right dropdownimg" onclick="toggleDropdown()">

@@ -102,6 +102,8 @@ document.addEventListener('DOMContentLoaded', function () {
             // Create a checkbox for the contact
             const checkbox = document.createElement('input');
             checkbox.type = 'checkbox';
+            checkbox.type = 'checkbox';
+            checkbox.className = 'checkbox_class'
             checkbox.value = contact.email;
             checkbox.id = `contact-${key}`;
 

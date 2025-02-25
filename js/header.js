@@ -35,15 +35,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
 function displayInitials() {
     const nameMenuElement = document.getElementById("name_menu");
+
     if (nameMenuElement) {
-        const initials = localStorage.getItem("userInitials");
-        console.log("Initials from localStorage:", initials); // Debugging
-        if (initials) {
-            nameMenuElement.textContent = initials;
-            console.log("Updated name_menu with initials:", initials); // Debugging
-        } else {
-            console.error("No initials found in localStorage!"); // Debugging
+        let initials = localStorage.getItem("userInitials");
+
+        if (!initials) {
+            initials = "G"; // Default to "G" for guests
+            localStorage.setItem("userInitials", initials); // Store "G" in localStorage
         }
+
+        nameMenuElement.textContent = initials;
     } else {
         console.error("Element with id 'name_menu' not found!");
     }

@@ -108,7 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         <div class="contact-details">
                             <h3>${contact.name}</h3>
                             <p>${contact.email}</p>
-                            <p>${contact.phone}</p>
+                        
                         </div>
                     `;
                     // Add click event to show details
@@ -307,12 +307,11 @@ if (closeContactOverlayButton) {
 
     // Function to handle form submission
     function createContact(event) {
-        
-        event.preventDefault();         
+        event.preventDefault();
         const name = document.getElementById('name').value;
         const email = document.getElementById('email').value;
-        const phone = document.getElementById('phone').value;    
-        
+        const phone = document.getElementById('phone').value;
+    
         const newContact = {
             name: name,
             email: email,
@@ -324,7 +323,8 @@ if (closeContactOverlayButton) {
         // Save the contact to Firebase
         saveContact(newContact)
             .then((data) => {
-                console.log('Contact saved successfully!', data);
+                // Show toast notification
+                showToast('Contact created successfully!');
     
                 // Add the Firebase-generated ID to the new contact
                 newContact.id = data.name;
@@ -343,13 +343,26 @@ if (closeContactOverlayButton) {
     
                 // On smaller screens, toggle to the right column
                 if (window.innerWidth <= 960) {
-                    console.log('Small screen detected. Toggling columns...');
                     toggleColumns();
                 }
             })
             .catch(error => {
+                // Show error toast
+                showToast('Error saving contact. Please try again.');
                 console.error('Error saving contact:', error);
             });
+    }
+    
+    // Function to show a toast notification
+    function showToast(message) {
+        const toast = document.getElementById('toast');
+        toast.textContent = message; // Set the toast message
+        toast.classList.add('show'); // Show the toast
+    
+        // Hide the toast after 3 seconds
+        setTimeout(() => {
+            toast.classList.remove('show');
+        }, 3000);
     }
     
     // Attach form submission handler
@@ -454,7 +467,4 @@ document.addEventListener('click', function(event) {
     }
 });
 
-// Prevent clicks inside the overlay from closing it
-document.getElementById('mobileEditOverlay').addEventListener('click', function(event) {
-    event.stopPropagation(); // Stop the click event from propagating to the document
-});
+

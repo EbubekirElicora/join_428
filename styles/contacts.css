@@ -12,16 +12,15 @@
 
 .contact {
     display: flex;
-    justify-content: space-between; /* Space between header and back button */
-    align-items: center; /* Vertically center the content */
-    padding: 20px; /* Add some padding */
+    justify-content: space-between; 
+    align-items: center; 
 }
 
 .contact-header {
     display: flex;
-    align-items: center; /* Vertically center the header content */
-    gap: 10px; /* Space between h1, separator, and h3 */
-    margin: 0 auto; /* Center the header content on larger screens */
+    align-items: center; 
+    gap: 10px; 
+    margin: 0 auto; 
 }
 .contact h1 {
     margin: 0;
@@ -60,16 +59,19 @@
 
 /* contact list section */
 .left-column {
-    position: fixed; /* Fix the left column */
-    width: 290px; /* Fixed width */
-    height: 100vh; /* Full viewport height */
-    background-color: #fff; /* Light gray background */
-    border-right: 2px solid #ccc; /* Border on the right */
-    box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1,0); /* Shadow on the right */
-    padding: 20px; /* Optional: Add some padding */
-    overflow-y: auto; /* Enable scrolling if content overflows */
+    position: fixed; 
+    width: 290px; 
+    height: 100vh; 
+    background-color: #fff; 
+    border-right: 2px solid #ccc;
+    box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1,0); 
+    padding: 20px; 
+    overflow-y: auto; 
     cursor: pointer;
     margin-bottom: 10px;
+}
+.left-column p{
+    color: #3498db;
 }
 .header-content{
     display: flex;
@@ -88,7 +90,7 @@
 
 /* New Circular Add Contact Button */
 .add-contact-circle {
-    display: none; /* Hidden by default */
+    display: none; 
     position: fixed;
     align-items: center;
     justify-content: center;
@@ -97,15 +99,15 @@
     transform: translateY(-80%);
     width: 70px;
     height: 70px;
-    background-color: #2A3647; /* Match the original button's background color */
+    background-color: #2A3647; 
     color: white;
-    border-radius: 50%; /* Makes it circular */
+    border-radius: 50%; 
     text-align: center;
-    line-height: 80px; /* Vertically center the "+" */
+    line-height: 80px; 
     font-size: 24px;
     cursor: pointer;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Optional: Add a shadow */
-    z-index: 1000; /* Ensure it's above other content */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+    z-index: 1000; 
 }
 .contact-item {
     display: flex;
@@ -124,15 +126,15 @@
     padding-bottom: 5px;
 }
 .contact-item:last-child {
-    border-bottom: none; /* Remove border for the last item */
-    margin-bottom: 100px; /* Add 10px bottom margin for the last item */
+    border-bottom: none; 
+    margin-bottom: 100px; 
 }
 
 /* contact display section(scrollable) */
 .right-column {
-    margin-left: 340px; /* Offset by the width of the left column */
-    padding: 20px; /* Optional: Add some padding */
-     /* White background */
+    margin-left: 340px; 
+    padding: 20px; 
+     
 }
 
 .hidden {
@@ -195,14 +197,14 @@
 
 /* Close button styles */
 .close-button {
-    position: absolute; /* Position the button absolutely */
-    top: 10px; /* Distance from the top */
-    right: px; /* Distance from the right */
-    font-size: 20px; /* Adjust font size */
-    color: #000; /* Button text color */
-    text-decoration: none; /* Remove underline */
-    cursor: pointer; /* Add pointer cursor */
-    z-index: 1002; /* Ensure it's above other content */
+    position: absolute;
+    top: 10px;
+    right: px;
+    font-size: 20px;
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+    z-index: 1002;
 }
 
 .left-section {
@@ -282,17 +284,17 @@
 }
 .input-container input {
     width: 300px;
-    padding: 10px; /* Adjust for the desired padding inside the input */
-    margin-bottom: 15px; /* Space between each input */
-    box-sizing: border-box; /* Ensures padding is included in the total width */
-    border: 1px solid #ccc; /* Optional: subtle border */
-    border-radius: 5px; /* Optional: rounded corners */
+    padding: 10px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 5px;
 }
 .input-container .input-icon {
     position: absolute;
     margin-top: 10px;
-    right:12px; /* Adjust icon position */
-    width: 20px; /* Adjust icon size */
+    right:12px; 
+    width: 20px;
     height: 20px;
     pointer-events: none;
     opacity: 0.7; 
@@ -306,9 +308,9 @@
 
 .button-container {
     display: flex;
-    gap: 10px; /* Space between buttons */
-    justify-content: center; /* Center-align buttons */
-    margin-top: 15px; /* Add space above buttons */
+    gap: 10px; 
+    justify-content: center; 
+    margin-top: 15px; 
 }
 .create-contact{
     
@@ -440,7 +442,7 @@
 .contact-initials {
     width: 80px;
     height: 80px;
-     /* Ensures a circular shape */
+    
     color: #fff;
     display: flex;
     align-items: center;
@@ -448,8 +450,7 @@
     font-size: 24px;
     margin-right: 15px;
     border-radius:100%;    
-    overflow: hidden; /* Ensures any overflow is hidden within the circle */
-    
+    overflow: hidden; 
 }
 .contact-initials-overlay {
     width: 80px;
@@ -466,6 +467,35 @@
 #contact-overlay.open {
     left: 0;
 }
+.toast {
+    position: fixed;
+    bottom: -100px; /* Start off-screen */
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 14px 20px;
+    color: #fff;
+    font-size: 16px;
+    border-radius: 6px;
+    text-align: center;
+    z-index: 1000;
+    opacity: 0;
+    transition: bottom 0.8s ease-out, opacity 0.8s ease-in-out;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    width: 200px;
+    text-align: center;
+    background-color: #1a2b47;
+}
+.toast.show {
+    bottom: 50%; 
+    opacity: 1;
+}
+
+.toast.hide {
+    opacity: 0;
+    bottom: 55%;
+    transition: opacity 0.5s ease-in-out, bottom 0.5s ease-in-out;
+}
+
 
 
 

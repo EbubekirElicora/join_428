@@ -26,3 +26,14 @@ function includeHTML() {
     }
   }
   // Function to display initials in the header
+// Function to show a toast notification
+function showToast(message) {
+  const toast = document.getElementById('toast');
+  toast.textContent = message; // Set the toast message
+  toast.classList.add('show'); // Show the toast
+
+  // Hide the toast after 3 seconds
+  setTimeout(() => {
+      toast.classList.remove('show');
+  }, 3000);
+}

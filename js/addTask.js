@@ -18,23 +18,27 @@ function setPrio(prio) {
     });
     document.querySelector(`.prioBtn${prio.charAt(0).toUpperCase() + prio.slice(1)}`).classList.add('active');
 }
+// Global variables
+let selectedContacts = []; // For assigned contacts
+
+
 document.addEventListener('DOMContentLoaded', function () {
     const BASE_URL = "https://join-428-default-rtdb.europe-west1.firebasedatabase.app/";
-    const CONTACTS_ENDPOINT = "contacts.json"; //
+    const CONTACTS_ENDPOINT = "contacts.json";
 
     const contactInput = document.getElementById('contactInput');
     const dropdownContent = document.getElementById('dropdownContent');
     const dropdownIcon = document.getElementById('dropdownIcon');
     const dropdownIconUp = document.getElementById('dropdownIconUp');
-    let selectedContacts = []; 
 
-    
+    // Function to get initials
     function getInitials(name) {
         const names = name.split(' ');
         const initials = names.map(n => n[0]).join('');
         return initials.toUpperCase();
     }
-    
+
+    // Function to generate random color
     function getRandomColor() {
         const letters = '0123456789ABCDEF';
         let color = '#';
@@ -44,7 +48,7 @@ document.addEventListener('DOMContentLoaded', function () {
         return color;
     }
 
-   
+    // Fetch contacts from Firebase
     async function fetchContacts() {
         try {
             const response = await fetch(`${BASE_URL}${CONTACTS_ENDPOINT}`);
@@ -59,7 +63,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    
+    // Populate dropdown with contacts
     async function populateDropdown() {
         const contacts = await fetchContacts();
 
@@ -70,16 +74,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
         dropdownContent.innerHTML = '';
 
-        
         Object.keys(contacts).forEach(key => {
             const contact = contacts[key];
             const contactItem = document.createElement('div');
 
-            // Create a container for the contact info (name and initials)
             const contactInfo = document.createElement('div');
             contactInfo.className = 'contact-info';
 
-            // Create a span for the contact name
             const contactName = document.createElement('span');
             contactName.textContent = contact.name;
 
@@ -87,47 +88,58 @@ document.addEventListener('DOMContentLoaded', function () {
             initialsContainer.className = 'initials-container';
             initialsContainer.style.backgroundColor = getRandomColor();
 
-            // Create a div for the initials
             const initialsDiv = document.createElement('div');
             initialsDiv.className = 'initials';
             initialsDiv.textContent = getInitials(contact.name);
 
-            // Append initials to the background container
             initialsContainer.appendChild(initialsDiv);
-
-            // Append name and initials to the contact info container
             contactInfo.appendChild(initialsContainer);
             contactInfo.appendChild(contactName);
 
-            // Create a checkbox for the contact
             const checkbox = document.createElement('input');
             checkbox.type = 'checkbox';
-            checkbox.type = 'checkbox';
-            checkbox.className = 'checkbox_class'
+            checkbox.className = 'checkbox_class';
             checkbox.value = contact.email;
             checkbox.id = `contact-${key}`;
 
-            
             contactItem.appendChild(contactInfo);
             contactItem.appendChild(checkbox);
 
-            
             checkbox.addEventListener('change', function () {
                 if (this.checked) {
-                    selectedContacts.push(contact.name); 
+                    selectedContacts.push(contact.name); // Add to selected contacts
                 } else {
-                    selectedContacts = selectedContacts.filter(name => name !== contact.name); 
+                    selectedContacts = selectedContacts.filter(name => name !== contact.name); // Remove from selected contacts
                 }
-                updateInputField(); 
+                updateInputField(); // Update the input field
             });
 
             dropdownContent.appendChild(contactItem);
         });
     }
 
-    
+    // Update the input field with selected contacts
     function updateInputField() {
-        contactInput.value = selectedContacts.join(', '); 
+        console.log('Updating input field. Selected contacts:', selectedContacts); // Debugging
+        contactInput.value = selectedContacts.join(', ');
+    
+        // Clear the existing initials
+        const selectedContactsInitials = document.getElementById('selectedContactsInitials');
+        selectedContactsInitials.innerHTML = '';
+    
+        // Add the initials of the selected contacts
+        selectedContacts.forEach(contactName => {
+            const initialsContainer = document.createElement('div');
+            initialsContainer.className = 'initials-container';
+            initialsContainer.style.backgroundColor = getRandomColor();
+    
+            const initialsDiv = document.createElement('div');
+            initialsDiv.className = 'initials';
+            initialsDiv.textContent = getInitials(contactName);
+    
+            initialsContainer.appendChild(initialsDiv);
+            selectedContactsInitials.appendChild(initialsContainer);
+        });
     }
 
     // Toggle dropdown visibility
@@ -143,7 +155,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // Add click event listener to the icons only
+    // Add click event listener to the icons
     dropdownIcon.addEventListener('click', toggleDropdown);
     dropdownIconUp.addEventListener('click', toggleDropdown);
 
@@ -156,11 +168,107 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
+    
     populateDropdown();
+
+    // Add event listener to the "Create Task" button
+    document.getElementById('createTaskBtn').addEventListener('click', async function (event) {
+        event.preventDefault(); 
+    
+       
+        const taskData = collectTaskData();
+    
+       
+        if (!taskData.title || !taskData.dueDate || !taskData.category) {
+            alert('Please fill in all required fields (Title, Due Date, Category).');
+            return;
+        }
+    
+        // Save task to Firebase
+        const savedTask = await saveTaskToFirebase(taskData);
+    
+        if (savedTask) {
+            showToast('Task created successfully!');
+            console.log('Task saved. Resetting form...'); 
+            resetForm(); 
+        } else {
+            alert('Failed to create task. Please try again.');
+        }
+    });
 });
 
+// Function to collect task data
+function collectTaskData() {
+    const title = document.getElementById('title').value;
+    const description = document.getElementById('description').value;
+    const dueDate = document.getElementById('date').value;
+    const priority = document.querySelector('.prioBtnUrgent.active') ? 'urgent' :
+                     document.querySelector('.prioBtnMedium.active') ? 'medium' :
+                     document.querySelector('.prioBtnLow.active') ? 'low' : 'medium';
+    const category = document.getElementById('select_txt').textContent;
+    const assignedContacts = selectedContacts; 
+    const subtasksList = subtasks;
+
+    return {
+        title,
+        description,
+        dueDate,
+        priority,
+        category,
+        assignedContacts,
+        subtasks: subtasksList
+    };
+}
+
+// Function to save task to Firebase
+async function saveTaskToFirebase(taskData) {
+    const TASKS_ENDPOINT = "tasks.json"; 
+    const BASE_URL = "https://join-428-default-rtdb.europe-west1.firebasedatabase.app/";
+
+    try {
+        const response = await fetch(`${BASE_URL}${TASKS_ENDPOINT}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(taskData)
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to save task to Firebase');
+        }
+
+        const data = await response.json();
+        console.log('Task saved successfully:', data);
+        return data;
+    } catch (error) {
+        console.error('Error saving task:', error);
+        return null;
+    }
+}
+
+// Function to reset the form
+function resetForm() {
+    console.log('Resetting form...');
+
+    document.getElementById('title').value = '';
+    document.getElementById('description').value = '';
+    document.getElementById('date').value = '';
+    document.getElementById('select_txt').textContent = 'Select task category';
+    document.getElementById('added_text').innerHTML = '';
+
+    selectedContacts = [];
+    console.log('Selected contacts after reset:', selectedContacts);
+
+    document.getElementById('contactInput').value = '';
+    document.getElementById('selectedContactsInitials').innerHTML = '';
+    subtasks = [];
+
+    setPrio('medium');
+}
 
 
+//create task functions//
 
 
 

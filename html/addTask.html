@@ -9,13 +9,7 @@
     <link rel="stylesheet" href="../styles/sidebar.css">
     <link rel="stylesheet" href="../styles/addTask.css">
     <link rel="stylesheet" href="../styles/summary.css">
-    <script src="../js/template.js"></script>
-    <script src="../js/header.js"></script>
-    <script src="../js/addTask.js"></script>
-    <script src="../js/addTaskTemplates.js"></script>
-    <script src="../js/board.js"></script>
-    <!-- <script src="../js/contacts.js"></script> -->
-    <script src="../script.js"></script>
+    <link rel="stylesheet" href="../styles/template.css">
     <title>Join</title>
 </head>
 
@@ -53,57 +47,29 @@
                                         placeholder="Enter a Description"></textarea>
                                 </div>
                             </div>
-
-
                             <div class="assigned_container">
                                 <div>
                                     <label for="contactInput">Assigned to</label>
                                 </div>
                                 <div class="dropdown">
                                     <div class="input-container">
-                                        <input type="text" id="contactInput" placeholder="Select contacts to assign"
-                                            readonly>
+                                        <input type="text" id="contactInput" placeholder="Select contacts to assign" readonly>
                                         <div class="icons">
-                                            <img src=" ../assets/arrow_drop_down_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
-                                                id="dropdownIcon" class="cursorPointer dropdownimg"
-                                                onclick="toggleDropdown()">
+                                            <img src="../assets/arrow_drop_down_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
+                                                 id="dropdownIcon" class="cursorPointer dropdownimg" onclick="toggleDropdown()">
                                             <img src="../assets/arrow-drop-up.svg" id="dropdownIconUp"
-                                                class="cursorPointer dropdownimg d-none" onclick="toggleDropdown()">
+                                                 class="cursorPointer dropdownimg d-none" onclick="toggleDropdown()">
                                         </div>
                                     </div>
-                                    <div class="dropdown-content" id="dropdownContent">
-                                    </div>
+                                    <div class="dropdown-content" id="dropdownContent"></div>
                                 </div>
+                                <!-- New container for selected contacts' initials -->
+                                <div id="selectedContactsInitials" class="selected-contacts-initials"></div>
                             </div>
 
 
 
-                         <!---<div class="assigned_container">
-                                <div>
-                                    <span class="assigned_headline">Assigned to</span>
-                                </div>
-                                <div class="assigned_position">
-                                    <div>
-                                        <div class="assigned_select">Select contacts to assign</div>
-                                    </div>
-                                    <div class="drop_down_img_assigned_container">
-                                        <img class="rotate" src="../assets/icons/arrow_drop_down_icon.png">
-                                    </div>
-                                </div>
-                                <div class="drop_down_main_container">
-                                    <div class="select_contacts_container">
-                                        <div class="contact_container">
-                                            <div class="contact_icon">G</div>
-                                            <div>
-                                                <span class="contact_name">Guest(You)</span>
-                                            </div>
-                                        </div>
-                                        <div style="display: flex;">
-                                            <input type="checkbox" class="checkbox_class">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>-->
+
                             
                         </form>
                     </div>
@@ -201,15 +167,24 @@
                         </button>
                     </div>
                     <div class="create_task_btn_container">
-                        <button class="create_task_btn" type="submit">Create Task
+                        <button id="createTaskBtn" class="create_task_btn" type="submit">Create Task
                             <img class="create_icon" src="../assets/icons/create_task_icon.png">
                         </button>
+
                     </div>
                 </div>
             </form>
         </div>
+        <div id="toast" class="toast"></div>
 
     </section>
+    <script src="../js/utility.js"></script>
+    <script src="../js/header.js"></script>
+    <script src="../js/addTask.js"></script>
+    <script src="../js/addTaskTemplates.js"></script>
+    <script src="../js/board.js"></script>
+    
+    <script src="../script.js"></script>
 
     <script src="https://www.w3schools.com/lib/w3.js"></script>
     <script>
@@ -218,20 +193,3 @@
 </body>
 
 </html>
-<div class="input-group">
-    <label for="assignTask" class="add-task-label fonts font_2A3647">Assigned to<span class="required">*</span></label>
-    <div class="input-with-icon">
-        <input type="text" name="assigned" class="add-task-title add-task-assigned-to cursorPointer" id="assigned-to"
-            placeholder="Selected contacts to assign" autocomplete="off" readonly onclick="toggleDropdown()">
-        <div>
-            <img src="../Assets/addTask/arrow_drop_downaa.svg" id="dropdown"
-                class="cursorPointer margin-right dropdownimg" onclick="toggleDropdown()">
-            <img src="../Assets/addTask/Property 1=Variant4.svg" id="dropdown1"
-                class="cursorPointer margin-right dropdownimg d-none" onclick="toggleDropdown()">
-        </div>
-        <!-- Custom Dropdown with checkboxes -->
-        <div id="assignTaskDropdown" class="dNone">
-            <!-- Options will be dynamically generated with checkboxes -->
-        </div>
-    </div>
-</div>

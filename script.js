@@ -11,6 +11,7 @@ function initAddTask() {
     initializeTaskForm();
     hideInputSubTaksClickContainerOnOutsideClick();
     loadContacts();
+    
 }
 
 
@@ -64,6 +65,7 @@ function toggleDropdown() {
         dropdownContent.style.display = 'block';
         dropdownIcon.classList.add('d-none');
         dropdownIconUp.classList.remove('d-none');
+        loadContacts();
     }
 }
 
@@ -243,47 +245,6 @@ function renderSubtasks(editIndex = -1) {
         } else {
             subtask_list.innerHTML += subTaskCreatedTemplate(index, subtask);
         }
-    });
-}
-
-async function loadContacts() {
-    const dropdownContent = document.getElementById("dropdownContent");
-    if (!dropdownContent) return;
-
-    const contactsData = await loadData("contacts");
-    if (contactsData) {
-        const contactsArray = Object.values(contactsData);
-        dropdownContent.innerHTML = "";
-
-        contactsArray.forEach(contact => {
-            const contactDiv = document.createElement("div");
-            contactDiv.classList.add("dropdown-item");
-            contactDiv.textContent = contact.name || "Unnamed";
-            contactDiv.onclick = () => selectContact(contact);
-            dropdownContent.appendChild(contactDiv);
-        });
-    } else {
-        dropdownContent.innerHTML = "<div class='dropdown-item'>No contacts available</div>";
-    }
-}
-
-function selectContact(contact) {
-    if (!selectedContacts.find(c => c.name === contact.name)) {
-        selectedContacts.push(contact);
-        updateSelectedContacts();
-    }
-    document.getElementById("dropdownContent").style.display = "none";
-}
-
-function updateSelectedContacts() {
-    const container = document.getElementById("selectedContactsInitials");
-    if (!container) return;
-    container.innerHTML = "";
-    selectedContacts.forEach(contact => {
-        const span = document.createElement("span");
-        span.classList.add("contact-initial");
-        span.textContent = contact.initial || (contact.name ? contact.name.charAt(0).toUpperCase() : "?");
-        container.appendChild(span);
     });
 }
 

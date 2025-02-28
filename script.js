@@ -1,19 +1,19 @@
 
-let selectedContacts = [];
-let subtasks = [];
-let newtasks = [];
-
-
-function initAddTask() {
-    getDateToday();
-    initializeDropdown();
-    initializeCategorySelector();
-    initializeTaskForm();
-    hideInputSubTaksClickContainerOnOutsideClick();
-    loadContacts();
+function getDateToday() {
+    const dateInput = document.getElementById('date');
+    if (dateInput) {
+        dateInput.min = new Date().toISOString().split('T')[0];
+        dateInput.onclick = function () {
+            if (this.value === "yyyy-mm-dd") {
+                this.value = new Date().toISOString().split('T')[0];
+            }
+        };
+    }
 }
 
-
+function to_open_category_dropdown() {
+    toggleCategoryDropdown();
+}
 
 function setPrio(prio) {
     document.querySelectorAll('.prioBtnUrgent, .prioBtnMedium, .prioBtnLow').forEach(btn => {
@@ -22,21 +22,20 @@ function setPrio(prio) {
     document.querySelector(`.prioBtn${prio.charAt(0).toUpperCase() + prio.slice(1)}`).classList.add('active');
 }
 
-function getDateToday() {
-    const dateInput = document.getElementById('date');
-    if (dateInput) {
-        dateInput.min = new Date().toISOString().split('T')[0];
-    }
-}
-
+let isDropdownClosed = false;
+let selectedContacts = [];
+let subtasks = [];
+let newtasks = [];
 
 function initializeDropdown() {
     const dropdownIcon = document.getElementById('dropdownIcon');
     const dropdownIconUp = document.getElementById('dropdownIconUp');
     const dropdownContent = document.getElementById('dropdownContent');
+
     if (dropdownIcon && dropdownIconUp && dropdownContent) {
         dropdownIcon.addEventListener('click', toggleDropdown);
         dropdownIconUp.addEventListener('click', toggleDropdown);
+
         document.addEventListener('click', (event) => {
             if (!dropdownContent.contains(event.target) &&
                 !dropdownIcon.contains(event.target) &&
@@ -51,19 +50,8 @@ function initializeDropdown() {
 
 function toggleDropdown() {
     const dropdownContent = document.getElementById('dropdownContent');
-    const dropdownIcon = document.getElementById('dropdownIcon');
-    const dropdownIconUp = document.getElementById('dropdownIconUp');
-
-    if (!dropdownContent || !dropdownIcon || !dropdownIconUp) return;
-
-    if (dropdownContent.style.display === 'block') {
-        dropdownContent.style.display = 'none';
-        dropdownIcon.classList.remove('d-none');
-        dropdownIconUp.classList.add('d-none');
-    } else {
-        dropdownContent.style.display = 'block';
-        dropdownIcon.classList.add('d-none');
-        dropdownIconUp.classList.remove('d-none');
+    if (dropdownContent) {
+        dropdownContent.style.display = (dropdownContent.style.display === 'none' || dropdownContent.style.display === '') ? 'block' : 'none';
     }
 }
 
@@ -110,11 +98,9 @@ function initializeTaskForm() {
             if (validateTaskData(taskData)) {
                 const savedTask = await saveTaskToFirebase(taskData);
                 if (savedTask) {
-                    alert('Task created successfully!');
+                    showToast('Task created successfully!');
                     resetForm();
-                    if (typeof init === 'function') {
-                        init();
-                    }
+                    init();
                 } else {
                     alert('Failed to create task. Please try again.');
                 }
@@ -125,27 +111,22 @@ function initializeTaskForm() {
 
 function collectTaskData() {
     return {
-        id: Date.now().toString(),
         title: document.getElementById('title')?.value.trim(),
         description: document.getElementById('description')?.value.trim(),
         dueDate: document.getElementById('date')?.value.trim(),
+        priority: document.querySelector('.prioBtnUrgent.active') ? 'urgent' :
+                  document.querySelector('.prioBtnMedium.active') ? 'medium' :
+                  document.querySelector('.prioBtnLow.active') ? 'low' : 'medium',
         category: document.getElementById('select_txt')?.textContent.trim(),
         assignedContacts: selectedContacts,
-        subtasks: subtasks
+        subtasks: subtasks,
+        id: Date.now().toString()
     };
 }
 
 function validateTaskData(taskData) {
-    if (!taskData.title) {
-        alert('Please fill in the Title');
-        return false;
-    }
-    if (!taskData.dueDate) {
-        alert('Please fill in the Due Date');
-        return false;
-    }
-    if (!taskData.category || taskData.category === "Select task category") {
-        alert('Please fill in the Category');
+    if (!taskData.title || !taskData.dueDate || !taskData.category || taskData.category === "Select task category") {
+        alert('Please fill in all required fields (Title, Due Date, Category).');
         return false;
     }
     return true;
@@ -161,8 +142,8 @@ function resetForm() {
     document.getElementById('contactInput').value = '';
     document.getElementById('selectedContactsInitials').innerHTML = '';
     subtasks = [];
+    setPrio('medium');
 }
-
 
 async function saveTaskToFirebase(taskData) {
     const BASE_URL = "https://join-428-default-rtdb.europe-west1.firebasedatabase.app/";
@@ -186,7 +167,6 @@ async function saveTaskToFirebase(taskData) {
         return null;
     }
 }
-
 
 function showToast(message) {
     const toast = document.getElementById('toast');
@@ -260,7 +240,6 @@ async function loadContacts() {
         contactsArray.forEach(contact => {
             const contactDiv = document.createElement("div");
             contactDiv.classList.add("dropdown-item");
-            
             contactDiv.textContent = contact.name || "Unnamed";
             contactDiv.onclick = () => selectContact(contact);
             dropdownContent.appendChild(contactDiv);
@@ -369,36 +348,18 @@ function add_new_text(event) {
     }
 }
 
-
-document.addEventListener("click", function (event) {
-    let overlay = document.getElementById("name_menu"); 
-    if (overlay && !overlay.contains(event.target)) { 
-        overlay.classList.remove("visible");
-    }
-});
-
 function hideInputSubTaksClickContainerOnOutsideClick() {
     document.addEventListener('click', function (event) {
         let add_delete_container = document.getElementById('add_delete_container');
         let show_subtask_container = document.getElementById('show_subtask_container');
         let add_subtask_container = document.querySelector('.add_subtask_container');
         let subtask_input = document.getElementById('subtask_input');
-
-        if (
-            add_delete_container && 
-            show_subtask_container && 
-            add_subtask_container && 
-            subtask_input
-        ) {
-            if (
-                !add_delete_container.contains(event.target) &&
-                !subtask_input.contains(event.target) &&
-                !show_subtask_container.contains(event.target)
-            ) {
-                add_delete_container.classList.remove('visible');
-                show_subtask_container.style.display = 'block';
-                add_subtask_container.classList.remove('no-hover');
-            }
+        if (!add_delete_container.contains(event.target) &&
+            !subtask_input.contains(event.target) &&
+            !show_subtask_container.contains(event.target)) {
+            add_delete_container.classList.remove('visible');
+            show_subtask_container.style.display = 'block';
+            add_subtask_container.classList.remove('no-hover');
         }
     });
 }
@@ -431,13 +392,3 @@ function deleteSubTask(index) {
     subtasks.splice(index, 1);
     renderSubtasks();
 }
-
-
-
-
-
-
-
-
-
-

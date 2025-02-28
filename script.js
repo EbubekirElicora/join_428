@@ -77,6 +77,8 @@ function initializeCategorySelector() {
     }
 }
 
+
+
 function toggleCategoryDropdown() {
     let dropdown = document.getElementById("category_dropdown");
     if (dropdown) {
@@ -258,6 +260,7 @@ async function loadContacts() {
         contactsArray.forEach(contact => {
             const contactDiv = document.createElement("div");
             contactDiv.classList.add("dropdown-item");
+            
             contactDiv.textContent = contact.name || "Unnamed";
             contactDiv.onclick = () => selectContact(contact);
             dropdownContent.appendChild(contactDiv);

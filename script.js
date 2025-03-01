@@ -27,6 +27,10 @@ let selectedContacts = [];
 let subtasks = [];
 let newtasks = [];
 
+
+
+
+
 function initializeDropdown() {
     const dropdownIcon = document.getElementById('dropdownIcon');
     const dropdownIconUp = document.getElementById('dropdownIconUp');
@@ -54,18 +58,6 @@ function toggleDropdown() {
         dropdownContent.style.display = (dropdownContent.style.display === 'none' || dropdownContent.style.display === '') ? 'block' : 'none';
     }
 }
-
-function initializeCategorySelector() {
-    const categorySelect = document.getElementById('category_select');
-    if (categorySelect) {
-        categorySelect.addEventListener('click', (event) => {
-            event.stopPropagation();
-            toggleCategoryDropdown();
-        });
-    }
-}
-
-
 
 function toggleCategoryDropdown() {
     let dropdown = document.getElementById("category_dropdown");
@@ -179,33 +171,12 @@ function showToast(message) {
     }
 }
 
-function hideInputSubTaksClickContainerOnOutsideClick() {
-    document.addEventListener('click', function (event) {
-        let add_delete_container = document.getElementById('add_delete_container');
-        let show_subtask_container = document.getElementById('show_subtask_container');
-        let add_subtask_container = document.querySelector('.add_subtask_container');
-        let subtask_input = document.getElementById('subtask_input');
-        if (!add_delete_container ||
-            !show_subtask_container ||
-            !add_subtask_container ||
-            !subtask_input) return;
-
-        if (!add_delete_container.contains(event.target) &&
-            !subtask_input.contains(event.target) &&
-            !show_subtask_container.contains(event.target)) {
-            add_delete_container.classList.remove('visible');
-            show_subtask_container.style.display = 'block';
-            add_subtask_container.classList.remove('no-hover');
-        }
-    });
-}
-
 function add_new_text(event) {
     let newSubTask = document.getElementById('subtask_input');
-    if (!newSubTask || newSubTask.value.trim() === '') {
-        return;
+    if (newSubTask.value == 0) {
+        return false;
     }
-    subtasks.push(newSubTask.value.trim());
+    subtasks.push(newSubTask.value);
     newSubTask.value = '';
     renderSubtasks();
     if (event && event.type === 'click') {
@@ -215,9 +186,9 @@ function add_new_text(event) {
     }
 }
 
+
 function renderSubtasks(editIndex = -1) {
     let subtask_list = document.getElementById('added_text');
-    if (!subtask_list) return;
     subtask_list.innerHTML = '';
     subtasks.forEach((subtask, index) => {
         if (index === editIndex) {
@@ -227,6 +198,7 @@ function renderSubtasks(editIndex = -1) {
         }
     });
 }
+
 
 async function loadContacts() {
     const dropdownContent = document.getElementById("dropdownContent");
@@ -269,32 +241,6 @@ function updateSelectedContacts() {
     });
 }
 
-
-
-function toggleCategoryDropdown() {
-    let dropdown = document.getElementById("category_dropdown");
-    if (dropdown) {
-        if (dropdown.style.display === "none" || dropdown.style.display === "") {
-            if (dropdown.innerHTML.trim() === "") {
-                dropdown.innerHTML = `
-                    <div class="select_category" onclick="selectCategory('Technical Task')">Technical Task</div>
-                    <div class="select_category" onclick="selectCategory('User Story')">User Story</div>
-                `;
-            }
-            dropdown.style.display = "block";
-        } else {
-            dropdown.style.display = "none";
-        }
-    }
-}
-
-function selectCategory(category) {
-    document.getElementById("select_txt").innerText = category;
-    document.getElementById("category_dropdown").style.display = "none";
-}
-
-
-
 function to_open_category_dropdown() {
     let dropdown = document.getElementById("category_dropdown");
     if (dropdown) {
@@ -303,12 +249,6 @@ function to_open_category_dropdown() {
         console.error("Dropdown element with id 'category_dropdown' not found!");
     }
 }
-
-
-
-
-
-
 
 function show_subtask_container() {
     let add_delete_container = document.getElementById('add_delete_container');
@@ -333,20 +273,6 @@ function delete_text() {
     subtask_input.removeEventListener('click', show_subtask_container);
 }
 
-function add_new_text(event) {
-    let newSubTask = document.getElementById('subtask_input');
-    if (newSubTask.value == 0) {
-        return false;
-    }
-    subtasks.push(newSubTask.value);
-    newSubTask.value = '';
-    renderSubtasks();
-    if (event && event.type === 'click') {
-        document.getElementById('add_delete_container').classList.remove('visible');
-        document.getElementById('show_subtask_container').style.display = 'block';
-        document.querySelector('.add_subtask_container').classList.remove('no-hover');
-    }
-}
 
 function hideInputSubTaksClickContainerOnOutsideClick() {
     document.addEventListener('click', function (event) {
@@ -360,18 +286,6 @@ function hideInputSubTaksClickContainerOnOutsideClick() {
             add_delete_container.classList.remove('visible');
             show_subtask_container.style.display = 'block';
             add_subtask_container.classList.remove('no-hover');
-        }
-    });
-}
-
-function renderSubtasks(editIndex = -1) {
-    let subtask_list = document.getElementById('added_text');
-    subtask_list.innerHTML = '';
-    subtasks.forEach((subtask, index) => {
-        if (index === editIndex) {
-            subtask_list.innerHTML += subTaskProgressTemplate(index, subtask);
-        } else {
-            subtask_list.innerHTML += subTaskCreatedTemplate(index, subtask);
         }
     });
 }

@@ -10,17 +10,11 @@
     <link rel="stylesheet" href="../styles/board.css">
     <link rel="stylesheet" href="../styles/standart.css">
     <script src="../js/utility.js"></script>
-    <script src="../js/header.js"></script>
-    <script src="../js/board.js"></script>
-     <!--<script src="/script.js"></script> -->
-    <script src="../js/addTaskTemplates.js"></script>
-    <script src="../js/addTask.js"></script>
-    <script src="../js/firebase.js"></script>
-    <script src="../js/contacts.js"></script>
-    <title>Join</title>
+    <link rel="stylesheet" href="../styles/template.css">
+   
 </head>
 <body onload="init()">
-    <div w3-include-html="../Templates/sidebar.html"></div> 
+    <div w3-include-html="../Templates/sidebar.html"></div>
     <div w3-include-html="../Templates/header.html"></div>
 
     <main class="board_main">
@@ -46,7 +40,7 @@
                 <div id="popup_container" class="d_none" onclick="event.stopPropagation()"></div>
             </div>
         </div>
-        
+       
 
 
         <div class="content_board">
@@ -59,6 +53,7 @@
                     <div class="tasks show">No tasks To do</div>
                 </div>
             </div>
+            
             <div id="progress" class="nav_board">
                 <div class="board_text_img">
                     <p class="text_board">In Progress</p>
@@ -87,15 +82,15 @@
                 </div>
             </div>
         </div>
-    </main> 
+    </main>
 
     <script src="../js/header.js"></script>
-    
+   
 <script src="../js/board.js"></script>    
     <script src="../js/firebase.js"></script>    
     <script src="../js/utility.js"></script>
     <script src="../js/addTaskTemplates.js"></script>
-    
+   
     <script src="../script.js"></script>
     <title>Join</title>
     <script src="https://www.w3schools.com/lib/w3.js"></script>

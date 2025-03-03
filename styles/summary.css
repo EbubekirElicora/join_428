@@ -246,10 +246,6 @@ button:hover a {
     height: 56px;
 }
 
-.mobile_greets_container {
-    display: flex;
-}
-
 .greets_container {
     display: flex;
     align-items: flex-start;
@@ -261,7 +257,12 @@ button:hover a {
 .greets_text {
     font-weight: 500;
     font-size: 32px;
+}
 
+.greeted_user {
+    font-weight: 700;
+    font-size: 54px;
+    color: rgb(29, 164, 238);
 }
 
 .greeted_user {

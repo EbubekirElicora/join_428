@@ -60,7 +60,7 @@
 
 /* Hover Effect */
 .widget.active {
-    
+
     border: 5px solid yellow !important;
 }
 
@@ -107,56 +107,78 @@
     #sidebar {
         display: flex;
         width: 100%;
-        height: 62px;
+        height: 72px;
         bottom: 0;
         flex-direction: row;
         top: unset;
-        justify-content: center; /* Horizontally center the items */
-        align-items: center; /* Vertically center the items */
+        justify-content: center;
+        /* Horizontally center the items */
+        align-items: center;
+        /* Vertically center the items */
     }
 
     .sidebar_size {
-        flex-direction: row; /* Change to row layout */
-        padding-block: 0; /* Remove vertical padding */
-        justify-content: space-around; /* Space items evenly */
-        width: 100%; /* Full width */
+        flex-direction: row;
+        /* Change to row layout */
+        padding-block: 0;
+        /* Remove vertical padding */
     }
 
     .sidelinks {
-        display: flex; /* Ensure flexbox is applied */
-        flex-direction: row; /* Change to row layout */
-        gap: 40px; /* Increased gap between links */
-        padding: 20px 50px; /* Add horizontal padding for better spacing */
-        align-items: center; /* Center links vertically */
+        display: flex;
+        /* Ensure flexbox is applied */
+        flex-direction: row;
+        /* Change to row layout */
+        gap: 0;
+        /* Increased gap between links */
+        align-items: center;
+        /* Center links vertically */
     }
 
     #widget_1,
     #widget_2,
     #widget_3,
     #widget_4 {
-        width: auto; /* Allow widgets to shrink */
-        padding: 8px; /* Reduce padding */
+        width: auto;
+        /* Allow widgets to shrink */
+        padding: 8px;
+        /* Reduce padding */
+    }
+
+    #widget_1:hover,
+    #widget_2:hover,
+    #widget_3:hover,
+    #widget_4:hover {
+        background-color: #091931;
     }
 
     .sidebar_img_container {
-        flex-direction: row; /* Change to row layout */
-        gap: 10px; /* Add gap between items */
+        flex-direction: row;
+        /* Change to row layout */
+        gap: 10px;
+        /* Add gap between items */
     }
 
     .menu_bar,
     .privacy_and_noticy_container {
-        flex-direction: row; /* Change to row layout */
-        align-items: center; /* Center items vertically */
+        flex-direction: row;
+        /* Change to row layout */
+        align-items: center;
+        /* Center items vertically */
     }
 
     .nav_position_button {
-        padding-left: 0; /* Remove left padding */
+        padding-left: 0;
+        /* Remove left padding */
     }
 
     .sidelinks a {
-        padding-left: 0; /* Remove left padding */
-        margin-top: 0; /* Remove top margin */
-        white-space: nowrap; /* Prevent text from wrapping */
+        padding-left: 0;
+        /* Remove left padding */
+        margin-top: 0;
+        /* Remove top margin */
+        white-space: nowrap;
+        /* Prevent text from wrapping */
     }
 
     #sidefoot {
@@ -165,5 +187,22 @@
 
     .sidebarlogo {
         display: none;
+    }
+}
+
+@media (max-width: 475px) {
+    .sidelinks a {
+        display: flex;
+        flex-direction: column;
+        font-size: 14px;
+        gap: 3px;
+    }
+
+    #widget_1,
+    #widget_2,
+    #widget_3,
+    #widget_4 {
+        width: auto;
+        padding: 8px 12px 8px 12px;
     }
 }

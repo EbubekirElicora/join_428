@@ -125,15 +125,35 @@ function showToast(message, type) {
 
 
 // Toggle password visibility
-function togglePasswordVisibility(inputId, iconId) {
-    const passwordInput = document.getElementById(inputId);
-    const icon = document.getElementById(iconId).querySelector("img");
 
-    if (passwordInput.type === "password") {
-        passwordInput.type = "text";
-        icon.src = "../assets/visibility_on.svg";
+function togglePasswordVisibility(inputId, toggleIconId) {
+    const passwordInput = document.getElementById(inputId);
+    const toggleIconElement = document.getElementById(toggleIconId);
+
+    // Check if elements are found
+    if (!passwordInput || !toggleIconElement) {
+        console.error('Element not found');
+        return;
+    }
+
+    const toggleIcon = toggleIconElement.getElementsByTagName('img')[0];
+
+    // Check if image element is found
+    if (!toggleIcon) {
+        console.error('Image element not found inside toggleIconId:', toggleIconId);
+        return;
+    }
+
+    // Toggle password visibility
+    if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        toggleIcon.src = '/Assets/visibility.svg'; 
+        toggleIcon.alt = 'Hide Password';
+        console.log('Password is now visible.'); 
     } else {
-        passwordInput.type = "password";
-        icon.src = "../assets/visibility_off - Copy.svg";
+        passwordInput.type = 'password'; 
+        toggleIcon.src = '/Assets/visibility_off - Copy.svg'; 
+        toggleIcon.alt = 'Show Password'; 
+        console.log('Password is now hidden.'); 
     }
 }

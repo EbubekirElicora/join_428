@@ -186,10 +186,11 @@ button:hover a {
     justify-content: center;
     align-items: center;
     font-weight: 100;
-    width: 2px;
-    min-height: 100px;
+    width: 4px;
+    min-height: 64px;
     border: 0;
     color: rgb(29, 164, 238);
+    background-color: rgb(29, 164, 238);
 }
 
 .dividing_line_urgent {
@@ -347,5 +348,130 @@ button:hover a {
 
     .memory_container {
         justify-content: center;
+    }
+}
+
+@media (max-width: 601px) {
+
+    .headline {
+        flex-direction: column;
+        align-items: flex-start;
+        margin-block-start: 0;
+        margin-block-end: 0;
+    }
+
+    .txt_container {
+        margin-block-end: 32px;
+    }
+
+    .dividing_line {
+        min-height: 0;
+        border-top: 4px solid;
+        width: 96px;
+    }
+
+    .headline_span {
+        display: none;
+    }
+}
+
+@media (max-width: 600px) {
+
+    .mobile_headline_span {
+        display: flex;
+        font-weight: 400;
+        font-size: 26px;
+    }
+
+    .txt_container,
+    .d-flex,
+    .tasks_container {
+        width: 420px;
+    }
+
+    .done_container {
+        width: 50%;
+        height: 146px;
+
+    }
+
+    .urgent_container {
+        width: 100%;
+        height: 146px;
+    }
+
+    .tasks_in_board_container,
+    .tasks_in_progress_container,
+    .tasks_in_awaiting_container {
+        width: 164px;
+        height: 146px;
+    }
+
+    .to_do_icon,
+    .urgent_icon,
+    .done_icon {
+        width: 48px;
+        height: 48px;
+    }
+
+    .tasks_in_progress_container,
+    .tasks_in_awaiting_container {
+        margin-left: 16px;
+    }
+
+    .to_do_container {
+        width: 50%;
+        height: 146px;
+        margin-right: 16px;
+    }
+}
+
+@media (max-width: 450px) {
+
+    .txt_container,
+    .d-flex,
+    .tasks_container {
+        width: 360px;
+    }
+
+    .to_do_container,
+    .done_container {
+        width: 50%;
+        height: 130px;
+
+    }
+
+    .urgent_container {
+        width: 100%;
+        height: 130px;
+    }
+
+    .tasks_in_board_container,
+    .tasks_in_progress_container,
+    .tasks_in_awaiting_container {
+        width: 140px;
+        height: 130px;
+    }
+
+    .button_h1 {
+        font-size: 40px;
+    }
+
+    .to_do,
+    .done,
+    .urgent,
+    .date_txt,
+    .info_txt,
+    .tasks_in_board,
+    .tasks_in_awaiting_feedback,
+    .tasks_in_progress {
+        font-size: 14px;
+    }
+
+    .to_do_icon,
+    .urgent_icon,
+    .done_icon {
+        width: 40px;
+        height: 40px;
     }
 }

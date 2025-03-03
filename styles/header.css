@@ -177,7 +177,7 @@ header p {
         top: 51px;
     }
 
-    .headline_txt {
+    .headline_txt,.pos_cont_head_left,.help_icon img,.user-info img  {
         display: none;
     }
 
@@ -185,16 +185,12 @@ header p {
         display: block;
     }
 
-    .user-info img {
-        display: none;
-    }
-
-    .help_icon img {
-        display: none;
+    .pos_cont_head_right {
+        padding-right: 0;
     }
 
     .pos_cont_head_right {
-        padding-right: 0;
+        width: 0;
     }
 }
 

@@ -19,16 +19,11 @@ function setPrio(prio) {
     document.querySelector(`.prioBtn${prio.charAt(0).toUpperCase() + prio.slice(1)}`).classList.add('active');
 }
 
-// Set today's date as the minimum date for the date input
-function getDateToday() {
-    const dateInput = document.getElementById('date');
-    if (dateInput) {
-        dateInput.min = new Date().toISOString().split('T')[0];
-    }
-}
+let isDropdownClosed = false;
+let selectedContacts = [];
+let subtasks = [];
+let newtasks = [];
 
-
-// Initialize the contacts dropdown
 function initializeDropdown() {
     const dropdownIcon = document.getElementById('dropdownIcon');
     const dropdownIconUp = document.getElementById('dropdownIconUp');
@@ -76,7 +71,6 @@ function toggleDropdown() {
     }
 }
 
-// Initialize the category selector dropdown
 function initializeCategorySelector() {
     const categorySelect = document.getElementById('category_select');
     if (categorySelect) {
@@ -211,132 +205,17 @@ async function saveTaskToFirebase(taskData) {
     }
 }
 
-// Load contacts from Firebase
-async function loadContacts() {
-    const dropdownContent = document.getElementById('dropdownContent');
-    if (!dropdownContent) {
-        console.error('Dropdown content element not found!');
-        return;
-    }
-
-    console.log('Loading contacts...');
-    const contactsData = await loadData('contacts');
-    console.log('Contacts data:', contactsData);
-
-    if (contactsData) {
-        const contactsArray = Object.values(contactsData);
-        dropdownContent.innerHTML = '';
-
-        contactsArray.forEach(contact => {
-            const contactDiv = document.createElement('div');
-            contactDiv.classList.add('dropdown-item');
-
-            
-            contactDiv.innerHTML = `
-                <div class="contact-info">
-                    <div class="contact-initials-container" style="background-color: ${getRandomColor()}">
-                        <div class="contact-initials">${getInitials(contact.name)}</div>
-                    </div>
-                    <span class="contact-name">${contact.name}</span>
-                </div>
-                <input type="checkbox" class="contact-checkbox">
-            `;
-
-            
-            const checkbox = contactDiv.querySelector('.contact-checkbox');
-
-            
-            checkbox.addEventListener('change', (event) => {
-                if (checkbox.checked) {
-                    
-                    if (!selectedContacts.find(c => c.name === contact.name)) {
-                        selectedContacts.push(contact);
-                    }
-                } else {
-                    
-                    selectedContacts = selectedContacts.filter(c => c.name !== contact.name);
-                }
-
-                
-                updateSelectedContacts();
-            });
-
-            dropdownContent.appendChild(contactDiv);
-        });
-    } else {
-        dropdownContent.innerHTML = '<div class="dropdown-item">No contacts available</div>';
+function showToast(message) {
+    const toast = document.getElementById('toast');
+    if (toast) {
+        toast.textContent = message;
+        toast.classList.add('show');
+        setTimeout(() => {
+            toast.classList.remove('show');
+        }, 3000);
     }
 }
 
-// Select a contact
-
-function selectContact(contact) {
-    if (!selectedContacts.find(c => c.name === contact.name)) {
-        selectedContacts.push(contact);
-        updateSelectedContacts();
-        console.log('Contact selected:', contact.name);
-    } else {
-        console.log('Contact already selected:', contact.name);
-    }
-    
-}
-
-function updateSelectedContacts() {
-    const inputField = document.getElementById('contactInput');
-    const initialsContainer = document.getElementById('selectedContactsInitials');
-
-    if (!inputField || !initialsContainer) {
-        console.error('Input field or initials container not found!');
-        return;
-    }
-
-    
-    const selectedNames = selectedContacts.map(contact => contact.name).join(', ');
-    inputField.value = selectedNames;
-
-    
-    initialsContainer.innerHTML = '';
-    selectedContacts.forEach(contact => {
-        const span = document.createElement('span');
-        span.classList.add('contact-initial');
-
-        
-        span.innerHTML = `
-            <div class="contact-initials-container" style="background-color: ${getRandomColor()}">
-                <div class="contact-initials">${getInitials(contact.name)}</div>
-            </div>
-        `;
-
-        initialsContainer.appendChild(span);
-    });
-}
-
-function getInitials(name) {
-    return name.split(' ').map(part => part[0]).join('').toUpperCase();
-}
-
-function getRandomColor() {
-    const letters = '0123456789ABCDEF';
-    let color = '#';
-    for (let i = 0; i < 6; i++) {
-        color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
-}
-
-
-
-// Close the "Add Task" pop-up
-function closeOverlay() {
-    const overlay = document.getElementById('overlay');
-    const popupContainer = document.getElementById('popup_container');
-
-    // Hide the overlay and pop-up
-    overlay.classList.add('d_none');
-    popupContainer.classList.add('d_none');
-}
-
-// Show the subtask container
 function show_subtask_container() {
     let add_delete_container = document.getElementById('add_delete_container');
     let show_subtask_container = document.getElementById('show_subtask_container');
@@ -361,7 +240,6 @@ function delete_text() {
     subtask_input.removeEventListener('click', show_subtask_container);
 }
 
-// Add a new subtask
 function add_new_text(event) {
     let newSubTask = document.getElementById('subtask_input');
     if (newSubTask.value == 0) {
@@ -377,7 +255,22 @@ function add_new_text(event) {
     }
 }
 
-// Render subtasks
+function hideInputSubTaksClickContainerOnOutsideClick() {
+    document.addEventListener('click', function (event) {
+        let add_delete_container = document.getElementById('add_delete_container');
+        let show_subtask_container = document.getElementById('show_subtask_container');
+        let add_subtask_container = document.querySelector('.add_subtask_container');
+        let subtask_input = document.getElementById('subtask_input');
+        if (!add_delete_container.contains(event.target) &&
+            !subtask_input.contains(event.target) &&
+            !show_subtask_container.contains(event.target)) {
+            add_delete_container.classList.remove('visible');
+            show_subtask_container.style.display = 'block';
+            add_subtask_container.classList.remove('no-hover');
+        }
+    });
+}
+
 function renderSubtasks(editIndex = -1) {
     let subtask_list = document.getElementById('added_text');
     subtask_list.innerHTML = '';

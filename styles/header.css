@@ -156,16 +156,6 @@ header p {
 }
 
 
-@media (max-width: 1440px) {
-
-    .pos_cont_head_left {
-        display: flex;
-        width: 50%;
-        justify-content: flex-end;
-        padding-left: 0;
-    }
-}
-
 @media (max-width: 1080px) {
 
 
@@ -201,6 +191,10 @@ header p {
 
     .help_icon img {
         display: none;
+    }
+
+    .pos_cont_head_right {
+        padding-right: 0;
     }
 }
 

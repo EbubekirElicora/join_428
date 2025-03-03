@@ -337,9 +337,6 @@ button:hover a {
         justify-content: center;
     }
 }
-<<<<<<< HEAD
-/* Greeting Overlay for Smaller Screens */
-
 @media (max-width: 960px) {
     .mobile_greets_container {
         display: flex;
@@ -367,7 +364,8 @@ button:hover a {
         display: flex;
         flex-direction: column;
         gap: 5px;
-        align-items: flex-start;        
+        align-items: flex-start;   
+        padding-left: 13px;     
     }
     .txt_container{
         margin-bottom: 50px;
@@ -386,16 +384,13 @@ button:hover a {
     }
 }
 
-
-=======
-
 @media (max-width: 601px) {
 
     .headline {
         flex-direction: column;
         align-items: flex-start;
         margin-block-start: 0;
-        margin-block-end: 0;
+        
     }
 
     .txt_container {
@@ -513,4 +508,3 @@ button:hover a {
         height: 40px;
     }
 }
->>>>>>> 6590162cecb2db4254230e787f51f6eb2e2b8eab

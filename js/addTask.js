@@ -327,17 +327,26 @@ function toggleRotationDownImage() {
     let down_image = document.getElementById('drop_down_img_category');
     down_image.classList.add('rotate180');
 }
-
 function initializeCategorySelector() {
     let category_select = document.getElementById('category_select');
+    
+    if (!category_select) {  // Prevent error if the element is missing
+        console.warn("Element #category_select not found.");
+        return;
+    }
+
     category_select.addEventListener('click', function (event) {
-        let selected_category = this.querySelector('#select_txt');
-        if (selected_category.textContent !== 'Select task category') {
+        let selected_category = document.getElementById('select_txt');
+        if (selected_category && selected_category.textContent !== 'Select task category') {
             event.stopPropagation();
             resetCategorySelector();
         }
     });
 }
+
+
+
+
 
 function resetCategorySelector() {
     let selected_txt = document.getElementById('select_txt');

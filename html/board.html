@@ -10,12 +10,8 @@
     <link rel="stylesheet" href="../styles/board.css">
     <link rel="stylesheet" href="../styles/standart.css">
     <script src="../js/utility.js"></script>
-    <script src="../js/header.js"></script>
-    <script src="../js/board.js"></script>
-    <script src="../js/addTask.js"></script>
-    <script src="../js/firebase.js"></script>
-    <!-- <script src="../js/contacts.js"></script> -->
-    <title>Join</title>
+    <link rel="stylesheet" href="../styles/template.css">
+    
 </head>
 <body onload="init()">
     <div w3-include-html="../Templates/sidebar.html"></div> 
@@ -37,7 +33,7 @@
                 </button>
             </div>
         </div>
-        
+
         <div onclick="closeOverlay()" id="overlay" class="overlay d_none">
             <div class="popup_container">
                 <img id="close_img" onclick="closeOverlay()" class="close_img" src="../assets/icons/close.png" alt="Close">
@@ -45,6 +41,7 @@
             </div>
         </div>
         
+
 
         <div class="content_board">
             <div id="todo" class="nav_board">
@@ -86,6 +83,15 @@
         </div>
     </main> 
 
+    <script src="../js/header.js"></script>
+    
+<script src="../js/board.js"></script>    
+    <script src="../js/firebase.js"></script>    
+    <script src="../js/utility.js"></script>
+    <script src="../js/addTaskTemplates.js"></script>
+    
+    <script src="../script.js"></script>
+    <title>Join</title>
     <script src="https://www.w3schools.com/lib/w3.js"></script>
     <script>
         includeHTML();

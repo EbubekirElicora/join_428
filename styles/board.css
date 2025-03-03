@@ -143,4 +143,52 @@ h1 {
     cursor: pointer;
     z-index: 1002;
 }
+.dropdown-content {
+    
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ccc;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 1000;
+}
 
+.dropdown-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px;
+    cursor: pointer;
+}
+
+.contact-info {
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Space between initials and name */
+}
+
+.contact-initials-container {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.contact-initials {
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.contact-name {
+    font-size: 14px;
+}
+
+.contact-checkbox {
+    margin-left: auto; /* Push the checkbox to the right */
+    width: 16px; /* Set a fixed width */
+    height: 16px; /* Set a fixed height */
+    cursor: pointer; /* Change cursor to pointer */
+}

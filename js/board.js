@@ -1,7 +1,5 @@
-
 document.addEventListener('DOMContentLoaded', () => {
     getDateToday();
-    initializeDropdown();
     initializeCategorySelector();
     initializeTaskForm();
     init();
@@ -23,6 +21,20 @@ async function loadAddTaskContent() {
         const addTaskContent = doc.querySelector('.content_container_size');
         if (addTaskContent) {
             document.getElementById('popup_container').innerHTML = addTaskContent.outerHTML;
+
+            // Dynamically load addTask.js
+            const script = document.createElement('script');
+            script.src = '../js/addTask.js';
+            script.onload = () => {
+                // Re-initialize all necessary functionality
+                if (typeof initAddTask === 'function') {
+                    initAddTask(); // Initialize dropdowns, contacts, etc.
+                    console.log('Add Task content and script loaded successfully.');
+                } else {
+                    console.error('initAddTask is not defined!');
+                }
+            };
+            document.body.appendChild(script);
         }
     } catch (error) {
         console.error('Error loading addTask.html:', error);

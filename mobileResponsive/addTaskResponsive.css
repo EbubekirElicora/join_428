@@ -1,0 +1,85 @@
+@media (max-width: 1350px) {
+
+    .content_container_size {
+        width: 896px;
+        margin-left: 0;
+    }
+
+    .divider_line {
+        margin: 0 40px;
+    }
+
+    .left_container,
+    .right_container {
+        width: 372px;
+    }
+
+    .container_size {
+        justify-content: flex-start;
+    }
+
+    .btn_position {
+        padding-right: 72px;
+    }
+}
+
+@media (max-width: 1320px) {
+
+    .content_container_size {
+        width: 856px;
+    }
+
+    .btn_position {
+        padding-right: 32px;
+    }
+}
+
+@media (max-width: 1130px) {
+
+    .content_container_size {
+        width: 800px;
+    }
+
+    .btn_position {
+        padding-right: 16px;
+    }
+
+    .left_container,
+    .right_container {
+        width: 352px;
+    }
+}
+
+@media (max-width: 1080px) {
+
+    .container_pos {
+        margin-left: 0;
+    }
+
+    .headline_addTask_position {
+        margin-bottom: 24px;
+        margin-top: 24px;
+    }
+
+    .btn_container_addTask {
+        margin-block-start: 16px;
+    }
+}
+
+@media (max-width: 840px) {
+    .content_container_size {
+        width: 664px;
+    }
+
+    .left_container,
+    .right_container {
+        width: 300px;
+    }
+
+    .prioBtnMedium,
+    .prioBtnUrgent,
+    .prioBtnLow {
+        width: 94px;
+        font-size: 16px;
+    }
+}

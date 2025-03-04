@@ -190,13 +190,35 @@
     }
 }
 
-@media (max-width: 475px) {
+@media (max-width: 490px) {
     .sidelinks a {
         display: flex;
         flex-direction: column;
         font-size: 14px;
         gap: 3px;
     }
+
+    #widget_1,
+    #widget_2,
+    #widget_3,
+    #widget_4 {
+        width: auto;
+        padding: 8px 24px 8px 24px;
+    }
+}
+
+@media (max-width: 400px) {
+
+    #widget_1,
+    #widget_2,
+    #widget_3,
+    #widget_4 {
+        width: auto;
+        padding: 8px 18px 8px 18px;
+    }
+}
+
+@media (max-width: 360px) {
 
     #widget_1,
     #widget_2,

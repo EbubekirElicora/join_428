@@ -206,3 +206,18 @@
         padding: 8px 12px 8px 12px;
     }
 }
+
+
+/* Ensure the Login link is styled correctly */
+#login-link a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    color: inherit;
+}
+
+#login-link img {
+    width: 20px;
+    height: 20px;
+}

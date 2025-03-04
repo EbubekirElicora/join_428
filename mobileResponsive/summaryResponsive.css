@@ -43,7 +43,7 @@
         margin-block-end: 0;
     }
 }
-@media (max-width: 960px) {
+@media (max-width: 760px) {
     .mobile_greets_container {
         display: flex;
         align-items: center;

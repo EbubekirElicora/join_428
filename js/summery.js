@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Show the greeting overlay on smaller screens
     const mobileGreetsContainer = document.querySelector('.mobile_greets_container');
 
-    if (window.innerWidth < 960) { // Only for smaller screens
+    if (window.innerWidth < 760) { // Only for smaller screens
         // Ensure the greeting text and user name are updated in the overlay
         const greetsTextOverlay = document.getElementById('greets_text');
         const greetedUserOverlay = document.getElementById('greeted_user');

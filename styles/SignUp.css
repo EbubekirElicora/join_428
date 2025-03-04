@@ -1,4 +1,3 @@
-/* Join section styling */
 .join {
     position: relative;
     display: flex;
@@ -12,16 +11,19 @@
     margin-top: 30px;
 }
 
-/* Join logo image styling */
 .joinLogo img {
-    position: fixed;
+    
     width: 120px;
-    height: auto;
-    top: 100px;
-    left: 100px;
+    height: 120px;
 }
 
-/* Signup container styling */
+#signup-logoContainer {
+    position: absolute;
+    top: 20px;
+    left: 50px;    
+    z-index: 3000;
+}
+
 .signup-joinContainer {
     position: relative;
     background-color: white;
@@ -30,12 +32,11 @@
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     width: 100%;
     max-width: 500px;
-    /* Responsive width */
+    margin-top: 70px;
     height: auto; 
 
 }
 
-/* Signup title styling */
 .signup-joinContainer h1 {
     margin-top: 3px;
     margin-bottom: 20px;
@@ -48,7 +49,6 @@
     text-decoration-thickness: 2px;
 }
 
-/* Positioning the back to login button */
 .go-to-login {
     position: absolute;
     top: 50px;
@@ -56,33 +56,36 @@
 }
 .go-to-login {
     position: absolute;
-    top: 70px; /* Adjust as needed to fit within padding */
-    left: 20px; /* Aligns to top left */
+    top: 70px; 
+    left: 20px; 
 }
 
 .go-to-login img {
-    width: 24px; /* Adjust icon size if needed */
+    width: 24px; 
     height: auto;
 }
 
-/* Input group styling */
 .input-group {
     display: flex;
     align-items: center;
-    margin-bottom: 10px;  /* Reduce the space between input fields */
+    margin-bottom: 10px;  
     position: relative;
 }
 
 .input-group input {
     width: 100%;
-    padding: 10px 15px;  /* Adjust padding */
-    margin: 0;  /* Remove any default margin */
-    border: 2px solid #ccc;  /* Optional, just ensure border is consistent */
+    padding: 10px 15px;  
+    margin: 0;  
+    border: 2px solid #ccc;  
     border-radius: 8px;
     font-size: 16px;
 }
+.input-group input:focus {
+    border-color: #73aace; 
+    outline: none; 
+    
+}
 
-/* Icon inside input group */
 .input-group .icon {
     position: absolute;
     right: 10px;
@@ -90,7 +93,6 @@
     transform: translateY(-50%);
 }
 
-/* Styling for the signup button */
 .signup-button {
     display: flex;
     justify-content: center;
@@ -116,9 +118,9 @@
 }
 .legalPolicy {
     display: flex;
-    justify-content: center; /* Center the items horizontally */
-    align-items: center; /* Center the items vertically if needed */
-    gap: 20px; /* Space between the links */
+    justify-content: center; 
+    align-items: center; 
+    gap: 20px;
     margin-top: 20px;
     margin-bottom: 80px;
 }
@@ -126,29 +128,26 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 15px; /* Add space below */
+    margin-bottom: 15px;
     gap: 10px;
 }
 
-/* Checkbox input styling */
 .checkbox-group input{
     cursor: pointer;
 }
 
-
-/* Span styling for the label */
 .checkbox-group span {
     font-size: 14px;
     color: #333;
 }
 
 .checkbox-group span a {
-    color: #3498db; /* Link color for "Terms and Conditions" */
+    color: #3498db; 
     text-decoration: none;
 }
 
 .checkbox-group span a:hover {
-    text-decoration: underline; /* Hover effect for link */
+    text-decoration: underline;
     cursor: pointer;
 }
 
@@ -159,7 +158,7 @@
 
 .toast {
     position: fixed;
-    bottom: -100px; /* Start off-screen */
+    bottom: -100px; 
     left: 50%;
     transform: translateX(-50%);
     padding: 14px 20px;
@@ -184,7 +183,7 @@
 }
 
 .toast.show {
-    bottom: 50%; /* Move toast to the middle */
+    bottom: 50%; 
     opacity: 1;
 }
 
@@ -199,4 +198,113 @@
     margin-top: 4px;
 }
 
+@media (max-width: 980px) {
+    
+    
 
+    .join {
+        overflow: hidden;
+    }
+
+    
+
+    .signup-joinContainer {
+        padding: 30px;
+        max-width: 400px;
+        margin-top: 70px;
+    }
+
+    .signup-joinContainer h1 {
+        font-size: 40px;
+    }
+
+    .input-group input {
+        font-size: 14px;
+        padding: 10px 35px 10px 8px;
+    }
+}
+@media (max-width: 780px){
+    .signup-joinContainer {
+        position: relative;
+        background-color: white;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        width: 100%;        
+        margin-top: 150px;
+        height: auto; 
+    
+    }
+    #signup-logoContainer {
+        position: absolute;
+        top: 10px;
+        left: 10%; 
+        z-index: 3000;
+        transform: translateX(0); 
+    }
+    .joinLogo img {
+    
+        width: 90px;
+        height: 90px;
+    }
+
+
+}
+
+@media (max-width: 480px) {
+    #signup-logoContainer {
+        top: 10px; 
+        left: 10%;
+    }
+
+    .signup-joinContainer {
+        padding: 20px;
+        width: 70%; 
+        max-width: 100%; 
+        margin-top: 50px; 
+        border-radius: 10px;
+        margin-bottom: 0;
+    }
+
+    .signup-joinContainer h1 {
+        font-size: 28px;
+        margin-bottom: px; 
+    }
+
+    .input-group input {
+        font-size: 14px;
+        padding: 8px 15px;
+    }
+
+    #signup-logoContainer img {
+        width: 70px; 
+        height: 70px;
+    }
+
+    .go-to-login {
+        top: 10px;
+        left: 10px;
+    }
+
+    .signup-button button {
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    .legalPolicy {
+        gap: 8px;
+        margin-top: 0px;
+        font-size: 12px;
+    }
+
+    .checkbox-group {
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .checkbox-group span {
+        font-size: 12px;
+    }
+}

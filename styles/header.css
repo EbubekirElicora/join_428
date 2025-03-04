@@ -157,8 +157,7 @@ header p {
 
 
 @media (max-width: 1080px) {
-
-
+    
     .mobile_headerNav {
         height: 204px;
     }
@@ -194,3 +193,17 @@ header p {
     }
 }
 
+@media (max-width: 490px) {
+
+
+    .user-icon {
+        width: 38px !important;
+        height: 38px !important;
+        min-width: 0;
+    }
+
+    .headerImg img{
+        height: 56px;
+        width: 48px;
+    }
+}

@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="../styles/board.css">
     <link rel="stylesheet" href="../styles/standart.css">
     <link rel="stylesheet" href="../styles/template.css">
+    <link rel="stylesheet" href="../styles/board_template.css">
     <title>Join</title>
 </head>
 <body onload="init()">
@@ -43,40 +44,56 @@
 
 
         <div class="content_board">
-            <div id="todo" class="nav_board">
+            <!-- To do -->
+            <div class="nav_board">
                 <div class="board_text_img">
                     <p class="text_board">To do</p>
                     <img class="img_board" onclick="addTask()" src="../assets/icons/plus button.png" alt="">
                 </div>
-                <div id="todo_task" class="board_tasks drag_area" ondrop="moveTo('todo')" ondragleave="removeHighlight('todo_task')" ondragover="allowDrop(event); highlight('todo_task')">
+                <div id="todo_task" class="board_tasks drag_area" 
+                     ondrop="moveToStage('todo')" 
+                     ondragleave="removeHighlight('todo_task')" 
+                     ondragover="allowDrop(event); highlight('todo_task')">
                     <div class="tasks show">No tasks To do</div>
                 </div>
             </div>
-            
-            <div id="progress" class="nav_board">
+        
+            <!-- In Progress -->
+            <div class="nav_board">
                 <div class="board_text_img">
                     <p class="text_board">In Progress</p>
                     <img class="img_board" onclick="addTask()" src="../assets/icons/plus button.png" alt="">
                 </div>
-                <div id="progress_task" class="board_tasks drag_area" ondrop="moveTo('progress')" ondragleave="removeHighlight('progress_task')" ondragover="allowDrop(event); highlight('progress_task')">
+                <div id="progress_task" class="board_tasks drag_area" 
+                     ondrop="moveToStage('progress')" 
+                     ondragleave="removeHighlight('progress_task')" 
+                     ondragover="allowDrop(event); highlight('progress_task')">
                     <div class="tasks">No tasks In Progress</div>
                 </div>
             </div>
-            <div id="feedback" class="nav_board">
+        
+            <div class="nav_board">
                 <div class="board_text_img">
-                    <p class="text_board">Await Feetback</p>
+                    <p class="text_board">Await Feedback</p>
                     <img class="img_board" onclick="addTask()" src="../assets/icons/plus button.png" alt="">
                 </div>
-                <div id="feedback_task" class="board_tasks drag_area" ondrop="moveTo('feedback')" ondragleave="removeHighlight('feedback_task')" ondragover="allowDrop(event); highlight('feedback_task')">
-                    <div class="tasks">No tasks Await Feetback</div>
+                <div id="feedback_task" class="board_tasks drag_area" 
+                     ondrop="moveToStage('feedback')" 
+                     ondragleave="removeHighlight('feedback_task')" 
+                     ondragover="allowDrop(event); highlight('feedback_task')">
+                    <div class="tasks">No tasks Await Feedback</div>
                 </div>
             </div>
-            <div id="done" class="nav_board">
+        
+            <div class="nav_board">
                 <div class="board_text_img">
                     <p class="text_board">Done</p>
                     <img class="img_board" onclick="addTask()" src="../assets/icons/plus button.png" alt="">
                 </div>
-                <div id="done_task" class="board_tasks drag_area" ondrop="moveTo('done')" ondragleave="removeHighlight('done_task')" ondragover="allowDrop(event); highlight('done_task')">
+                <div id="done_task" class="board_tasks drag_area" 
+                     ondrop="moveToStage('done')" 
+                     ondragleave="removeHighlight('done_task')" 
+                     ondragover="allowDrop(event); highlight('done_task')">
                     <div class="tasks">No tasks Done</div>
                 </div>
             </div>
@@ -89,6 +106,7 @@
     <script src="../js/utility.js"></script>
     <script src="../js/addTaskTemplates.js"></script>
     <script src="../script.js"></script>
+    <script src="../js/board_template.js"></script>
     <script src="https://www.w3schools.com/lib/w3.js"></script>
     <script>
         includeHTML();

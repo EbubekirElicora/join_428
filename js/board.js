@@ -52,32 +52,34 @@ function closeOverlay() {
 
 let currentDraggedElement;
 let todos = [];
-let categories = ["todo", "progress", "feedback", "done"];
-
+const stages = ["todo", "progress", "feedback", "done"]; 
 
 async function init() {
-    let loadedTodos = await loadData("tasks");
-    todos = loadedTodos ? Object.values(loadedTodos) : []; 
-    updateHTML();
-    fetchTasks();
+    try {
+        const loadedTodos = await loadData("tasks");
+        todos = loadedTodos ? Object.entries(loadedTodos).map(([id, task]) => ({ id, ...task })) : [];
+        updateHTML();
+    } catch (error) {
+        console.error("Error loading data:", error);
+    }
 }
 
 function updateHTML() {
-    let categoryMapping = {
+    const categoryMapping = {
         "Technical Task": "todo",
-        "User Story": "todo"
+        "User Story": "todo",
     };
-    categories.forEach(category => {
-        let container = document.getElementById(`${category}_task`);
+    stages.forEach(stage => {
+        const container = document.getElementById(`${stage}_task`);
         if (container) {
-            container.innerHTML = "";
-            let filteredTasks = todos.filter(task => {
-                let mappedCategory = categoryMapping[task.category] || task.category;
-                return mappedCategory.toLowerCase() === category;
+            const filteredTasks = todos.filter(task => {
+                return task.stage 
+                    ? task.stage === stage
+                    : categoryMapping[task.category] === stage;
             });
-            filteredTasks.forEach(task => {
-                container.innerHTML += generateTodoHTML(task);
-            });
+            container.innerHTML = filteredTasks.length > 0 
+                ? filteredTasks.map(task => generateTodoHTML(task)).join('')
+                : `<div class="tasks">No tasks in ${stage}</div>`;
         }
     });
 }
@@ -86,50 +88,44 @@ function startDragging(id) {
     currentDraggedElement = id;
 }
 
-function generateTodoHTML(task) {
-    return `<div draggable="true" ondragstart="startDragging('${task.id}')" class="task">
-                <h3>${task.title}</h3>
-                <p>${task.description || ''}</p>
-                <p>Due: ${task.dueDate}</p>
-                <p>Category: ${task.category}</p>
-            </div>`;
-}
-
 async function createTask() {
     const newTask = {
-        title: document.getElementById("taskTitle").value.trim(),
-        description: document.getElementById("taskDescription").value.trim(),
-        dueDate: document.getElementById("taskDueDate").value,
-        category: "todo",
+        stage: "todo",
+        category: "Technical Task"
     };
-    if (!newTask.title) {
-        alert("Title required!");
-        return;
-    }
-    try {
-        await postData("tasks", newTask);
-        await fetchTasks();
-        closeOverlay();
-    } catch (error) {
-        console.error("Create error:", error);
-    }
+    await postData("tasks", newTask);
+}
+
+
+function resetForm() {
+    document.getElementById("taskTitle").value = '';
+    document.getElementById("taskDescription").value = '';
+    document.getElementById("taskDueDate").value = '';
+    selectedContacts = [];
+    subtasks = [];
+    updateAssignedContactsDisplay();
+    updateSubtasksDisplay();
 }
 
 function allowDrop(ev) {
     ev.preventDefault();
 }
 
-async function moveTo(category) {
+async function moveToStage(targetStage) {
     if (!currentDraggedElement) return;
     
     try {
         const task = todos.find(t => t.id === currentDraggedElement);
-        await updateData(`tasks/${currentDraggedElement}`, {...task, category});
+        await updateData(`tasks/${currentDraggedElement}`, { 
+            ...task, 
+            stage: targetStage
+        });
         await fetchTasks();
     } catch (error) {
         console.error("Move error:", error);
     }
 }
+
 
 function highlight(id) {
     document.getElementById(id).classList.add("drag-area-highlight");
@@ -145,7 +141,7 @@ async function fetchTasks() {
         todos = data ? Object.entries(data).map(([id, task]) => ({ id, ...task })) : [];
         updateHTML();
     } catch (error) {
-        console.error("Fetch error:", error);
+        console.error("Task update error:", error);
     }
 }
 

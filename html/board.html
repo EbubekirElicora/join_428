@@ -9,9 +9,8 @@
     <link rel="stylesheet" href="../styles/addTask.css">
     <link rel="stylesheet" href="../styles/board.css">
     <link rel="stylesheet" href="../styles/standart.css">
-    <script src="../js/utility.js"></script>
     <link rel="stylesheet" href="../styles/template.css">
-   
+    <title>Join</title>
 </head>
 <body onload="init()">
     <div w3-include-html="../Templates/sidebar.html"></div>
@@ -63,12 +62,12 @@
                     <div class="tasks">No tasks In Progress</div>
                 </div>
             </div>
-            <div id="feetback" class="nav_board">
+            <div id="feedback" class="nav_board">
                 <div class="board_text_img">
                     <p class="text_board">Await Feetback</p>
                     <img class="img_board" onclick="addTask()" src="../assets/icons/plus button.png" alt="">
                 </div>
-                <div id="feetback_task" class="board_tasks drag_area" ondrop="moveTo('feetback')" ondragleave="removeHighlight('feetback_task')" ondragover="allowDrop(event); highlight('feetback_task')">
+                <div id="feedback_task" class="board_tasks drag_area" ondrop="moveTo('feedback')" ondragleave="removeHighlight('feedback_task')" ondragover="allowDrop(event); highlight('feedback_task')">
                     <div class="tasks">No tasks Await Feetback</div>
                 </div>
             </div>
@@ -85,14 +84,11 @@
     </main>
 
     <script src="../js/header.js"></script>
-   
-<script src="../js/board.js"></script>    
+    <script src="../js/board.js"></script>    
     <script src="../js/firebase.js"></script>    
     <script src="../js/utility.js"></script>
     <script src="../js/addTaskTemplates.js"></script>
-   
     <script src="../script.js"></script>
-    <title>Join</title>
     <script src="https://www.w3schools.com/lib/w3.js"></script>
     <script>
         includeHTML();

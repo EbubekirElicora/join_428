@@ -1,3 +1,5 @@
+
+
 document.addEventListener('DOMContentLoaded', () => {
     getDateToday();
     initializeCategorySelector();
@@ -21,15 +23,11 @@ async function loadAddTaskContent() {
         const addTaskContent = doc.querySelector('.content_container_size');
         if (addTaskContent) {
             document.getElementById('popup_container').innerHTML = addTaskContent.outerHTML;
-
-            // Dynamically load addTask.js
             const script = document.createElement('script');
             script.src = '../js/addTask.js';
             script.onload = () => {
-                // Re-initialize all necessary functionality
                 if (typeof initAddTask === 'function') {
-                    initAddTask(); // Initialize dropdowns, contacts, etc.
-                    console.log('Add Task content and script loaded successfully.');
+                    initAddTask();
                 } else {
                     console.error('initAddTask is not defined!');
                 }
@@ -54,35 +52,32 @@ function closeOverlay() {
 
 let currentDraggedElement;
 let todos = [];
+let categories = ["todo", "progress", "feedback", "done"];
+
 
 async function init() {
     let loadedTodos = await loadData("tasks");
-    todos = loadedTodos ? Object.values(loadedTodos) : [];
+    todos = loadedTodos ? Object.values(loadedTodos) : []; 
     updateHTML();
+    fetchTasks();
 }
 
 function updateHTML() {
-    let categories = ["todo", "progress", "feetback", "done"];
+    let categoryMapping = {
+        "Technical Task": "todo",
+        "User Story": "todo"
+    };
     categories.forEach(category => {
         let container = document.getElementById(`${category}_task`);
         if (container) {
-            container.innerHTML = '';
+            container.innerHTML = "";
             let filteredTasks = todos.filter(task => {
-                return task.category && task.category.toLowerCase() === category;
+                let mappedCategory = categoryMapping[task.category] || task.category;
+                return mappedCategory.toLowerCase() === category;
             });
-            if (filteredTasks.length === 0) {
-                let placeholderText = {
-                    todo: "No tasks To do",
-                    progress: "No tasks In Progress",
-                    feetback: "No tasks Await Feedback",
-                    done: "No tasks Done"
-                };
-                container.innerHTML = `<div class="tasks">${placeholderText[category]}</div>`;
-            } else {
-                filteredTasks.forEach(task => {
-                    container.innerHTML += generateTodoHTML(task);
-                });
-            }
+            filteredTasks.forEach(task => {
+                container.innerHTML += generateTodoHTML(task);
+            });
         }
     });
 }
@@ -100,16 +95,39 @@ function generateTodoHTML(task) {
             </div>`;
 }
 
+async function createTask() {
+    const newTask = {
+        title: document.getElementById("taskTitle").value.trim(),
+        description: document.getElementById("taskDescription").value.trim(),
+        dueDate: document.getElementById("taskDueDate").value,
+        category: "todo",
+    };
+    if (!newTask.title) {
+        alert("Title required!");
+        return;
+    }
+    try {
+        await postData("tasks", newTask);
+        await fetchTasks();
+        closeOverlay();
+    } catch (error) {
+        console.error("Create error:", error);
+    }
+}
+
 function allowDrop(ev) {
     ev.preventDefault();
 }
 
 async function moveTo(category) {
-    let task = todos.find(t => t.id === currentDraggedElement);
-    if (task) {
-        task.category = category;
-        await updateData(`tasks/${task.id}`, task);
-        init();
+    if (!currentDraggedElement) return;
+    
+    try {
+        const task = todos.find(t => t.id === currentDraggedElement);
+        await updateData(`tasks/${currentDraggedElement}`, {...task, category});
+        await fetchTasks();
+    } catch (error) {
+        console.error("Move error:", error);
     }
 }
 
@@ -120,3 +138,18 @@ function highlight(id) {
 function removeHighlight(id) {
     document.getElementById(id).classList.remove("drag-area-highlight");
 }
+
+async function fetchTasks() {
+    try {
+        const data = await loadData("tasks");
+        todos = data ? Object.entries(data).map(([id, task]) => ({ id, ...task })) : [];
+        updateHTML();
+    } catch (error) {
+        console.error("Fetch error:", error);
+    }
+}
+
+let filteredTasks = todos.filter(task => {
+    const taskCategory = task.category.toLowerCase();
+    return taskCategory === category;
+});

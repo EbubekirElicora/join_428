@@ -194,3 +194,11 @@ h1 {
 }
 /*chuks, delete if you want
 */
+
+
+.task {
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 16px;
+}

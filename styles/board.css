@@ -82,6 +82,11 @@ h1 {
 }
 
 .board_tasks {
+    display: flex;
+    flex-direction: column;
+}
+
+.tasks {
     background-color: #e7e7e7;
     color: #a0a0a0;
     border: 2px dashed #d1d1d1;

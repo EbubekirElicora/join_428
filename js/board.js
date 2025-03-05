@@ -55,6 +55,10 @@ let todos = [];
 const stages = ["todo", "progress", "feedback", "done"]; 
 
 async function init() {
+    todosLoaded();
+}
+
+async function todosLoaded() {
     try {
         const loadedTodos = await loadData("tasks");
         todos = loadedTodos ? Object.entries(loadedTodos).map(([id, task]) => ({ id, ...task })) : [];
@@ -113,7 +117,6 @@ function allowDrop(ev) {
 
 async function moveToStage(targetStage) {
     if (!currentDraggedElement) return;
-    
     try {
         const task = todos.find(t => t.id === currentDraggedElement);
         await updateData(`tasks/${currentDraggedElement}`, { 
@@ -125,7 +128,6 @@ async function moveToStage(targetStage) {
         console.error("Move error:", error);
     }
 }
-
 
 function highlight(id) {
     document.getElementById(id).classList.add("drag-area-highlight");

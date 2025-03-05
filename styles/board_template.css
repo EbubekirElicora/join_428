@@ -3,5 +3,7 @@
     background-color: white;
     display: flex;
     flex-direction: column;
-    margin-bottom: 16px;
+    margin-bottom: 24px;
+    border-radius: 16px;
+    padding: 16px;
 }

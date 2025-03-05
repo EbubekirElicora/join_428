@@ -102,6 +102,21 @@
     gap: 10px;
 }
 
+/* Ensure the Login link is styled correctly */
+#login-link a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    color: inherit;
+}
+
+#login-link img {
+    width: 20px;
+    height: 20px;
+}
+
+
 /* Media query for smaller screens */
 @media (max-width: 1080px) {
     #sidebar {
@@ -230,16 +245,3 @@
 }
 
 
-/* Ensure the Login link is styled correctly */
-#login-link a {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    text-decoration: none;
-    color: inherit;
-}
-
-#login-link img {
-    width: 20px;
-    height: 20px;
-}

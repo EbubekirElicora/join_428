@@ -4,7 +4,7 @@
  * 
  * @returns {void} - Keine Rückgabe.
  */
-function init () {
+function init() {
     logoMuve();
 }
 
@@ -26,7 +26,7 @@ function guestLogIn() {
     localStorage.removeItem("userInitials");
     localStorage.removeItem("userName");
     localStorage.setItem("isGuest", "true");
-    localStorage.setItem("isLoggedIn", "false"); // Ensure isLoggedIn is false for guests
+    localStorage.setItem("isLoggedIn", "true"); // Ensure isLoggedIn is false for guests
     console.log('Guest logged in. isLoggedIn set to false.'); // Debug log
     window.location.href = "../html/summary.html";
 }

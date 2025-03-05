@@ -7,54 +7,60 @@ function isUserLoggedIn() {
 
 function checkIfNavigatedFromSignup() {
     const urlParams = new URLSearchParams(window.location.search);
-    const fromSignup = urlParams.get('from') === 'signup';
+    const fromSignup = urlParams.get("from") === "signup";
 
-    console.log('Navigated from signup:', fromSignup);
-    console.log('Is user logged in?', isUserLoggedIn());
-    console.log('localStorage isLoggedIn value:', localStorage.getItem('isLoggedIn'));
+    console.log("Navigated from signup:", fromSignup);
+    console.log("Is user logged in?", isUserLoggedIn());
+    console.log("localStorage isLoggedIn value:", localStorage.getItem("isLoggedIn"));
 
     if (fromSignup && !isUserLoggedIn()) {
-        console.log('User is not logged in, hiding sidebar items and header elements...');
+        console.log("User is not logged in, hiding sidebar items, header elements, and pageBack button...");
 
-        // Hide the help_user_container if it's found on page load
-        const helpUserContainer = document.querySelector('.help_user_container');
-        if (helpUserContainer) {
-            helpUserContainer.style.display = 'none';
-            console.log('help_user_container hidden on page load.');
-        } else {
-            console.log('help_user_container not found on page load.');
-        }
+        // Function to hide elements
+        const hideElements = () => {
+            const helpUserContainer = document.querySelector(".help_user_container");
+            const nameMenu = document.getElementById("name_menu");
+            const pageBackButton = document.getElementById("pageBackButton"); // Assuming the button has ID "pageBackButton"
 
-        // Hide the name_menu element on page load
-        const nameMenu = document.getElementById('name_menu');
-        if (nameMenu) {
-            nameMenu.style.display = 'none';  // Hide name_menu
-            console.log('name_menu hidden on page load.');
-        } else {
-            console.log('name_menu not found on page load.');
-        }
-
-        // Watch for changes to the header to check for name_menu if it's added dynamically
-        const headerObserver = new MutationObserver((mutations, observer) => {
-            const nameMenu = document.getElementById('name_menu');
-            if (nameMenu) {
-                nameMenu.style.display = 'none';  // Hide name_menu
-                console.log('name_menu dynamically added! Hiding now.');
-                observer.disconnect(); // Stop observing after it's found and hidden
+            if (helpUserContainer) {
+                helpUserContainer.style.display = "none";
+                console.log("help_user_container found and hidden.");
+            } else {
+                console.log("help_user_container not found.");
             }
+
+            if (nameMenu) {
+                nameMenu.style.visibility = "hidden";
+                nameMenu.style.opacity = "0";
+
+                console.log("name_menu found and hidden.");
+            } else {
+                console.log("name_menu not found.");
+            }
+
+            if (pageBackButton) {
+                pageBackButton.style.display = "none"; // Hide the pageBack button
+                console.log("pageBackButton found and hidden.");
+            } else {
+                console.log("pageBackButton not found.");
+            }
+        };
+
+        // Hide elements on initial load
+        hideElements();
+
+        // Watch for changes to the entire document body
+        const globalObserver = new MutationObserver((mutations) => {
+            console.log("DOM changes detected:", mutations);
+            hideElements(); // Re-run the hide function whenever the DOM changes
         });
 
-        // Observe the header for changes (like dynamic addition of name_menu)
-        const header = document.querySelector('header');
-        if (header) {
-            headerObserver.observe(header, { childList: true, subtree: true });
-        } else {
-            console.log('Header element not found for mutation observer.');
-        }
+        globalObserver.observe(document.body, { childList: true, subtree: true });
+        console.log("Global mutation observer started on document body.");
 
         // Wait for sidebar to be added to the DOM
         const sidebarObserver = new MutationObserver((mutations, observer) => {
-            const sidebar = document.getElementById('sidebar');
+            const sidebar = document.getElementById("sidebar");
             if (sidebar) {
                 observer.disconnect(); // Stop observing once sidebar is found
                 modifySidebar();
@@ -63,7 +69,7 @@ function checkIfNavigatedFromSignup() {
 
         sidebarObserver.observe(document.body, { childList: true, subtree: true });
     } else {
-        console.log('User is logged in or not from signup, skipping hiding elements.');
+        console.log("User is logged in or not from signup, skipping hiding elements.");
     }
 }
 

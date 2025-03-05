@@ -6,4 +6,55 @@
     margin-bottom: 24px;
     border-radius: 16px;
     padding: 16px;
+    cursor: pointer;
+    margin-top: 24px;
 }
+
+.bg_Technical {
+    background-color: #23D8C2;
+    width: 50%;
+}
+
+.bg_User {
+    background-color: #1500ff;
+    width: 35%;
+}
+
+.category {
+    color: white;
+    border-radius: 5px;
+    padding: 5px 10px;
+}
+
+.assigned-contacts {
+    display: flex;
+    margin-top: 12px;
+    position: relative;
+}
+
+.contact-badge {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 600;
+    font-size: 14px;
+    margin-left: -8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: margin 0.2s;
+}
+
+.contact-badge:hover {
+    margin-left: 4px;
+    z-index: 2;
+}
+
+.priority_contact {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+

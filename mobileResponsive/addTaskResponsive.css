@@ -83,3 +83,127 @@
         font-size: 16px;
     }
 }
+
+@media (max-width: 700px) {
+    .divider_line {
+        display: none;
+    }
+
+    .headline_addTask_position {
+        margin-bottom: 16px;
+        margin-top: 0;
+    }
+
+    .headline_txt_addTask {
+        font-size: 48px;
+    }
+
+    .d-flex,
+    .datepicker_container {
+        margin-block-end: 8px;
+    }
+
+    .assigned_container {
+        margin-block-end: 0;
+    }
+
+    .container_size {
+        flex-direction: column;
+    }
+
+    .content_container_size {
+        width: 100%;
+    }
+
+    .container_pos {
+        margin: 16px 8px 80px 8px;
+    }
+
+    .left_container,
+    .right_container {
+        width: 100%;
+    }
+
+    .category_container,
+    .subtask_container,
+    .required_container {
+        display: none;
+    }
+
+    .prioBtnMedium,
+    .prioBtnUrgent,
+    .prioBtnLow {
+        width: 152px;
+        font-size: 16px;
+        height: 40px;
+    }
+
+    textarea {
+        height: 104px;
+        background-image: none;
+        font-size: 16px;
+    }
+
+    .btn_position {
+        padding-right: 0;
+    }
+
+    input[type=text],
+    input[type=date i],
+    input[type=date],
+    select {
+        font-size: 16px;
+        height: 40px;
+    }
+
+    label,
+    .assigned_headline,
+    .category_headline,
+    .subtasks_headline {
+        font-size: 16px;
+    }
+
+    .selected-contacts-initials {
+        margin-top: 8px;
+    }
+
+    .btn_container_addTask {
+        margin-block-start: 0;
+    }
+
+    .initials-container {
+        width: 20px;
+        height: 20px;
+    }
+
+    .selected-contacts-initials .initials-container {
+        width: 32px;
+        height: 32px;
+    }
+
+    .create_task_btn,
+    .clear_btn {
+        height: 40px;
+    }
+}
+
+@media (max-width: 490px) {
+
+    .selected-contacts-initials .initials-container {
+        width: 26px;
+        height: 26px;
+    }
+
+    .headline_addTask_position {
+        margin-bottom: 8px;
+    }
+}
+
+@media (max-width: 350px) {
+
+    .prioBtnMedium,
+    .prioBtnUrgent,
+    .prioBtnLow {
+        width: 96px;
+    }
+}

@@ -199,3 +199,22 @@ h1 {
 }
 /*chuks, delete if you want
 */
+
+.overlay {
+    height: 100vh;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.385);
+    z-index: 1000;
+
+}
+
+.d_none {
+    display: none;
+}

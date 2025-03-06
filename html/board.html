@@ -17,6 +17,8 @@
     <div w3-include-html="../Templates/sidebar.html"></div>
     <div w3-include-html="../Templates/header.html"></div>
 
+    <div onclick="overlayBoard()" id="board_overlay" class="overlay d_none"></div>
+
     <main class="board_main">
         <div class="header_board">
             <div class="content_h1">
@@ -97,6 +99,8 @@
             </div>
         </div>
     </main>
+    <!-- <img id="overlay_uncheck" src="../assets/icons/contact_icon_uncheck.png" alt="">
+    <img class="d_none" id="overlay_check" src="../assets/icons/contact_icon_check.png" alt=""> -->
 
     <script src="../js/header.js"></script>
     <script src="../js/board.js"></script>    
@@ -105,6 +109,7 @@
     <script src="../js/addTaskTemplates.js"></script>
     <script src="../script.js"></script>
     <script src="../js/board_template.js"></script>
+    <script src="../js/board_overlay.js"></script>
     <script src="https://www.w3schools.com/lib/w3.js"></script>
     <script>
         includeHTML();

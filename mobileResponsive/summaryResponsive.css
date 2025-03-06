@@ -74,6 +74,10 @@
         transition: opacity 1s ease-out; 
     }
 
+    .greets_container {
+        margin-left: 0;
+    }
+
     .mobile_greets_container.hide {
         opacity: 0;
         pointer-events: none; 

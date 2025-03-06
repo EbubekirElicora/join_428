@@ -56,6 +56,7 @@ const stages = ["todo", "progress", "feedback", "done"];
 
 async function init() {
     todosLoaded();
+    updateHTML();
 }
 
 async function todosLoaded() {
@@ -146,6 +147,7 @@ async function fetchTasks() {
         console.error("Task update error:", error);
     }
 }
+
 
 let filteredTasks = todos.filter(task => {
     const taskCategory = task.category.toLowerCase();

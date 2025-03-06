@@ -82,8 +82,8 @@
 
 .progress_fill {
     height: 100%;
-    color: rgb(69,137,255);
-    transition: width 0.3s ease;
+    background-color: rgb(69, 137, 255);
+    transition: width 0.3s ease-in-out;
 }
 
 .subtasks_counter {
@@ -94,7 +94,6 @@
 
 .inner_content {
     width: 525px;
-    height: 800px;
     background-color: white;
     border-radius: 24px;
     padding: 24px;
@@ -125,7 +124,7 @@
 } 
 
 p {
-    font-size: 20px;
+    font-size: 18px;
     color: #2a3647;
 }
 
@@ -146,3 +145,26 @@ p {
     gap: 8px;
     align-items: center;
 }
+
+.contact_item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-left: 24px;
+}
+
+.subtask_item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    padding: 4px;
+    margin-left: 24px;
+}
+
+.subtask-icon {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+}
+

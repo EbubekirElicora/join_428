@@ -153,11 +153,11 @@ let filteredTasks = todos.filter(task => {
     return taskCategory === category;
 });
 
-async function toggleSubtask(taskId, subtaskId) {
-    const task = todos.find(t => t.id === taskId);
-    if (!task.subtasks) task.subtasks = {};
-    task.subtasks[subtaskId].completed = !task.subtasks[subtaskId].completed;
-    await updateData(`tasks/${taskId}`, task);
-    overlay(taskId);
-    updateHTML();
-}
+// async function toggleSubtask(taskId, subtaskId) {
+//     const task = todos.find(t => t.id === taskId);
+//     if (!task.subtasks) task.subtasks = {};
+//     task.subtasks[subtaskId].completed = !task.subtasks[subtaskId].completed;
+//     await updateData(`tasks/${taskId}`, task);
+//     overlay(taskId);
+//     updateHTML();
+// }

@@ -56,6 +56,7 @@ const stages = ["todo", "progress", "feedback", "done"];
 
 async function init() {
     todosLoaded();
+    updateHTML();
 }
 
 async function todosLoaded() {

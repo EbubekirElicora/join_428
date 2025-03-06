@@ -4,7 +4,7 @@
 function generateTodoHTML(task) {
     const priorityIcons = {
         urgent: '<img src="../assets/icons/prio_urgent_icon.png" alt="">',
-        medium: '<img src="../assets/icons/prio_medium_icon.png" alt="">',
+        medium: '<img src="../assets/icons/prio_media.png" alt="">',
         low: '<img src="../assets/icons/prio_low_icon.png" alt="">'
     };
     const contactsHTML = task.assignedContacts?.map(contact => `

@@ -152,3 +152,10 @@ let filteredTasks = todos.filter(task => {
     const taskCategory = task.category.toLowerCase();
     return taskCategory === category;
 });
+
+async function toggleSubtask(taskId, subtaskId) {
+    const task = todos.find(t => t.id === taskId);
+    task.subtasks[subtaskId].completed = !task.subtasks[subtaskId].completed;
+    await updateData(`tasks/${taskId}`, task);
+    updateHTML();
+}

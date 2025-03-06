@@ -148,6 +148,7 @@ async function fetchTasks() {
     }
 }
 
+
 let filteredTasks = todos.filter(task => {
     const taskCategory = task.category.toLowerCase();
     return taskCategory === category;

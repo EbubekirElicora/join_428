@@ -31,11 +31,6 @@ function initializeDropdown() {
     const dropdownIcon = document.getElementById('dropdownIcon');
     const dropdownIconUp = document.getElementById('dropdownIconUp');
     const dropdownContent = document.getElementById('dropdownContent');
-
-    console.log('Dropdown Icon:', dropdownIcon);
-    console.log('Dropdown Icon Up:', dropdownIconUp);
-    console.log('Dropdown Content:', dropdownContent);
-
     if (dropdownIcon && dropdownIconUp && dropdownContent) {
         dropdownIcon.addEventListener('click', toggleDropdown);
         dropdownIconUp.addEventListener('click', toggleDropdown);
@@ -216,11 +211,7 @@ async function loadContacts() {
         console.error('Dropdown content element not found!');
         return;
     }
-
-    console.log('Loading contacts...');
     const contactsData = await loadData('contacts');
-    console.log('Contacts data:', contactsData);
-
     if (contactsData) {
         const contactsArray = Object.values(contactsData);
         dropdownContent.innerHTML = '';

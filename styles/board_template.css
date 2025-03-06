@@ -23,7 +23,7 @@
 }
 
 .bg_User {
-    background-color: #1500ff;
+    background-color: rgb(69,137,255);
     width: 35%;
 }
 
@@ -82,7 +82,7 @@
 
 .progress_fill {
     height: 100%;
-    background: #002fff;
+    color: rgb(69,137,255);
     transition: width 0.3s ease;
 }
 
@@ -90,4 +90,59 @@
     font-size: 12px;
     color: #666;
     margin-top: 4px;
+}
+
+.inner_content {
+    width: 525px;
+    height: 800px;
+    background-color: white;
+    border-radius: 24px;
+    padding: 24px;
+}
+
+.header_board_overlay {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 24px;
+}
+
+.header_category {
+    color: white;
+    border-radius: 8px;
+    padding: 5px 10px;
+    font-size: 24px;
+    text-align: center;
+}
+
+.header_board_overlay img {
+    cursor: pointer;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.header_board_overlay img:hover {
+    transform: scale(1.1);
+    opacity: 0.8;
+} 
+
+p {
+    font-size: 20px;
+    color: #2a3647;
+}
+
+.priority_overlay {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+}
+
+.date_olerlay {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+}
+
+.priority_icons {
+    display: flex;
+    gap: 8px;
+    align-items: center;
 }

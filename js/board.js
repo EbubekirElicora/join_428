@@ -93,13 +93,26 @@ function startDragging(id) {
     currentDraggedElement = id;
 }
 
-async function createTask() {
+async function createTask(title, category, dueDate, priority, assignedContacts, subtasksArray) {
     const newTask = {
-        stage: "todo",
-        category: "Technical Task"
+      id: Date.now().toString(),
+      title,
+      category,
+      dueDate,
+      priority,
+      assignedContacts,
+      subtasks: subtasksArray.reduce((acc, title, index) => {
+        acc[index] = {
+          title: title,
+          completed: false
+        };
+        return acc;
+      }, {})
     };
     await postData("tasks", newTask);
-}
+    todos.push(newTask);
+    updateHTML();
+  }
 
 
 function resetForm() {
@@ -140,16 +153,30 @@ function removeHighlight(id) {
 
 async function fetchTasks() {
     try {
-        const data = await loadData("tasks");
-        todos = data ? Object.entries(data).map(([id, task]) => ({ id, ...task })) : [];
-        updateHTML();
+      const data = await loadData("tasks");
+      todos = data ? Object.entries(data).map(([id, task]) => {
+        if (task.subtasks) {
+          const fixedSubtasks = {};
+          Object.entries(task.subtasks).forEach(([key, value]) => {
+            if (typeof value === 'string') {
+              fixedSubtasks[key] = { title: value, completed: false };
+            } else {
+              fixedSubtasks[key] = value;
+            }
+          });
+          task.subtasks = fixedSubtasks;
+        }
+        return { id, ...task };
+      }) : [];
+      updateHTML();
     } catch (error) {
-        console.error("Task update error:", error);
+      console.error("Task update error:", error);
     }
-}
+  }
 
 
 let filteredTasks = todos.filter(task => {
     const taskCategory = task.category.toLowerCase();
     return taskCategory === category;
 });
+

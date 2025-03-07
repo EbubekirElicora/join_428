@@ -32,18 +32,21 @@ function getOverlayHtml(task) {
     `).join('') || '<div class="no-contacts">No contacts assigned</div>';
 
     const subtasksHTML = Object.entries(task.subtasks || {}).map(([subtaskId, subtask]) => {
-        const title = typeof subtask === 'string' ? subtask : subtask.title || "Untitled";
-        const completed = typeof subtask === 'string' ? false : subtask.completed;
-    
+        const normalizedSubtask = typeof subtask === 'string' 
+          ? { title: subtask, completed: false } 
+          : subtask;
+        const title = normalizedSubtask.title || "Untitled";
+        const completed = normalizedSubtask.completed;
+      
         return `
-            <div class="subtask_item" onclick="toggleSubtask('${task.id}', '${subtaskId}')">
-                <img src="../assets/icons/contact_icon_${completed ? 'check' : 'uncheck'}.png" 
-                     class="subtask-icon" 
-                     alt="${completed ? 'Completed' : 'Uncompleted'}">
-                <span class="${completed ? 'completed' : ''}">${title}</span>
-            </div>
+          <div class="subtask_item" onclick="toggleSubtask('${task.id}', '${subtaskId}')">
+            <img src="/assets/icons/contact_icon_${completed ? 'check' : 'uncheck'}.png" 
+                 class="subtask-icon" 
+                 alt="${completed ? 'Completed' : 'Uncompleted'}">
+            <span>${title}</span>
+          </div>
         `;
-    }).join('') || '<div class="no-subtasks">No subtasks</div>';
+      }).join('') || '<div class="no-subtasks">No subtasks</div>';
 
     return `
         <div onclick="overlayProtection(event)" class="inner_content">
@@ -85,28 +88,46 @@ function getOverlayHtml(task) {
 
 window.toggleSubtask = async function(taskId, subtaskId) {
     try {
-        const task = todos.find(t => t.id === taskId);
-        if (!task || !task.subtasks || !task.subtasks[subtaskId]) return;
-        task.subtasks[subtaskId].completed = !task.subtasks[subtaskId].completed;
-        const icon = document.querySelector(`[onclick*="${subtaskId}"] .subtask-icon`);
-        if (icon) {
-            icon.src = `../assets/icons/contact_icon_${task.subtasks[subtaskId].completed ? 'check' : 'uncheck'}.png`;
-        }
-        const progressFill = document.querySelector(`[ondragstart*="${taskId}"] .progress_fill`);
-        const counter = document.querySelector(`[ondragstart*="${taskId}"] .subtasks_counter`);
-        
-        if (progressFill && counter) {
-            const total = Object.keys(task.subtasks).length;
-            const done = Object.values(task.subtasks).filter(s => s.completed).length;
-            progressFill.style.width = `${(done / total) * 100}%`;
-            counter.textContent = `${done}/${total} Subtasks`;
-        }
-
-        await updateData(`tasks/${taskId}`, task);
+      const task = todos.find(t => t.id === taskId);
+      if (!task || !task.subtasks || !task.subtasks[subtaskId]) return;
+      if (typeof task.subtasks[subtaskId] === 'string') {
+        task.subtasks[subtaskId] = {
+          title: task.subtasks[subtaskId],
+          completed: false
+        };
+      }
+      task.subtasks[subtaskId].completed = !task.subtasks[subtaskId].completed;
+      await updateData(`tasks/${taskId}`, task);
+      const icon = document.querySelector(`[onclick*="${subtaskId}"] .subtask-icon`);
+      if (icon) {
+        icon.src = `/assets/icons/contact_icon_${task.subtasks[subtaskId].completed ? 'check' : 'uncheck'}.png`;
+      }
+      updateHTML();
     } catch (error) {
-        console.error("Error:", error);
+      console.error("Error:", error);
     }
-};
+  };
+
+  async function migrateSubtasks() {
+    const tasks = await loadData("tasks");
+    for (const [taskId, task] of Object.entries(tasks)) {
+      if (task.subtasks) {
+        const fixedSubtasks = {};
+        Object.entries(task.subtasks).forEach(([key, value]) => {
+          if (typeof value === 'string') {
+            fixedSubtasks[key] = { title: value, completed: false };
+          } else {
+            fixedSubtasks[key] = value;
+          }
+        });
+        await updateData(`tasks/${taskId}`, { ...task, subtasks: fixedSubtasks });
+      }
+    }
+  }
+
+  
+
+
 
 todos.forEach(task => {
     if (task.subtasks) {

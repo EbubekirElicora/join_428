@@ -1,0 +1,16 @@
+
+.edit_close {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.edit_close img {
+    cursor: pointer;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.edit_close img:hover {
+    transform: scale(1.1);
+    opacity: 0.8;
+}

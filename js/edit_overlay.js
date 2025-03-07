@@ -17,7 +17,11 @@ async function editOverlay(taskId) {
 function getOverlayEdit(task) {
     return `
         <div onclick="editProtection(event)" class="inner_content">
-            <h1>HALLO</h1>
+            <div class="edit_close">
+                <h2>Bearbeiten der Aufgabe</h2>
+                <img onclick="editOverlay()" src="/assets/icons/close.png" alt="">
+            </div>
+            
         </div>
     `;
 }

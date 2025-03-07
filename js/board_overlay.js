@@ -80,6 +80,18 @@ function getOverlayHtml(task) {
                     ${subtasksHTML}
                 </div>
             </div>
+
+            <div class="buttons">
+                <button onclick="editTask('${task.id}')" class="img_p">
+                    <img src="/assets/icons/edit.png" alt="">
+                    <p>Edit</p>
+                </button>
+                <div class="shadow_box"></div>
+                <button onclick="deleteTask('${task.id}')" class="img_p">
+                    <img src="/assets/icons/delete.png" alt="">
+                    <p>Delete</p>
+                </button>
+            </div>
             
             
         </div>
@@ -125,10 +137,6 @@ window.toggleSubtask = async function(taskId, subtaskId) {
     }
   }
 
-  
-
-
-
 todos.forEach(task => {
     if (task.subtasks) {
         Object.keys(task.subtasks).forEach(key => {
@@ -156,3 +164,15 @@ function getSubtasksCounter(task) {
 function overlayProtection (event) {
     event.stopPropagation();
 }
+
+async function deleteTask(taskId) {
+    try {
+      await deleteData(`tasks/${taskId}`);
+      todos = todos.filter(task => task.id !== taskId);
+      updateHTML();
+      overlayBoard();
+    } catch (error) {
+      console.error("Uninstall error:", error);
+    }
+  }
+

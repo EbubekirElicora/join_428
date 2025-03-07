@@ -141,7 +141,7 @@
         display: flex; /* Ensure flexbox is applied */
         flex-direction: row; /* Change to row layout */
         gap: 40px; /* Increased gap between links */
-        padding: 20px 50px; /* Add horizontal padding for better spacing */
+        padding:0 20px;
         align-items: center; /* Center links vertically */
     }
 
@@ -175,18 +175,38 @@
     }
 
     .privacy_and_noticy_container {
-        display: none !important; 
+        display: none; 
     }
 
 
     .sidebarlogo {
         display: none;
     }
-    #sidebar.show-privacy-links-mobile .privacy_and_noticy_container {
+}
+@media (max-width: 1080px) {
+    .show-privacy-links-mobile .privacy_and_noticy_container {
         display: flex !important;
         flex-direction: row !important;
-        gap: 16px;
-        align-items: center;
+        justify-content: center !important;
+        align-items: center !important;
+        gap: 20px;
+        
+        position: relative; /* Ensures it stays in place */
+        bottom: 0;
+        padding: 10px 0;
+    }
+
+    .show-privacy-links-mobile .privacy_and_noticy_container a {
+        text-align: center;
+        flex-grow: 1; /* Ensures equal spacing */
+        white-space: nowrap; /* Prevents text from wrapping */
+        padding: 5px 10px;
+    }
+
+    .show-privacy-links-mobile #sidefoot {
+        display: flex;
+        flex-direction: row;
         justify-content: center;
+        width: 100%;
     }
 }

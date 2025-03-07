@@ -82,7 +82,7 @@ function getOverlayHtml(task) {
             </div>
 
             <div class="buttons">
-                <button onclick="editTask('${task.id}')" class="img_p">
+                <button onclick="editOverlay('${task.id}')" class="img_p">
                     <img src="/assets/icons/edit.png" alt="">
                     <p>Edit</p>
                 </button>

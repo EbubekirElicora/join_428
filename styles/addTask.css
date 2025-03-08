@@ -800,6 +800,35 @@ input[type="checkbox"]:checked {
   overflow-y: auto;
   z-index: 1;
 }
+.checkbox_class {
+  opacity: 1;
+  position: relative;
+  width: 16px;
+  height: 16px;
+  margin-right: 8px;
+  cursor: pointer;
+}
+
+.selected-dropdown-item .checkbox_class {
+  filter: brightness(0) invert(1);
+}
+
+.selected-dropdown-item {
+  background-color: #2A3647;
+  color: white;
+}
+
+.contact-item {
+  margin-bottom: 4px;
+  padding: 4px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.contact-item:hover:not(.selected-dropdown-item) {
+  background-color: #f0f0f0;
+}
+
 
 .dropdown-content div {
   padding: 5px;
@@ -821,6 +850,7 @@ input[type="checkbox"]:checked {
   border-radius: 50%;
   background-color: #ccc;
   position: relative; 
+  border: 2px solid white;
 }
 
 .initials {

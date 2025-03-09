@@ -1,14 +1,4 @@
-@keyframes greetAnimation {
-    0% {
-        opacity: 1;
-        transform: translateY(50px);
-    }
 
-    100% {
-        opacity: 0;
-        transform: translateY(0);
-    }
-}
 
 @media (max-width: 1440px) {
 
@@ -16,9 +6,7 @@
         margin-left: 332px;
         margin-block-start: 40px;
     }
-}
 
-@media (max-width: 1230px) {
 
     .button_container {
         margin-left: 300px;
@@ -68,9 +56,9 @@
         top: 100px;
         left: 0;
         width: 100%;
-        height: calc(100vh - 172px);
-        background-color: #f6f7f8;
-        z-index: 1000;
+        height: calc(100vh - 172px); 
+        background-color:#f6f7f8;
+        z-index:500px; 
         opacity: 1;
         transition: opacity 1s ease-out;
     }

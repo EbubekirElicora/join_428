@@ -157,13 +157,31 @@ h1 {
     overflow-y: auto;
     z-index: 1000;
 }
+/* Style for selected contact items */
+.selected-contact-item {
+    background-color: #2A3647;
+    color: white;
+}
 
+/* Ensure the checkbox inside the selected contact item is white */
+.selected-contact-item .contact-checkbox {
+    filter: brightness(0) invert(1);
+}
+
+/* Style for contact items in the dropdown */
+
+
+/* Hover effect for contact items */
+.dropdown-item:hover:not(.selected-contact-item) {
+    background-color: #f0f0f0;
+}
 .dropdown-item {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 8px;
     cursor: pointer;
+    margin-bottom: 3px;
 }
 
 .contact-info {
@@ -179,6 +197,7 @@ h1 {
     display: flex;
     align-items: center;
     justify-content: center;
+    border: 2px solid white;
 }
 
 .contact-initials {
@@ -216,5 +235,9 @@ h1 {
 }
 
 .d_none {
+    display: none;
+}
+
+.edit_none {
     display: none;
 }

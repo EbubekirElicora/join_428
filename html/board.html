@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="../styles/standart.css">
     <link rel="stylesheet" href="../styles/template.css">
     <link rel="stylesheet" href="../styles/board_template.css">
+    <link rel="stylesheet" href="/styles/edit_overlay.css">
     <title>Join</title>
 </head>
 <body onload="init()">
@@ -18,11 +19,12 @@
     <div w3-include-html="../Templates/header.html"></div>
 
     <div onclick="overlayBoard()" id="board_overlay" class="overlay d_none"></div>
-
+    <div onclick="editOverlay()" id="edit_overlay" class="overlay edit_none"></div>
     <main class="board_main">
         <div class="header_board">
             <div class="content_h1">
                 <h1>Board</h1>
+
             </div>
             <div class="input_button">
                 <div class="input_img">
@@ -99,9 +101,7 @@
             </div>
         </div>
     </main>
-    <!-- <img id="overlay_uncheck" src="../assets/icons/contact_icon_uncheck.png" alt="">
-    <img class="d_none" id="overlay_check" src="../assets/icons/contact_icon_check.png" alt=""> -->
-
+    
     <script src="../js/header.js"></script>
     <script src="../js/board.js"></script>    
     <script src="../js/firebase.js"></script>    
@@ -110,6 +110,7 @@
     <script src="../script.js"></script>
     <script src="../js/board_template.js"></script>
     <script src="../js/board_overlay.js"></script>
+    <script src="/js/edit_overlay.js"></script>
     <script src="https://www.w3schools.com/lib/w3.js"></script>
     <script>
         includeHTML();

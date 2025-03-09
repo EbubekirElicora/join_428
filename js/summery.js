@@ -28,33 +28,27 @@ document.addEventListener('DOMContentLoaded', function () {
 
     greetText.textContent = greeting;
 
-    // Show the greeting overlay on smaller screens
+    // Handle the fade-out effect only for mobile screens
     const mobileGreetsContainer = document.querySelector('.mobile_greets_container');
 
     if (window.innerWidth < 760) { // Only for smaller screens
-        // Ensure the greeting text and user name are updated in the overlay
-        const greetsTextOverlay = document.getElementById('greets_text');
-        const greetedUserOverlay = document.getElementById('greeted_user');
-
-        greetsTextOverlay.textContent = greeting;
-        greetedUserOverlay.textContent = isGuest === "true" ? "Guest" : localStorage.getItem('userName');
-
-        // Show the overlay
-        mobileGreetsContainer.style.display = 'flex';
-
-        // Hide the overlay after 3 seconds
+        // Hide the overlay after 3 seconds with a fade-out effect
         setTimeout(() => {
             mobileGreetsContainer.classList.add('hide');
-        }, 2000); // 3 seconds
+        }, 2000); // Start fade-out after 2 seconds
+
+        // Remove the overlay from the DOM after the fade-out completes
+        setTimeout(() => {
+            mobileGreetsContainer.style.display = 'none';
+        }, 1000); // Remove after 3 seconds (1 second fade-out duration)
     }
 });
-
-
 
 function loadUserInfo() {
     const userName = localStorage.getItem("userName") || "Guest";
     document.getElementById("greeted_user").textContent = userName;
 }
+
 document.addEventListener("DOMContentLoaded", loadUserInfo);
 
 

@@ -1,111 +1,159 @@
-function isUserLoggedIn() {
-    const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
-    console.log('isUserLoggedIn() returned:', isLoggedIn);
-    console.log('localStorage isLoggedIn value:', localStorage.getItem('isLoggedIn'));
-    return isLoggedIn;
-}
+const BASE_URL = "https://join-428-default-rtdb.europe-west1.firebasedatabase.app/";
 
-function checkIfNavigatedFromSignup() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const fromSignup = urlParams.get('from') === 'signup';
+document.addEventListener("DOMContentLoaded", function () {
+    const signUpButton = document.getElementById("signup-btn");
+    const termsCheckbox = document.getElementById("terms-checkbox");
+    const signUpForm = document.getElementById("join-form");
 
-    console.log('Navigated from signup:', fromSignup);
-    console.log('Is user logged in?', isUserLoggedIn());
-    console.log('localStorage isLoggedIn value:', localStorage.getItem('isLoggedIn'));
+    // Enable signup button only when checkbox is checked
+    termsCheckbox.addEventListener("change", function () {
+        signUpButton.disabled = !this.checked;
+    });
 
-    if (fromSignup && !isUserLoggedIn()) {
-        console.log('User is not logged in, hiding sidebar items and header elements...');
+    // Attach event listener to form submission
+    signUpForm.addEventListener("submit", function (event) {
+        event.preventDefault(); // Prevent form reload
+        signUp();
+    });
+});
 
-        // Hide the help_user_container if it's found on page load
-        const helpUserContainer = document.querySelector('.help_user_container');
-        if (helpUserContainer) {
-            helpUserContainer.style.display = 'none';
-            console.log('help_user_container hidden on page load.');
-        } else {
-            console.log('help_user_container not found on page load.');
-        }
+async function signUp() {
+    const name = document.getElementById("name").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value.trim();
+    const confirmPassword = document.getElementById("confirm-password").value.trim();
 
-        // Hide the name_menu element on page load
-        const nameMenu = document.getElementById('name_menu');
-        if (nameMenu) {
-            nameMenu.style.display = 'none';  // Hide name_menu
-            console.log('name_menu hidden on page load.');
-        } else {
-            console.log('name_menu not found on page load.');
-        }
-
-        // Watch for changes to the header to check for name_menu if it's added dynamically
-        const headerObserver = new MutationObserver((mutations, observer) => {
-            const nameMenu = document.getElementById('name_menu');
-            if (nameMenu) {
-                nameMenu.style.display = 'none';  // Hide name_menu
-                console.log('name_menu dynamically added! Hiding now.');
-                observer.disconnect(); // Stop observing after it's found and hidden
-            }
-        });
-
-        // Observe the header for changes (like dynamic addition of name_menu)
-        const header = document.querySelector('header');
-        if (header) {
-            headerObserver.observe(header, { childList: true, subtree: true });
-        } else {
-            console.log('Header element not found for mutation observer.');
-        }
-
-        // Wait for sidebar to be added to the DOM
-        const sidebarObserver = new MutationObserver((mutations, observer) => {
-            const sidebar = document.getElementById('sidebar');
-            if (sidebar) {
-                observer.disconnect(); // Stop observing once sidebar is found
-                modifySidebar();
-            }
-        });
-
-        sidebarObserver.observe(document.body, { childList: true, subtree: true });
-    } else {
-        console.log('User is logged in or not from signup, skipping hiding elements.');
-    }
-}
-
-function modifySidebar() {
-    const sidebar = document.getElementById('sidebar');
-    if (!sidebar) {
-        console.error('Sidebar not found!');
+    // Validate input fields
+    if (!name || !email || !password || !confirmPassword) {
+        
         return;
     }
 
-    console.log('Sidebar found, modifying...');
-    const widgets = document.querySelectorAll('.widget');
-    const sidebarLinks = document.querySelectorAll('.menu_bar a');
-    const sidebarLogoContainer = document.querySelector('.sidebar_img_container');
-    const privacyLinks = document.querySelectorAll('.privacy_and_noticy_container a');
+    // Validate email format
+    if (!validateEmail(email)) {
+        showToast("Invalid email format.", "error");
+        clearForm();
+        return;
+    }
 
-    // Hide all sidebar items except Privacy Policy and Legal Notice
-    widgets.forEach(widget => widget.style.display = 'none');
-    sidebarLinks.forEach(link => {
-        if (![...privacyLinks].includes(link)) {
-            link.style.display = 'none';
-        }
-    });
+    // Validate password match
+    if (password !== confirmPassword) {
+        showToast("Passwords do not match.", "error");
+        return;
+    }
 
-    // Add login link below the logo
-    if (sidebarLogoContainer) {
-        const loginLinkContainer = document.createElement('div');
-        loginLinkContainer.innerHTML = `
-            <a href="../html/log_in.html" class="login-link">
-                <img src="../assets/login icon.svg" alt="Login Icon" class="login-icon">
-                <span>Login</span>
-            </a>`;
-        loginLinkContainer.style.marginTop = '40px'; 
-        loginLinkContainer.style.marginLeft = '-90px'; 
-        sidebarLogoContainer.appendChild(loginLinkContainer);
+    // Check if user already exists
+    if (await userExists(email)) {
+        showToast("Email already registered.", "error");
+        clearForm();
+        return;
+    }
 
-        console.log('Login link added below the logo.');
+    // Save user to Firebase
+    try {
+        const newUser = { name, email, password };
+        await saveUserToFirebase(newUser);
+        showToast("You signed up successfully", "success");
+
+        setTimeout(() => {
+            window.location.href = "./log_in.html"; // Redirect to login page
+        }, 2000);
+    } catch (error) {
+        console.error("Error signing up:", error);
+        showToast("Error signing up. Try again later.", "error");
     }
 }
 
-// Run the function after the DOM is fully loaded
-document.addEventListener('DOMContentLoaded', () => {
-    console.log('DOM fully loaded');
-    checkIfNavigatedFromSignup();
-});
+// Function to validate email format
+function validateEmail(email) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+}
+
+// Function to check if user exists
+async function userExists(email) {
+    try {
+        const response = await fetch(`${BASE_URL}users.json`);
+        if (!response.ok) throw new Error("Failed to fetch users");
+
+        const users = await response.json();
+        return users && Object.values(users).some(user => user.email === email);
+    } catch (error) {
+        console.error("Error checking existing user:", error);
+        return false;
+    }
+}
+
+// Function to save user to Firebase
+async function saveUserToFirebase(user) {
+    try {
+        const response = await fetch(`${BASE_URL}users.json`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(user),
+        });
+
+        if (!response.ok) throw new Error("Failed to save user");
+    } catch (error) {
+        console.error("Error saving user:", error);
+        throw error;
+    }
+}
+
+// Function to clear form
+function clearForm() {
+    document.getElementById("join-form").reset();
+}
+
+// Function to show toast notification
+function showToast(message, type) {
+    // Create toast container
+    const toast = document.createElement("div");
+    toast.className = `toast toast-${type}`;
+    toast.innerText = message;
+    document.body.appendChild(toast);
+
+    // Apply 'show' class after a short delay to trigger animation
+    setTimeout(() => toast.classList.add("show"), 100);
+
+    // Hide toast after 2.5 seconds
+    setTimeout(() => {
+        toast.classList.add("hide"); // Slide up slightly
+        setTimeout(() => toast.remove(), 500); // Remove from DOM
+    }, 2500);
+}
+
+
+// Toggle password visibility
+
+function togglePasswordVisibility(inputId, toggleIconId) {
+    const passwordInput = document.getElementById(inputId);
+    const toggleIconElement = document.getElementById(toggleIconId);
+
+    // Check if elements are found
+    if (!passwordInput || !toggleIconElement) {
+        console.error('Element not found');
+        return;
+    }
+
+    const toggleIcon = toggleIconElement.getElementsByTagName('img')[0];
+
+    // Check if image element is found
+    if (!toggleIcon) {
+        console.error('Image element not found inside toggleIconId:', toggleIconId);
+        return;
+    }
+
+    // Toggle password visibility
+    if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        toggleIcon.src = '/Assets/visibility.svg'; 
+        toggleIcon.alt = 'Hide Password';
+        console.log('Password is now visible.'); 
+    } else {
+        passwordInput.type = 'password'; 
+        toggleIcon.src = '/Assets/visibility_off - Copy.svg'; 
+        toggleIcon.alt = 'Show Password'; 
+        console.log('Password is now hidden.'); 
+    }
+}

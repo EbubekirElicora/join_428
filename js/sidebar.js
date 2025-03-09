@@ -8,19 +8,28 @@ function isUserLoggedIn() {
 function checkIfNavigatedFromSignup() {
     const urlParams = new URLSearchParams(window.location.search);
     const fromSignup = urlParams.get("from") === "signup";
+    const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
 
     console.log("Navigated from signup:", fromSignup);
-    console.log("Is user logged in?", isUserLoggedIn());
+    console.log("Is user logged in?", isLoggedIn);
     console.log("localStorage isLoggedIn value:", localStorage.getItem("isLoggedIn"));
 
-    if (fromSignup && !isUserLoggedIn()) {
-        console.log("User is not logged in, hiding sidebar items, header elements, and pageBack button...");
+    if (fromSignup && !isLoggedIn) {
+        console.log("User is not logged in and navigated from signup, showing privacy/legal notice links on mobile...");
 
-        // Function to hide elements
+        const sidebar = document.getElementById("sidebar");
+        if (sidebar) {
+            sidebar.classList.add("show-privacy-links-mobile");
+            console.log("Added class to show privacy/legal notice links on mobile.");
+            console.log("Sidebar classes:", sidebar.classList);
+        } else {
+            console.log("Sidebar not found.");
+        }
+
         const hideElements = () => {
             const helpUserContainer = document.querySelector(".help_user_container");
             const nameMenu = document.getElementById("name_menu");
-            const pageBackButton = document.getElementById("pageBackButton"); // Assuming the button has ID "pageBackButton"
+            const pageBackButton = document.getElementById("pageBackButton");
 
             if (helpUserContainer) {
                 helpUserContainer.style.display = "none";
@@ -32,47 +41,51 @@ function checkIfNavigatedFromSignup() {
             if (nameMenu) {
                 nameMenu.style.visibility = "hidden";
                 nameMenu.style.opacity = "0";
-
                 console.log("name_menu found and hidden.");
             } else {
                 console.log("name_menu not found.");
             }
 
             if (pageBackButton) {
-                pageBackButton.style.display = "none"; // Hide the pageBack button
+                pageBackButton.style.display = "none";
                 console.log("pageBackButton found and hidden.");
             } else {
                 console.log("pageBackButton not found.");
             }
         };
 
-        // Hide elements on initial load
         hideElements();
 
-        // Watch for changes to the entire document body
         const globalObserver = new MutationObserver((mutations) => {
             console.log("DOM changes detected:", mutations);
-            hideElements(); // Re-run the hide function whenever the DOM changes
+
+            const sidebar = document.getElementById("sidebar");
+            if (sidebar) {
+                console.log("Sidebar found dynamically!");
+                sidebar.classList.add("show-privacy-links-mobile");
+                console.log("Added class to show privacy/legal notice links on mobile.");
+                globalObserver.disconnect();
+            }
+
+            hideElements();
         });
 
         globalObserver.observe(document.body, { childList: true, subtree: true });
         console.log("Global mutation observer started on document body.");
 
-        // Wait for sidebar to be added to the DOM
         const sidebarObserver = new MutationObserver((mutations, observer) => {
             const sidebar = document.getElementById("sidebar");
             if (sidebar) {
-                observer.disconnect(); // Stop observing once sidebar is found
+                observer.disconnect();
                 modifySidebar();
             }
         });
 
         sidebarObserver.observe(document.body, { childList: true, subtree: true });
     } else {
-        console.log("User is logged in or not from signup, skipping hiding elements.");
+        console.log("User is logged in or not from signup, skipping showing privacy/legal notice links.");
     }
 }
-
 function modifySidebar() {
     const sidebar = document.getElementById('sidebar');
     if (!sidebar) {

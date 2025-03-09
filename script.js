@@ -174,7 +174,7 @@ function resetForm() {
     document.getElementById('date').value = '';
     document.getElementById('select_txt').textContent = 'Select task category';
     document.getElementById('added_text').innerHTML = '';
-    selectedContacts = [];
+    
     document.getElementById('contactInput').value = '';
     document.getElementById('selectedContactsInitials').innerHTML = '';
     subtasks = [];
@@ -220,7 +220,6 @@ async function loadContacts() {
             const contactDiv = document.createElement('div');
             contactDiv.classList.add('dropdown-item');
 
-           
             contactDiv.innerHTML = `
                 <div class="contact-info">
                     <div class="contact-initials-container" style="background-color: ${getRandomColor()}">
@@ -231,22 +230,21 @@ async function loadContacts() {
                 <input type="checkbox" class="contact-checkbox">
             `;
 
-           
             const checkbox = contactDiv.querySelector('.contact-checkbox');
 
-           
             checkbox.addEventListener('change', (event) => {
                 if (checkbox.checked) {
-                   
+                    // Add the selected-contact-item class
+                    contactDiv.classList.add('selected-contact-item');
                     if (!selectedContacts.find(c => c.name === contact.name)) {
                         selectedContacts.push(contact);
                     }
                 } else {
-                   
+                    // Remove the selected-contact-item class
+                    contactDiv.classList.remove('selected-contact-item');
                     selectedContacts = selectedContacts.filter(c => c.name !== contact.name);
                 }
 
-               
                 updateSelectedContacts();
             });
 
@@ -256,7 +254,6 @@ async function loadContacts() {
         dropdownContent.innerHTML = '<div class="dropdown-item">No contacts available</div>';
     }
 }
-
 // Select a contact
 
 function selectContact(contact) {
@@ -279,17 +276,16 @@ function updateSelectedContacts() {
         return;
     }
 
-   
+    // Update the input field with selected contact names
     const selectedNames = selectedContacts.map(contact => contact.name).join(', ');
     inputField.value = selectedNames;
 
-   
+    // Update the initials container
     initialsContainer.innerHTML = '';
     selectedContacts.forEach(contact => {
         const span = document.createElement('span');
         span.classList.add('contact-initial');
 
-       
         span.innerHTML = `
             <div class="contact-initials-container" style="background-color: ${getRandomColor()}">
                 <div class="contact-initials">${getInitials(contact.name)}</div>

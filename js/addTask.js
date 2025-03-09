@@ -21,7 +21,17 @@ function setPrio(prio) {
 // Global variables
 let selectedContacts = []; // For assigned contacts
 
+// Define getRandomColor in the global scope
+function getRandomColor() {
+    const letters = '0123456789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+}
 
+// Rest of your code...
 document.addEventListener('DOMContentLoaded', function () {
     const BASE_URL = "https://join-428-default-rtdb.europe-west1.firebasedatabase.app/";
     const CONTACTS_ENDPOINT = "contacts.json";
@@ -36,16 +46,6 @@ document.addEventListener('DOMContentLoaded', function () {
         const names = name.split(' ');
         const initials = names.map(n => n[0]).join('');
         return initials.toUpperCase();
-    }
-
-    // Function to generate random color
-    function getRandomColor() {
-        const letters = '0123456789ABCDEF';
-        let color = '#';
-        for (let i = 0; i < 6; i++) {
-            color += letters[Math.floor(Math.random() * 16)];
-        }
-        return color;
     }
 
     // Fetch contacts from Firebase
@@ -66,57 +66,72 @@ document.addEventListener('DOMContentLoaded', function () {
     // Populate dropdown with contacts
     async function populateDropdown() {
         const contacts = await fetchContacts();
-
+    
         if (!contacts) {
             console.error('No contacts found or failed to fetch.');
             return;
         }
-
-        dropdownContent.innerHTML = '';
-
+    
+        const dropdownContent = document.getElementById('dropdownContent');
+        dropdownContent.innerHTML = ''; // Clear existing dropdown content
+    
         Object.keys(contacts).forEach(key => {
             const contact = contacts[key];
             const contactItem = document.createElement('div');
-
+            contactItem.className = 'contact-item'; // Add a class for styling
+    
             const contactInfo = document.createElement('div');
             contactInfo.className = 'contact-info';
-
+    
             const contactName = document.createElement('span');
             contactName.textContent = contact.name;
-
+    
             const initialsContainer = document.createElement('div');
             initialsContainer.className = 'initials-container';
             initialsContainer.style.backgroundColor = getRandomColor();
-
+    
             const initialsDiv = document.createElement('div');
             initialsDiv.className = 'initials';
             initialsDiv.textContent = getInitials(contact.name);
-
+    
             initialsContainer.appendChild(initialsDiv);
             contactInfo.appendChild(initialsContainer);
             contactInfo.appendChild(contactName);
-
+    
             const checkbox = document.createElement('input');
             checkbox.type = 'checkbox';
             checkbox.className = 'checkbox_class';
             checkbox.value = contact.email;
-            checkbox.id = `contact-${key}`;
-
+            checkbox.id = `contact-${key}`; // Ensure unique ID for each checkbox
+    
             contactItem.appendChild(contactInfo);
             contactItem.appendChild(checkbox);
-
-            checkbox.addEventListener('change', function () {
-                if (this.checked) {
-                    selectedContacts.push(contact.name); // Add to selected contacts
-                } else {
-                    selectedContacts = selectedContacts.filter(name => name !== contact.name); // Remove from selected contacts
+    
+            // Add event listener to the contactItem to toggle the selected state
+            contactItem.addEventListener('click', function (event) {
+                // Prevent the checkbox from being toggled twice
+                if (event.target !== checkbox) {
+                    checkbox.checked = !checkbox.checked;
                 }
-                updateInputField(); // Update the input field
+    
+                // Toggle the selected state
+                contactItem.classList.toggle('selected-dropdown-item');
+    
+                // Update the selectedContacts array
+                if (checkbox.checked) {
+                    selectedContacts.push(contact.name);
+                } else {
+                    selectedContacts = selectedContacts.filter(name => name !== contact.name);
+                }
+    
+                // Update the input field
+                updateInputField();
             });
-
+    
             dropdownContent.appendChild(contactItem);
         });
     }
+
 
     // Update the input field with selected contacts
     function updateInputField() {
@@ -168,29 +183,35 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    
     populateDropdown();
 
     // Add event listener to the "Create Task" button
     document.getElementById('createTaskBtn').addEventListener('click', async function (event) {
         event.preventDefault(); 
-    
-       
+
+        // Collect task data
         const taskData = collectTaskData();
-    
-       
+
+        // Validate required fields
         if (!taskData.title || !taskData.dueDate || !taskData.category) {
             alert('Please fill in all required fields (Title, Due Date, Category).');
             return;
         }
-    
+
         // Save task to Firebase
         const savedTask = await saveTaskToFirebase(taskData);
-    
+
         if (savedTask) {
             showToast('Task created successfully!');
             console.log('Task saved. Resetting form...'); 
-            resetForm(); 
+
+            // Reset the form
+            resetForm();
+
+            // Redirect to the board page after a short delay (e.g., 2 seconds)
+            setTimeout(() => {
+                window.location.href = 'board.html'; // Replace with the correct path to your board page
+            }, 2000); // 2000 milliseconds = 2 seconds
         } else {
             alert('Failed to create task. Please try again.');
         }
@@ -206,7 +227,10 @@ function collectTaskData() {
                      document.querySelector('.prioBtnMedium.active') ? 'medium' :
                      document.querySelector('.prioBtnLow.active') ? 'low' : 'medium';
     const category = document.getElementById('select_txt').textContent;
-    const assignedContacts = selectedContacts; 
+    const assignedContacts = selectedContacts.map(contact => ({
+        name: contact,
+        color: getRandomColor() // Use the globally defined function
+    }));
     const subtasksList = subtasks;
 
     return {
@@ -266,8 +290,6 @@ function resetForm() {
 
     setPrio('medium');
 }
-
-
 //create task functions//
 
 

@@ -54,14 +54,21 @@
 /* Hover Effect */
 
 
-.widget.active {
-    border: 5px solid yellow !important;
-}
+
 .widget.active {
     background-color: #1A1F2E !important;
     color: white !important;
     font-weight: bold;
 }
+
+/* 🔹 Fix: Remove hover effect when active */
+.widget.active:hover {
+    background-color: #1A1F2E !important; /* Keeps the active color */
+}
+
+
+
+
 .widget:hover {
     background-color: #2A3D59 !important;
 }

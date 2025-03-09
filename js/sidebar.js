@@ -130,37 +130,4 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-document.addEventListener('DOMContentLoaded', function () {
-    console.log('DOM fully loaded and parsed');
-    initializeSidebar();
-});
 
-function initializeSidebar() {
-    const sidebarItems = document.querySelectorAll('.widget');
-
-    console.log('Sidebar items found:', sidebarItems.length);
-
-    function setActiveItem(clickedItem) {
-        console.log('Setting active item:', clickedItem.id);
-        sidebarItems.forEach(item => item.classList.remove('active'));
-        clickedItem.classList.add('active');
-        localStorage.setItem('activeItem', clickedItem.id);
-    }
-
-    sidebarItems.forEach(item => {
-        item.addEventListener('click', function () {
-            console.log('Clicked item:', this.id);
-            setActiveItem(this);
-        });
-    });
-
-    const activeItemId = localStorage.getItem('activeItem');
-    if (activeItemId) {
-        console.log('Active item from localStorage:', activeItemId);
-        const activeItem = document.getElementById(activeItemId);
-        if (activeItem) {
-            console.log('Applying active class to:', activeItem.id);
-            activeItem.classList.add('active');
-        }
-    }
-}

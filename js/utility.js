@@ -37,3 +37,64 @@ function showToast(message) {
       toast.classList.remove('show');
   }, 3000);
 }
+document.addEventListener("DOMContentLoaded", function () {
+  const observer = new MutationObserver((mutations, obs) => {
+      const sidebar = document.getElementById("sidelinks");
+      if (sidebar) {
+          console.log("✅ Sidebar detected, running script...");
+          applyActiveState();
+          addSidebarClickListeners(); // Attach click event listeners
+          obs.disconnect(); // Stop observing once sidebar is found
+      }
+  });
+
+  observer.observe(document.body, { childList: true, subtree: true });
+});
+
+function applyActiveState() {
+  const currentPath = window.location.pathname.split("/").pop();
+  console.log("Checking active state for:", currentPath);
+
+  const pageMap = {
+      "summary.html": "widget_1",
+      "addTask.html": "widget_2",
+      "board.html": "widget_3",
+      "contacts.html": "widget_4"
+  };
+
+  // Remove active state from all widgets
+  document.querySelectorAll(".widget").forEach(widget => {
+      widget.classList.remove("active");
+      widget.style.backgroundColor = ""; // Reset color
+      widget.style.color = ""; // Reset text color
+      widget.style.fontWeight = ""; // Reset font weight
+  });
+
+  // Apply active state to the matching widget
+  if (pageMap[currentPath]) {
+      const activeWidget = document.getElementById(pageMap[currentPath]);
+      if (activeWidget) {
+          activeWidget.style.backgroundColor = "#1A1F2E";
+          activeWidget.style.color = "white";
+          activeWidget.style.fontWeight = "bold";
+          activeWidget.classList.add("active");
+
+          console.log("✅ Active widget set:", activeWidget.id);
+      } else {
+          console.error("❌ Active widget not found in DOM!");
+      }
+  }
+}
+
+function addSidebarClickListeners() {
+  document.querySelectorAll(".widget a").forEach(link => {
+      link.addEventListener("click", function (event) {
+          event.preventDefault(); // Stop default navigation
+          const targetPage = this.getAttribute("href");
+          
+          // Update active state immediately
+          history.pushState({}, "", targetPage); // Update URL without reload
+          applyActiveState();
+      });
+  });
+}

@@ -52,14 +52,11 @@
     align-items: flex-start;
 }
 /* Hover Effect */
-<<<<<<< HEAD
 
 
-=======
 .widget.active {
     border: 5px solid yellow !important;
 }
->>>>>>> 43f49c17d35b33fea3a890efaf68f4e9949960dd
 .widget.active {
     background-color: #1A1F2E !important;
     color: white !important;

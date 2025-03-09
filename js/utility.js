@@ -43,7 +43,6 @@ document.addEventListener("DOMContentLoaded", function () {
       if (sidebar) {
           console.log("✅ Sidebar detected, running script...");
           applyActiveState();
-          addSidebarClickListeners(); // Attach click event listeners
           obs.disconnect(); // Stop observing once sidebar is found
       }
   });
@@ -62,39 +61,22 @@ function applyActiveState() {
       "contacts.html": "widget_4"
   };
 
-  // Remove active state from all widgets
-  document.querySelectorAll(".widget").forEach(widget => {
-      widget.classList.remove("active");
-      widget.style.backgroundColor = ""; // Reset color
-      widget.style.color = ""; // Reset text color
-      widget.style.fontWeight = ""; // Reset font weight
-  });
-
-  // Apply active state to the matching widget
   if (pageMap[currentPath]) {
       const activeWidget = document.getElementById(pageMap[currentPath]);
       if (activeWidget) {
-          activeWidget.style.backgroundColor = "#1A1F2E";
-          activeWidget.style.color = "white";
-          activeWidget.style.fontWeight = "bold";
-          activeWidget.classList.add("active");
+          // Check if the widget is already active
+          if (!activeWidget.classList.contains("active")) {
+              activeWidget.style.backgroundColor = "#1A1F2E";
+              activeWidget.style.color = "white";
+              activeWidget.style.fontWeight = "bold";
 
-          console.log("✅ Active widget set:", activeWidget.id);
+              // Apply the active state class
+              activeWidget.classList.add("active");
+
+              console.log("✅ Active widget set:", activeWidget.id);
+          }
       } else {
           console.error("❌ Active widget not found in DOM!");
       }
   }
-}
-
-function addSidebarClickListeners() {
-  document.querySelectorAll(".widget a").forEach(link => {
-      link.addEventListener("click", function (event) {
-          event.preventDefault(); // Stop default navigation
-          const targetPage = this.getAttribute("href");
-          
-          // Update active state immediately
-          history.pushState({}, "", targetPage); // Update URL without reload
-          applyActiveState();
-      });
-  });
 }

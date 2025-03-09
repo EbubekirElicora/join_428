@@ -168,7 +168,12 @@ button:hover a {
     gap: 16px;
 }
 
-.button_h1 {
+.todo_number,
+.done_number,
+.urgent_number,
+.board_number,
+.progress_number,
+.feedback_number {
     font-size: 54px;
     font-weight: 600;
     gap: 16px;

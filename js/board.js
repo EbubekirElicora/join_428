@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initializeCategorySelector();
     initializeTaskForm();
     init();
+    loadPositionsFromFirebase();
 });
 
 function openOverlay() {
@@ -153,3 +154,22 @@ let filteredTasks = todos.filter(task => {
     const taskCategory = task.category.toLowerCase();
     return taskCategory === category;
 });
+
+
+async function savePosition(taskId, position) {
+    const path = `positionDropArea/${taskId}`;
+    await updateData(path, position);
+}
+
+async function loadPositionsFromFirebase() {
+    try {
+        const positionsData = await loadData("positionDropArea");
+
+        todos = todos.map((task) => {
+            const position = positionsData[task.id] || task.category;
+            return { ...task, category: position };
+        });
+    } catch (error) {
+        
+    }
+}

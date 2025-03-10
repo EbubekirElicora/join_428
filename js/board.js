@@ -183,43 +183,7 @@ let filteredTasks = todos.filter(task => {
 
 
 
-
 //Ebu unten
-
-
-// Aufgabenpositionsmanagement
-
-/**
-* Speichert die Position (Kategorie) einer Aufgabe in Firebase.
-* @param {string} taskId – Die eindeutige ID der Aufgabe.
-* @param {string} position – Die neue Position/Kategorie der Aufgabe.
-*/
-
-async function savePosition(taskId, position) {
-    const path = `newTaskPos/${taskId}`;
-    await updateData(path, position);
-}
-
-
-/**
-* Lädt Aufgabenpositionen von Firebase und aktualisiert die lokalen Aufgaben entsprechend.
-*/
-
-async function loadPositionsFromFirebase() {
-    try {
-        const positionsData = await loadData("newTaskPos");
-
-        todos = todos.map((task) => {
-            const position = positionsData[task.id] || task.category;
-            return { ...task, category: position };
-        });
-    } catch (error) {
-        
-    }
-}
-
-
-
 
 
 // Drag-Area-Zähler
@@ -231,7 +195,7 @@ async function loadPositionsFromFirebase() {
 
 function getTodoCount() {
     const todoContainer = document.getElementById("todo_task");
-    const tasks = todoContainer.querySelectorAll(".task");
+    const tasks = todoContainer.querySelectorAll(".titel-card");
     return tasks.length;
 }
 
@@ -239,7 +203,6 @@ function getTodoCount() {
 /**
 * Aktualisiert die Anzahl der Aufgaben im lokalen Speicher.
 */
-
 function updateTodoCount() {
     const todoCount = getTodoCount();
     localStorage.setItem('todoCount', todoCount);
@@ -250,29 +213,23 @@ function updateTodoCount() {
 * Ruft die Anzahl der Aufgaben in der Kategorie „erledigt“ ab.
 * @returns {number} Die Anzahl der „erledigten“ Aufgaben.
 */
-
 function getDoneCount() {
     const doneContainer = document.getElementById("done_task");
     const tasks = doneContainer.querySelectorAll(".task");
     return tasks.length;
 }
 
-
 /**
 * Aktualisiert die Anzahl der erledigten Aufgaben im lokalen Speicher.
 */
-
 function updateDoneCount() {
     const doneCount = getDoneCount();
     localStorage.setItem('doneCount', doneCount);
 }
-
-
 /**
 * Berechnet die Gesamtzahl der Aufgaben in allen Kategorien.
 * @returns {number} Die Gesamtzahl der Aufgaben.
 */
-
 function getBoardTaskCount() {
     const todoTasks = document.getElementById("todo_task").querySelectorAll(".task");
     const inProgressTasks = document.getElementById("progress_task").querySelectorAll(".task");
@@ -286,7 +243,6 @@ function getBoardTaskCount() {
 /**
 * Aktualisiert die Gesamtanzahl der Aufgaben im lokalen Speicher.
 */
-
 function updateBoardTaskCount() {
     const boardTaskCount = getBoardTaskCount();
     localStorage.setItem('boardTaskCount', boardTaskCount);
@@ -294,9 +250,8 @@ function updateBoardTaskCount() {
 
 /**
 * Ruft die Anzahl der Aufgaben in der Kategorie „in Bearbeitung“ ab.
-* @returns {number} Die Anzahl der „in Bearbeitung“-Aufgaben.
+* @returns {number} Die Anzahl der „in Bearbeitung“ Aufgaben.
 */
-
 function getInProgressCount() {
     const inProgressTasks = document.getElementById("progress_task").querySelectorAll(".task");
     return inProgressTasks.length;
@@ -305,29 +260,52 @@ function getInProgressCount() {
 /**
 * Aktualisiert die Anzahl der in Bearbeitung befindlichen Aufgaben im lokalen Speicher.
 */
-
 function updateInProgressCount() {
     const inProgressCount = getInProgressCount();
     localStorage.setItem('inProgressCount', inProgressCount);
 }
 
-
 /**
-* Ruft die Anzahl der Aufgaben in der Kategorie „awaitFeedback“ ab.
-* @returns {number} Die Anzahl der „awaitFeedback“-Aufgaben.
+* Ruft die Anzahl der Aufgaben in der Kategorie „feedback_task“ ab.
+* @returns {number} Die Anzahl der feedback_task-Aufgaben.
 */
-
 function getAwaitFeedbackCount() {
     const feedbackTasks = document.getElementById("feedback_task").querySelectorAll(".task");
     return feedbackTasks.length;
 }
 
-
 /**
-* Aktualisiert die Anzahl der „awaitFeedback“-Aufgaben im lokalen Speicher.
+* Aktualisiert die Anzahl der „feedback_task“-Aufgaben im lokalen Speicher.
 */
-
 function updateAwaitFeedbackCount() {
     const feedbackCount = getAwaitFeedbackCount();
     localStorage.setItem('feedbackCount', feedbackCount);
+}
+
+// Aufgabenpositionsverwaltung
+
+/**
+* Speichert die Position (Kategorie) einer Aufgabe in Firebase.
+* @param {string} taskId – Die eindeutige ID der Aufgabe.
+* @param {string} position – Die neue Position/Kategorie der Aufgabe.
+*/
+async function savePosition(taskId, position) {
+    const path = `posDropArea/${taskId}`;
+    await updateData(path, position);
+}
+
+/**
+* Lädt Aufgabenpositionen von Firebase und aktualisiert die lokalen Aufgaben entsprechend.
+*/
+async function loadPositionsFromFirebase() {
+    try {
+        const positionsData = await loadData("posDropArea");
+
+        todos = todos.map((task) => {
+            const position = positionsData[task.id] || task.category; // Fallback zur aktuellen Kategorie
+            return { ...task, category: position };
+        });
+    } catch (error) {
+        
+    }
 }

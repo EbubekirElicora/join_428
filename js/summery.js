@@ -52,12 +52,6 @@ function loadUserInfo() {
 document.addEventListener("DOMContentLoaded", loadUserInfo);
 
 
-
-
-
-//Ebu unten
-
-
 /**
 * Lädt Aufgaben von Firebase.
 * @returns {Promise<Array>} Liste der Aufgaben.

@@ -88,7 +88,7 @@ async function loadTasksFromFirebase() {
 */
 
 async function loadPositionsFromFirebase() {
-    const positionsData = await loadData("newTaskPos");
+    const positionsData = await loadData("posDropArea");
     return positionsData || {};
 }
 

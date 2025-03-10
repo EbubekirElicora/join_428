@@ -179,3 +179,155 @@ let filteredTasks = todos.filter(task => {
     const taskCategory = task.category.toLowerCase();
     return taskCategory === category;
 });
+
+
+
+
+
+//Ebu unten
+
+
+// Aufgabenpositionsmanagement
+
+/**
+* Speichert die Position (Kategorie) einer Aufgabe in Firebase.
+* @param {string} taskId – Die eindeutige ID der Aufgabe.
+* @param {string} position – Die neue Position/Kategorie der Aufgabe.
+*/
+
+async function savePosition(taskId, position) {
+    const path = `newTaskPos/${taskId}`;
+    await updateData(path, position);
+}
+
+
+/**
+* Lädt Aufgabenpositionen von Firebase und aktualisiert die lokalen Aufgaben entsprechend.
+*/
+
+async function loadPositionsFromFirebase() {
+    try {
+        const positionsData = await loadData("newTaskPos");
+
+        todos = todos.map((task) => {
+            const position = positionsData[task.id] || task.category;
+            return { ...task, category: position };
+        });
+    } catch (error) {
+        
+    }
+}
+
+
+
+
+
+// Drag-Area-Zähler
+
+/**
+* Ruft die Anzahl der Aufgaben in der Kategorie „zu erledigen“ ab.
+* @returns {number} Die Anzahl der „zu erledigenden“ Aufgaben.
+*/
+
+function getTodoCount() {
+    const todoContainer = document.getElementById("todo_task");
+    const tasks = todoContainer.querySelectorAll(".task");
+    return tasks.length;
+}
+
+
+/**
+* Aktualisiert die Anzahl der Aufgaben im lokalen Speicher.
+*/
+
+function updateTodoCount() {
+    const todoCount = getTodoCount();
+    localStorage.setItem('todoCount', todoCount);
+}
+
+
+/**
+* Ruft die Anzahl der Aufgaben in der Kategorie „erledigt“ ab.
+* @returns {number} Die Anzahl der „erledigten“ Aufgaben.
+*/
+
+function getDoneCount() {
+    const doneContainer = document.getElementById("done_task");
+    const tasks = doneContainer.querySelectorAll(".task");
+    return tasks.length;
+}
+
+
+/**
+* Aktualisiert die Anzahl der erledigten Aufgaben im lokalen Speicher.
+*/
+
+function updateDoneCount() {
+    const doneCount = getDoneCount();
+    localStorage.setItem('doneCount', doneCount);
+}
+
+
+/**
+* Berechnet die Gesamtzahl der Aufgaben in allen Kategorien.
+* @returns {number} Die Gesamtzahl der Aufgaben.
+*/
+
+function getBoardTaskCount() {
+    const todoTasks = document.getElementById("todo_task").querySelectorAll(".task");
+    const inProgressTasks = document.getElementById("progress_task").querySelectorAll(".task");
+    const feedbackTasks = document.getElementById("feedback_task").querySelectorAll(".task");
+    const doneTasks = document.getElementById("done_task").querySelectorAll(".task");
+
+    const totalTasks = todoTasks.length + inProgressTasks.length + feedbackTasks.length + doneTasks.length;
+    return totalTasks;
+}
+
+/**
+* Aktualisiert die Gesamtanzahl der Aufgaben im lokalen Speicher.
+*/
+
+function updateBoardTaskCount() {
+    const boardTaskCount = getBoardTaskCount();
+    localStorage.setItem('boardTaskCount', boardTaskCount);
+}
+
+/**
+* Ruft die Anzahl der Aufgaben in der Kategorie „in Bearbeitung“ ab.
+* @returns {number} Die Anzahl der „in Bearbeitung“-Aufgaben.
+*/
+
+function getInProgressCount() {
+    const inProgressTasks = document.getElementById("progress_task").querySelectorAll(".task");
+    return inProgressTasks.length;
+}
+
+/**
+* Aktualisiert die Anzahl der in Bearbeitung befindlichen Aufgaben im lokalen Speicher.
+*/
+
+function updateInProgressCount() {
+    const inProgressCount = getInProgressCount();
+    localStorage.setItem('inProgressCount', inProgressCount);
+}
+
+
+/**
+* Ruft die Anzahl der Aufgaben in der Kategorie „awaitFeedback“ ab.
+* @returns {number} Die Anzahl der „awaitFeedback“-Aufgaben.
+*/
+
+function getAwaitFeedbackCount() {
+    const feedbackTasks = document.getElementById("feedback_task").querySelectorAll(".task");
+    return feedbackTasks.length;
+}
+
+
+/**
+* Aktualisiert die Anzahl der „awaitFeedback“-Aufgaben im lokalen Speicher.
+*/
+
+function updateAwaitFeedbackCount() {
+    const feedbackCount = getAwaitFeedbackCount();
+    localStorage.setItem('feedbackCount', feedbackCount);
+}

@@ -64,17 +64,20 @@ function applyActiveState() {
   if (pageMap[currentPath]) {
       const activeWidget = document.getElementById(pageMap[currentPath]);
       if (activeWidget) {
-          // Check if the widget is already active
-          if (!activeWidget.classList.contains("active")) {
-              activeWidget.style.backgroundColor = "#1A1F2E";
-              activeWidget.style.color = "white";
-              activeWidget.style.fontWeight = "bold";
+          const allWidgets = document.querySelectorAll('.widget');
+          allWidgets.forEach(widget => {
+              widget.classList.remove('active');
+              widget.style.backgroundColor = '';
+              widget.style.color = '';
+              widget.style.fontWeight = '';
+          });
 
-              // Apply the active state class
-              activeWidget.classList.add("active");
+          activeWidget.classList.add("active");
+          activeWidget.style.backgroundColor = "#1A1F2E";
+          activeWidget.style.color = "white";
+          activeWidget.style.fontWeight = "bold";
 
-              console.log("✅ Active widget set:", activeWidget.id);
-          }
+          console.log("✅ Active widget set:", activeWidget.id);
       } else {
           console.error("❌ Active widget not found in DOM!");
       }

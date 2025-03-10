@@ -4,7 +4,6 @@ function isUserLoggedIn() {
     console.log('localStorage isLoggedIn value:', localStorage.getItem('isLoggedIn'));
     return isLoggedIn;
 }
-
 function checkIfNavigatedFromSignup() {
     const urlParams = new URLSearchParams(window.location.search);
     const fromSignup = urlParams.get("from") === "signup";
@@ -30,6 +29,7 @@ function checkIfNavigatedFromSignup() {
             const helpUserContainer = document.querySelector(".help_user_container");
             const nameMenu = document.getElementById("name_menu");
             const pageBackButton = document.getElementById("pageBackButton");
+            const helpIcon = document.querySelector(".help_icon"); // Select the help icon
 
             if (helpUserContainer) {
                 helpUserContainer.style.display = "none";
@@ -51,6 +51,13 @@ function checkIfNavigatedFromSignup() {
                 console.log("pageBackButton found and hidden.");
             } else {
                 console.log("pageBackButton not found.");
+            }
+
+            if (helpIcon) {
+                helpIcon.style.display = "none"; // Hide the help icon
+                console.log("help_icon found and hidden.");
+            } else {
+                console.log("help_icon not found.");
             }
         };
 

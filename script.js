@@ -297,9 +297,11 @@ function updateSelectedContacts() {
 }
 
 function getInitials(name) {
-    return name.split(' ').map(part => part[0]).join('').toUpperCase();
+    if (!name) return ''; // Handle undefined or empty names
+    const names = name.split(' ');
+    const initials = names.map(n => n[0]).join('');
+    return initials.toUpperCase();
 }
-
 function getRandomColor() {
     const letters = '0123456789ABCDEF';
     let color = '#';

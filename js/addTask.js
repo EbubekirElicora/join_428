@@ -227,11 +227,18 @@ function collectTaskData() {
                      document.querySelector('.prioBtnMedium.active') ? 'medium' :
                      document.querySelector('.prioBtnLow.active') ? 'low' : 'medium';
     const category = document.getElementById('select_txt').textContent;
+
+    // Add initials to each contact object
     const assignedContacts = selectedContacts.map(contact => ({
         name: contact,
-        color: getRandomColor() // Use the globally defined function
+        color: getRandomColor(), // Use the globally defined function
+        initials: getInitials(contact) // Add initials here
     }));
+
     const subtasksList = subtasks;
+
+    // Log the assignedContacts array for debugging
+    console.log("Assigned Contacts:", assignedContacts);
 
     return {
         title,
@@ -243,7 +250,12 @@ function collectTaskData() {
         subtasks: subtasksList
     };
 }
-
+function getInitials(name) {
+    if (!name) return ''; // Handle undefined or empty names
+    const names = name.split(' ');
+    const initials = names.map(n => n[0]).join('');
+    return initials.toUpperCase();
+}
 // Function to save task to Firebase
 async function saveTaskToFirebase(taskData) {
     const TASKS_ENDPOINT = "tasks.json"; 

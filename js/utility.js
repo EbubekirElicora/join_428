@@ -37,3 +37,49 @@ function showToast(message) {
       toast.classList.remove('show');
   }, 3000);
 }
+document.addEventListener("DOMContentLoaded", function () {
+  const observer = new MutationObserver((mutations, obs) => {
+      const sidebar = document.getElementById("sidelinks");
+      if (sidebar) {
+          console.log("✅ Sidebar detected, running script...");
+          applyActiveState();
+          obs.disconnect(); // Stop observing once sidebar is found
+      }
+  });
+
+  observer.observe(document.body, { childList: true, subtree: true });
+});
+
+function applyActiveState() {
+  const currentPath = window.location.pathname.split("/").pop();
+  console.log("Checking active state for:", currentPath);
+
+  const pageMap = {
+      "summary.html": "widget_1",
+      "addTask.html": "widget_2",
+      "board.html": "widget_3",
+      "contacts.html": "widget_4"
+  };
+
+  if (pageMap[currentPath]) {
+      const activeWidget = document.getElementById(pageMap[currentPath]);
+      if (activeWidget) {
+          const allWidgets = document.querySelectorAll('.widget');
+          allWidgets.forEach(widget => {
+              widget.classList.remove('active');
+              widget.style.backgroundColor = '';
+              widget.style.color = '';
+              widget.style.fontWeight = '';
+          });
+
+          activeWidget.classList.add("active");
+          activeWidget.style.backgroundColor = "#1A1F2E";
+          activeWidget.style.color = "white";
+          activeWidget.style.fontWeight = "bold";
+
+          console.log("✅ Active widget set:", activeWidget.id);
+      } else {
+          console.error("❌ Active widget not found in DOM!");
+      }
+  }
+}

@@ -115,6 +115,10 @@ function to_open_category_dropdown() {
 }
 
 // Initialize the task form
+document.addEventListener('DOMContentLoaded', () => {
+    initializeTaskForm();
+});
+
 function initializeTaskForm() {
     const createTaskBtn = document.getElementById('createTaskBtn');
     if (createTaskBtn) {
@@ -127,7 +131,7 @@ function initializeTaskForm() {
                     alert('Task created successfully!');
                     resetForm();
                     if (typeof init === 'function') {
-                        init();
+                        init(); // Refresh the board or summary page
                     }
                 } else {
                     alert('Failed to create task. Please try again.');
@@ -137,20 +141,37 @@ function initializeTaskForm() {
     }
 }
 
-// Collect task data from the form
 function collectTaskData() {
-    return {
-        id: Date.now().toString(),
-        title: document.getElementById('title')?.value.trim(),
-        description: document.getElementById('description')?.value.trim(),
-        dueDate: document.getElementById('date')?.value.trim(),
-        category: document.getElementById('select_txt')?.textContent.trim(),
-        assignedContacts: selectedContacts,
-        subtasks: subtasks
-    };
+    const title = document.getElementById('title')?.value.trim();
+    const category = document.getElementById('select_txt')?.textContent.trim();
+    const dueDate = document.getElementById('date')?.value.trim();
+    const priority = getSelectedPriority(); // Ensure you have a function to get the selected priority
+    const assignedContacts = selectedContacts;
+    const subtasksArray = subtasks;
+    const stage = 'todo'; // Or get the stage from a dropdown/input if needed
+
+    return createTask(title, category, dueDate, priority, assignedContacts, subtasksArray, stage);
 }
 
-// Validate task data
+function createTask(title, category, dueDate, priority, assignedContacts, subtasksArray, stage = 'todo') {
+    const newTask = {
+        id: Date.now().toString(),
+        title,
+        category,
+        dueDate,
+        priority,
+        stage, // Default to 'todo' if not provided
+        assignedContacts,
+        subtasks: subtasksArray.reduce((acc, title, index) => {
+            acc[index] = {
+                title: title,
+                completed: false
+            };
+            return acc;
+        }, {})
+    };
+    return newTask;
+}// Validate task data
 function validateTaskData(taskData) {
     if (!taskData.title) {
         alert('Please fill in the Title');

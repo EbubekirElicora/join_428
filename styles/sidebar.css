@@ -176,10 +176,13 @@
     .sidelinks a {
         padding-left: 0;
         /* Remove left padding */
-        margin-top: 0;
+        margin-top: 0px;
         /* Remove top margin */
         white-space: nowrap;
         /* Prevent text from wrapping */
+    }
+    .login-link{
+        margin-top: -25px !important;
     }
     #sidefoot {
         display: none;

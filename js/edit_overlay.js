@@ -21,6 +21,18 @@ function getOverlayEdit(task) {
                 <h2>Bearbeiten der Aufgabe</h2>
                 <img onclick="editOverlay()" src="/assets/icons/close.png" alt="">
             </div>
+
+            <form id="edit_form">
+                <label for="edit_title">Title</label>
+               <input id="edit_title" value="${task.title}" type="text" required>
+                <label for="edit_description">Description</label>
+                <textarea id="edit_description">${task.description || ''}</textarea>
+                <label for="edit_due_date">Due Date</label>
+                <input value="${task.dueDate}" id="edit_due_date" type="date" required>
+
+                
+
+
             
         </div>
     `;

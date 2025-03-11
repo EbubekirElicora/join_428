@@ -52,3 +52,81 @@ document.addEventListener("DOMContentLoaded", loadUserInfo);
 
 
 
+document.addEventListener('DOMContentLoaded', () => {
+    updateSummary();
+});
+
+async function loadData(endpoint) {
+    const BASE_URL = 'https://join-428-default-rtdb.europe-west1.firebasedatabase.app/';
+    try {
+        const response = await fetch(`${BASE_URL}${endpoint}.json`);
+        if (!response.ok) throw new Error('Failed to load data');
+        return await response.json();
+    } catch (error) {
+        console.error('Error loading data:', error);
+        return null;
+    }
+}
+
+function updateElementText(id, value) {
+    const element = document.getElementById(id);
+    if (element) {
+        element.textContent = value;
+    } else {
+        console.error(`Element with ID '${id}' not found.`);
+    }
+}
+
+async function updateSummary() {
+    try {
+        const tasks = await loadData("tasks");
+        console.log('Tasks:', tasks); // Debugging: Log tasks data
+
+        if (!tasks) return;
+
+        // Add the 'stage' property if it doesn't exist
+        const todos = Object.values(tasks).map(task => {
+            if (!task.stage) {
+                task.stage = 'todo'; // Default to 'todo' if stage is missing
+            }
+            return task;
+        });
+
+        console.log('Todos:', todos); // Debugging: Log todos array
+
+        // Count tasks in each category
+        const todoTasks = todos.filter(task => task.stage?.toLowerCase() === 'todo');
+        console.log('Todo Tasks:', todoTasks); // Debugging: Log filtered todo tasks
+        const todoCount = todoTasks.length;
+        console.log('Todo Count:', todoCount); // Debugging: Log todo count
+
+        const doneCount = todos.filter(task => task.stage?.toLowerCase() === 'done').length;
+        const urgentCount = todos.filter(task => task.priority === 'urgent').length;
+        const totalTasks = todos.length;
+        const inProgressCount = todos.filter(task => task.stage?.toLowerCase() === 'progress').length;
+        const awaitingFeedbackCount = todos.filter(task => task.stage?.toLowerCase() === 'feedback').length;
+
+        // Find the nearest upcoming deadline
+        const upcomingDeadline = todos
+            .filter(task => task.dueDate)
+            .map(task => new Date(task.dueDate))
+            .sort((a, b) => a - b)
+            .find(date => date > new Date());
+
+        // Update the summary page
+        updateElementText('todo_number', todoCount);
+        updateElementText('done_number', doneCount);
+        updateElementText('urgent_number', urgentCount);
+        updateElementText('board_number', totalTasks);
+        updateElementText('progress_number', inProgressCount);
+        updateElementText('feedback_number', awaitingFeedbackCount);
+
+        if (upcomingDeadline) {
+            updateElementText('date', upcomingDeadline.toLocaleDateString());
+        } else {
+            updateElementText('date', 'No upcoming deadlines');
+        }
+    } catch (error) {
+        console.error('Error updating summary:', error);
+    }
+}

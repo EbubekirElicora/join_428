@@ -15,6 +15,9 @@
     <script src="../js/header.js"></script>
     <script src="../js/summery.js"></script>
     <script src="../js/sidebar.js"></script>
+    <script src="../script.js"></script>
+    <script src="../js/board.js"></script>
+
     <title>Summary</title>
 </head>
 
@@ -40,7 +43,7 @@
                         <img class="to_do_icon" src="../assets/icons/to-do-icon.png">
                         <img class="to_do_icon_white d-none" src="../assets/icons/todo_icon_white.png">
                         <div class="position_headline_span">
-                            <h1 class="todo_number"> 0 </h1>
+                            <h1 class="todo_number" id="todo_number"> 0 </h1>
                             <span class="to_do">To-do </span>
                         </div>
                     </a>
@@ -50,7 +53,7 @@
                         <img class="done_icon" src="../assets/icons/done-icon.png">
                         <img class="done_icon_white d-none" src="../assets/icons/done_icon_white.png">
                         <div class="position_headline_span">
-                            <h1 class="done_number"> 0 </h1>
+                            <h1 class="done_number" id="done_number"> 0 </h1>
                             <span class="done">Done</span>
                         </div>
                     </a>
@@ -62,7 +65,7 @@
                         <div class="container_position">
                             <img class="urgent_icon" src="../assets/icons/urgent-icon.png">
                             <div class="position_headline_span">
-                                <h1 class="urgent_number"> 0 </h1>
+                                <h1 class="urgent_number" id="urgent_number"> 0 </h1>
                                 <span class="urgent">Urgent</span>
                             </div>
                         </div>
@@ -78,36 +81,34 @@
                     </a>
                 </button>
                 <section class="mobile_greets_container">
-                <div class="greets_container">
-                    <div class="greets_text" id="greets_text"></div>
-                    <div class="greeted_user" id="greeted_user"></div>
-                </div>
-            </section>
+                    <div class="greets_container">
+                        <div class="greets_text" id="greets_text"></div>
+                        <div class="greeted_user" id="greeted_user"></div>
+                    </div>
+                </section>
             </div>
             <div class="tasks_container">
                 <button class="tasks_in_board_container">
                     <a class="go_to_board_task" href="../html/board.html">
-                        <h1 class="board_number"> 0 </h1>
+                        <h1 class="board_number" id="board_number"> 0 </h1>
                         <span class="tasks_in_board">Tasks in<br>Board</span>
                     </a>
                 </button>
                 <button class="tasks_in_progress_container">
                     <a class="go_to_board_task" href="../html/board.html">
-                        <h1 class="progress_number"> 0 </h1>
+                        <h1 class="progress_number" id="progress_number"> 0 </h1>
                         <span class="tasks_in_progress">Tasks in<br>Progress</span>
                     </a>
                 </button>
                 <button class="tasks_in_awaiting_container">
                     <a class="go_to_board_task" href="../html/board.html">
-                        <h1 class="feedback_number"> 0 </h1>
+                        <h1 class="feedback_number" id="feedback_number"> 0 </h1>
                         <span class="tasks_in_awaiting_feedback">Awaiting<br>Feedback</span>
                     </a>
                 </button>
             </div>
         </div>
     </section>
-
-
 
 
 

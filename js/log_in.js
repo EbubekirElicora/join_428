@@ -178,3 +178,29 @@ function getInitials(name) {
     let words = name.split(" ");  
     return words[0][0].toUpperCase() + (words[1] ? words[1][0].toUpperCase() : "");
 }
+document.addEventListener("DOMContentLoaded", function () {
+    const togglePassword = document.getElementById("togglePassword");
+
+    if (togglePassword) {
+        togglePassword.addEventListener("click", togglePasswordVisibility);
+    } else {
+        console.error("Element with ID 'togglePassword' not found!");
+    }
+});
+
+function togglePasswordVisibility() {
+    const passwordInput = document.getElementById("password");
+    const toggleIcon = document.getElementById("togglePassword");
+
+    if (passwordInput && toggleIcon) {
+        if (passwordInput.type === "password") {
+            passwordInput.type = "text"; // Show password
+            toggleIcon.src = "../Assets/visibility.svg"; // Change icon to "eye" (visible)
+        } else {
+            passwordInput.type = "password"; // Hide password
+            toggleIcon.src = "../assets/icons/lock.png"; // Change icon back to "lock" (hidden)
+        }
+    } else {
+        console.error("Password input or toggle icon not found!");
+    }
+}

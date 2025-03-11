@@ -139,7 +139,17 @@
 }
 
 
+.label_user {
+    position: relative; 
+}
 
+.label_user img {
+    position: absolute;
+    right: 10px; 
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer; 
+}
 
 
 

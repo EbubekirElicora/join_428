@@ -13,6 +13,9 @@ body {
     max-height: calc(100vh - 120px); /* Ensure .policy-content doesn't overflow the screen */
     
   }
+  .d-none {
+    display: none;
+  }
  
   h1 {
     font-weight: 700;

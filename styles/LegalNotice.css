@@ -18,7 +18,9 @@ body {
   flex-direction: row;
   justify-content: space-between;
 }
-
+.d-none {
+  display: none;
+}
 
 /* Layout Containers */
 .main-content {

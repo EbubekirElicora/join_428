@@ -24,9 +24,8 @@
                 </a>
             </div>
             <h1>Sign up</h1>
-            <form id="join-form" onsubmit="validateSignUp(event);">
+            <form id="join-form">
                 <div class="input-group">
-
                     <input type="name" id="name" name="name" placeholder="name" required autocomplete="on">
                     <span class="icon">
                         <img id="passwordImg" src="../assets/person.svg" alt="">
@@ -38,14 +37,12 @@
                         <img id="passwordImg" src="../Assets/mail.svg" alt="">
                     </span>
                 </div>
-                
                 <div class="input-group">                
                     <input type="password" id="password" name="password" placeholder="Password" required autocomplete="new-password">
                     <span class="icon" id="togglePasswordIcon" onclick="togglePasswordVisibility('password', 'togglePasswordIcon')">
                         <img class="cursorPointer" src="../assets/visibility_off - Copy.svg" alt="Show Password" style="cursor: pointer;">
                     </span>
                 </div>
-                
                 <div class="input-group">                
                     <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm password" required autocomplete="new-password">
                     <span class="icon" id="toggleConfirmPasswordIcon" onclick="togglePasswordVisibility('confirm-password', 'toggleConfirmPasswordIcon')">
@@ -53,18 +50,13 @@
                     </span>
                 </div>
                 <div id="error-message" class="error-message"></div>
-
-                
                 <div class="checkbox-group">
                     <input type="checkbox" id="terms-checkbox" name="terms-checkbox" required>
                     <span for="terms-checkbox">  I accept the <a href="../html/privacypolicy.html?from=signup" target="_blank">Privacy Policy</a></span>
                 </div>
-                
                 <div class="signup-button">
-                    <button onclick="signUp()" type="submit" id="signup-btn" class="btn" disabled>Sign up</button>
-                    
+                    <button type="submit" id="signup-btn" class="btn" disabled>Sign up</button>
                 </div>
-                
             </form>
         </div>
         <div id="sidefoot" class="legalPolicy">

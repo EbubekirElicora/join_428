@@ -241,3 +241,21 @@ h1 {
 .edit_none {
     display: none;
 }
+.edit_buttons {
+    display: flex;
+    justify-content: flex-end; 
+    margin-top: 20px; 
+}
+
+.ok_button {
+    padding: 10px 20px; 
+    background-color:#2A3647; 
+    color: white; 
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.ok_button:hover {
+    background-color:#29abe2; 
+}

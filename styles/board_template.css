@@ -77,6 +77,27 @@
     align-items: center;
     max-width: 100%;
 }
+.priority-options {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.priority-option {
+    cursor: pointer;
+    padding: 5px;
+    border: 2px solid transparent;
+    border-radius: 5px;
+}
+
+.priority-option.selected {
+    border-color: #007BFF; /* Highlight selected priority */
+}
+
+.priority-option img {
+    width: 20px;
+    height: 20px;
+}
 
 .progress_container {
     margin: 12px 0;

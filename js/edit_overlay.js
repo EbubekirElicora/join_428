@@ -80,9 +80,7 @@ function getOverlayEdit(task) {
     `;
 }
 
-
 function getOverlayEdit(task) {
-
     const contactsHTML = task.assignedContacts?.slice(0, 5).map(contact => `
         <div class="contact-badge" style="background-color: ${contact.color}" title="${contact.name}">
             ${contact.initials}
@@ -93,6 +91,34 @@ function getOverlayEdit(task) {
         ? `<div class="remaining-contacts">+${task.assignedContacts.length - 5}</div>`
         : '';
 
+    // Priority icons (reuse the same structure as in addTask HTML)
+    const priorityIcons = {
+        urgent: '<img src="../assets/icons/prio_urgent_icon.png">',
+        medium: '<img src="../assets/icons/prio_medium_icon.png">',
+        low: '<img src="../assets/icons/prio_low_icon.png">'
+    };
+
+    // Priority options (reuse the same structure as in addTask HTML)
+    const priorityHTML = `
+        <section class="prio_container">
+            <label for="prio">Priority</label>
+            <div class="prio_btn_container">
+                <button onclick="setPrio('urgent')" type="button" id="prioUrgent" class="prioBtnUrgent ${task.priority === 'urgent' ? 'active' : ''}">
+                    <span>Urgent</span>
+                    ${priorityIcons['urgent']}
+                </button>
+                <button onclick="setPrio('medium')" type="button" id="prioMedium" class="prioBtnMedium ${task.priority === 'medium' ? 'active' : ''}">
+                    <span>Medium</span>
+                    ${priorityIcons['medium']}
+                </button>
+                <button onclick="setPrio('low')" type="button" id="prioLow" class="prioBtnLow ${task.priority === 'low' ? 'active' : ''}">
+                    <span>Low</span>
+                    ${priorityIcons['low']}
+                </button>
+            </div>
+        </section>
+    `;
+
     return `
         <div onclick="editProtection(event)" class="inner_content">
             <div class="edit_close">
@@ -102,64 +128,88 @@ function getOverlayEdit(task) {
 
             <form id="edit_form">
                 <label for="edit_title">Title</label>
-               <input id="edit_title" value="${task.title}" type="text" required>
+                <input id="edit_title" value="${task.title}" type="text" required>
+
                 <label for="edit_description">Description</label>
                 <textarea id="edit_description">${task.description || ''}</textarea>
+
                 <label for="edit_due_date">Due Date</label>
                 <input value="${task.dueDate}" id="edit_due_date" type="date" required>
 
+                <!-- Priority Section (reuse the same structure as in addTask HTML) -->
+                ${priorityHTML}
 
-
-
+                <!-- Assigned Contacts Section -->
                 <div class="assigned_container">
-            <div class="dropdown">
-                <div class="input-container">
-                    <input type="text" id="editContactInput" placeholder="Select contacts..." readonly>
-                    <div class="icons">
-                        <img onclick="toggleEditDropdown()" 
-                             src="../assets/icons/arrow_drop_down_icon.png"
-                             id="editDropdownIcon" 
-                             class="cursorPointer dropdownimg">
-                        <img onclick="toggleEditDropdown()" src="../assets/icons/arrow_drop_up_icon.png" 
-                             id="editDropdownIconUp"
-                             class="cursorPointer dropdownimg d-none">
-                    </div>
-                </div>
-                <div class="dropdown-content" id="editDropdownContent">
-                    <div class="dropdown-item">
-    <div class="contact-info">
-        <div class="contact-initials-container">${task.initials}</div>
-        <span class="contact-name">${task.name}</span>
-    </div>
-</div>
-
-                </div>
-            </div>
-                    <div id="selectedContactsInitials" class="selected-contacts-initials">
-                         ${task.assignedContacts?.length > 0 ? `
-                        <div class="assigned-contacts">
-                            ${contactsHTML}
-                            ${remainingContacts}
+                    <div class="dropdown">
+                        <div class="input-container">
+                            <input type="text" id="editContactInput" placeholder="Select contacts..." readonly>
+                            <div class="icons">
+                                <img onclick="toggleEditDropdown()" 
+                                     src="../assets/icons/arrow_drop_down_icon.png"
+                                     id="editDropdownIcon" 
+                                     class="cursorPointer dropdownimg">
+                                <img onclick="toggleEditDropdown()" src="../assets/icons/arrow_drop_up_icon.png" 
+                                     id="editDropdownIconUp"
+                                     class="cursorPointer dropdownimg d-none">
+                            </div>
                         </div>
-                ` : ''}
+                        <div class="dropdown-content" id="editDropdownContent">
+                            <div class="dropdown-item">
+                                <div class="contact-info">
+                                    <div class="contact-initials-container">${task.initials}</div>
+                                    <span class="contact-name">${task.name}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="selectedContactsInitials" class="selected-contacts-initials">
+                        ${task.assignedContacts?.length > 0 ? `
+                            <div class="assigned-contacts">
+                                ${contactsHTML}
+                                ${remainingContacts}
+                            </div>
+                        ` : ''}
                     </div>
                 </div>  
-                                <div class="edit_buttons">
+
+                <!-- Buttons Section -->
+                <div class="edit_buttons">
                     <button type="button" class="ok_button">OK</button>
                 </div>
-
-
-
-
-
-
-
             </form>
         </div>
     `;
 }
 // ich habe die folgenden fuctionen rein gemacht:
+function handlePrioritySelection(event, priority) {
+    event.stopPropagation(); // Prevent event bubbling to avoid conflicts
+    currentTask.priority = priority;
 
+    // Update the UI to reflect the selected priority
+    const priorityOptions = document.querySelectorAll('.priority-option');
+    priorityOptions.forEach(option => {
+        if (option.getAttribute('onclick').includes(priority)) {
+            option.classList.add('selected');
+        } else {
+            option.classList.remove('selected');
+        }
+    });
+}
+function setPrio(priority) {
+    // Update the currentTask priority
+    currentTask.priority = priority;
+
+    // Update the UI to reflect the selected priority
+    const priorityButtons = document.querySelectorAll('.prio_btn_container button');
+    priorityButtons.forEach(button => {
+        if (button.getAttribute('onclick').includes(priority)) {
+            button.classList.add('active');
+        } else {
+            button.classList.remove('active');
+        }
+    });
+}
 async function fetchContacts() {
     try {
         const response = await fetch(`${BASE_URL}/contacts.json`);
@@ -273,28 +323,47 @@ async function editOverlay(taskId) {
         okButton.addEventListener('click', saveChanges);
     }
 }
-
-function saveChanges() {
+async function saveChanges() {
+    // Get the updated values from the edit form
     const title = document.getElementById('edit_title').value;
     const description = document.getElementById('edit_description').value;
     const dueDate = document.getElementById('edit_due_date').value;
 
+    // Update the currentTask object
     currentTask.title = title;
     currentTask.description = description;
     currentTask.dueDate = dueDate;
 
+    // Update the todos array
     const taskIndex = todos.findIndex(t => t.id === currentTask.id);
     if (taskIndex !== -1) {
         todos[taskIndex] = currentTask;
     }
 
-    renderTasks();
+    // Save changes to Firebase
+    try {
+        const response = await fetch(`${BASE_URL}/tasks/${currentTask.id}.json`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(currentTask),
+        });
 
-    editOverlay();
+        if (!response.ok) throw new Error("Failed to save changes to Firebase");
+
+        // Re-render the UI to reflect the changes
+        updateHTML();
+
+        // Close the edit overlay
+        editOverlay();
+    } catch (error) {
+        console.error("Error saving changes to Firebase:", error);
+    }
 }
 
 function renderTasks() {
-    const taskContainer = document.getElementById('task-container'); 
+    const taskContainer = document.getElementById('task_main'); 
     if (!taskContainer) return;
 
     taskContainer.innerHTML = '';
@@ -318,11 +387,14 @@ function renderTasks() {
     });
 }
 
+
+
 async function editOverlay(taskId) {
     const overlayRef = document.getElementById('edit_overlay');
     if (!taskId) {
         overlayRef.classList.add('edit_none');
         document.body.classList.remove('no-scroll');
+        updateHTML(); // Re-render the UI when the overlay is closed
         return;
     }
 

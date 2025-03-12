@@ -1,6 +1,3 @@
-
-
-
 @media (max-width: 1350px) {
 
     .content_container_size {
@@ -59,6 +56,10 @@
         margin-left: 0;
     }
 
+    .subtask_input_container {
+        margin-bottom: 8px;
+    }
+
     .headline_addTask_position {
         margin-bottom: 24px;
         margin-top: 24px;
@@ -92,6 +93,10 @@
         display: none;
     }
 
+    .required_container {
+        font-size: 14px;
+    }
+
     .headline_addTask_position {
         margin-bottom: 16px;
         margin-top: 0;
@@ -102,7 +107,8 @@
     }
 
     .d-flex,
-    .datepicker_container {
+    .datepicker_container,
+    .category_container  {
         margin-block-end: 8px;
     }
 
@@ -116,6 +122,8 @@
 
     .content_container_size {
         width: 100%;
+        overflow-y: auto;
+        height: 75vh;
     }
 
     .container_pos {
@@ -125,12 +133,6 @@
     .left_container,
     .right_container {
         width: 100%;
-    }
-
-    .category_container,
-    .subtask_container,
-    .required_container {
-        display: none;
     }
 
     .prioBtnMedium,
@@ -149,12 +151,14 @@
 
     .btn_position {
         padding-right: 0;
+        justify-content: flex-end;
     }
 
     input[type=text],
     input[type=date i],
     input[type=date],
-    select {
+    select,
+    .category_position {
         font-size: 16px;
         height: 40px;
     }
@@ -162,8 +166,15 @@
     label,
     .assigned_headline,
     .category_headline,
-    .subtasks_headline {
+    .subtasks_headline,
+    .category_select,
+    .select_category,
+    .dropdown-content span{
         font-size: 16px;
+    }
+
+    .initials {
+        font-size: 12px;
     }
 
     .selected-contacts-initials {
@@ -171,6 +182,7 @@
     }
 
     .btn_container_addTask {
+        flex-direction: column;
         margin-block-start: 0;
     }
 
@@ -188,6 +200,10 @@
     .clear_btn {
         height: 40px;
     }
+
+    .create_task_btn_container, .clear_task_btn_container{
+        width: auto;
+    }
 }
 
 @media (max-width: 490px) {
@@ -200,6 +216,10 @@
     .headline_addTask_position {
         margin-bottom: 8px;
     }
+
+    .required_container {
+        margin-bottom: 16px;
+    }
 }
 
 @media (max-width: 350px) {
@@ -208,5 +228,11 @@
     .prioBtnUrgent,
     .prioBtnLow {
         width: 96px;
+    }
+}
+
+@media (max-width: 330px) {
+    .btn_position {
+        justify-content: center;
     }
 }

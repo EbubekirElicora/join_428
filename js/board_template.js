@@ -6,12 +6,15 @@ function generateTodoHTML(task) {
         medium: '<img src="../assets/icons/prio_media.png" alt="">',
         low: '<img src="../assets/icons/prio_low_icon.png" alt="">'
     };
-    const contactsHTML = task.assignedContacts?.map(contact => `
-        <div class="contact-badge" style="background-color: ${contact.color}">
+    const contactsHTML = task.assignedContacts?.slice(0, 5).map(contact => `
+        <div class="contact-badge" style="background-color: ${contact.color}" title="${contact.name}">
             ${contact.initials}
         </div>
     `).join('') || '';
-
+    
+    const remainingContacts = task.assignedContacts?.length > 5 
+        ? `<div class="remaining-contacts">+${task.assignedContacts.length - 5}</div>`
+        : '';
     const subtasks = task.subtasks || {};
     const subtaskKeys = Object.keys(subtasks);
     const total = subtaskKeys.length;
@@ -33,6 +36,7 @@ function generateTodoHTML(task) {
                 ${task.assignedContacts?.length > 0 ? `
                     <div class="assigned-contacts">
                         ${contactsHTML}
+                        ${remainingContacts}
                     </div>
                 ` : ''}
                 <span class="priority">${priorityIcons[task.priority]}</span>   

@@ -18,7 +18,9 @@ body {
   flex-direction: row;
   justify-content: space-between;
 }
-
+.d-none {
+  display: none;
+}
 
 /* Layout Containers */
 .main-content {
@@ -74,15 +76,14 @@ body {
 /* Responsive Design for Mobile (max-width: 980px) */
 @media (max-width: 980px) {
 
+    .impressum {
+      padding-inline: 0;
+    }
 
   .main-content {
-    flex-direction: column;
-    /* Stack content vertically */
-    padding: 0 20px;
-    /* Add padding */
     margin-left: 20px;
-    margin-right: 20;
-    margin-top: 40px;
+    margin-right: 20px;
+    margin-top: 80px;
   }
 
   .legalNotice {

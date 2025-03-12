@@ -25,7 +25,7 @@ async function signUp() {
 
     // Validate input fields
     if (!name || !email || !password || !confirmPassword) {
-        
+        showToast("Please fill in all fields.", "error");
         return;
     }
 
@@ -53,6 +53,16 @@ async function signUp() {
     try {
         const newUser = { name, email, password };
         await saveUserToFirebase(newUser);
+
+        // Save user to contacts list (without phone number)
+        const newContact = {
+            name: name,
+            email: email,
+            initials: getInitials(name),
+            color: getRandomColor(),
+        };
+        await saveContact(newContact);
+
         showToast("You signed up successfully", "success");
 
         setTimeout(() => {
@@ -64,13 +74,12 @@ async function signUp() {
     }
 }
 
-// Function to validate email format
+// Helper functions
 function validateEmail(email) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
 }
 
-// Function to check if user exists
 async function userExists(email) {
     try {
         const response = await fetch(`${BASE_URL}users.json`);
@@ -84,7 +93,6 @@ async function userExists(email) {
     }
 }
 
-// Function to save user to Firebase
 async function saveUserToFirebase(user) {
     try {
         const response = await fetch(`${BASE_URL}users.json`, {
@@ -100,32 +108,53 @@ async function saveUserToFirebase(user) {
     }
 }
 
-// Function to clear form
+async function saveContact(contact) {
+    try {
+        const response = await fetch(`${BASE_URL}contacts.json`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(contact),
+        });
+
+        if (!response.ok) throw new Error("Failed to save contact");
+    } catch (error) {
+        console.error("Error saving contact:", error);
+        throw error;
+    }
+}
+
+function getInitials(name) {
+    return name.split(' ').map(part => part[0]).join('').toUpperCase();
+}
+
+function getRandomColor() {
+    const letters = '0123456789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+}
+
 function clearForm() {
     document.getElementById("join-form").reset();
 }
 
-// Function to show toast notification
 function showToast(message, type) {
-    // Create toast container
     const toast = document.createElement("div");
     toast.className = `toast toast-${type}`;
     toast.innerText = message;
     document.body.appendChild(toast);
 
-    // Apply 'show' class after a short delay to trigger animation
     setTimeout(() => toast.classList.add("show"), 100);
 
-    // Hide toast after 2.5 seconds
     setTimeout(() => {
-        toast.classList.add("hide"); // Slide up slightly
-        setTimeout(() => toast.remove(), 500); // Remove from DOM
+        toast.classList.add("hide");
+        setTimeout(() => toast.remove(), 500);
     }, 2500);
 }
 
-
 // Toggle password visibility
-
 function togglePasswordVisibility(inputId, toggleIconId) {
     const passwordInput = document.getElementById(inputId);
     const toggleIconElement = document.getElementById(toggleIconId);

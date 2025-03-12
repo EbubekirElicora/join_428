@@ -1,3 +1,18 @@
+
+html {
+  overflow: scroll;
+  overflow-x: hidden;
+}
+::-webkit-scrollbar {
+  width: 0;  /* Remove scrollbar space */
+  background: transparent;  /* Optional: just make scrollbar invisible */
+}
+/* Optional: show position indicator in red */
+::-webkit-scrollbar-thumb {
+  background: #f6f7f8;
+}
+
+
 body {
   margin: 0;
   padding: 0;
@@ -800,14 +815,6 @@ input[type="checkbox"]:checked {
   overflow-y: auto;
   z-index: 1;
 }
-.checkbox_class {
-  opacity: 1;
-  position: relative;
-  width: 16px;
-  height: 16px;
-  margin-right: 8px;
-  cursor: pointer;
-}
 
 .selected-dropdown-item .checkbox_class {
   filter: brightness(0) invert(1);
@@ -819,9 +826,9 @@ input[type="checkbox"]:checked {
 }
 
 .contact-item {
-  margin-bottom: 4px;
+  margin-bottom: 2px;
   padding: 4px;
-  border-radius: 4px;
+  border-radius: 16px;
   transition: background-color 0.3s ease;
 }
 
@@ -829,6 +836,9 @@ input[type="checkbox"]:checked {
   background-color: #f0f0f0;
 }
 
+.dropdown-content span {
+  font-size: 20px;
+}
 
 .dropdown-content div {
   padding: 5px;
@@ -845,8 +855,8 @@ input[type="checkbox"]:checked {
 }
 
 .initials-container {
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   background-color: #ccc;
   position: relative; 

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/x-icon" href="./assets/img/Capa 2.png">
+    <link rel="icon" type="image/x-icon" href="../assets/img/Capa 2.png">
     <link rel="stylesheet" href="../styles/header.css">
     <link rel="stylesheet" href="../styles/sidebar.css">
     <link rel="stylesheet" href="../styles/contacts.css">
@@ -16,7 +16,7 @@
     <script src="../js/sidebar.js"></script>
     
     
-    <title>Join</title>
+    <title>Contacts</title>
 </head>
 <body>
     <div w3-include-html="../Templates/sidebar.html"></div> 
@@ -99,17 +99,19 @@
         <div class="left-section">
             <img class="left-sectionImg" src="../Assets/JoinLogoWhite.svg" alt="">
             <h2>Add Contact</h2>
-            <p>Tasks are easier with a team!</p>
+            <p>Tasks are better with a team!</p>
         </div>
         <div class="right-section">
             <!-- Close button -->
-            <a href="" id="close-overlay" class="close-button" onclick="hideOverlay()">X</a> 
+            <a href="#" class="close-button" >
+                <img onclick="hideOverlay()" id="close-overlay" src="../assets/icons/close_button_contact_icon.png" >
+            </a> 
             <!-- New Flex Container -->
             <div class="right-section-flex">
                 <div class="contact-persona">
-                    <img src="../Assets/person.svg" class="centered-image" alt="">
+                    <img src="../Assets/icons/add_contact_profil_icon.png" class="centered-image" >
                 </div>
-                <div>
+                <div style="width: 100%;">
                     <form id="contact-form" class="contact-form">
                         <!-- Name input with icon -->
                         <div class="input-container">
@@ -145,19 +147,35 @@
                     <h2>Edit Contact</h2>
                 </div>
                 <div class="contactOverlayRight">
-                    <a href="#" id="close-contact-overlay" class="close-button">X</a>
+                    <a href="#"  class="close-button">
+                        <img id="close-contact-overlay" src="../assets/icons/close_button_contact_icon.png">
+                    </a>
                     <div class="contact-details-row">
                         <div class="contact-initials-overlay" id="contact-initials-overlay"></div>
+                        <div class="contact_details_container">
                         <div class="contact-details-inputs">
+                            <div>
+                            <img src="../assets/icons/edit_contact_person_icon.png">
                             <input type="text" id="edit-contact-name" class="edit-input" placeholder="Enter Name">
+                        </div>
+                        <div>
+                            <img src="../assets/icons/edit_contact_mail_icon.png">
                             <input type="email" id="edit-contact-email" class="edit-input" placeholder="Enter Email">
+                        </div>
+                        <div>
+                            <img src="../assets/icons/edit_contact_phone_icon.png">
                             <input type="tel" id="edit-contact-phone" class="edit-input" placeholder="Enter Phone">
                         </div>
+                        </div>
+                        <div class="contact-details-buttons">
+                            <button id="delete-contact-button" class="contact-button cancel">Delete</button>
+                            <button id="save-contact-button" class="contact-button create-contact">Save
+                                <img src="../assets/icons/edit_contact_check_icon.png">
+                            </button>
+                        </div>
                     </div>
-                    <div class="contact-details-buttons">
-                        <button id="delete-contact-button" class="contact-button cancel">Delete</button>
-                        <button id="save-contact-button" class="contact-button create-contact">Save</button>
                     </div>
+                 
                 </div>
             </div>
         </div>

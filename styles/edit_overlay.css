@@ -22,3 +22,28 @@
 .d-none {
     display: none !important;
 }
+
+.subTask {
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+  
+  .subTask.deleting {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+
+  .left_container_overlay {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .subtask_input_overlay {
+    width: 330px !important;
+  }
+
+  .subTask.deleting {
+    opacity: 0;
+    transform: translateX(-100%);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}

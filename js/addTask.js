@@ -424,7 +424,6 @@ function addCategoryOptions(category_dropdown) {
 
 
 
-
 let newtasks = [];
 let subtasks = [];
 

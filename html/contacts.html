@@ -50,37 +50,41 @@
                     <div class="contact-header">
                         <h1>Contacts</h1>
                         <div class="separator"></div>
-                        <h3>Better with Team</h3>
+                        <h3>Better with a team</h3>
                     </div>
                     <div class="back-button" onclick="toggleColumns()">
                         <img src="/Assets/arrowLeft.svg" alt="Back Arrow">
                     </div>
                 </div>
                 <div id="showDetails" class="hidden">
+                    <div style="display: flex;">
                     <h1>
                         <div id="contactInitials" class="contact-initials"></div>
-                        <span id="contactName"></span>
                     </h1>
+                    <div class="contact_link_container">
+                    <span id="contactName">
+                    </span>
                     <div class="links">
-                        <a href="#" id="editLink">✏️ Edit</a>
-                        <a href="#" id="deleteLink">🗑️ Delete</a>
+                        <a class="links_pos" href="#" id="editLink">
+                            <img src="../assets/icons/edit_contact_icon.png">Edit</a>
+                        <a class="links_pos" href="#" id="deleteLink">
+                            <img src="../assets/icons/delete_contact_icon.png">Delete</a>
                     </div>
+                </div>
+               
+                </div>
                     <div class="details-columns">
-                        <p>Contact information</p>
-                        <p><strong>Email:</strong> <span id="contactEmail"></span></p>
-                        <p><strong>Phone:</strong> <span id="contactPhone"></span></p>
+                        <p class="contact_info">Contact information</p>
+                        <p class="contact_mail"><strong>Email:</strong><a id="contactEmail"></a></p>
+                        <p class="contact_phone"><strong>Phone:</strong><span id="contactPhone"></span></p>
                     </div>
                     <div class="mobileEdit-button">
                         <img src="../assets/3dots.svg" alt="" onclick="toggleOverlay()">
                         
                         <!-- Overlay with Edit and Delete Links -->
                         <div id="mobileEditOverlay" class="mobileEdit-overlay">
-                            <a href="#" id="editLinkOverlay" class="edit-link">
-                                ✏️ Edit
-                            </a>
-                            <a href="#" id="deleteLinkOverlay" class="delete-link">
-                                🗑️ Delete
-                            </a>
+                            <a href="#" id="editLinkOverlay" class="edit-link">Edit</a>
+                            <a href="#" id="deleteLinkOverlay" class="delete-link">Delete</a>
                         </div>
                     </div>
                 </div>

@@ -194,6 +194,7 @@ button:hover a {
     width: 4px;
     min-height: 64px;
     border: 0;
+    border-radius: 24px;
     color: rgb(29, 164, 238);
     background-color: rgb(29, 164, 238);
 }

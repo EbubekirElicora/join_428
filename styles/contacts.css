@@ -432,7 +432,7 @@
 }
 
 .close-button:hover {
-    background-color: lightgray;
+    background-color: rgb(0, 0, 0,0.1);
 }
 
 /*edit overlay section*/

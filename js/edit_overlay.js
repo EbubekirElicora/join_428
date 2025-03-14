@@ -472,7 +472,29 @@ function editSubTask(id) {
         renderSubtasksOverlay();
     }
 }
+function addNewEditText(event) {
+    const input = document.getElementById('edit_subtask_input');
+    const title = input.value.trim();
+    if (!title) return;
+    const subtaskId = `subtask-${Date.now()}-${Math.random().toString(36).slice(2)}`;
+    editSubtasks[subtaskId] = {
+        title: title,
+        completed: false,
+        isEditing: false
+    };
 
+    // Sync with currentTask
+    currentTask.subtasks = { ...editSubtasks };
+
+    input.value = '';
+    renderSubtasksOverlay();
+    if (event && event.type === 'click') {
+        document.getElementById('edit_add_delete_container').classList.remove('visible');
+        document.getElementById('edit_show_subtask_container').style.display = 'block';
+        document.querySelector('.add_subtask_container').classList.remove('no-hover');
+    }
+}
+/*
 function addNewEditText(event) {
     const input = document.getElementById('edit_subtask_input');
     const title = input.value.trim();
@@ -490,7 +512,7 @@ function addNewEditText(event) {
         document.getElementById('edit_show_subtask_container').style.display = 'block';
         document.querySelector('.add_subtask_container').classList.remove('no-hover');
     }
-}
+}*/
 
 function renderEditMode(id, subtask) {
     return `
@@ -537,9 +559,25 @@ function renderSubtasksOverlay() {
         return subtask.isEditing ? renderEditMode(id, subtask) : renderViewMode(id, subtask);
     }).join('');
 }
-
-
 function deleteSubTaskOverlay(subtaskId) {
+    const subtaskElement = document.querySelector(`.subTask[data-subtask-id="${subtaskId}"]`);
+    if (subtaskElement) {
+        subtaskElement.classList.add('deleting');
+        setTimeout(() => {
+            delete editSubtasks[subtaskId];
+
+            // Sync with currentTask
+            currentTask.subtasks = { ...editSubtasks };
+
+            renderSubtasksOverlay();
+        }, 300);
+    } else {
+        console.error(`Subtask with ID ${subtaskId} not found.`);
+    }
+}
+
+
+/*function deleteSubTaskOverlay(subtaskId) {
     const subtaskElement = document.querySelector(`.subTask[data-subtask-id="${subtaskId}"]`);
     if (subtaskElement) {
         subtaskElement.classList.add('deleting');
@@ -550,7 +588,7 @@ function deleteSubTaskOverlay(subtaskId) {
     } else {
         console.error(`Subtask with ID ${subtaskId} not found.`);
     }
-}
+}*/
 
 async function saveEditedTask(taskId) {
     const updatedTask = {
@@ -587,9 +625,15 @@ function saveSubTask(id) {
     if (newTitle) {
         editSubtasks[id].title = newTitle;
         editSubtasks[id].isEditing = false;
+
+        // Sync with currentTask
+        currentTask.subtasks = { ...editSubtasks };
         renderSubtasksOverlay();
     }
 }
+
+
+
 
 
 

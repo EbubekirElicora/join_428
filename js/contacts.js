@@ -276,7 +276,7 @@ if (closeContactOverlayButton) {
             hideContactOverlay();            
             renderContacts();            
             document.getElementById('showDetails').classList.add('hidden');            
-            if (window.innerWidth <= 960) {
+            if (window.innerWidth <= 1060) {
                 console.log('Small screen detected. Toggling back to left column...');
                 toggleColumns(); 
             }
@@ -314,7 +314,7 @@ if (closeContactOverlayButton) {
                 hideOverlay();               
                 renderContacts();            
                 showContactDetails(newContact);                
-                if (window.innerWidth <= 960) {
+                if (window.innerWidth <= 1060) {
                     toggleColumns();
                 }
             })
@@ -366,7 +366,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const rightColumn = document.querySelector('.right-column');
 
         // Only toggle columns on small screens (960px or smaller)
-        if (window.innerWidth <= 960) {
+        if (window.innerWidth <= 1080) {
             leftColumn.classList.toggle('hidden');
             rightColumn.classList.toggle('active');
         }
@@ -428,3 +428,25 @@ document.addEventListener('click', function(event) {
 });
 
 
+document.addEventListener('DOMContentLoaded', function () {
+    const BASE_URL = "https://join-428-default-rtdb.europe-west1.firebasedatabase.app/";
+
+    // Function to handle clicks on dynamically generated .contact-item elements
+    document.getElementById('content').addEventListener('click', function (event) {
+        const contactItem = event.target.closest('.contact-item');
+        if (contactItem) {
+            // Remove active class from all items
+            document.querySelectorAll('.contact-item').forEach(item => {
+                item.classList.remove('active');
+            });
+
+            // Add active class to the clicked item
+            contactItem.classList.add('active');
+
+            // Log for debugging
+            console.log('Clicked on:', contactItem);
+        }
+    });
+
+    // Rest of your existing code...
+});

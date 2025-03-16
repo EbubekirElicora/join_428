@@ -1,69 +1,192 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="../assets/img/Capa 2.png">
-    <link rel="stylesheet" href="../styles/log_in.css">
-    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../styles/header.css">
+    <link rel="stylesheet" href="../styles/sidebar.css">
+    <link rel="stylesheet" href="../styles/contacts.css">
     <link rel="stylesheet" href="../styles/standart.css">
-    <script src="../js/log_in.js"></script>
+    <link rel="stylesheet" href="../styles/template.css">
+    <link rel="stylesheet" href="../mobileResponsive/contactResponsive.css">
+    <script src="../js/utility.js"></script>
     <script src="../js/header.js"></script>
-    <title>Desktop</title>
-</head>
-
-<body onload="init()">
+    <script src="../js/contacts.js"></script>
+    <script src="../js/sidebar.js"></script>
     
-    <img id="logo" class="finish_logo" src="../assets/img/Capa 2.png" alt="Logo" style="display: none;">
+    
+    <title>Contacts</title>
+</head>
+<body>
+    <div w3-include-html="../Templates/sidebar.html"></div> 
+    <div w3-include-html="../Templates/header.html"></div>
 
-    <div class="content-wrapper">
-        <div class="join-login" id="forGreeting">
-            <div class="joinLogo" id="login-logoContainer">
-                <img src="../Assets/joinLogo.svg" alt="">
+    <main class="contactsPage">
+        <div class="container">
+            <div class="left-column">
+                
+                <div class="header-content" id="addContact" onclick="showOverlay()">
+                    <span>Add New Contacts</span>
+                    <img src="../assets/img/personAdd.svg" alt="Add Contact Icon">
+                </div>
+            
+                
+                <div id="addContactCircle" class="add-contact-circle" onclick="showOverlay()">
+                    <span>
+                        <img src="../assets/img/personAdd.svg" alt="Add Contact Icon">
+                    </span>
+                </div>
+            
+                <div id="content"></div>
             </div>
-
-            <div class="login-joinContainer">
-                <h1>Log in</h1>
-                <form id="join-form" onsubmit="logIn(event)">
-                    <div class="input-group">
-                        <input type="text" id="email" name="email" placeholder="Email" required autocomplete="new-email">
-                        <span class="icon cursorPointer">
-                            <img id="passwordImg" src="../Assets/mail.svg" alt="">
-                        </span>
+            
+            
+            <div class="right-column">
+                
+                
+                
+                <div class="contact">
+                    <div class="contact-header">
+                        <h1>Contacts</h1>
+                        <div class="separator"></div>
+                        <h3>Better with a team</h3>
                     </div>
-
-                    <div class="input-group">
-                        <input type="password" id="password" name="password" placeholder="Password" required autocomplete="new-password">
-                        <span class="icon" onclick="togglePasswordVisibility('password', 'loginTogglePasswordIcon')">
-                            <img id="loginTogglePasswordIcon" src="../Assets/icons/lock.png" alt="Show Password" style="cursor: pointer;">
-                        </span>
+                    <div class="back-button" onclick="toggleColumns()">
+                        <img src="/Assets/arrowLeft.svg" alt="Back Arrow">
                     </div>
+                </div>
+                <div id="showDetails" class="hidden">
+                    <div style="display: flex;">
+                    <h1>
+                        <div id="contactInitials" class="contact-initials"></div>
+                    </h1>
+                    <div class="contact_link_container">
+                    <span id="contactName">
+                    </span>
+                    <div class="links">
+                        <div >
+                            <a  href="#" id="editLink">
+                                <img src="../assets/icons/edit_contact_icon.png">Edit
+                            </a>
 
-                    
-                    <div class="btn_log_in buttons User-Guest">
-                        <button type="submit" class=" show_button">Log in</button>
-                        <button onclick="guestLogIn()" class="show_button_guest login-button guest-btn">Guest Log in</button>
+                        </div>
+
+                        <div>
+                            <a href="#" id="deleteLink">
+                                <img src="../assets/icons/delete_contact_icon.png">Delete
+                            </a>
+                        </div>    
+                        
                     </div>
-                </form>
+                </div>
+               
+                </div>
+                    <div class="details-columns">
+                        <p class="contact_info">Contact information</p>
+                        <p class="contact_mail"><strong>Email:</strong><a id="contactEmail"></a></p>
+                        <p class="contact_phone"><strong>Phone:</strong><span id="contactPhone"></span></p>
+                    </div>
+                    <div class="mobileEdit-button">
+                        <img src="../assets/3dots.svg" alt="" onclick="toggleOverlay()">
+                        
+                        <!-- Overlay with Edit and Delete Links -->
+                        <div id="mobileEditOverlay" class="mobileEdit-overlay">
+                            <a href="#" id="editLinkOverlay" class="edit-link">Edit</a>
+                            <a href="#" id="deleteLinkOverlay" class="delete-link">Delete</a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <div id="greetingLogin" class="dnone">
-            <aside w3-include-html="../templates/greetingTemplate.html"></aside>
-        </div>
 
-        <div id="buttonLoginForGreeting" class="login-signup-button">
-            <span>Not a Join User?</span>
-            <a href="../html/sign_up.html">
-                <button class="login-button cursorPointer">Sign Up</button>
-            </a>
+        
+        <!-- Overlay -->
+<div id="overlay" class="overlay">
+    <div class="overlay-content">
+        <div class="left-section">
+            <img class="left-sectionImg" src="../Assets/JoinLogoWhite.svg" alt="">
+            <h2>Add Contact</h2>
+            <p>Tasks are better with a team!</p>
         </div>
-        <div id="sidefoot" class="legalPolicy">
-            <a class="sidebartext widget" href="../html/policy.html">Privacy Policy</a>
-            <a class="sidebartext widget" href="../html/legalNotice.html">Legal Notice</a>
+        <div class="right-section">
+            
+            <a href="" id="close-overlay" class="close-button" onclick="hideOverlay()">X</a> 
+            
+            <div class="right-section-flex">
+                <div class="contact-persona">
+                    <img src="../Assets/icons/add_contact_profil_icon.png" class="centered-image" >
+                </div>
+                <div style="width: 100%;">
+                    <form id="contact-form" class="contact-form">
+                        
+                        <div class="input-container">
+                            <img src="../assets/person.svg" class="input-icon" alt="Name Icon">
+                            <input type="text" id="name" placeholder="Name" required />
+                        </div>
+                        
+                        <div class="input-container">
+                            <img src="../Assets/mail.svg" class="input-icon" alt="Email Icon">
+                            <input type="email" id="email" placeholder="Email" required/>
+                        </div>
+                        
+                        <div class="input-container">
+                            <img src="../assets/call_24dp_D9D9D9_FILL0_wght400_GRAD0_opsz24.svg" class="input-icon" alt="Phone Icon">
+                            <input type="tel" id="phone" placeholder="Phone" required/>
+                        </div>
+                        
+                        <div class="button-container">
+                            
+                            <button type="button" id="cancel" class="form-button cancel">Cancel</button>
+                            <button type="submit" id="create-contact" class="form-button create-contact">Create contact</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
-</body>
+</div>
+<div id="contact-overlay" class="" style="display: none;">
+    <div class="contact-overlay-content">
+        <div class="contactOverlayLeft">
+            <img class="left-sectionImg" src="../Assets/JoinLogoWhite.svg" alt="">
+            <h2>Edit Contact</h2>
+        </div>
+        <div class="contactOverlayRight">
+            <a href="#" id="close-contact-overlay" class="close-button">X</a>
+            <div class="contact-details-row">
+                <div class="contact-initials-overlay" id="contact-initials-overlay"></div>
+                <div class="contact-details-inputs">
+                    <!-- Input field with icon for Name -->
+                    <div class="contact-input-container">
+                        <img src="../assets/person.svg" class="contact-input-icon" alt="Name Icon">
+                        <input type="text" id="edit-contact-name" class="edit-input" placeholder="Enter Name">
+                    </div>
+                    <!-- Input field with icon for Email -->
+                    <div class="contact-input-container">
+                        <img src="../assets/mail.svg" class="contact-input-icon" alt="Email Icon">
+                        <input type="email" id="edit-contact-email" class="edit-input" placeholder="Enter Email">
+                    </div>
+                    <!-- Input field with icon for Phone -->
+                    <div class="contact-input-container">
+                        <img src="../assets/call_24dp_D9D9D9_FILL0_wght400_GRAD0_opsz24.svg" class="contact-input-icon" alt="Phone Icon">
+                        <input type="tel" id="edit-contact-phone" class="edit-input" placeholder="Enter Phone">
+                    </div>
+                </div>
+            </div>
+            <div class="contact-details-buttons">
+                <button id="delete-contact-button" class="contact-button cancel">Delete</button>
+                <button id="save-contact-button" class="contact-button create-contact">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+        <div id="toast" class="toast"></div>
+    
+    </main>    
 
+    <script src="https://www.w3schools.com/lib/w3.js"></script>
+    <script>includeHTML();</script> 
+</body>
 </html>

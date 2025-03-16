@@ -2,9 +2,7 @@
 function HeaderMenu() {
     const menu = document.getElementById('mobileMenu');
     const userIcon = document.getElementById('user-initial');
-    menu.classList.toggle('active');
-
-   
+    menu.classList.toggle('active');   
 }
 
 function logout() {

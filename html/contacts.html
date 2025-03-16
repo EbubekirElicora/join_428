@@ -57,7 +57,7 @@
                     </div>
                 </div>
                 <div id="showDetails" class="hidden">
-                    <div style="display: flex;">
+                    <div class="contact_initials_overlay_container">
                     <h1>
                         <div id="contactInitials" class="contact-initials-overlay-profil"></div>
                     </h1>
@@ -105,8 +105,8 @@
         </div>
         <div class="right-section">
             <!-- Close button -->
-            <a href="#" class="close-button" >
-                <img onclick="hideOverlay()" id="close-overlay" src="../assets/icons/close_button_contact_icon.png" >
+            <a href="#" class="close-button" onclick="hideOverlay()">
+                <img  src="../assets/icons/close_button_contact_icon.png" >
             </a> 
             <!-- New Flex Container -->
             <div class="right-section-flex">
@@ -150,7 +150,8 @@
                 </div>
                 <div class="contactOverlayRight">
                     <a href="#"  class="close-button">
-                        <img id="close-contact-overlay" src="../assets/icons/close_button_contact_icon.png">
+                        <img id="close-contact-overlay" class="d-flex" src="../assets/icons/close_button_contact_icon.png">
+                        <img id="close-contact-overlay-white" class="d-none" src="../assets/icons/overlay_edit_close_icon.png">
                     </a>
                     <div class="contact-details-row">
                         <div class="contact-initials-overlay" id="contact-initials-overlay"></div>

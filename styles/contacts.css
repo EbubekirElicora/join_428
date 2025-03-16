@@ -490,8 +490,9 @@
     position: absolute;
     left: 0;
     bottom: -24px;
-    width: 30%;
+    width: 32%;
     border-bottom: 4px solid #3498db;
+    border-radius: 32px;
 }
 
 .contactOverlayRight {
@@ -570,6 +571,10 @@
     right: 56px;
     pointer-events: none;
     opacity: 0.7;
+}
+
+.contact_initials_overlay_container {
+    display: flex;
 }
 
 .contact-initials {

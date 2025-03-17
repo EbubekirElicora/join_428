@@ -43,9 +43,9 @@
             
             
             <div class="right-column">
+                <!-- Back Button -->
                 
-                
-                
+                <!-- Rest of the right column content -->
                 <div class="contact">
                     <div class="contact-header">
                         <h1>Contacts</h1>
@@ -59,25 +59,16 @@
                 <div id="showDetails" class="hidden">
                     <div class="contact_initials_overlay_container">
                     <h1>
-                        <div id="contactInitials" class="contact-initials"></div>
+                        <div id="contactInitials" class="contact-initials-overlay-profil"></div>
                     </h1>
                     <div class="contact_link_container">
                     <span id="contactName">
                     </span>
                     <div class="links">
-                        <div >
-                            <a  href="#" id="editLink">
-                                <img src="../assets/icons/edit_contact_icon.png">Edit
-                            </a>
-
-                        </div>
-
-                        <div>
-                            <a href="#" id="deleteLink">
-                                <img src="../assets/icons/delete_contact_icon.png">Delete
-                            </a>
-                        </div>    
-                        
+                        <a class="links_pos" href="#" id="editLink">
+                            <img src="../assets/icons/edit_contact_icon.png">Edit</a>
+                        <a class="links_pos" href="#" id="deleteLink">
+                            <img src="../assets/icons/delete_contact_icon.png">Delete</a>
                     </div>
                 </div>
                
@@ -92,8 +83,10 @@
                         
                         <!-- Overlay with Edit and Delete Links -->
                         <div id="mobileEditOverlay" class="mobileEdit-overlay">
-                            <a href="#" id="editLinkOverlay" class="edit-link">Edit</a>
-                            <a href="#" id="deleteLinkOverlay" class="delete-link">Delete</a>
+                            <a href="#" id="editLinkOverlay" class="edit-link">
+                                <img src="../assets/icons/overlay_contact_edit.png">Edit</a>
+                            <a href="#" id="deleteLinkOverlay" class="delete-link">
+                                <img src="../assets/icons/overlay_contact_delete.png">Delete</a>
                         </div>
                     </div>
                 </div>
@@ -101,7 +94,7 @@
         </div>
 
 
-        
+        <!-- Overlay -->
         <!-- Overlay -->
 <div id="overlay" class="overlay">
     <div class="overlay-content">
@@ -122,7 +115,7 @@
                 </div>
                 <div style="width: 100%;">
                     <form id="contact-form" class="contact-form">
-                        
+                        <!-- Name input with icon -->
                         <div class="input-container">
                             <img src="../assets/person.svg" class="input-icon" alt="Name Icon">
                             <input type="text" id="name" placeholder="Name" required />
@@ -139,7 +132,7 @@
                         </div>
                         
                         <div class="button-container">
-                            
+                            <!-- Add onclick="hideOverlay()" to the cancel button -->
                             <button type="button" id="cancel" class="form-button cancel">Cancel</button>
                             <button type="submit" id="create-contact" class="form-button create-contact">Create contact</button>
                         </div>
@@ -184,20 +177,11 @@
                             </button>
                         </div>
                     </div>
-                    <!-- Input field with icon for Phone -->
-                    <div class="contact-input-container">
-                        <img src="../assets/call_24dp_D9D9D9_FILL0_wght400_GRAD0_opsz24.svg" class="contact-input-icon" alt="Phone Icon">
-                        <input type="tel" id="edit-contact-phone" class="edit-input" placeholder="Enter Phone">
                     </div>
+                 
                 </div>
             </div>
-            <div class="contact-details-buttons">
-                <button id="delete-contact-button" class="contact-button cancel">Delete</button>
-                <button id="save-contact-button" class="contact-button create-contact">Save</button>
-            </div>
         </div>
-    </div>
-</div>
         <div id="toast" class="toast"></div>
     
     </main>    

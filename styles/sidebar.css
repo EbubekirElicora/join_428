@@ -1,5 +1,5 @@
 #sidebar {
-    background-color: #2A3647;
+    background-color: #2A3644;
     align-items: center;
     flex-direction: column;
     height: 100vh;
@@ -48,6 +48,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: space-evenly;
+    margin-top: -15px;
 }
 
 .menu_bar,

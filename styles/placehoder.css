@@ -408,7 +408,7 @@
 
 .close-button:hover {
     background-color:lightgray;
-    border: 2px solid #fff; /* Optional: Add a border */
+    
 }
 /*edit overlay section*/
 #contact-overlay {

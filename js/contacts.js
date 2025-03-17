@@ -1,10 +1,28 @@
-// Function to show the overlay
 function showOverlay() {
-    let overlay = document.getElementById('overlay');
-    overlay.classList.add('active');
+    const overlay = document.getElementById('overlay');
+    const addContactCircle = document.querySelector('.add-contact-circle');
+
+    if (addContactCircle) {
+        addContactCircle.classList.add('clicked');
+    }
+
+    setTimeout(() => {
+        overlay.style.display = 'block';
+        overlay.classList.add('active');
+    }, 300);
 }
 
+function hideOverlay() {
+    const overlay = document.getElementById('overlay');
+    const addContactCircle = document.querySelector('.add-contact-circle');
 
+    overlay.style.display = 'none';
+    overlay.classList.remove('active');
+
+    if (addContactCircle) {
+        addContactCircle.classList.remove('clicked');
+    }
+}
 const closeButton = document.querySelector('.close-button');
 if (closeButton) {
     closeButton.addEventListener('click', function () {

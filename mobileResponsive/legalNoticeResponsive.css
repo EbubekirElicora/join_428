@@ -1,0 +1,40 @@
+@media (max-width: 1080px) {
+
+    html {
+      overflow: scroll;
+      overflow-x: hidden;
+    }
+  
+    ::-webkit-scrollbar {
+      width: 0;
+      background: transparent;
+    }
+  
+    ::-webkit-scrollbar-thumb {
+      background: #f6f7f8;
+    }
+  
+    .impressum {
+      padding-inline: 0;
+    }
+  
+    .main-content {
+      margin-left: 20px;
+      margin-right: 20px;
+      margin-top: 80px;
+    }
+  
+    .legalNotice {
+      margin-top: 90px;
+      margin-bottom: 80px;
+      padding: 20px;
+      overflow-y: auto;
+    }
+  }
+  
+  @media (max-width: 480px) {
+  
+    .impressum h1 {
+      font-size: 40px;
+    }
+  }

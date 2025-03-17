@@ -1,0 +1,132 @@
+@media (max-width: 1080px) {
+    #sidebar {
+        display: flex;
+        width: 100%;
+        height: 72px;
+        bottom: 0;
+        flex-direction: row;
+        top: unset;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .sidebar_size {
+        flex-direction: row;
+        padding-block: 0;
+    }
+
+    .sidelinks {
+        display: flex;
+        flex-direction: row;
+        gap: 0;
+        align-items: center;
+    }
+
+    #widget_1,
+    #widget_2,
+    #widget_3,
+    #widget_4 {
+        width: auto;
+        padding: 16px 8px;
+        border-radius: 16px;
+        margin-right: 8px;
+    }
+
+    #widget_1:hover,
+    #widget_2:hover,
+    #widget_3:hover,
+    #widget_4:hover {
+        background-color: #091931;
+    }
+
+    .sidebar_img_container {
+        flex-direction: row;
+        gap: 10px;
+    }
+
+    .menu_bar,
+    .privacy_and_noticy_container {
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .nav_position_button {
+        padding-left: 0;
+        padding-top: 0;
+    }
+
+    .sidelinks a {
+        padding-left: 0;
+        margin-top: 0px;
+        white-space: nowrap;
+    }
+
+    .sidelinks div {
+        margin-top: 0 !important;
+        margin-left: 0 !important;
+    }
+
+    #sidefoot {
+        display: none;
+    }
+
+    .sidebarlogo {
+        display: none;
+    }
+
+    .show-privacy-links-mobile .privacy_and_noticy_container {
+        display: flex !important;
+        flex-direction: row !important;
+        justify-content: center !important;
+        align-items: center !important;
+        gap: 20px;
+        position: relative;
+        bottom: 0;
+        padding: 10px 0;
+    }
+
+    .show-privacy-links-mobile .privacy_and_noticy_container a {
+        text-align: center;
+        flex-grow: 1;
+        white-space: nowrap;
+        padding: 0 16px;
+    }
+
+    .show-privacy-links-mobile #sidefoot {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        width: 100%;
+    }
+}
+
+@media (max-width: 490px) {
+
+    .sidelinks a {
+        display: flex;
+        flex-direction: column;
+        font-size: 14px;
+        gap: 3px;
+    }
+
+    #widget_1,
+    #widget_2,
+    #widget_3,
+    #widget_4 {
+        width: auto;
+        padding: 8px 18px 8px 18px;
+        margin-right: 8px;
+    }
+}
+
+@media (max-width: 360px) {
+
+    #widget_1,
+    #widget_2,
+    #widget_3,
+    #widget_4 {
+        width: auto;
+        padding: 8px 12px 8px 12px;
+        margin-right: 6px;
+    }
+}

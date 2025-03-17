@@ -147,7 +147,7 @@
     }
 
     .right-column {
-        margin-left: 352px;
+        margin-left: 328px;
         padding: 124px 96px 102px 96px;
     }
 
@@ -269,6 +269,11 @@
 
     ::-webkit-scrollbar-thumb {
         background: white;
+    }
+
+    .contact-initials-overlay-profil {
+        width: 80px;
+        height: 80px;
     }
 
     #contactName {

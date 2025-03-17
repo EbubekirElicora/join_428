@@ -1,16 +1,3 @@
-function normalizeSubtasks(subtasks) {
-    if (Array.isArray(subtasks)) {
-        return subtasks.reduce((acc, subtask, index) => {
-            const id = subtask.id || `subtask-${index}-${Date.now()}`;
-            acc[id] = typeof subtask === 'string' 
-                ? { title: subtask, completed: false } 
-                : subtask;
-            return acc;
-        }, {});
-    }
-    return subtasks || {};
-  }
-
 
 
 function generateTodoHTML(task) {
@@ -76,10 +63,12 @@ function getOverlayHtml(task) {
             <p class="contact_name">${contact.name}</p>
         </div>
     `).join('') || '<div class="no-contacts">No contacts assigned</div>';
-    const normalizedSubtasks = normalizeSubtasks(task.subtasks);
-    const subtasksHTML = Object.entries(normalizedSubtasks).map(([subtaskId, subtask]) => {
-        const title = subtask.title || "Untitled";
-        const completed = subtask.completed || false;
+    const subtasksHTML = Object.entries(task.subtasks || {}).map(([subtaskId, subtask]) => {
+        const normalizedSubtask = typeof subtask === 'string' 
+          ? { title: subtask, completed: false } 
+          : subtask;
+        const title = normalizedSubtask.title || "Untitled";
+        const completed = normalizedSubtask.completed;
 
         return `
             <div class="subtask_item" data-subtask-id="${subtaskId}" onclick="toggleSubtask('${task.id}', '${subtaskId}')">

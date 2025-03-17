@@ -162,6 +162,7 @@
     align-items: center;
     gap: 10px;
     font-size: 54px;
+    
 }
 
 #showDetails .details-columns {
@@ -173,6 +174,8 @@
 .links{
     display: flex;
     gap: 16px;
+    padding-left: 20px;
+    margin-top: 20px;
 }
 .links a img {
     width: 20px;
@@ -197,6 +200,26 @@
 #contactName{
     font-size: 34px;
     font-weight: bold;
+    padding-left: 20px;
+}
+.details-columns p {
+    margin: 0;
+    padding: 0;
+}
+
+.details-columns p:first-of-type {
+    
+    font-size: 1.2em; 
+    margin-bottom: 20px; 
+}
+
+.details-columns strong {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.details-columns a, .details-columns span {
+    display: block;
 }
 /* create contacts Overlay styles */
 .overlay {

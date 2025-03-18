@@ -1,5 +1,11 @@
-function showOverlay() {
-    const overlay = document.getElementById('overlay');
+function showOverlay(overlayType) {
+    let overlay;
+    if (overlayType === 'contact') {
+        overlay = document.getElementById('contact-overlay');
+    } else {
+        overlay = document.getElementById('overlay');
+    }
+
     const addContactCircle = document.querySelector('.add-contact-circle');
 
     if (addContactCircle) {
@@ -9,8 +15,9 @@ function showOverlay() {
     setTimeout(() => {
         overlay.style.display = 'block';
         overlay.classList.add('active');
-    }, 300);
+    }, 200);
 }
+
 
 function hideOverlay() {
     const overlay = document.getElementById('overlay');

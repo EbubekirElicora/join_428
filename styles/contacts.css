@@ -442,6 +442,38 @@
     
 }
 /*edit overlay section*/
+
+#contact-overlay {
+    display: none; /* Initially hidden */
+    position: fixed;
+    top: 65%;
+    left: 52.5%;
+    transform: translate(-50%, -50%); /* Center the overlay */
+    z-index: 1001;
+    transition: transform 0.5s ease-in-out; /* Smooth transition for sliding */
+}
+
+/* Class to slide the overlay in */
+
+#contact-overlay.active {
+    display: block; /* Make the overlay visible */
+    animation: slideIn 0.5s ease-in-out forwards; /* Apply slide-in animation */
+}
+
+/* Animation for sliding in */
+@keyframes slideIn {
+    from {
+        transform: translate(50%, -50%); /* Start off-screen to the right */
+    }
+    to {
+        transform: translate(-50%, -50%); /* Move to the center */
+    }
+}
+
+
+#contact-overlay.active {
+    display: flex; /* Ensure the overlay is displayed as flex when active */
+}
 #contact-overlay {
       
     display: none ;
@@ -453,6 +485,7 @@
        
      
 }
+
 #contact-overlay.active {
     display: flex;
 }

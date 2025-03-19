@@ -24,8 +24,6 @@ async function overlayBoard(taskId) {
     editSubtasks = { ...task.subtasks };
   }
 
-  console.log("📌 editSubtasks geladen:", editSubtasks);
-
   overlayRef.classList.remove('d_none');
   overlayRef.innerHTML = getOverlayHtml(task);
   document.body.classList.add('no-scroll');

@@ -1,4 +1,9 @@
 
+// Global variables
+let subtasks = {};
+let isDropdownClosed = false;
+let selectedContacts = []; 
+
 function getDateToday() {
     let dateInput = document.getElementById('date');
     if (dateInput) {
@@ -11,15 +16,12 @@ function getDateToday() {
     }
 }
 
-
 function setPrio(prio) {
     document.querySelectorAll('.prioBtnUrgent, .prioBtnMedium, .prioBtnLow').forEach(btn => {
         btn.classList.remove('active');
     });
     document.querySelector(`.prioBtn${prio.charAt(0).toUpperCase() + prio.slice(1)}`).classList.add('active');
 }
-// Global variables
-let selectedContacts = []; // For assigned contacts
 
 // Define getRandomColor in the global scope
 function getRandomColor() {
@@ -311,15 +313,6 @@ function resetForm() {
 }
 //create task functions//
 
-
-
-
-
-
-
-
-let isDropdownClosed = false;
-
 function to_open_category_dropdown() {
     if (isDropdownClosed) return;
     let elements = getCategoryElements();
@@ -371,8 +364,7 @@ function toggleRotationDownImage() {
 function initializeCategorySelector() {
     let category_select = document.getElementById('category_select');
     
-    if (!category_select) {  // Prevent error if the element is missing
-        console.warn("Element #category_select not found.");
+    if (!category_select) { 
         return;
     }
 
@@ -384,10 +376,6 @@ function initializeCategorySelector() {
         }
     });
 }
-
-
-
-
 
 function resetCategorySelector() {
     let selected_txt = document.getElementById('select_txt');
@@ -417,14 +405,6 @@ function addCategoryOptions(category_dropdown) {
         category_dropdown.appendChild(category_item);
     });
 }
-
-
-
-
-
-
-let subtasks = {};
-
 
 function show_subtask_container() {
     {
@@ -461,8 +441,6 @@ function add_new_text(event) {
 
     newSubTask.value = ''; // Input-Feld leeren
     renderSubtasks();
-    
-    console.log("Aktuelle Subtasks als Objekt:", subtasks);
 }
 
 function hideInputSubTaksClickContainerOnOutsideClick() {

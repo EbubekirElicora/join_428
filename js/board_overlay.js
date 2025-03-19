@@ -30,9 +30,42 @@ async function overlayBoard(taskId) {
   overlayRef.innerHTML = getOverlayHtml(task);
   document.body.classList.add('no-scroll');
 
-  // 🖌️ Subtask-Overlay aktualisieren
+  // Subtask-Overlay aktualisieren
   renderSubtasksOverlay();
 }
+
+// Toggle-Funktion für Subtasks
+window.toggleSubtask = async function (taskId, subtaskId) {
+  try {
+    const task = todos.find(t => t.id === taskId);
+    if (!task || !task.subtasks || !task.subtasks[subtaskId]) return;
+
+    // Falls Subtask als String gespeichert wurde, umwandeln
+    if (typeof task.subtasks[subtaskId] === 'string') {
+      task.subtasks[subtaskId] = {
+        title: task.subtasks[subtaskId],
+        completed: false
+      };
+    }
+
+    // Subtask-Status umkehren (done/undone)
+    task.subtasks[subtaskId].completed = !task.subtasks[subtaskId].completed;
+
+    // Änderungen in Firebase speichern
+    await updateData(`tasks/${taskId}`, task);
+
+    // UI-Update für Subtask-Checkbox
+    const icon = document.querySelector(`[onclick*="${subtaskId}"] .subtask-icon`);
+    if (icon) {
+      icon.src = `/assets/icons/contact_icon_${task.subtasks[subtaskId].completed ? 'check' : 'uncheck'}.png`;
+    }
+
+    updateHTML();
+  } catch (error) {
+    console.error("Error:", error);
+  }
+};
+
 
 
 async function migrateSubtasks() {

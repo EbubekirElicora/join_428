@@ -31,16 +31,19 @@
 
 .mobileEdit-overlay {
     display: none; 
-    position: absolute;
-    bottom: 100%; 
+    position: absolute;    
     right: 0; 
-    background-color: white; 
+    background-color:white; 
     border: 1px solid #ddd; 
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); 
     z-index: 1000; 
     padding: 10px; 
+    border-radius: 19px 19px 0 19px;
+    top: -10px;
+
 }
+
 
 /* Links inside the overlay */
 .mobileEdit-overlay a {
@@ -52,7 +55,10 @@
     color: #333; 
     font-size: 14px; 
 }
-
+.mobileEdit-button.blue-background {
+    background-color: #3498db; /* This is the blue color */
+    transition: background-color 0.3s ease; /* Smooth transition */
+}
 .mobileEdit-overlay a:hover {
     background-color: #f5f5f5; 
     border-radius: 4px; 
@@ -62,13 +68,74 @@
 .mobileEdit-overlay.active {
     display: block;
 }
+.edit-link {
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Space between icon and text */
+    padding: 8px 16px;
+    text-decoration: none;
+    color: #000; /* Default color */
+    transition: color 0.3s ease; /* Smooth transition */
+}
 
+#editLinkOverlay {
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Space between icon and text */
+    padding: 8px 16px;
+    text-decoration: none;
+    color: #000; /* Default color */
+    transition: color 0.3s ease; /* Smooth transition */
+}
+
+#editLinkOverlay {
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Space between icon and text */
+    padding: 8px 16px;
+    text-decoration: none;
+    color: #000; /* Default color */
+    transition: color 0.3s ease; /* Smooth transition */
+}
+
+#editLinkOverlay i {
+    font-size: 16px; /* Icon size */
+    color: #000; /* Default icon color */
+    transition: color 0.3s ease; /* Smooth transition */
+}
+
+#editLinkOverlay.active {
+    color: #3498db; /* Blue color */
+}
+
+#editLinkOverlay.active i {
+    color: #3498db; /* Blue color for the icon */
+}
 @media(max-width:1080px){
     .contactsPage{
         margin-top: 90px;
         margin-left: 0px; 
          
     }
+
+    .close-button {
+        position: absolute;
+        top: 10px;
+        right: 15px;
+        color: black;
+        font-size: 24px;
+        width: 35px;
+        height: 35px;
+        transition: color 0.3s ease, background-color 0.3s ease;
+        
+    }
+    
+    
+    .close-button.active {
+        color: #3498db; /* Blue color for active state */
+        background-color: #3498db; /* Optional: Add blue background */
+    }
+
 
 
 
@@ -86,6 +153,15 @@
         cursor: pointer;
         
     }
+    .contact {
+        display: flex
+    ;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0px;
+        margin-top: 0px;
+        margin-left: 10px;
+    }
     .header-content {
         display: none; /* Hide the original button */
     }
@@ -95,6 +171,15 @@
         
     }
     .overlay {
+        display: none ;
+        position: fixed;
+        top: 50%;
+        left: 47%;
+        transform: translate(-50%, -50%);    
+        z-index: 1001;
+        
+    }
+    #contact-overlay {
         display: none ;
         position: fixed;
         top: 50%;
@@ -175,6 +260,7 @@
         position: relative; 
         font-size: 18px; 
         color: #333;
+        margin-left: 0px;
     }
     
     .contact h3::after {
@@ -190,6 +276,8 @@
     .separator {
         display: none;
     }
+    
+
     .left-column {
         width: 100%; 
         padding: 20px; 
@@ -232,6 +320,16 @@
     .back-button {
         display: block; 
     }
+    .close-button {
+        position: absolute;
+        top: 10px;
+        right: 15px;
+        color: black;
+        font-size: 24px;
+        width: 30px;
+        height: 30px;
+        
+    }
 
     .right-column {
         display: none;
@@ -265,10 +363,22 @@
         height: 70px;
         width: 70px;
         border-radius: 50%;
-        transform: translateY(-140px);
+        transform: translateY(-90px);
         position: fixed;
         left: 70%;
     }
+    .blue-background {
+        background-color: #007BFF; /* Blue color */
+        color: white; /* Ensure text is visible */
+        border-radius: 50%; /* Make it circular */
+        padding: 5px; /* Add some padding */
+        transition: background-color 0.3s ease; /* Smooth transition */
+        z-index: 1010;
+    }
+    .close-button{
+        z-index: 1010;
+    }
+    
     
 }
 @media(max-width:780px){
@@ -359,6 +469,9 @@
         background-color: #ddd;
         margin: 10px 0;
     }
+    .mobileEdit-button{
+        transform: translateY(-30PX);
+    }
 
     .contact-list .contact-item:last-of-type + .divider {
         display: block;
@@ -434,8 +547,6 @@
         padding: 0;
         border-radius: 10px;
         margin: 0 auto;
-        top: 3%;
-        left: 15%;
         transform: none;
         overflow: hidden;
         border: none;
@@ -470,7 +581,16 @@
         border-top-right-radius: 20px;
         border-bottom-left-radius: 0px;
     }
-    
+    .contactOverlayLeft{
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
+        border-bottom-left-radius: 0px;
+
+    }
+    .contactOverlayRight{
+        border-top-right-radius: 0px;
+        border-bottom-left-radius: 20px;
+    }
     .right-section {
         width: 100%;
         height: 60%; 
@@ -526,9 +646,7 @@
         right: 20px;
         color:#fff !important;
     }
-    .close-button:hover{
-        color: #fff;
-    }
+    
 
     /* Input fields styling */
     input[type="text"],
@@ -583,8 +701,8 @@
         padding: 0;
         border-radius: 10px;
         margin: 0 auto;
-        top: 3%;
-        left: 15%;
+        
+        
         transform: none;
         overflow: hidden;
         border: none;
@@ -696,7 +814,7 @@
         position: absolute; 
         bottom: -20px; 
     }
-
+    
     h3 {
         margin-bottom: 30px; 
         font-size: 16px;
@@ -723,8 +841,22 @@
         font-size:18px;
         font-weight: bold;
     }
+    .contact-overlay-buttons {
+        display: flex;
+        gap: 20px; /* Adjust as needed */
+        margin-left:0px;
+    }
 
     
+}
+@media(max-width:480px){
+    .close-button {
+        font-size: 16px; 
+        width: 28px; 
+        height: 28px; 
+        top: 8px; 
+        right: 8px; 
+    }
 }
 @media(max-width:400px){
     .contactOverlayRight input[type="text"],
@@ -752,6 +884,10 @@
         margin-bottom: 30px;
         border-radius: 5px;
         font-size: 16px;
+    }
+    .contactOverlayLeft h2{
+      font-size: 28px;  
+
     }
 
 }

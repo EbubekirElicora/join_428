@@ -1,11 +1,5 @@
-function showOverlay(overlayType) {
-    let overlay;
-    if (overlayType === 'contact') {
-        overlay = document.getElementById('contact-overlay');
-    } else {
-        overlay = document.getElementById('overlay');
-    }
-
+function showOverlay() {
+    const overlay = document.getElementById('overlay');
     const addContactCircle = document.querySelector('.add-contact-circle');
 
     if (addContactCircle) {
@@ -13,29 +7,43 @@ function showOverlay(overlayType) {
     }
 
     setTimeout(() => {
-        overlay.style.display = 'block';
-        overlay.classList.add('active');
+        if (overlay) {
+            overlay.style.display = 'block';
+            overlay.classList.add('active');
+        }
     }, 200);
 }
 
-
-function hideOverlay() {
-    const overlay = document.getElementById('overlay');
-    const addContactCircle = document.querySelector('.add-contact-circle');
-
-    overlay.style.display = 'none';
-    overlay.classList.remove('active');
-
-    if (addContactCircle) {
-        addContactCircle.classList.remove('clicked');
-    }
-}
+// Event listener for closing the main overlay
 const closeButton = document.querySelector('.close-button');
 if (closeButton) {
-    closeButton.addEventListener('click', function () {
-        hideOverlay();
+    closeButton.addEventListener('click', function (e) {
+        e.preventDefault(); // Prevent default link behavior
+        hideOverlay(); // Call hideOverlay to close the overlay
     });
 }
+
+// Event listener for closing the contact overlay
+const closeContactOverlayButton = document.getElementById('close-contact-overlay');
+if (closeContactOverlayButton) {
+    closeContactOverlayButton.addEventListener('click', function (e) {
+        e.preventDefault(); // Prevent default link behavior
+        hideOverlay(); // Call hideOverlay to close the overlay
+    });
+}
+
+// Event listener for closing the contact overlay (white close button)
+const closeContactOverlayButtonWhite = document.getElementById('close-contact-overlay-white');
+if (closeContactOverlayButtonWhite) {
+    closeContactOverlayButtonWhite.addEventListener('click', function (e) {
+        e.preventDefault(); // Prevent default link behavior
+        hideOverlay(); // Call hideOverlay to close the overlay
+    });
+}
+
+
+
+
 
 document.addEventListener('DOMContentLoaded', () => {
     const BASE_URL = "https://join-428-default-rtdb.europe-west1.firebasedatabase.app/";
@@ -199,33 +207,63 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Function to open the edit overlay
     function openEditOverlay(contact) {
+        const editLink = document.getElementById('editLinkOverlay');
         const overlay = document.getElementById('contact-overlay');
         const contactInitialsOverlay = document.getElementById('contact-initials-overlay');
         const editContactName = document.getElementById('edit-contact-name');
         const editContactEmail = document.getElementById('edit-contact-email');
         const editContactPhone = document.getElementById('edit-contact-phone');
-
+    
+        if (editLink) {
+            // Add the active class to turn the Edit link blue
+            editLink.classList.add('active');
+        }
+    
         // Populate the overlay with contact details
-        contactInitialsOverlay.textContent = contact.initials;
-        contactInitialsOverlay.style.backgroundColor = contact.color;
-        editContactName.value = contact.name;
-        editContactEmail.value = contact.email;
-        editContactPhone.value = contact.phone;
-
-        // Show the overlay
-        overlay.style.display = 'flex';
-
+        if (contactInitialsOverlay) {
+            contactInitialsOverlay.textContent = contact.initials;
+            contactInitialsOverlay.style.backgroundColor = contact.color;
+        }
+        if (editContactName) {
+            editContactName.value = contact.name;
+        }
+        if (editContactEmail) {
+            editContactEmail.value = contact.email;
+        }
+        if (editContactPhone) {
+            editContactPhone.value = contact.phone;
+        }
+    
+        // Wait for 2 seconds (2000 milliseconds) before opening the overlay
+        setTimeout(() => {
+            if (overlay) {
+                overlay.style.display = 'block';
+                overlay.classList.add('active');
+            }
+    
+            // Optional: Remove the active class after opening the overlay
+            if (editLink) {
+                editLink.classList.remove('active');
+            }
+        }, 1000); // 2-second delay
+    
         // Set up the save button
         const saveButton = document.getElementById('save-contact-button');
-        saveButton.onclick = () => saveEditedContact(contact);
+        if (saveButton) {
+            saveButton.onclick = () => saveEditedContact(contact);
+        }
+    
+        // Set up the delete button
         const deleteButton = document.getElementById('delete-contact-button');
-        deleteButton.onclick = () => deleteContact(contact);
-
+        if (deleteButton) {
+            deleteButton.onclick = () => deleteContact(contact);
+        }
     }
     function hideContactOverlay() {
         const contactOverlay = document.getElementById('contact-overlay');
         if (contactOverlay) {
             contactOverlay.style.display = 'none';
+            contactOverlay.classList.remove('active');
             console.log('Contact overlay hidden');
         } else {
             console.error('Contact overlay element not found!');
@@ -374,13 +412,37 @@ document.addEventListener('DOMContentLoaded', () => {
 function hideOverlay() {
     const overlay = document.getElementById('overlay');
     const contactOverlay = document.getElementById('contact-overlay');
+    const closeButton = document.querySelector('.close-button');
+    const closeContactOverlayButton = document.getElementById('close-contact-overlay');
+    const closeContactOverlayButtonWhite = document.getElementById('close-contact-overlay-white');
 
-    if (overlay) {
-        overlay.classList.remove('active');
+    // Function to handle the close animation
+    function handleCloseAnimation(overlayElement) {
+        if (closeButton) {
+            closeButton.classList.add('blue-background'); // Add blue background class
+        }
+
+        // Wait for 2 seconds (2000 milliseconds)
+        setTimeout(() => {
+            if (overlayElement) {
+                overlayElement.style.display = 'none';
+                overlayElement.classList.remove('active');
+            }
+
+            if (closeButton) {
+                closeButton.classList.remove('blue-background'); // Remove blue background class
+            }
+        }, 2000); // 2-second delay
     }
 
-    if (contactOverlay) {
-        contactOverlay.classList.remove('active');
+    // Handle the main overlay
+    if (overlay && overlay.style.display === 'block') {
+        handleCloseAnimation(overlay);
+    }
+
+    // Handle the contact overlay
+    if (contactOverlay && contactOverlay.style.display === 'block') {
+        handleCloseAnimation(contactOverlay);
     }
 }
 
@@ -443,8 +505,46 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function toggleOverlay() {
-    const overlay = document.getElementById('mobileEditOverlay');
-    overlay.classList.toggle('active');
+    const mobileEditButton = document.querySelector('.mobileEdit-button');
+    const mobileEditOverlay = document.getElementById('mobileEditOverlay');
+
+    if (mobileEditButton && mobileEditOverlay) {
+        // Add the blue background class to the button
+        mobileEditButton.classList.add('blue-background');
+
+        // Wait for 1 second (1000 milliseconds)
+        setTimeout(() => {
+            // Remove the blue background class
+            mobileEditButton.classList.remove('blue-background');
+
+            // Toggle the overlay
+            mobileEditOverlay.classList.toggle('active');
+        }, 1000); // Adjust the delay as needed
+    }
+}
+
+// Add event listener to the Edit link
+const editLink = document.getElementById('editLinkOverlay');
+if (editLink) {
+    editLink.addEventListener('click', function (e) {
+        e.preventDefault(); // Prevent default link behavior
+
+        // Add the active class to turn the link blue
+        editLink.classList.add('active');
+
+        // Wait for 2 seconds (2000 milliseconds)
+        setTimeout(() => {
+            // Open the contact-overlay
+            const contactOverlay = document.getElementById('contact-overlay');
+            if (contactOverlay) {
+                contactOverlay.style.display = 'block';
+                contactOverlay.classList.add('active');
+            }
+
+            // Optional: Remove the active class after opening the overlay
+            // editLink.classList.remove('active');
+        }, 2000); // 2-second delay
+    });
 }
 
 // Close the overlay when clicking outside of it

@@ -235,24 +235,24 @@
     position: fixed;
     top: 65%;
     left: 52.5%;
-    transform: translate(-50%, -50%); /* Center the overlay */
+    transform: translate(-50%, -50%); 
     z-index: 1001;
-    transition: transform 0.5s ease-in-out; /* Smooth transition for sliding */
+    transition: transform 0.5s ease-in-out; 
 }
 
-/* Class to slide the overlay in */
+
 .overlay.active {
-    display: block; /* Make the overlay visible */
-    animation: slideIn 0.5s ease-in-out forwards; /* Apply slide-in animation */
+    display: block; 
+    animation: slideIn 0.5s ease-in-out forwards; 
 }
 
 /* Animation for sliding in */
 @keyframes slideIn {
     from {
-        transform: translate(50%, -50%); /* Start off-screen to the left */
+        transform: translate(50%, -50%); 
     }
     to {
-        transform: translate(-50%, -50%); /* Move to the center */
+        transform: translate(-50%, -50%); 
     }
 }
 
@@ -269,17 +269,7 @@
 }
 
 /* Close button styles */
-.close-button {
-    position: absolute; 
-    top: 10px; 
-    right: px; 
-    font-size: 20px;
-    color: #000; 
-    text-decoration: none; 
-    cursor: pointer; 
-    z-index: 1002; 
-    border-radius: 50%;
-}
+
 
 .left-section {
     background-color: #2A3647;
@@ -423,8 +413,8 @@
 }
 .close-button {
     position: absolute;
-    top: 20px;
-    right: 20px;
+    top: 15px;
+    right: 10px;
     color:black;
     font-size: 24px; 
     width: 40px; 
@@ -437,10 +427,7 @@
 }
 
 
-.close-button:hover {
-    background-color:lightgray;
-    
-}
+
 /*edit overlay section*/
 
 #contact-overlay {
@@ -487,7 +474,7 @@
 }
 
 #contact-overlay.active {
-    display: flex;
+    display: flex !important;
 }
 
 
@@ -545,7 +532,7 @@
 .contact-overlay-buttons {
     display: flex;
     gap: 20px; /* Adjust as needed */
-    padding-left: 100px;
+    margin-left: 100px;
 }
 .edit-input {
     padding: 10px;

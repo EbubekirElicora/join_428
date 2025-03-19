@@ -423,9 +423,7 @@ function addCategoryOptions(category_dropdown) {
 
 
 
-
-let newtasks = [];
-let subtasks = [];
+let subtasks = {};
 
 
 function show_subtask_container() {
@@ -453,19 +451,18 @@ function delete_text() {
     subtask_input.removeEventListener('click', show_subtask_container);
 }
 
+
 function add_new_text(event) {
     let newSubTask = document.getElementById('subtask_input');
-    if (newSubTask.value == 0) {
-        return false;
-    }
-    subtasks.push(newSubTask.value);
-    newSubTask.value = '';
+    if (!newSubTask.value.trim()) return;
+
+    let id = Date.now(); // Erzeuge eine eindeutige ID
+    subtasks[id] = newSubTask.value; //  Speichern im Objekt
+
+    newSubTask.value = ''; // Input-Feld leeren
     renderSubtasks();
-    if (event && event.type === 'click') {
-        document.getElementById('add_delete_container').classList.remove('visible');
-        document.getElementById('show_subtask_container').style.display = 'block';
-        document.querySelector('.add_subtask_container').classList.remove('no-hover');
-    }
+    
+    console.log("Aktuelle Subtasks als Objekt:", subtasks);
 }
 
 function hideInputSubTaksClickContainerOnOutsideClick() {
@@ -484,31 +481,33 @@ function hideInputSubTaksClickContainerOnOutsideClick() {
     });
 }
 
-function renderSubtasks(editIndex = -1) {
+function renderSubtasks(editIndex = null) {
     let subtask_list = document.getElementById('added_text');
     subtask_list.innerHTML = '';
-    subtasks.forEach((subtask, index) => {
-        if (index === editIndex) {
-            subtask_list.innerHTML += subTaskProgressTemplate(index, subtask);
+
+    Object.keys(subtasks).forEach(id => {
+        let subtask = subtasks[id];
+
+        if (id == editIndex) {
+            subtask_list.innerHTML += subTaskProgressTemplate(id, subtask);
         } else {
-            subtask_list.innerHTML += subTaskCreatedTemplate(index, subtask);
+            subtask_list.innerHTML += subTaskCreatedTemplate(id, subtask);
         }
     });
 }
 
-function editSubTask(index) {
-    renderSubtasks(index);
+function editSubTask(id) {
+    renderSubtasks(id); // Edit-Modus aktivieren
 }
-
-function saveSubTask(index) {
-    let editedText = document.getElementById(`editInput${index}`).value;
-    if (editedText.trim() !== '') {
-        subtasks[index] = editedText;
-    }
+function saveSubTask(id) {
+    let input = document.getElementById(`editInput${id}`);
+    if (!input.value.trim()) return;
+    
+    subtasks[id] = input.value; // Aktualisieren
     renderSubtasks();
 }
 
-function deleteSubTask(index) {
-    subtasks.splice(index, 1);
+function deleteSubTask(id) {
+    delete subtasks[id]; // Löscht den Eintrag aus dem Objekt
     renderSubtasks();
 }

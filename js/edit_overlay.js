@@ -1,3 +1,5 @@
+let editSubtasks = {};
+
 async function editOverlay(taskId) {
     const overlayRef = document.getElementById('edit_overlay');
     if (!taskId) {
@@ -19,8 +21,8 @@ function getOverlayEdit(task) {
             ${contact.initials}
         </div>
     `).join('') || '';
-    
-    const remainingContacts = task.assignedContacts?.length > 5 
+
+    const remainingContacts = task.assignedContacts?.length > 5
         ? `<div class="remaining-contacts">+${task.assignedContacts.length - 5}</div>`
         : '';
 
@@ -55,9 +57,9 @@ function getOverlayEdit(task) {
     const subtasksHTML = Object.entries(task.subtasks || {}).map(([id, subtask]) => {
         const title = (typeof subtask === 'string') ? subtask : (subtask.title || '');
         const isEditing = editSubtasks[id]?.isEditing || false;
-    
+
         if (isEditing) {
-            
+
             return `
                 <div class="subTaskEdit" data-subtask-id="${id}">
                     <div class="leftContainerSubTask left_container_overlay">
@@ -75,7 +77,7 @@ function getOverlayEdit(task) {
                 </div>
             `;
         } else {
-            
+
             return `
                 <div class="subTask" data-subtask-id="${id}">
                     <div class="leftContainerSubTask">
@@ -94,7 +96,7 @@ function getOverlayEdit(task) {
             `;
         }
     }).join('');
-    
+
     return `
         <div onclick="editProtection(event)" class="inner_content">
             <div class="edit_close">
@@ -302,7 +304,7 @@ function toggleEditDropdown() {
     if (!dropdownContent || !iconDown || !iconUp) return;
 
     const isOpen = dropdownContent.style.display === 'block';
-    
+
     dropdownContent.style.display = isOpen ? 'none' : 'block';
     iconDown.classList.toggle('d-none', isOpen);
     iconUp.classList.toggle('d-none', !isOpen);
@@ -338,41 +340,57 @@ async function editOverlay(taskId) {
     }
 }
 async function saveChanges() {
-    // Get the updated values from the edit form
-    const title = document.getElementById('edit_title').value;
-    const description = document.getElementById('edit_description').value;
-    const dueDate = document.getElementById('edit_due_date').value;
-    // Update the currentTask object
+    // Prüfe, ob currentTask existiert
+    if (!currentTask) {
+        console.error("❌ Fehler: currentTask ist nicht definiert!");
+        return;
+    }
+    if (!currentTask.id) {
+        console.error("❌ Fehler: currentTask hat keine ID!");
+        return;
+    }
+
+    // Aktualisierte Werte aus dem Formular holen
+    const title = document.getElementById('edit_title')?.value || "";
+    const description = document.getElementById('edit_description')?.value || "";
+    const dueDate = document.getElementById('edit_due_date')?.value || "";
+
+    // Update currentTask-Objekt
     currentTask.title = title;
     currentTask.description = description;
     currentTask.dueDate = dueDate;
-    // Update the todos array
+
+    // Update todos-Array
     const taskIndex = todos.findIndex(t => t.id === currentTask.id);
     if (taskIndex !== -1) {
-        todos[taskIndex] = currentTask;
+        todos[taskIndex] = { ...currentTask };
+    } else {
+        console.warn("⚠️ Warnung: Task wurde in todos nicht gefunden!");
     }
 
-    // Save changes to Firebase
+    // Änderungen in Firebase speichern
     try {
         const response = await fetch(`${BASE_URL}/tasks/${currentTask.id}.json`, {
             method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(currentTask),
         });
-        if (!response.ok) throw new Error("Failed to save changes to Firebase");
-        // Re-render the UI to reflect the changes
-        updateHTML();
-        // Close the edit overlay
-        editOverlay();
+
+        if (!response.ok) throw new Error("Fehler beim Speichern in Firebase");
+
+        console.log("✅ Änderungen erfolgreich gespeichert!");
+
+        // UI aktualisieren
+        if (typeof updateHTML === "function") updateHTML();
+        if (typeof editOverlay === "function") editOverlay();
+
     } catch (error) {
-        console.error("Error saving changes to Firebase:", error);
+        console.error("❌ Fehler beim Speichern in Firebase:", error);
     }
 }
 
 function renderTasks() {
-    const taskContainer = document.getElementById('task_main'); 
+    const taskContainer = document.getElementById('task_main');
     if (!taskContainer) return;
     taskContainer.innerHTML = '';
     todos.forEach(task => {
@@ -420,7 +438,7 @@ async function editOverlay(taskId) {
     }
 }
 
-function editProtection (event) {
+function editProtection(event) {
     event.stopPropagation();
 }
 
@@ -430,7 +448,7 @@ function editProtection (event) {
 
 
 
-let editSubtasks = {};
+
 
 function showEditSubtaskContainerOverlay() {
     let edit_show_subtask_container = document.getElementById('edit_show_subtask_container');
@@ -441,37 +459,24 @@ function showEditSubtaskContainerOverlay() {
     edit_add_delete_container.classList.add('visible');
     edit_show_subtask_container.style.display = 'none';
     edit_add_subtask_container.classList.add('no-hover');
-    edit_subtask_input.addEventListener('click', edit_show_subtask_container);
+    edit_subtask_input.addEventListener('click', () => {
+        edit_show_subtask_container.style.display = 'block';
+    });
 }
 
 function deleteEditText() {
     document.getElementById('edit_subtask_input').value = '';
 }
 
-  function addNewEditText(event) {
-    const input = document.getElementById('edit_subtask_input');
-    const title = input.value.trim();
-    if (!title) return;
-    const subtaskId = `subtask-${Date.now()}-${Math.random().toString(36).slice(2)}`;
-    editSubtasks[subtaskId] = {
-        title: title,
-        completed: false
-    };
-    input.value = '';
-    renderSubtasksOverlay();
-    if (event && event.type === 'click') {
-        document.getElementById('edit_add_delete_container').classList.remove('visible');
-        document.getElementById('edit_show_subtask_container').style.display = 'block';
-        document.querySelector('.add_subtask_container').classList.remove('no-hover');
-    }
-}
-
 function editSubTask(id) {
     if (editSubtasks[id]) {
         editSubtasks[id].isEditing = true;
         renderSubtasksOverlay();
+    } else {
+        console.error(`❌ Subtask mit ID ${id} nicht gefunden.`);
     }
 }
+
 function addNewEditText(event) {
     const input = document.getElementById('edit_subtask_input');
     const title = input.value.trim();
@@ -494,25 +499,6 @@ function addNewEditText(event) {
         document.querySelector('.add_subtask_container').classList.remove('no-hover');
     }
 }
-/*
-function addNewEditText(event) {
-    const input = document.getElementById('edit_subtask_input');
-    const title = input.value.trim();
-    if (!title) return;
-    const subtaskId = `subtask-${Date.now()}-${Math.random().toString(36).slice(2)}`;
-    editSubtasks[subtaskId] = {
-        title: title,
-        completed: false,
-        isEditing: false
-    };
-    input.value = '';
-    renderSubtasksOverlay();
-    if (event && event.type === 'click') {
-        document.getElementById('edit_add_delete_container').classList.remove('visible');
-        document.getElementById('edit_show_subtask_container').style.display = 'block';
-        document.querySelector('.add_subtask_container').classList.remove('no-hover');
-    }
-}*/
 
 function renderEditMode(id, subtask) {
     return `
@@ -576,20 +562,6 @@ function deleteSubTaskOverlay(subtaskId) {
     }
 }
 
-
-/*function deleteSubTaskOverlay(subtaskId) {
-    const subtaskElement = document.querySelector(`.subTask[data-subtask-id="${subtaskId}"]`);
-    if (subtaskElement) {
-        subtaskElement.classList.add('deleting');
-        setTimeout(() => {
-            delete editSubtasks[subtaskId];
-            renderSubtasksOverlay();
-        }, 300);
-    } else {
-        console.error(`Subtask with ID ${subtaskId} not found.`);
-    }
-}*/
-
 async function saveEditedTask(taskId) {
     const updatedTask = {
         ...currentTask,
@@ -600,23 +572,49 @@ async function saveEditedTask(taskId) {
 }
 
 function loadTaskForEdit(task) {
-    editSubtasks = {};
+    editSubtasks = {}; // Subtasks leeren
+
+    if (!task || !task.subtasks) {
+        return;
+    }
     if (Array.isArray(task.subtasks)) {
         task.subtasks.forEach((subtask, index) => {
-            const id = subtask.id || `subtask-${index}-${Date.now()}`;
-            editSubtasks[id] = {
-                title: subtask.title || subtask.name,
-                completed: subtask.completed || false,
-                isEditing: false
-            };
+            let id = `subtask-${index}-${Date.now()}`;
+            let title = "Unbenannt";
+            let completed = false;
+
+            if (typeof subtask === "string") {
+                title = subtask;
+            } else if (typeof subtask === "object") {
+                title = subtask.title || "Unbenannt";
+                completed = subtask.completed || false;
+            }
+
+            editSubtasks[id] = { title, completed, isEditing: false };
         });
-    } else if (task.subtasks && typeof task.subtasks === 'object') {
+
+    } else if (typeof task.subtasks === 'object') {
+
         Object.entries(task.subtasks).forEach(([id, subtask]) => {
-            editSubtasks[id] = { ...subtask, isEditing: false };
+            let title = "Unbenannt";
+            let completed = false;
+
+            if (typeof subtask === "string") {
+                title = subtask;
+            } else if (typeof subtask === "object") {
+                title = subtask.title || "Unbenannt";
+                completed = subtask.completed || false;
+            }
+
+            editSubtasks[id] = { title, completed, isEditing: false };
         });
+
+    } else {
+        console.error("❌ Unerwartetes Format von `subtasks`:", task.subtasks);
     }
     renderSubtasksOverlay();
 }
+
 
 function saveSubTask(id) {
     const input = document.getElementById(`edit_input${id}`);
@@ -631,12 +629,3 @@ function saveSubTask(id) {
         renderSubtasksOverlay();
     }
 }
-
-
-
-
-
-
-
-
-

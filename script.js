@@ -129,6 +129,7 @@ function initializeTaskForm() {
                 const savedTask = await saveTaskToFirebase(taskData);
                 if (savedTask) {
                     window.location.reload();
+                    window.location.href = "/html/board.html";
                 } else {
                     alert('Failed to create task. Please try again.');
                 }

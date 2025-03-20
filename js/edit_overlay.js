@@ -448,8 +448,6 @@ function editProtection(event) {
 
 
 
-
-
 function showEditSubtaskContainerOverlay() {
     let edit_show_subtask_container = document.getElementById('edit_show_subtask_container');
     let edit_add_delete_container = document.getElementById('edit_add_delete_container');
@@ -469,11 +467,15 @@ function deleteEditText() {
 }
 
 function editSubTask(id) {
+    if (!editSubtasks) {
+        console.error('editSubtasks ist nicht definiert.');
+        return;
+    }
     if (editSubtasks[id]) {
         editSubtasks[id].isEditing = true;
         renderSubtasksOverlay();
     } else {
-        console.error(`❌ Subtask mit ID ${id} nicht gefunden.`);
+        console.error(`Subtask mit ID ${id} nicht gefunden.`);
     }
 }
 
@@ -481,7 +483,9 @@ function addNewEditText(event) {
     const input = document.getElementById('edit_subtask_input');
     const title = input.value.trim();
     if (!title) return;
-    const subtaskId = `subtask-${Date.now()}-${Math.random().toString(36).slice(2)}`;
+
+    // Используем тот же id, что и в `subtasks`
+    const subtaskId = Date.now(); // Простой id
     editSubtasks[subtaskId] = {
         title: title,
         completed: false,
@@ -493,11 +497,6 @@ function addNewEditText(event) {
 
     input.value = '';
     renderSubtasksOverlay();
-    if (event && event.type === 'click') {
-        document.getElementById('edit_add_delete_container').classList.remove('visible');
-        document.getElementById('edit_show_subtask_container').style.display = 'block';
-        document.querySelector('.add_subtask_container').classList.remove('no-hover');
-    }
 }
 
 function renderEditMode(id, subtask) {
@@ -610,7 +609,7 @@ function loadTaskForEdit(task) {
         });
 
     } else {
-        console.error("❌ Unerwartetes Format von `subtasks`:", task.subtasks);
+        console.error("Unerwartetes Format von `subtasks`:", task.subtasks);
     }
     renderSubtasksOverlay();
 }

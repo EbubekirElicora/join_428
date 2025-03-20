@@ -1,6 +1,6 @@
 
 // Global variables
-let subtasks = {};
+window.subtasks = window.subtasks || {};
 let isDropdownClosed = false;
 let selectedContacts = []; 
 

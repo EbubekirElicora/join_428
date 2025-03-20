@@ -128,11 +128,7 @@ function initializeTaskForm() {
             if (validateTaskData(taskData)) {
                 const savedTask = await saveTaskToFirebase(taskData);
                 if (savedTask) {
-                    alert('Task created successfully!');
-                    resetForm();
-                    if (typeof init === 'function') {
-                        init(); // Refresh the board or summary page
-                    }
+                    window.location.reload();
                 } else {
                     alert('Failed to create task. Please try again.');
                 }
@@ -172,6 +168,8 @@ function createTask(title, category, dueDate, priority, assignedContacts, subtas
     };
     return newTask;
 }// Validate task data
+
+
 function validateTaskData(taskData) {
     if (!taskData.title) {
         alert('Please fill in the Title');
@@ -344,103 +342,92 @@ function closeOverlay() {
     popupContainer.classList.add('d_none');
 }
 
+window.subtasks = window.subtasks || {};
+
 // Show the subtask container
 function show_subtask_container() {
-    let add_delete_container = document.getElementById('add_delete_container');
-    let show_subtask_container = document.getElementById('show_subtask_container');
-    let add_subtask_container = document.querySelector('.add_subtask_container');
-    let subtask_input = document.getElementById('subtask_input');
-    add_delete_container.classList.add('visible');
-    show_subtask_container.style.display = 'none';
-    add_subtask_container.classList.add('no-hover');
-    subtask_input.addEventListener('click', show_subtask_container);
+    {
+        let add_delete_container = document.getElementById('add_delete_container');
+        let show_subtask_container = document.getElementById('show_subtask_container');
+        let add_subtask_container = document.querySelector('.add_subtask_container');
+        let subtask_input = document.getElementById('subtask_input');
+        add_delete_container.classList.add('visible');
+        show_subtask_container.style.display = 'none';
+        add_subtask_container.classList.add('no-hover');
+        subtask_input.addEventListener('click', show_subtask_container);
+    }
 }
 
-// Delete text from the subtask input
 function delete_text() {
     let add_delete_container = document.getElementById('add_delete_container');
     let show_subtask_container = document.getElementById('show_subtask_container');
     let add_subtask_container = document.querySelector('.add_subtask_container');
     let subtask_input = document.getElementById('subtask_input');
-    subtask_input.value = '';
+    subtask_input.value = "";
     show_subtask_container.style.display = 'block';
     add_delete_container.classList.remove('visible');
     add_subtask_container.classList.remove('no-hover');
     subtask_input.removeEventListener('click', show_subtask_container);
 }
 
-// Add a new subtask
+
 function add_new_text(event) {
     let newSubTask = document.getElementById('subtask_input');
-    if (newSubTask.value == 0) {
-        return false;
-    }
-    subtasks.push(newSubTask.value);
-    newSubTask.value = '';
-    renderSubtasks();
-    if (event && event.type === 'click') {
-        document.getElementById('add_delete_container').classList.remove('visible');
-        document.getElementById('show_subtask_container').style.display = 'block';
-        document.querySelector('.add_subtask_container').classList.remove('no-hover');
-    }
-}
+    if (!newSubTask.value.trim()) return;
 
-// Render subtasks
-function renderSubtasks(editIndex = -1) {
-    let subtask_list = document.getElementById('added_text');
-    subtask_list.innerHTML = '';
-    subtasks.forEach((subtask, index) => {
-        if (index === editIndex) {
-            subtask_list.innerHTML += subTaskProgressTemplate(index, subtask);
-        } else {
-            subtask_list.innerHTML += subTaskCreatedTemplate(index, subtask);
-        }
-    });
-}
+    let id = Date.now(); // Erzeuge eine eindeutige ID
+    subtasks[id] = newSubTask.value; //  Speichern im Objekt
 
-// Edit a subtask
-function editSubTask(index) {
-    renderSubtasks(index);
-}
-
-// Save a subtask
-function saveSubTask(index) {
-    let editedText = document.getElementById(`editInput${index}`).value;
-    if (editedText.trim() !== '') {
-        subtasks[index] = editedText;
-    }
+    newSubTask.value = ''; // Input-Feld leeren
     renderSubtasks();
 }
 
-// Delete a subtask
-function deleteSubTask(index) {
-    subtasks.splice(index, 1);
-    renderSubtasks();
-}
 
-// Hide subtask input container on outside click
 function hideInputSubTaksClickContainerOnOutsideClick() {
     document.addEventListener('click', function (event) {
         let add_delete_container = document.getElementById('add_delete_container');
         let show_subtask_container = document.getElementById('show_subtask_container');
         let add_subtask_container = document.querySelector('.add_subtask_container');
         let subtask_input = document.getElementById('subtask_input');
-
-        if (
-            add_delete_container &&
-            show_subtask_container &&
-            add_subtask_container &&
-            subtask_input
-        ) {
-            if (
-                !add_delete_container.contains(event.target) &&
-                !subtask_input.contains(event.target) &&
-                !show_subtask_container.contains(event.target)
-            ) {
-                add_delete_container.classList.remove('visible');
-                show_subtask_container.style.display = 'block';
-                add_subtask_container.classList.remove('no-hover');
-            }
+        if (!add_delete_container.contains(event.target) &&
+            !subtask_input.contains(event.target) &&
+            !show_subtask_container.contains(event.target)) {
+            add_delete_container.classList.remove('visible');
+            show_subtask_container.style.display = 'block';
+            add_subtask_container.classList.remove('no-hover');
         }
     });
 }
+
+function renderSubtasks(editIndex = null) {
+    let subtask_list = document.getElementById('added_text');
+    subtask_list.innerHTML = '';
+
+    Object.keys(subtasks).forEach(id => {
+        let subtask = subtasks[id];
+
+        if (id == editIndex) {
+            subtask_list.innerHTML += subTaskProgressTemplate(id, subtask);
+        } else {
+            subtask_list.innerHTML += subTaskCreatedTemplate(id, subtask);
+        }
+    });
+}
+
+function editSubTask(id) {
+    renderSubtasks(id); // Edit-Modus aktivieren
+}
+function saveSubTask(id) {
+    let input = document.getElementById(`editInput${id}`);
+    if (!input.value.trim()) return;
+    
+    subtasks[id] = input.value; // Aktualisieren
+    renderSubtasks();
+}
+
+function deleteSubTask(id) {
+    delete subtasks[id]; // Löscht den Eintrag aus dem Objekt
+    renderSubtasks();
+}
+
+

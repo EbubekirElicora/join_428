@@ -122,6 +122,13 @@
     }
 }
 
+@media(max-width: 550px) {
+    .inner_content {
+        width: 400px;
+        height: 450px;
+    }
+}
+
 @media(max-width: 450px) {
     .popup_container {
         width: 270px;
@@ -156,4 +163,11 @@
     .close_img {
         top: 15px;
     }
+
+    .inner_content {
+        width: 300px;
+        height: 450px;
+    }
 }
+
+

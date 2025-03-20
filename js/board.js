@@ -179,3 +179,32 @@ let filteredTasks = todos.filter(task => {
     const taskCategory = task.category.toLowerCase();
     return taskCategory === category;
 });
+
+function taskFilter() {
+    const searchTerm = document.getElementById('find_task').value.toLowerCase();
+    const allTasks = document.querySelectorAll('.task');
+    allTasks.forEach(task => {
+        const title = task.querySelector('.title_find')?.textContent.toLowerCase() || '';
+        const description = task.querySelector('.description_find')?.textContent.toLowerCase() || '';
+        const isVisible = title.includes(searchTerm) || description.includes(searchTerm);
+        
+        task.style.display = isVisible ? 'block' : 'none';
+    });
+    
+    updateEmptyStates();
+}
+
+function updateEmptyStates() {
+    document.querySelectorAll('.nav_board').forEach(column => {
+        const tasksContainer = column.querySelector('.board_tasks');
+        if (!tasksContainer) return;
+        const noTaskElement = tasksContainer.querySelector('.tasks.show');
+        if (!noTaskElement) return;
+        const hasVisibleTasks = Array.from(tasksContainer.children).some(child => {
+            return child.style.display !== 'none' 
+                   && !child.classList.contains('show')
+                   && child !== noTaskElement;
+        }); 
+        noTaskElement.style.display = hasVisibleTasks ? 'none' : 'block';
+    });
+}

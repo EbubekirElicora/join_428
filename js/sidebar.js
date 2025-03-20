@@ -1,7 +1,5 @@
 function isUserLoggedIn() {
     const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
-    console.log('isUserLoggedIn() returned:', isLoggedIn);
-    console.log('localStorage isLoggedIn value:', localStorage.getItem('isLoggedIn'));
     return isLoggedIn;
 }
 
@@ -10,20 +8,12 @@ function checkIfNavigatedFromSignup() {
     const fromSignup = urlParams.get("from") === "signup";
     const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
 
-    console.log("Navigated from signup:", fromSignup);
-    console.log("Is user logged in?", isLoggedIn);
-    console.log("localStorage isLoggedIn value:", localStorage.getItem("isLoggedIn"));
-
     if (fromSignup && !isLoggedIn) {
-        console.log("User is not logged in and navigated from signup, showing privacy/legal notice links on mobile...");
-
         const sidebar = document.getElementById("sidebar");
         if (sidebar) {
             sidebar.classList.add("show-privacy-links-mobile");
-            console.log("Added class to show privacy/legal notice links on mobile.");
-            console.log("Sidebar classes:", sidebar.classList);
         } else {
-            console.log("Sidebar not found.");
+            console.error("Sidebar not found.");
         }
 
         const hideElements = () => {
@@ -33,6 +23,7 @@ function checkIfNavigatedFromSignup() {
             const helpIcon = document.querySelector(".help_icon");
             const posContHeadRight = document.querySelector(".pos_cont_head_right");
         
+<<<<<<< HEAD
             console.log("Checking elements before hiding...");
         
             if (helpUserContainer) {
@@ -43,16 +34,40 @@ function checkIfNavigatedFromSignup() {
             if (nameMenu) {
                 nameMenu.style.display = "none";
                 console.log("name_menu hidden.");
+=======
+            if (helpUserContainer) {
+                helpUserContainer.style.display = "none";
+            } else {
+                console.error("help_user_container not found.");
+            }
+        
+            if (nameMenu) {
+                nameMenu.style.visibility = "hidden";
+                nameMenu.style.opacity = "0";
+            } else {
+                console.error("name_menu not found.");
+>>>>>>> 7b3feb77b263cba3970bc8808a502b6eef55f2cc
             }
         
             if (pageBackButton) {
                 pageBackButton.style.display = "none";
+<<<<<<< HEAD
                 console.log("pageBackButton hidden.");
             }
         
             if (helpIcon) {
                 helpIcon.style.display = "none";
                 console.log("help_icon hidden.");
+=======
+            } else {
+                console.error("pageBackButton not found.");
+            }
+        
+            if (helpIcon) {
+                helpIcon.style.display = "none"; // Hide the help icon
+            } else {
+                console.error("help_icon not found.");
+>>>>>>> 7b3feb77b263cba3970bc8808a502b6eef55f2cc
             }
         
             if (posContHeadRight) {
@@ -83,9 +98,7 @@ function checkIfNavigatedFromSignup() {
 
             const sidebar = document.getElementById("sidebar");
             if (sidebar) {
-                console.log("Sidebar found dynamically!");
                 sidebar.classList.add("show-privacy-links-mobile");
-                console.log("Added class to show privacy/legal notice links on mobile.");
                 globalObserver.disconnect();
             }
 
@@ -93,8 +106,6 @@ function checkIfNavigatedFromSignup() {
         });
 
         globalObserver.observe(document.body, { childList: true, subtree: true });
-        console.log("Global mutation observer started on document body.");
-
         const sidebarObserver = new MutationObserver((mutations, observer) => {
             const sidebar = document.getElementById("sidebar");
             if (sidebar) {
@@ -105,7 +116,7 @@ function checkIfNavigatedFromSignup() {
 
         sidebarObserver.observe(document.body, { childList: true, subtree: true });
     } else {
-        console.log("User is logged in or not from signup, skipping showing privacy/legal notice links.");
+        console.error("User is logged in or not from signup, skipping showing privacy/legal notice links.");
     }
 }
 function modifySidebar() {
@@ -141,13 +152,11 @@ function modifySidebar() {
         loginLinkContainer.style.marginLeft = '-90px'; 
         sidebarLogoContainer.appendChild(loginLinkContainer);
 
-        console.log('Login link added below the logo.');
     }
 }
 
 // Run the function after the DOM is fully loaded
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('DOM fully loaded');
     checkIfNavigatedFromSignup();
 });
 

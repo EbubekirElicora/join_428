@@ -1,3 +1,8 @@
+body {
+    overflow-y: auto;
+    height: 100vh;
+}
+
 .board_main{
     max-width: 1440px;
     margin-top: 180px;
@@ -154,7 +159,7 @@ h1 {
     background-color: white;
     border: 1px solid #ccc;
     max-height: 200px;
-    overflow-y: auto;
+    overflow: auto;
     z-index: 1000;
 }
 /* Style for selected contact items */
@@ -258,4 +263,16 @@ h1 {
 
 .ok_button:hover {
     background-color:#29abe2; 
+}
+
+.responsiv_button {
+    display: none;
+}
+
+.task {
+    display: block;
+}
+
+.task[hidden] {
+    display: none !important;
 }

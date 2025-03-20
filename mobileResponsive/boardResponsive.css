@@ -1,0 +1,173 @@
+
+@media(max-width: 1430px) {
+    .board_main {
+        margin-left: 280px;
+        margin-top: 150px;
+        padding: 24px;
+    }
+}
+
+@media(max-width: 1370px) {
+
+    .nav_board {
+        width: 100%;
+    }
+    .content_board {
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
+
+    .board_main {
+        margin-top: 100px;
+    }
+
+    .board_tasks {
+        display: block;
+    }
+
+    .board_tasks {
+        display: flex;
+        flex-direction: row;
+        gap: 16px;
+        overflow-x: auto;
+        white-space: nowrap;
+        padding-bottom: 10px;
+        max-width: 100%;
+    }
+
+    .board_tasks::-webkit-scrollbar {
+        height: 8px;
+    }
+
+    .board_tasks::-webkit-scrollbar-thumb {
+        background: rgb(29, 164, 238);
+        border-radius: 4px;
+    }
+
+    .board_tasks::-webkit-scrollbar-track {
+        background: #f1f1f1;
+    }
+
+    .task {
+        width: 220px !important;
+        min-width: 220px !important;
+        flex-shrink: 0 !important;
+    }
+}
+
+@media(max-width: 1080px) {
+    .board_main {
+        margin: auto;
+    }
+
+    body {
+        padding-bottom: 100px;
+        min-height: 100vh;
+    }
+
+    .header_board {
+        margin-top: 100px;
+    }
+}
+
+@media(max-width: 750px) {
+    .popup_container {
+        width: 650px;
+    }
+
+    .task_btn {
+        display: none;
+    }
+
+    .task_btn {
+        flex-direction: column;
+    }
+
+    .responsiv_button {
+    display: block;
+    border: none;
+    background-color: #2A3647;
+    color: white;
+    cursor: pointer;
+    font-size: 32px;
+    padding: 15px 16px;
+    border-radius: 8px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+}
+    .header_board {
+        display: block;
+    }
+
+    .content_h1 {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+}
+
+@media(max-width: 700px) {
+    .category_position {
+        width: 98%;
+    }
+
+    .popup_container {
+        width: 400px;
+    }
+
+    .close_img {
+        top: 30px;
+    }
+}
+
+@media(max-width: 550px) {
+    .inner_content {
+        width: 400px;
+        height: 450px;
+    }
+}
+
+@media(max-width: 450px) {
+    .popup_container {
+        width: 270px;
+        padding: 8px;
+    }
+
+    .create_task_btn {
+        width: auto;
+        font-size: 14px;
+    }
+
+    .clear_btn {
+        font-size: 14px;
+    }
+
+    .prioBtnMedium, .prioBtnUrgent, .prioBtnLow {
+        font-size: 14px;
+    }
+
+    .prioBtnMedium img, .prioBtnUrgent img, .prioBtnLow img {
+        width: 13px;
+    }
+
+    .find_task {
+        font-size: 16px;
+    }
+
+    .headline_txt_addTask {
+        font-size: 38px;
+    }
+
+    .close_img {
+        top: 15px;
+    }
+
+    .inner_content {
+        width: 300px;
+        height: 450px;
+    }
+}
+
+

@@ -41,7 +41,6 @@ document.addEventListener("DOMContentLoaded", function () {
   const observer = new MutationObserver((mutations, obs) => {
       const sidebar = document.getElementById("sidelinks");
       if (sidebar) {
-          console.log("✅ Sidebar detected, running script...");
           applyActiveState();
           obs.disconnect(); // Stop observing once sidebar is found
       }
@@ -52,7 +51,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
 function applyActiveState() {
   const currentPath = window.location.pathname.split("/").pop();
-  console.log("Checking active state for:", currentPath);
 
   const pageMap = {
       "summary.html": "widget_1",
@@ -77,7 +75,6 @@ function applyActiveState() {
           activeWidget.style.color = "white";
           activeWidget.style.fontWeight = "bold";
 
-          console.log("✅ Active widget set:", activeWidget.id);
       } else {
           console.error("❌ Active widget not found in DOM!");
       }

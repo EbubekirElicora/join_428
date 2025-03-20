@@ -9,13 +9,8 @@ function logout() {
     
     localStorage.removeItem("userName");
     localStorage.removeItem("userInitials"); 
-    localStorage.removeItem("isGuest");
-
-    
+    localStorage.removeItem("isGuest"); 
     localStorage.setItem("isLoggedIn", "false");
-    console.log('User logged out. isLoggedIn set to false.'); 
-
-    
     window.location.href = "../html/log_in.html";
 }
 
@@ -24,14 +19,9 @@ function pageBack() {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-    console.log("DOM fully loaded"); 
-
     const observer = new MutationObserver(function (mutationsList, observer) {
-        console.log("DOM changed"); 
-
         const nameMenuElement = document.getElementById("name_menu");
         if (nameMenuElement) {
-            console.log("Element with id 'name_menu' found!"); 
             observer.disconnect();
             displayInitials();
         }
@@ -62,12 +52,10 @@ function displayInitials() {
             nameMenuElement.style.visibility = "visible"; // Restore visibility
             nameMenuElement.style.opacity = "1"; // Restore opacity
             nameMenuElement.style.display = "flex"; // Ensure display: flex is applied
-            console.log("name_menu shown with initials:", initials);
         } else {
             // Hide the name_menu if navigating from signup/login and the user is not logged in
             nameMenuElement.style.visibility = "hidden";
             nameMenuElement.style.opacity = "0";
-            console.log("name_menu hidden.");
         }
     } else {
         console.error("Element with id 'name_menu' not found!");

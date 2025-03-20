@@ -1,4 +1,9 @@
 
+// Global variables
+window.subtasks = window.subtasks || {};
+let isDropdownClosed = false;
+let selectedContacts = []; 
+
 function getDateToday() {
     let dateInput = document.getElementById('date');
     if (dateInput) {
@@ -11,15 +16,12 @@ function getDateToday() {
     }
 }
 
-
 function setPrio(prio) {
     document.querySelectorAll('.prioBtnUrgent, .prioBtnMedium, .prioBtnLow').forEach(btn => {
         btn.classList.remove('active');
     });
     document.querySelector(`.prioBtn${prio.charAt(0).toUpperCase() + prio.slice(1)}`).classList.add('active');
 }
-// Global variables
-let selectedContacts = []; // For assigned contacts
 
 // Define getRandomColor in the global scope
 function getRandomColor() {
@@ -311,15 +313,6 @@ function resetForm() {
 }
 //create task functions//
 
-
-
-
-
-
-
-
-let isDropdownClosed = false;
-
 function to_open_category_dropdown() {
     if (isDropdownClosed) return;
     let elements = getCategoryElements();
@@ -371,8 +364,7 @@ function toggleRotationDownImage() {
 function initializeCategorySelector() {
     let category_select = document.getElementById('category_select');
     
-    if (!category_select) {  // Prevent error if the element is missing
-        console.warn("Element #category_select not found.");
+    if (!category_select) { 
         return;
     }
 
@@ -384,10 +376,6 @@ function initializeCategorySelector() {
         }
     });
 }
-
-
-
-
 
 function resetCategorySelector() {
     let selected_txt = document.getElementById('select_txt');
@@ -418,16 +406,6 @@ function addCategoryOptions(category_dropdown) {
     });
 }
 
-
-
-
-
-
-
-let newtasks = [];
-let subtasks = [];
-
-
 function show_subtask_container() {
     {
         let add_delete_container = document.getElementById('add_delete_container');
@@ -453,19 +431,16 @@ function delete_text() {
     subtask_input.removeEventListener('click', show_subtask_container);
 }
 
+
 function add_new_text(event) {
     let newSubTask = document.getElementById('subtask_input');
-    if (newSubTask.value == 0) {
-        return false;
-    }
-    subtasks.push(newSubTask.value);
-    newSubTask.value = '';
+    if (!newSubTask.value.trim()) return;
+
+    let id = Date.now(); // Erzeuge eine eindeutige ID
+    subtasks[id] = newSubTask.value; //  Speichern im Objekt
+
+    newSubTask.value = ''; // Input-Feld leeren
     renderSubtasks();
-    if (event && event.type === 'click') {
-        document.getElementById('add_delete_container').classList.remove('visible');
-        document.getElementById('show_subtask_container').style.display = 'block';
-        document.querySelector('.add_subtask_container').classList.remove('no-hover');
-    }
 }
 
 function hideInputSubTaksClickContainerOnOutsideClick() {
@@ -484,31 +459,33 @@ function hideInputSubTaksClickContainerOnOutsideClick() {
     });
 }
 
-function renderSubtasks(editIndex = -1) {
+function renderSubtasks(editIndex = null) {
     let subtask_list = document.getElementById('added_text');
     subtask_list.innerHTML = '';
-    subtasks.forEach((subtask, index) => {
-        if (index === editIndex) {
-            subtask_list.innerHTML += subTaskProgressTemplate(index, subtask);
+
+    Object.keys(subtasks).forEach(id => {
+        let subtask = subtasks[id];
+
+        if (id == editIndex) {
+            subtask_list.innerHTML += subTaskProgressTemplate(id, subtask);
         } else {
-            subtask_list.innerHTML += subTaskCreatedTemplate(index, subtask);
+            subtask_list.innerHTML += subTaskCreatedTemplate(id, subtask);
         }
     });
 }
 
-function editSubTask(index) {
-    renderSubtasks(index);
+function editSubTask(id) {
+    renderSubtasks(id); // Edit-Modus aktivieren
 }
-
-function saveSubTask(index) {
-    let editedText = document.getElementById(`editInput${index}`).value;
-    if (editedText.trim() !== '') {
-        subtasks[index] = editedText;
-    }
+function saveSubTask(id) {
+    let input = document.getElementById(`editInput${id}`);
+    if (!input.value.trim()) return;
+    
+    subtasks[id] = input.value; // Aktualisieren
     renderSubtasks();
 }
 
-function deleteSubTask(index) {
-    subtasks.splice(index, 1);
+function deleteSubTask(id) {
+    delete subtasks[id]; // Löscht den Eintrag aus dem Objekt
     renderSubtasks();
 }

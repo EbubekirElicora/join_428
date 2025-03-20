@@ -30,42 +30,51 @@ function checkIfNavigatedFromSignup() {
             const helpUserContainer = document.querySelector(".help_user_container");
             const nameMenu = document.getElementById("name_menu");
             const pageBackButton = document.getElementById("pageBackButton");
-            const helpIcon = document.querySelector(".help_icon"); // Select the help icon
+            const helpIcon = document.querySelector(".help_icon");
+            const posContHeadRight = document.querySelector(".pos_cont_head_right");
         
-            console.log("helpUserContainer:", helpUserContainer);
-            console.log("nameMenu:", nameMenu);
-            console.log("pageBackButton:", pageBackButton);
-            console.log("helpIcon:", helpIcon);
+            console.log("Checking elements before hiding...");
         
             if (helpUserContainer) {
                 helpUserContainer.style.display = "none";
-                console.log("help_user_container found and hidden.");
-            } else {
-                console.log("help_user_container not found.");
+                console.log("help_user_container hidden.");
             }
         
             if (nameMenu) {
-                nameMenu.style.visibility = "hidden";
-                nameMenu.style.opacity = "0";
-                console.log("name_menu found and hidden.");
-            } else {
-                console.log("name_menu not found.");
+                nameMenu.style.display = "none";
+                console.log("name_menu hidden.");
             }
         
             if (pageBackButton) {
                 pageBackButton.style.display = "none";
-                console.log("pageBackButton found and hidden.");
-            } else {
-                console.log("pageBackButton not found.");
+                console.log("pageBackButton hidden.");
             }
         
             if (helpIcon) {
-                helpIcon.style.display = "none"; // Hide the help icon
-                console.log("help_icon found and hidden.");
-            } else {
-                console.log("help_icon not found.");
+                helpIcon.style.display = "none";
+                console.log("help_icon hidden.");
             }
+        
+            if (posContHeadRight) {
+                posContHeadRight.style.display = "none"; // Hide the entire right header section
+                console.log("pos_cont_head_right hidden.");
+            } else {
+                console.log("pos_cont_head_right NOT found, waiting for DOM update...");
+            }
+        
+            // If .pos_cont_head_right is missing at first, watch for DOM changes
+            const observer = new MutationObserver(() => {
+                const posContHeadRight = document.querySelector(".pos_cont_head_right");
+                if (posContHeadRight) {
+                    posContHeadRight.style.display = "none";
+                    console.log("pos_cont_head_right dynamically detected and hidden.");
+                    observer.disconnect(); // Stop observing after it's hidden
+                }
+            });
+        
+            observer.observe(document.body, { childList: true, subtree: true });
         };
+        
 
         hideElements();
 

@@ -15,6 +15,7 @@
     justify-content: space-between; 
     align-items: center; 
     padding: 20px; 
+    margin-top: 45px;
 }
 
 .contact-header {
@@ -31,11 +32,12 @@
 .contact h3 {
     margin: 0;
     font-size: 24;
+    margin-left: -20px;
 }
 
 .separator {
     width: 3px;
-    height: 30px;
+    height: 50px;
     background-color: #3498db;
     margin: 0 15px;
 }
@@ -76,6 +78,8 @@
     font-size: 20px;
     gap: 10px;
     padding: 8px;
+    margin-bottom:-20px ;
+    margin-top: -10px;
 }
 .header-content:hover{
     background-color: #3498db;
@@ -101,6 +105,10 @@
     cursor: pointer;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     z-index: 1000;
+    transition: background-color 0.3s ease; 
+}
+.add-contact-circle.clicked {
+    background-color: #3498db; /* Blue color */
 }
 .contact-item.active h3 {
     color: white !important;
@@ -129,7 +137,6 @@
 
 .letter-header {
     font-size: 24px;
-    font-weight: bold;
     margin-top: 20px;
     margin-bottom: 10px;
     color: #333;
@@ -222,14 +229,31 @@
     display: block;
 }
 /* create contacts Overlay styles */
+
 .overlay {
-    display: none ;
+    display: none; /* Initially hidden */
     position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);    
+    top: 65%;
+    left: 52.5%;
+    transform: translate(-50%, -50%); 
     z-index: 1001;
-    
+    transition: transform 0.5s ease-in-out; 
+}
+
+
+.overlay.active {
+    display: block; 
+    animation: slideIn 0.5s ease-in-out forwards; 
+}
+
+/* Animation for sliding in */
+@keyframes slideIn {
+    from {
+        transform: translate(50%, -50%); 
+    }
+    to {
+        transform: translate(-50%, -50%); 
+    }
 }
 
 .overlay.active {
@@ -239,33 +263,24 @@
 .overlay-content {
     
     display: flex;
-    width: 900px;
-    height: 500px;
+    width: 1100px;
+    height: 400px;
     border-radius: 20px;
 }
 
 /* Close button styles */
-.close-button {
-    position: absolute; 
-    top: 10px; 
-    right: px; 
-    font-size: 20px;
-    color: #000; 
-    text-decoration: none; 
-    cursor: pointer; 
-    z-index: 1002; 
-    border-radius: 50%;
-}
+
 
 .left-section {
-    background-color: #2A3647;
+    background-color: #2A3649;
     padding: 20px;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
     border-top-left-radius: 20px;
     border-bottom-left-radius: 20px;
-    width: 300px;
+    width: 400px;
+    border: solid 1px #2A3640;
 }
 
 .left-section img {
@@ -374,6 +389,12 @@
     transition: background-color 0.25s ease, color 0.25s ease;
     border: none;
 }  
+.button-icon {
+    width: 16px; /* Adjust the size as needed */
+    height: 16px; /* Adjust the size as needed */
+    margin-right: 8px; /* Space between the image and text */
+    vertical-align: middle; /* Align the image with the text */
+}
 .create-contact:hover{
     background-color: #3498db;
     border: none;
@@ -392,11 +413,11 @@
 }
 .close-button {
     position: absolute;
-    top: 20px;
-    right: 20px;
+    top: 15px;
+    right: 10px;
     color:black;
-    font-size: 24px; /* Adjust font size as needed */
-    width: 40px; /* Set width and height for the circle */
+    font-size: 24px; 
+    width: 40px; 
     height: 40px;
     display: flex;
     align-items: center;
@@ -406,31 +427,61 @@
 }
 
 
-.close-button:hover {
-    background-color:lightgray;
-    
-}
+
 /*edit overlay section*/
+
+#contact-overlay {
+    display: none; /* Initially hidden */
+    position: fixed;
+    top: 65%;
+    left: 52.5%;
+    transform: translate(-50%, -50%); /* Center the overlay */
+    z-index: 1001;
+    transition: transform 0.5s ease-in-out; /* Smooth transition for sliding */
+}
+
+/* Class to slide the overlay in */
+
+#contact-overlay.active {
+    display: block; /* Make the overlay visible */
+    animation: slideIn 0.5s ease-in-out forwards; /* Apply slide-in animation */
+}
+
+/* Animation for sliding in */
+@keyframes slideIn {
+    from {
+        transform: translate(50%, -50%); /* Start off-screen to the right */
+    }
+    to {
+        transform: translate(-50%, -50%); /* Move to the center */
+    }
+}
+
+
+#contact-overlay.active {
+    display: flex; /* Ensure the overlay is displayed as flex when active */
+}
 #contact-overlay {
       
     display: none ;
     position: fixed;
-    top: 50%;
-    left: 50%;
+    top: 63%;
+    left: 52.5%;
     transform: translate(-50%, -50%);    
     z-index: 1001;
        
      
 }
+
 #contact-overlay.active {
-    display: flex;
+    display: flex !important;
 }
 
 
 .contact-overlay-content{
     display: flex;
-    width: 900px;
-    height: 500px;
+    width: 1100px;
+    height: 400px;
     border-radius: 20px;
     
 }
@@ -439,8 +490,8 @@
     width: 40%;    
     padding: 20px;    
     flex-direction: column;    
-    justify-content:center;    
-    align-items: center;   
+    justify-content:center !important;    
+    align-items: center !important;   
     border-top-left-radius: 20px; 
     border-bottom-left-radius: 20px;
 }
@@ -453,7 +504,7 @@
 }
 .contactOverlayLeft img{
     margin-left:10px;
-    margin-top: 30%;
+    margin-top: 10%;
 }
 .contactOverlayLeft h2::after {
     content: '';
@@ -477,6 +528,11 @@
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
     
+}
+.contact-overlay-buttons {
+    display: flex;
+    gap: 20px; /* Adjust as needed */
+    margin-left: 100px;
 }
 .edit-input {
     padding: 10px;
@@ -561,723 +617,3 @@
 .contact-input-container input:focus {
     border-color: #3498db;
     outline: none;}
-
-
-    /*sart*/
-
-.addContact-mobile{
-    background-color:yellow;
-    margin-top: 350px;
-    border-radius: 50%;
-    width: 80px;
-    height: 80px;
-
-}
-.back-button {
-    cursor: pointer;
-    font-size: 18px;
-    color: #2A3647; 
-    display: none; 
-    position: fixed; 
-    right: 20px;
-    top: 20px; 
-    z-index: 1000; 
-}
-.back-button:hover {
-    text-decoration: underline;
-}
-/* Mobile Edit Button */
-.mobileEdit-button {
-    position: relative; 
-    cursor: pointer;
-}
-
-/* Overlay */
-
-.mobileEdit-overlay {
-    display: none; 
-    position: absolute;
-    bottom: 100%; 
-    right: 0; 
-    background-color: white; 
-    border: 1px solid #ddd; 
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
-    z-index: 1000; 
-    padding: 10px; 
-}
-
-/* Links inside the overlay */
-.mobileEdit-overlay a {
-    display: flex;
-    align-items: center;
-    gap: 8px; 
-    padding: 8px 12px; 
-    text-decoration: none; 
-    color: #333; 
-    font-size: 14px; 
-}
-
-.mobileEdit-overlay a:hover {
-    background-color: #f5f5f5; 
-    border-radius: 4px; 
-}
-
-/* Show the overlay when active */
-.mobileEdit-overlay.active {
-    display: block;
-}
-
-@media(max-width:1080px){
-    .contactsPage{
-        margin-top: 90px;
-        margin-left: 0px; 
-         
-    }
-
-
-
-    .left-column {
-        flex: 0 0 30%;    
-        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);    
-        border-radius: 8px;    
-        background-color: white;   
-         display: flex;
-        flex-direction: column;
-        align-items: center;
-        overflow-x:hidden;
-        overflow-y: auto;
-        height: 68.5vh;
-        cursor: pointer;
-        
-    }
-    .header-content {
-        display: none; /* Hide the original button */
-    }
-
-    .add-contact-circle {
-        display: block; /* Show the circular button */
-        
-    }
-
-    
-    .overlay-content {
-        display: flex;
-        width: 700px;
-        height:100%;
-        border-radius: 20px;       
-        
-    }
-   
-    
-    
-    .contact-overlay-content{
-        display: flex;
-        width: 700px;
-        height:100%;
-        border-radius: 20px;
-    }
-    .contact-initials-overlay {
-        width: 120px;
-        height: 80px;
-        color: #fff;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 18px;
-        margin-right: 15px;
-        border-radius:50%;    
-        overflow: hidden; 
-    }
-   
-
-}
-@media (max-width: 1080px) {
-
-    html {
-        overflow: scroll;
-        overflow-x: hidden;
-      }
-      ::-webkit-scrollbar {
-        width: 0;  /* Remove scrollbar space */
-        background: transparent;  /* Optional: just make scrollbar invisible */
-      }
-      /* Optional: show position indicator in red */
-      ::-webkit-scrollbar-thumb {
-        background: white;
-      }
-      
-    .right-column {
-        margin-left:10px;
-        padding: 20px; 
-         
-    }
-    .contact-header {
-        margin: 0; 
-        align-items: flex-start; 
-        flex-direction: column; 
-        gap: 5px; 
-    }
-    .links{
-        display: none;
-    }
-    
-    .contact h1 {
-        margin: 0;
-        font-size: 54px;
-    }
-    
-    .contact h3 {
-        position: relative; 
-        font-size: 18px; 
-        color: #333;
-    }
-    
-    .contact h3::after {
-        content: "";
-        position: absolute;
-        
-        left: 0;
-        bottom: -5px; 
-        width: 60px; 
-        border-bottom: 2px solid #3498db; 
-    }
-    
-    .separator {
-        display: none;
-    }
-    .left-column {
-        width: 100%; 
-        padding: 20px; 
-        box-sizing: border-box; 
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start; 
-        height: 88.5vh;
-    }
-    .contact-item.active {
-        background-color: inherit !important; 
-    }
-
-    .contact-item.active h3 {
-        color: inherit !important; 
-    }
-
-
-    .left-column #content {
-        width: 100%; 
-    }
-
-    .left-column .header-content,
-    .left-column .add-contact-circle {
-        align-self: flex-start; 
-    }
-
-    .right-column {
-        display: none; 
-    }
-
-    .right-column.active {
-        display: block; 
-    }
-
-    .left-column.hidden {
-        display: none; 
-    }
-
-    .back-button {
-        display: block; 
-    }
-
-    .right-column {
-        display: none;
-    }
-
-    /* Show the right column and hide the left column when a contact is clicked */
-    .right-column.active {
-        display: block;
-    }
-
-    .left-column.hidden {
-        display: none;
-     }
-    .back-button {
-        cursor: pointer;
-        font-size: 18px;
-        margin-bottom: 20px;
-        color: #2A3647;
-        display:block;
-    }
-    .add-contact-circle {
-        display: block; 
-        left: 70%;
-        
-    }
-    .mobileEdit-button{
-        display: block;
-        background-color: #2A3647;
-        display: flex;
-        justify-content: center;
-        height: 70px;
-        width: 70px;
-        border-radius: 50%;
-        transform: translateY(-140px);
-        position: fixed;
-        left: 70%;
-    }
-    
-}
-@media(max-width:780px){
-    .overlay {
-        
-        transform: translate(-50%, -50%);
-        width: 600px;
-    }
-}
-@media(max-width:990px){
-    #main-content {
-        margin-left: 0;    
-        margin-top: 95px; 
-        margin-bottom: 90px;          
-        
-    }
-    .contact-list {
-        flex: 0 0 30%;    
-        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);    
-        border-radius: 8px;    
-        background-color: white;   
-         display: flex;
-        flex-direction: column;
-        align-items: center;
-        overflow-x:hidden;
-        overflow-y: auto;
-        height: 71.5vh;
-        cursor: pointer;
-        
-    }
-    
-
-}
-@media (max-width: 780px) {
-    
-   
-      .contact-form {
-        display: flex;
-    
-        flex-direction: column;
-        width: 110%;
-        margin-top: 40px;
-        gap: 0 !important;
-      }
-      .create-contact{      
-      padding:10px;       
-      font-size: small;
-      font-weight: 600;
-      
-  }
-  
-
-    
-
-    .contact-item {
-        width: 100%;
-        padding: 10px 0;
-        margin-left: 0px; 
-        border-width: 100%;
-        margin-top: 10px;
-        display:flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        align-items: flex-start;
-        box-sizing: border-box;
-        flex-grow: 1;
-    }
-    .contact-item:hover{
-        background-color:white;
-    }
-
-   
-
-    .divider {
-        width: 100%;
-        height: 1px;
-        background-color: #ddd;
-        margin: 10px 0;
-    }
-
-    .contact-list .contact-item:last-of-type + .divider {
-        display: block;
-    }
-
-    .add-contact-icon {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        bottom: 90px;
-        right: 10%;
-        padding: 8px;
-    }
-
-    .add-contact-icon img {
-        width: 40px;
-        height: 40px;
-    }
-    .contact.active, .contact-details.active {
-        display: block;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        background: #fff; 
-        z-index: 1000; 
-        padding: 20px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    }
-    
-}
-@media (max-width: 780px) {
-   
-    .overlay{
-        width: 70%;
-        height: 550px;
-        padding: 0;
-        border-radius: 10px;
-        margin: 0 auto;
-        top: 3%;
-        left: 15%;
-        transform: none;
-        overflow: hidden;
-        border: none;        
-        flex-direction: column;
-    }
-
-    /* Make overlay content match the overlay width */
-    .overlay-content {
-        width: 100%;
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        box-sizing: border-box;
-        position: relative;
-    }
-    #contact-overlay {
-        width: 70%;
-        height: 550px;
-        padding: 0;
-        border-radius: 10px;
-        margin: 0 auto;
-        top: 3%;
-        left: 15%;
-        transform: none;
-        overflow: hidden;
-        border: none;
-        flex-direction: column;
-    }
-    .overlay-content::before {
-        content: '';
-        position: absolute;
-        top: 40%; 
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background-image: url('../Assets/person.svg');
-        background-size: contain;
-        background-repeat: no-repeat;
-    
-
-        z-index: 2;
-        display: block;
-        width: 110px; 
-        height: 110px;
-        border-radius: 50%; 
-        padding: 15px; 
-        border: 3px solid white; 
-        box-sizing: border-box;
-        background-color: lightgrey;
-    }
-    
-
-    /* Left and Right sections */
-    
-    .right-section {
-        width: 100%;
-        height: 60%; 
-        padding: 20px;
-        box-sizing: border-box;
-        overflow: hidden;
-    }
-    .left-section{
-        width: 100%;
-        height: 40%; 
-        padding: 20px;
-        box-sizing: border-box;
-        overflow: hidden;
-        
-
-    }
-
-    /* Hide image in left-section */
-    .left-section img{
-        display: none;
-    }
-
-    /* Image positioning */
-    .right-section img.centered-image {
-        position: absolute; 
-        top: 25%; 
-        left: 50%; 
-        transform: translate(-50%, -50%); 
-        max-height: 150px;
-        z-index: 2; 
-        display: none;
-    }
-
-    /* Adjust font sizes and layout */
-    .left-section h2 {
-        font-size: 24px;
-    }
-    .left-section p {
-        font-size: 14px;
-    }
-
-    /* Right section flex layout */
-    .right-section-flex {
-        flex-direction: column;
-        gap: 20px;
-        position: relative;
-        z-index: 1;
-    }
-
-    /* Close button */
-    .close-button {
-        top: 20px;
-        right: 20px;
-        color:#fff !important;
-    }
-    .close-button:hover{
-        color: #fff;
-    }
-
-    /* Input fields styling */
-    input[type="text"],
-    input[type="email"],
-    input[type="tel"] {
-        width: 90%;
-        padding-top: 20px;
-        max-width: 250px;
-        box-sizing: border-box;
-        padding: 10px;
-        margin-bottom: 30px;
-        border-radius: 5px;
-        font-size: 16px;
-    }
-
-    #cancel-button {
-        display: none;
-    }
-
-    /* Button styling */
-    .create-contact-button {
-        width: 50%;
-        max-width: 250px;
-        padding: 12px;
-        margin: 20px auto 10px auto;
-        font-size: 16px;
-        background-color: #28a745;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        margin-bottom: 0;
-    }
-    .back-button {
-        
-        position: fixed;
-        right: 20px;
-        top: 20px;
-        margin-bottom: 0; 
-    }
-    .dots-icon{
-        display: block;
-    }
-
-
-}
-
-@media (max-width: 780px) {
-    #contact-overlay {
-        width: 70%;
-        height: 550px;
-        padding: 0;
-        border-radius: 10px;
-        margin: 0 auto;
-        top: 3%;
-        left: 15%;
-        transform: none;
-        overflow: hidden;
-        border: none;
-        flex-direction: column;
-    }
-
-    .contact-overlay-content {
-        width: 100%;
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        box-sizing: border-box;
-        position: relative;
-        justify-content: center;
-    }
-
-    .contactOverlayLeft img {
-        display: none;
-    }
-
-    .contactOverlayLeft {
-        width: 100%;
-        height: 40%; 
-        padding: 20px;
-        box-sizing: border-box;
-        overflow: hidden;
-    }
-
-    .contactOverlayRight {
-        width: 100%;
-        height: 60%; 
-        padding: 20px;
-        box-sizing: border-box;
-        overflow: hidden;
-
-        /* Center the input fields */
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: 15px; 
-    }
-    .contact-details-inputs{
-        margin-top: 20px;
-    }
-
-    /* Input field styling */
-    .contactOverlayRight input[type="text"],
-    .contactOverlayRight input[type="email"],
-    .contactOverlayRight input[type="tel"] {
-        width: 100%; 
-        max-width: 300px; 
-        padding: 5px;
-        font-size: 16px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        box-sizing: border-box;
-        display: block;
-        margin-top: 5px;
-
-    }
-
-    .contact-details-buttons {
-        width: 40%;
-        display: flex;
-        justify-content: space-between;
-        margin-top: 20px;
-    }
-
-    .contactOverlayLeft h2 {
-        font-size: 34px;
-    }
-
-    .contactOverlayLeft p {
-        font-size: 14px;
-    }
-
-    .contact-initials-overlay {
-        position: absolute; 
-        top: calc(100% - 350px); 
-        left: 50%; 
-        transform: translate(-50%, -50%);
-        width: 90px;
-        height: 90px;
-        border-radius: 50%;
-        border: 5px solid #fff;
-        font-size: 24px;
-        font-weight: bold;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        
-        z-index: 2; 
-    }
-    .contact {
-        display: flex;
-        
-        align-items:flex-start;         
-        position:relative;
-        padding-top: 0;
-    }
-
-    .separator {
-        width: 30px; 
-        height: 2px; 
-        background-color: #3498db;
-        margin: 10px auto; 
-        position: absolute; 
-        bottom: -20px; 
-    }
-
-    h3 {
-        margin-bottom: 30px; 
-        font-size: 16px;
-    }
-    h1{
-        font-size: 38px !important;
-    }
-    .contact-details .contact-name {
-    
-        font-size: 28px;
-        font-style:normal;
-        font-family:"PT Sans";
-        color: black;
-        font-weight: bold;
-    }
-    .contact-initials{
-        width: 50px;
-        height: 50px;
-    }
-    .contact-name-container{
-        padding-left: 0;
-    }
-    .contact-details h2{
-        font-size:18px;
-        font-weight: bold;
-    }
-
-    
-}
-@media(max-width:400px){
-    .contactOverlayRight input[type="text"],
-    .contactOverlayRight input[type="email"],
-    .contactOverlayRight input[type="tel"] {
-        width: 100%; 
-        max-width: 200px; 
-        padding: 5px;
-        font-size: 16px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        box-sizing: border-box;
-        display: block;
-        margin-top: 5px;
-
-    }
-    input[type="text"],
-    input[type="email"],
-    input[type="tel"] {
-        width: 90%;
-        padding-top: 20px;
-        max-width: 200px;
-        box-sizing: border-box;
-        padding: 10px;
-        margin-bottom: 30px;
-        border-radius: 5px;
-        font-size: 16px;
-    }
-
-}

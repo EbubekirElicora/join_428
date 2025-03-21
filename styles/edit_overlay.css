@@ -1,49 +1,48 @@
-
 .edit_close {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .edit_close img {
-    cursor: pointer;
-    transition: transform 0.2s ease, opacity 0.2s ease;
+  cursor: pointer;
+  transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
 .edit_close img:hover {
-    transform: scale(1.1);
-    opacity: 0.8;
+  transform: scale(1.1);
+  opacity: 0.8;
 }
 
 #editDropdownContent {
-    z-index: 1001;
+  z-index: 1001;
 }
 
 .d-none {
-    display: none !important;
+  display: none !important;
 }
 
 .subTask {
-    transition: opacity 0.3s ease, transform 0.3s ease;
-  }
-  
-  .subTask.deleting {
-    opacity: 0;
-    transform: translateX(-100%);
-  }
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
 
-  .left_container_overlay {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
+.subTask.deleting {
+  opacity: 0;
+  transform: translateX(-100%);
+}
 
-  .subtask_input_overlay {
-    width: 330px !important;
-  }
+.left_container_overlay {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 
-  .subTask.deleting {
-    opacity: 0;
-    transform: translateX(-100%);
-    transition: opacity 0.3s ease, transform 0.3s ease;
+.subtask_input_overlay {
+  width: 330px !important;
+}
+
+.subTask.deleting {
+  opacity: 0;
+  transform: translateX(-100%);
+  transition: opacity 0.3s ease, transform 0.3s ease;
 }

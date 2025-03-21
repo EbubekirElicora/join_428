@@ -24,8 +24,8 @@ function generateTodoHTML(task) {
     return `
         <div draggable="true" onclick="overlayBoard('${task.id}')" ondragstart="startDragging('${task.id}')" class="task">
             <div class="category bg_${task.category}">${task.category}</div>
-            <h2 class="title_find">${task.title}</h2>
-            <p class="description_find">${task.description || ''}</p>
+            <h2>${task.title}</h2>
+            <p>${task.description || ''}</p>
             <div class="progress_container">
                 <div class="progress_bar">
                     <div class="progress_fill" style="width:${progress}%"></div>

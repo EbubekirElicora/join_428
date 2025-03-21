@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,17 +20,17 @@
     <link rel="stylesheet" href="../mobileResponsive/helpContentResponsive.css">
     <title>Board</title>
 </head>
+
 <body onload="init()">
     <div w3-include-html="../Templates/sidebar.html"></div>
     <div w3-include-html="../Templates/header.html"></div>
-    
     <div onclick="overlayBoard()" id="board_overlay" class="overlay d_none"></div>
     <div onclick="editOverlay()" id="edit_overlay" class="overlay edit_none"></div>
     <main class="board_main">
         <div class="header_board">
             <div class="content_h1">
                 <h1>Board</h1>
-                <button onclick="addTask()" class="responsiv_button">+</button> 
+                <button onclick="addTask()" class="responsiv_button">+</button>
             </div>
             <div class="input_button">
                 <div class="input_img">
@@ -42,79 +43,62 @@
                 </button>
             </div>
         </div>
-
-    
-
-</section>
-
-    
+        </section>
         <div onclick="closeOverlay()" id="overlay" class="overlay d_none">
             <div class="popup_container">
-                <img id="close_img" onclick="closeOverlay()" class="close_img" src="../assets/icons/close.png" alt="Close">
+                <img id="close_img" onclick="closeOverlay()" class="close_img" src="../assets/icons/close.png"
+                    alt="Close">
                 <div id="popup_container" class="d_none" onclick="event.stopPropagation()"></div>
             </div>
         </div>
-       
-
         <div class="content_board">
-
             <div class="nav_board">
                 <div class="board_text_img">
                     <p class="text_board">To do</p>
                     <img class="img_board" onclick="addTask()" src="../assets/icons/plus button.png" alt="">
                 </div>
-                <div id="todo_task" class="board_tasks drag_area" 
-                     ondrop="moveToStage('todo')" 
-                     ondragleave="removeHighlight('todo_task')" 
-                     ondragover="allowDrop(event); highlight('todo_task')">
+                <div id="todo_task" class="board_tasks drag_area" ondrop="moveToStage('todo')"
+                    ondragleave="removeHighlight('todo_task')" ondragover="allowDrop(event); highlight('todo_task')">
                     <div class="tasks show">No tasks To do</div>
                 </div>
             </div>
-        
             <div class="nav_board">
                 <div class="board_text_img">
                     <p class="text_board">In Progress</p>
                     <img class="img_board" onclick="addTask()" src="../assets/icons/plus button.png" alt="">
                 </div>
-                <div id="progress_task" class="board_tasks drag_area" 
-                     ondrop="moveToStage('progress')" 
-                     ondragleave="removeHighlight('progress_task')" 
-                     ondragover="allowDrop(event); highlight('progress_task')">
+                <div id="progress_task" class="board_tasks drag_area" ondrop="moveToStage('progress')"
+                    ondragleave="removeHighlight('progress_task')"
+                    ondragover="allowDrop(event); highlight('progress_task')">
                     <div class="tasks">No tasks In Progress</div>
                 </div>
             </div>
-        
             <div class="nav_board">
                 <div class="board_text_img">
                     <p class="text_board">Await Feedback</p>
                     <img class="img_board" onclick="addTask()" src="../assets/icons/plus button.png" alt="">
                 </div>
-                <div id="feedback_task" class="board_tasks drag_area" 
-                     ondrop="moveToStage('feedback')" 
-                     ondragleave="removeHighlight('feedback_task')" 
-                     ondragover="allowDrop(event); highlight('feedback_task')">
+                <div id="feedback_task" class="board_tasks drag_area" ondrop="moveToStage('feedback')"
+                    ondragleave="removeHighlight('feedback_task')"
+                    ondragover="allowDrop(event); highlight('feedback_task')">
                     <div class="tasks">No tasks Await Feedback</div>
                 </div>
             </div>
-        
             <div class="nav_board">
                 <div class="board_text_img">
                     <p class="text_board">Done</p>
                     <img class="img_board" onclick="addTask()" src="../assets/icons/plus button.png" alt="">
                 </div>
-                <div id="done_task" class="board_tasks drag_area" 
-                     ondrop="moveToStage('done')" 
-                     ondragleave="removeHighlight('done_task')" 
-                     ondragover="allowDrop(event); highlight('done_task')">
+                <div id="done_task" class="board_tasks drag_area" ondrop="moveToStage('done')"
+                    ondragleave="removeHighlight('done_task')" ondragover="allowDrop(event); highlight('done_task')">
                     <div class="tasks">No tasks Done</div>
                 </div>
             </div>
         </div>
     </main>
-    
     <script src="../js/header.js"></script>
-    <script src="../js/board.js"></script>    
-    <script src="../js/firebase.js"></script>    
+    <script src="../js/board.js"></script>
+    <script src="../js/firebase.js"></script>
     <script src="../js/utility.js"></script>
     <script src="../js/addTaskTemplates.js"></script>
     <script src="/script.js"></script>
@@ -125,6 +109,6 @@
     <script src="https://www.w3schools.com/lib/w3.js"></script>
     <script>
         includeHTML();
-        </script>
+    </script>
 </body>
 </html>

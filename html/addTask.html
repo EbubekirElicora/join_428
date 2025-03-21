@@ -27,7 +27,6 @@
 <body>
     <div w3-include-html="../Templates/sidebar.html"></div>
     <div w3-include-html="../Templates/header.html"></div>
-
     <section class="container_pos">
         <div class="content_container_size">
             <div class="headline_addTask_position">
@@ -64,25 +63,24 @@
                                 </div>
                                 <div class="dropdown">
                                     <div class="input-container">
-                                        <input type="text" id="contactInput" placeholder="Select contacts to assign" readonly>
+                                        <input type="text" id="contactInput" placeholder="Select contacts to assign"
+                                            readonly>
                                         <div class="icons">
-                                            <img src="../assets/icons/arrow_drop_down_icon.png"
-                                                 id="dropdownIcon" class="cursorPointer dropdownimg">
+                                            <img src="../assets/icons/arrow_drop_down_icon.png" id="dropdownIcon"
+                                                class="cursorPointer dropdownimg">
                                             <img src="../assets/icons/arrow_drop_up_icon.png" id="dropdownIconUp"
-                                                 class="cursorPointer dropdownimg d-none">
+                                                class="cursorPointer dropdownimg d-none">
                                         </div>
                                     </div>
                                     <div class="dropdown-content" id="dropdownContent"></div>
                                 </div>
                                 <!-- New container for selected contacts' initials -->
                                 <div id="selectedContactsInitials" class="selected-contacts-initials"></div>
-                            </div>  
+                            </div>
                         </form>
                     </div>
                 </section>
-
                 <section class="divider_line"></section>
-
                 <section class="right_container">
                     <div class="datepicker_container">
                         <label for="due_date">Due Date</label>
@@ -90,7 +88,6 @@
                         <input onclick="getDateToday()" type="date" id="date" class="datepicker-input"
                             placeholder="yyyy-MM-dd">
                     </div>
-
                     <section class="prio_container">
                         <label for="prio">Priority</label>
                         <div class="prio_btn_container">
@@ -109,7 +106,6 @@
                             </button>
                         </div>
                     </section>
-
                     <div class="category_container">
                         <div>
                             <span class="category_headline">Category
@@ -127,7 +123,6 @@
                         <div class="select_category_container" id="category_dropdown">
                         </div>
                     </div>
-
                     <section class="subtask_container">
                         <div class="subtask_input_container">
                             <span class="subtasks_headline">Subtasks</span>
@@ -157,7 +152,6 @@
                     </section>
                 </section>
             </section>
-
             <form class="btn_container_addTask">
                 <div>
                     <span class="required_container">
@@ -176,18 +170,12 @@
                         <button id="createTaskBtn" class="create_task_btn" type="submit">Create Task
                             <img class="create_icon" src="../assets/icons/create_task_icon.png">
                         </button>
-
                     </div>
                 </div>
             </form>
         </div>
         <div id="toast" class="toast"></div>
-
     </section>
-
-
-    
-
     <script src="https://www.w3schools.com/lib/w3.js"></script>
     <script>
         includeHTML();

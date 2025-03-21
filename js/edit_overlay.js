@@ -453,9 +453,7 @@ function showEditSubtaskContainerOverlay() {
     edit_add_delete_container.classList.add('visible');
     edit_show_subtask_container.style.display = 'none';
     edit_add_subtask_container.classList.add('no-hover');
-    edit_subtask_input.addEventListener('click', () => {
-        edit_show_subtask_container.style.display = 'block';
-    });
+    edit_subtask_input.addEventListener('click', edit_show_subtask_container);
 }
 
 function deleteEditText() {

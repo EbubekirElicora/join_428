@@ -1,5 +1,3 @@
-
-
 function generateTodoHTML(task) {
     const priorityIcons = {
         urgent: '<img src="../assets/icons/prio_urgent_icon.png" alt="">',
@@ -11,8 +9,8 @@ function generateTodoHTML(task) {
             ${contact.initials}
         </div>
     `).join('') || '';
-    
-    const remainingContacts = task.assignedContacts?.length > 5 
+
+    const remainingContacts = task.assignedContacts?.length > 5
         ? `<div class="remaining-contacts">+${task.assignedContacts.length - 5}</div>`
         : '';
     const subtasks = task.subtasks || {};
@@ -45,9 +43,6 @@ function generateTodoHTML(task) {
     `;
 }
 
-
-
-
 function getOverlayHtml(task) {
     const priorityIcons = {
         urgent: '<img src="../assets/icons/prio_urgent_icon.png" class="priority-icon" alt="Urgent">',
@@ -64,9 +59,9 @@ function getOverlayHtml(task) {
         </div>
     `).join('') || '<div class="no-contacts">No contacts assigned</div>';
     const subtasksHTML = Object.entries(task.subtasks || {}).map(([subtaskId, subtask]) => {
-        const normalizedSubtask = typeof subtask === 'string' 
-          ? { title: subtask, completed: false } 
-          : subtask;
+        const normalizedSubtask = typeof subtask === 'string'
+            ? { title: subtask, completed: false }
+            : subtask;
         const title = normalizedSubtask.title || "Untitled";
         const completed = normalizedSubtask.completed;
 

@@ -311,8 +311,8 @@ function resetForm() {
 
     setPrio('medium');
 }
-//create task functions//
 
+//create task functions//
 function to_open_category_dropdown() {
     if (isDropdownClosed) return;
     let elements = getCategoryElements();

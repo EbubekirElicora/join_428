@@ -1,4 +1,4 @@
-let editSubtasks = {};
+
 
 async function editOverlay(taskId) {
     const overlayRef = document.getElementById('edit_overlay');
@@ -442,11 +442,7 @@ function editProtection(event) {
     event.stopPropagation();
 }
 
-
-
-
-
-
+let editSubtasks = {};
 
 function showEditSubtaskContainerOverlay() {
     let edit_show_subtask_container = document.getElementById('edit_show_subtask_container');
@@ -483,9 +479,7 @@ function addNewEditText(event) {
     const input = document.getElementById('edit_subtask_input');
     const title = input.value.trim();
     if (!title) return;
-
-    // Используем тот же id, что и в `subtasks`
-    const subtaskId = Date.now(); // Простой id
+    const subtaskId = Date.now();
     editSubtasks[subtaskId] = {
         title: title,
         completed: false,

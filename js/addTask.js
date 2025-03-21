@@ -1,6 +1,6 @@
 
 // Global variables
-window.subtasks = window.subtasks || {};
+
 let isDropdownClosed = false;
 let selectedContacts = []; 
 
@@ -212,7 +212,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // Redirect to the board page after a short delay (e.g., 2 seconds)
             setTimeout(() => {
-                window.location.href = 'board.html'; // Replace with the correct path to your board page
+                window.location.href = '/html/board.html'; // Replace with the correct path to your board page
             }, 2000); // 2000 milliseconds = 2 seconds
         } else {
             alert('Failed to create task. Please try again.');
@@ -406,6 +406,8 @@ function addCategoryOptions(category_dropdown) {
     });
 }
 
+window.subtasks = window.subtasks || {};
+
 function show_subtask_container() {
     {
         let add_delete_container = document.getElementById('add_delete_container');
@@ -436,12 +438,17 @@ function add_new_text(event) {
     let newSubTask = document.getElementById('subtask_input');
     if (!newSubTask.value.trim()) return;
 
-    let id = Date.now(); // Erzeuge eine eindeutige ID
-    subtasks[id] = newSubTask.value; //  Speichern im Objekt
+    let id = Date.now();
+    subtasks[id] = {
+        title: newSubTask.value,
+        completed: false,
+        isEditing: false
+    };
 
-    newSubTask.value = ''; // Input-Feld leeren
+    newSubTask.value = '';
     renderSubtasks();
 }
+
 
 function hideInputSubTaksClickContainerOnOutsideClick() {
     document.addEventListener('click', function (event) {
@@ -466,13 +473,19 @@ function renderSubtasks(editIndex = null) {
     Object.keys(subtasks).forEach(id => {
         let subtask = subtasks[id];
 
+        if (typeof subtask === 'string') {
+            subtask = { title: subtask, completed: false, isEditing: false };
+            subtasks[id] = subtask;
+        }
+
         if (id == editIndex) {
-            subtask_list.innerHTML += subTaskProgressTemplate(id, subtask);
+            subtask_list.innerHTML += subTaskProgressTemplate(id, subtask.title);
         } else {
-            subtask_list.innerHTML += subTaskCreatedTemplate(id, subtask);
+            subtask_list.innerHTML += subTaskCreatedTemplate(id, subtask.title);
         }
     });
 }
+
 
 function editSubTask(id) {
     renderSubtasks(id); // Edit-Modus aktivieren

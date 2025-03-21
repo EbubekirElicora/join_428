@@ -128,7 +128,6 @@ function initializeTaskForm() {
             if (validateTaskData(taskData)) {
                 const savedTask = await saveTaskToFirebase(taskData);
                 if (savedTask) {
-                    window.location.reload();
                     window.location.href = "/html/board.html";
                 } else {
                     alert('Failed to create task. Please try again.');
@@ -345,18 +344,15 @@ function closeOverlay() {
 
 window.subtasks = window.subtasks || {};
 
-// Show the subtask container
 function show_subtask_container() {
-    {
-        let add_delete_container = document.getElementById('add_delete_container');
-        let show_subtask_container = document.getElementById('show_subtask_container');
-        let add_subtask_container = document.querySelector('.add_subtask_container');
-        let subtask_input = document.getElementById('subtask_input');
-        add_delete_container.classList.add('visible');
-        show_subtask_container.style.display = 'none';
-        add_subtask_container.classList.add('no-hover');
-        subtask_input.addEventListener('click', show_subtask_container);
-    }
+    let add_delete_container = document.getElementById('add_delete_container');
+    let show_subtask_container = document.getElementById('show_subtask_container');
+    let add_subtask_container = document.querySelector('.add_subtask_container');
+    let subtask_input = document.getElementById('subtask_input');
+    add_delete_container.classList.add('visible');
+    show_subtask_container.style.display = 'none';
+    add_subtask_container.classList.add('no-hover');
+    subtask_input.addEventListener('click', show_subtask_container);
 }
 
 function delete_text() {
@@ -371,15 +367,18 @@ function delete_text() {
     subtask_input.removeEventListener('click', show_subtask_container);
 }
 
-
 function add_new_text(event) {
     let newSubTask = document.getElementById('subtask_input');
     if (!newSubTask.value.trim()) return;
 
-    let id = Date.now(); // Erzeuge eine eindeutige ID
-    subtasks[id] = newSubTask.value; //  Speichern im Objekt
+    let id = Date.now();
+    subtasks[id] = {
+        title: newSubTask.value,
+        completed: false,
+        isEditing: false
+    };
 
-    newSubTask.value = ''; // Input-Feld leeren
+    newSubTask.value = '';
     renderSubtasks();
 }
 
@@ -407,28 +406,33 @@ function renderSubtasks(editIndex = null) {
     Object.keys(subtasks).forEach(id => {
         let subtask = subtasks[id];
 
+        if (typeof subtask === 'string') {
+            subtask = { title: subtask, completed: false, isEditing: false };
+            subtasks[id] = subtask;
+        }
+
         if (id == editIndex) {
-            subtask_list.innerHTML += subTaskProgressTemplate(id, subtask);
+            subtask_list.innerHTML += subTaskProgressTemplate(id, subtask.title);
         } else {
-            subtask_list.innerHTML += subTaskCreatedTemplate(id, subtask);
+            subtask_list.innerHTML += subTaskCreatedTemplate(id, subtask.title);
         }
     });
 }
 
+
 function editSubTask(id) {
-    renderSubtasks(id); // Edit-Modus aktivieren
+    renderSubtasks(id);
 }
+
 function saveSubTask(id) {
     let input = document.getElementById(`editInput${id}`);
     if (!input.value.trim()) return;
     
-    subtasks[id] = input.value; // Aktualisieren
+    subtasksBoard[id] = input.value;
     renderSubtasks();
 }
 
 function deleteSubTask(id) {
-    delete subtasks[id]; // Löscht den Eintrag aus dem Objekt
+    delete subtasksBoard[id];
     renderSubtasks();
 }
-
-

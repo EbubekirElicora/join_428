@@ -3,7 +3,7 @@ body {
     height: 100vh;
 }
 
-.board_main{
+.board_main {
     max-width: 1440px;
     margin-top: 180px;
     margin-left: 350px;
@@ -153,8 +153,8 @@ h1 {
     cursor: pointer;
     z-index: 1002;
 }
+
 .dropdown-content {
-    
     position: absolute;
     background-color: white;
     border: 1px solid #ccc;
@@ -162,24 +162,20 @@ h1 {
     overflow: auto;
     z-index: 1000;
 }
-/* Style for selected contact items */
+
 .selected-contact-item {
     background-color: #2A3647;
     color: white;
 }
 
-/* Ensure the checkbox inside the selected contact item is white */
 .selected-contact-item .contact-checkbox {
     filter: brightness(0) invert(1);
 }
 
-/* Style for contact items in the dropdown */
-
-
-/* Hover effect for contact items */
 .dropdown-item:hover:not(.selected-contact-item) {
     background-color: #f0f0f0;
 }
+
 .dropdown-item {
     display: flex;
     align-items: center;
@@ -192,7 +188,7 @@ h1 {
 .contact-info {
     display: flex;
     align-items: center;
-    gap: 8px; /* Space between initials and name */
+    gap: 8px;
 }
 
 .contact-initials-container {
@@ -216,13 +212,11 @@ h1 {
 }
 
 .contact-checkbox {
-    margin-left: auto; /* Push the checkbox to the right */
-    width: 16px; /* Set a fixed width */
-    height: 16px; /* Set a fixed height */
-    cursor: pointer; /* Change cursor to pointer */
+    margin-left: auto;
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
 }
-/*chuks, delete if you want
-*/
 
 .overlay {
     height: 100vh;
@@ -236,7 +230,6 @@ h1 {
     align-items: center;
     background-color: rgba(0, 0, 0, 0.385);
     z-index: 1000;
-
 }
 
 .d_none {
@@ -246,23 +239,24 @@ h1 {
 .edit_none {
     display: none;
 }
+
 .edit_buttons {
     display: flex;
-    justify-content: flex-end; 
-    margin-top: 20px; 
+    justify-content: flex-end;
+    margin-top: 20px;
 }
 
 .ok_button {
-    padding: 10px 20px; 
-    background-color:#2A3647; 
-    color: white; 
+    padding: 10px 20px;
+    background-color: #2A3647;
+    color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
 }
 
 .ok_button:hover {
-    background-color:#29abe2; 
+    background-color: #29abe2;
 }
 
 .responsiv_button {

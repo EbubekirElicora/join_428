@@ -55,7 +55,6 @@ header p {
 .header_overlay {
     height: 100vh;
     width: 100vw;
-    
 }
 
 .mobileMenu {
@@ -81,7 +80,7 @@ header p {
 .active {
     transform: translateX(0);
     opacity: 1;
-    
+
 }
 
 .mobileMenu a {
@@ -126,7 +125,6 @@ header p {
     width: 50%;
 }
 
-
 .pos_cont_head_right {
     display: flex;
     width: 348px;
@@ -151,7 +149,6 @@ header p {
     height: 20px;
     width: 20px;
 }
-
 
 .hide-header-right {
     display: none !important;

@@ -1,12 +1,15 @@
-
 html {
   overflow: scroll;
   overflow-x: hidden;
 }
+
 ::-webkit-scrollbar {
-  width: 0;  /* Remove scrollbar space */
-  background: transparent;  /* Optional: just make scrollbar invisible */
+  width: 0;
+  /* Remove scrollbar space */
+  background: transparent;
+  /* Optional: just make scrollbar invisible */
 }
+
 /* Optional: show position indicator in red */
 ::-webkit-scrollbar-thumb {
   background: #f6f7f8;
@@ -20,7 +23,6 @@ body {
   background-color: #f6f7f8;
   scroll-behavior: smooth;
   overflow: hidden;
-  font-family: 'Inter', sans-serif !important;
   height: 100vh;
   max-width: 1420px !important;
 }
@@ -38,6 +40,24 @@ a {
 
 .d-none {
   display: none;
+}
+
+.errorMessage {
+  display: none;
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+  width: 100%;
+  height: 0px;
+}
+
+.inputError {
+  border: 1px solid red !important;
+}
+
+.showError {
+  display: block;
+  height: auto;
 }
 
 .content_container_size {
@@ -424,6 +444,7 @@ input[type="date"],
   margin-top: 120px;
   margin-left: 320px;
 }
+
 .assigned_container {
   position: relative;
   width: 100%;
@@ -502,6 +523,7 @@ input[type="checkbox"]:checked {
   margin-bottom: 3px;
   cursor: pointer;
 }
+
 .selected-contacts-initials {
   display: flex;
   flex-wrap: wrap;
@@ -778,6 +800,7 @@ input[type="checkbox"]:checked {
   position: relative;
   width: 100%;
 }
+
 .input-container {
   position: relative;
   display: flex;
@@ -791,7 +814,8 @@ input[type="checkbox"]:checked {
   align-items: center;
   gap: 5px;
 }
-.icons:hover{
+
+.icons:hover {
   background-color: rgba(0, 0, 0, 0.1);
   border-radius: 50%;
 }
@@ -851,7 +875,7 @@ input[type="checkbox"]:checked {
 .contact-info {
   display: flex;
   align-items: center;
-  gap: 10px; 
+  gap: 10px;
 }
 
 .initials-container {
@@ -859,21 +883,21 @@ input[type="checkbox"]:checked {
   height: 40px;
   border-radius: 50%;
   background-color: #ccc;
-  position: relative; 
+  position: relative;
   border: 2px solid white;
 }
 
 .initials {
-  position: absolute; 
-  top: 50%; 
-  left: 50%; 
-  transform: translate(-50%, -50%); 
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   font-size: 14px;
   font-weight: bold;
-  color: white; 
+  color: white;
 }
 
 .dropdown-content input[type="checkbox"] {
-  margin-right: 10px; 
+  margin-right: 10px;
   cursor: pointer;
 }

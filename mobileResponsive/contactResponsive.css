@@ -1,9 +1,18 @@
+@keyframes slideIn {
+    from {
+        transform: translate(-50%, 150%);
+    }
 
-@media(max-width:1080px){
-    .contactsPage{
+    to {
+        transform: translate(-50%, -50%);
+    }
+}
+
+@media(max-width:1080px) {
+
+    .contactsPage {
         margin-top: 90px;
-        margin-left: 0px; 
-         
+        margin-left: 0px;
     }
 
     .close-button {
@@ -15,85 +24,77 @@
         width: 35px;
         height: 35px;
         transition: color 0.3s ease, background-color 0.3s ease;
-        
     }
-    
-    
+
     .close-button.active {
-        color: #3498db; /* Blue color for active state */
-        background-color: #3498db; /* Optional: Add blue background */
+        color: #3498db;
+        background-color: #3498db;
     }
-
-
-
 
     .left-column {
-        flex: 0 0 30%;    
-        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);    
-        border-radius: 8px;    
-        background-color: white;   
-         display: flex;
+        flex: 0 0 30%;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+        border-radius: 8px;
+        background-color: white;
+        display: flex;
         flex-direction: column;
         align-items: center;
-        overflow-x:hidden;
+        overflow-x: hidden;
         overflow-y: auto;
         height: 68.5vh;
         cursor: pointer;
-        
     }
+
     .contact {
-        display: flex
-    ;
+        display: flex;
         justify-content: space-between;
         align-items: center;
         padding: 0px;
         margin-top: 0px;
         margin-left: 10px;
     }
+
     .header-content {
-        display: none; /* Hide the original button */
+        display: none;
     }
 
     .add-contact-circle {
-        display: block; /* Show the circular button */
-        
-    }
-    .overlay {
-        display: none ;
-        position: fixed;
-        top: 50%;
-        left: 47%;
-        transform: translate(-50%, -50%);    
-        z-index: 1001;
-        
-    }
-    #contact-overlay {
-        display: none ;
-        position: fixed;
-        top: 50%;
-        left: 47%;
-        transform: translate(-50%, -50%);    
-        z-index: 1001;
-        
+        display: block;
+
     }
 
-    
+    .overlay {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 47%;
+        transform: translate(-50%, -50%);
+        z-index: 1001;
+    }
+
+    #contact-overlay {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 47%;
+        transform: translate(-50%, -50%);
+        z-index: 1001;
+    }
+
     .overlay-content {
         display: flex;
         width: 700px;
-        height:100%;
-        border-radius: 20px;       
-        
-    }
-   
-    
-    
-    .contact-overlay-content{
-        display: flex;
-        width: 700px;
-        height:100%;
+        height: 100%;
         border-radius: 20px;
     }
+
+    .contact-overlay-content {
+        display: flex;
+        width: 700px;
+        height: 100%;
+        border-radius: 20px;
+    }
+
     .contact-initials-overlay {
         width: 120px;
         height: 80px;
@@ -103,111 +104,112 @@
         justify-content: center;
         font-size: 18px;
         margin-right: 15px;
-        border-radius:50%;    
-        overflow: hidden; 
+        border-radius: 50%;
+        overflow: hidden;
     }
-   
-
 }
+
 @media (max-width: 1080px) {
 
     html {
         overflow: scroll;
         overflow-x: hidden;
-      }
-      ::-webkit-scrollbar {
-        width: 0;  /* Remove scrollbar space */
-        background: transparent;  /* Optional: just make scrollbar invisible */
-      }
-      /* Optional: show position indicator in red */
-      ::-webkit-scrollbar-thumb {
+    }
+
+    ::-webkit-scrollbar {
+        width: 0;
+        background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
         background: white;
-      }
-      
+    }
+
     .right-column {
-        margin-left:10px;
-        padding: 20px; 
-         
+        margin-left: 10px;
+        padding: 20px;
+
     }
+
     .contact-header {
-        margin: 0; 
-        align-items: flex-start; 
-        flex-direction: column; 
-        gap: 5px; 
+        margin: 0;
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 5px;
     }
-    .links{
+
+    .links {
         display: none;
     }
-    
+
     .contact h1 {
         margin: 0;
         font-size: 54px;
     }
-    
+
     .contact h3 {
-        position: relative; 
-        font-size: 18px; 
+        position: relative;
+        font-size: 18px;
         color: #333;
         margin-left: 0px;
     }
-    
+
     .contact h3::after {
         content: "";
         position: absolute;
-        
         left: 0;
-        bottom: -5px; 
-        width: 60px; 
-        border-bottom: 2px solid #3498db; 
+        bottom: -5px;
+        width: 60px;
+        border-bottom: 2px solid #3498db;
     }
-    
+
     .separator {
         display: none;
     }
-    
 
     .left-column {
-        width: 100%; 
-        padding: 20px; 
-        box-sizing: border-box; 
+        width: 100%;
+        padding: 20px;
+        box-sizing: border-box;
         display: flex;
         flex-direction: column;
-        align-items: flex-start; 
+        align-items: flex-start;
         height: 88.5vh;
     }
+
     .contact-item.active {
-        background-color: inherit !important; 
+        background-color: inherit !important;
     }
 
     .contact-item.active h3 {
-        color: inherit !important; 
+        color: inherit !important;
     }
 
-
     .left-column #content {
-        width: 100%; 
+        width: 100%;
     }
 
     .left-column .header-content,
     .left-column .add-contact-circle {
-        align-self: flex-start; 
+        align-self: flex-start;
     }
 
     .right-column {
-        display: none; 
+        display: none;
     }
 
     .right-column.active {
-        display: block; 
+        display: block;
     }
 
     .left-column.hidden {
-        display: none; 
+        display: none;
     }
 
     .back-button {
-        display: block; 
+        display: block;
     }
+
     .close-button {
         position: absolute;
         top: 10px;
@@ -216,34 +218,34 @@
         font-size: 24px;
         width: 30px;
         height: 30px;
-        
     }
 
     .right-column {
         display: none;
     }
 
-    /* Show the right column and hide the left column when a contact is clicked */
     .right-column.active {
         display: block;
     }
 
     .left-column.hidden {
         display: none;
-     }
+    }
+
     .back-button {
         cursor: pointer;
         font-size: 18px;
         margin-bottom: 20px;
         color: #2A3647;
-        display:block;
+        display: block;
     }
+
     .add-contact-circle {
-        display: block; 
+        display: block;
         left: 70%;
-        
     }
-    .mobileEdit-button{
+
+    .mobileEdit-button {
         display: block;
         background-color: #2A3647;
         display: flex;
@@ -255,105 +257,100 @@
         position: fixed;
         left: 70%;
     }
-    
-    
-    
-    
 }
-@media(max-width:780px){
-   
-}
-@media(max-width:990px){
+
+@media(max-width:990px) {
+
     #main-content {
-        margin-left: 0;    
-        margin-top: 95px; 
-        margin-bottom: 90px;          
-        
+        margin-left: 0;
+        margin-top: 95px;
+        margin-bottom: 90px;
+
     }
+
     .contact-list {
-        flex: 0 0 30%;    
-        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);    
-        border-radius: 8px;    
-        background-color: white;   
-         display: flex;
+        flex: 0 0 30%;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+        border-radius: 8px;
+        background-color: white;
+        display: flex;
         flex-direction: column;
         align-items: center;
-        overflow-x:hidden;
+        overflow-x: hidden;
         overflow-y: auto;
         height: 71.5vh;
         cursor: pointer;
-        
     }
-    
-
 }
+
 @media (max-width: 780px) {
+
+    .contact-input-container .contact-input-icon {
+        top: 50%;
+    }
+
     .overlay {
-        
         transform: translate(-50%, -50%);
         width: 600px;
         height: 400px;
     }
-   
-      .contact-form {
+
+    .contact-form {
         display: flex;
-    
         flex-direction: column;
         width: 110%;
         margin-top: 40px;
         gap: 0 !important;
-      }
-      .create-contact{      
-      padding:10px;       
-      font-size: small;
-      font-weight: 600;
-      
-  }
-  #cancel{
-    display: none;
-  }
-  .close-button:hover{
-    background-color: transparent;
-  }
-  .close-button:active,
+    }
+
+    .create-contact {
+        padding: 10px;
+        font-size: small;
+        font-weight: 600;
+    }
+
+    #cancel {
+        display: none;
+    }
+
+    .close-button:hover {
+        background-color: transparent;
+    }
+
+    .close-button:active,
     .close-button:focus {
-        background-color:#3498db;
+        background-color: #3498db;
         color: white;
         border-radius: 50%;
         transition: background-color 0.2s ease;
     }
 
-
-
-  .button-container {
-    display: flex
-;
-    gap: 10px;
-    justify-content: center;
-    margin-top: -15px;
-}
-  
-
-    
+    .button-container {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+        margin-top: -15px;
+    }
 
     .contact-item {
         width: 100%;
         padding: 10px 0;
-        margin-left: 0px; 
+        margin-left: 0px;
         border-width: 100%;
         margin-top: 10px;
-        display:flex;
+        display: flex;
         flex-direction: column;
         justify-content: flex-start;
         align-items: flex-start;
         box-sizing: border-box;
         flex-grow: 1;
     }
-    .contact-item:hover{
-        background-color:white;
+
+    .contact-item:hover {
+        background-color: white;
     }
 
-   
+
 
     .divider {
         width: 100%;
@@ -361,11 +358,12 @@
         background-color: #ddd;
         margin: 10px 0;
     }
-    .mobileEdit-button{
+
+    .mobileEdit-button {
         transform: translateY(-30PX);
     }
 
-    .contact-list .contact-item:last-of-type + .divider {
+    .contact-list .contact-item:last-of-type+.divider {
         display: block;
     }
 
@@ -382,49 +380,42 @@
         width: 40px;
         height: 40px;
     }
-    .contact.active, .contact-details.active {
+
+    .contact.active,
+    .contact-details.active {
         display: block;
         position: absolute;
         top: 0;
         left: 0;
         width: 100%;
-        background: #fff; 
-        z-index: 1000; 
+        background: #fff;
+        z-index: 1000;
         padding: 20px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     }
-    
+
 }
+
 @media (max-width: 780px) {
-   
-    .overlay{
+
+    .overlay {
         width: 70%;
         height: 550px;
         padding: 0;
         border-radius: 10px;
         margin: 0 auto;
-        
+
         transform: none;
         overflow: hidden;
-        border: none;        
+        border: none;
         flex-direction: column;
     }
+
     .overlay.active {
-        animation: slideIn 0.5s ease-in-out forwards; /* Apply slide-in animation */
+        animation: slideIn 0.5s ease-in-out forwards;
+        /* Apply slide-in animation */
     }
 
-    @keyframes slideIn {
-        from {
-            transform: translate(-50%, 150%); /* Start off-screen at the bottom */
-        }
-        to {
-            transform: translate(-50%, -50%); /* Move to the center */
-        }
-    }
-
-
-
-    /* Make overlay content match the overlay width */
     .overlay-content {
         width: 100%;
         height: 100%;
@@ -433,6 +424,7 @@
         box-sizing: border-box;
         position: relative;
     }
+
     #contact-overlay {
         width: 70%;
         height: 550px;
@@ -444,87 +436,82 @@
         border: none;
         flex-direction: column;
     }
+
     .overlay-content::before {
         content: '';
         position: absolute;
-        top: 40%; 
+        top: 40%;
         left: 50%;
         transform: translate(-50%, -50%);
         background-image: url('../Assets/person.svg');
         background-size: contain;
         background-repeat: no-repeat;
-    
-
         z-index: 2;
         display: block;
-        width: 110px; 
+        width: 110px;
         height: 110px;
-        border-radius: 50%; 
-        padding: 15px; 
-        border: 3px solid white; 
+        border-radius: 50%;
+        padding: 15px;
+        border: 3px solid white;
         box-sizing: border-box;
         background-color: lightgrey;
     }
-    
 
-    /* Left and Right sections */
     .left-section {
         border-top-left-radius: 20px;
         border-top-right-radius: 20px;
         border-bottom-left-radius: 0px;
     }
-    .contactOverlayLeft{
+
+    .contactOverlayLeft {
         border-top-left-radius: 20px;
         border-top-right-radius: 20px;
         border-bottom-left-radius: 0px;
-
     }
-    .contactOverlayRight{
+
+    .contactOverlayRight {
         border-top-right-radius: 0px;
         border-bottom-left-radius: 20px;
     }
+
     .right-section {
         width: 100%;
-        height: 60%; 
+        height: 60%;
         padding: 20px;
         box-sizing: border-box;
         overflow: hidden;
     }
-    .left-section{
+
+    .left-section {
         width: 100%;
-        height: 40%; 
+        height: 40%;
         padding: 20px;
         box-sizing: border-box;
         overflow: hidden;
-        
-
     }
 
-    /* Hide image in left-section */
-    .left-section img{
+    .left-section img {
         display: none;
     }
 
-    /* Image positioning */
     .right-section img.centered-image {
-        position: absolute; 
-        top: 25%; 
-        left: 50%; 
-        transform: translate(-50%, -50%); 
+        position: absolute;
+        top: 25%;
+        left: 50%;
+        transform: translate(-50%, -50%);
         max-height: 150px;
-        z-index: 2; 
+        z-index: 2;
         display: none;
     }
 
-    /* Adjust font sizes and layout */
     .left-section h2 {
         font-size: 24px;
     }
+
     .left-section p {
         font-size: 14px;
     }
 
-    /* Right section flex layout */
     .right-section-flex {
         flex-direction: column;
         gap: 20px;
@@ -532,15 +519,12 @@
         z-index: 1;
     }
 
-    /* Close button */
     .close-button {
         top: 20px;
         right: 20px;
-        color:#fff !important;
+        color: #fff !important;
     }
-    
 
-    /* Input fields styling */
     input[type="text"],
     input[type="email"],
     input[type="tel"] {
@@ -558,7 +542,6 @@
         display: none;
     }
 
-    /* Button styling */
     .create-contact-button {
         width: 50%;
         max-width: 250px;
@@ -572,33 +555,32 @@
         cursor: pointer;
         margin-bottom: 0;
     }
+
     .back-button {
-        
         position: fixed;
         right: 20px;
         top: 20px;
-        margin-bottom: 0; 
+        margin-bottom: 0;
     }
-    .dots-icon{
+
+    .dots-icon {
         display: block;
     }
-
-
 }
 
 @media (max-width: 780px) {
+
     .contact h1 {
-        
-        font-size:34px;
+        font-size: 34px;
     }
+
     #contact-overlay {
         width: 70%;
         height: 550px;
         padding: 0;
         border-radius: 10px;
         margin: 0 auto;
-        
-        
+
         transform: none;
         overflow: hidden;
         border: none;
@@ -621,7 +603,7 @@
 
     .contactOverlayLeft {
         width: 100%;
-        height: 40%; 
+        height: 40%;
         padding: 20px;
         box-sizing: border-box;
         overflow: hidden;
@@ -629,28 +611,26 @@
 
     .contactOverlayRight {
         width: 100%;
-        height: 60%; 
+        height: 60%;
         padding: 20px;
         box-sizing: border-box;
         overflow: hidden;
-
-        /* Center the input fields */
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        gap: 15px; 
+        gap: 15px;
     }
-    .contact-details-inputs{
+
+    .contact-details-inputs {
         margin-top: 20px;
     }
 
-    /* Input field styling */
     .contactOverlayRight input[type="text"],
     .contactOverlayRight input[type="email"],
     .contactOverlayRight input[type="tel"] {
-        width: 100%; 
-        max-width: 300px; 
+        width: 100%;
+        max-width: 300px;
         padding: 5px;
         font-size: 16px;
         border: 1px solid #ccc;
@@ -658,7 +638,6 @@
         box-sizing: border-box;
         display: block;
         margin-top: 5px;
-
     }
 
     .contact-details-buttons {
@@ -678,9 +657,9 @@
     }
 
     .contact-initials-overlay {
-        position: absolute; 
-        top: calc(100% - 350px); 
-        left: 50%; 
+        position: absolute;
+        top: calc(100% - 350px);
+        left: 50%;
         transform: translate(-50%, -50%);
         width: 90px;
         height: 90px;
@@ -691,123 +670,134 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        
-        z-index: 2; 
+        z-index: 2;
     }
+
     .contact {
         display: flex;
-        
-        align-items:flex-start;         
-        position:relative;
+
+        align-items: flex-start;
+        position: relative;
         padding-top: 0;
     }
 
     .separator {
-        width: 30px; 
-        height: 2px; 
+        width: 30px;
+        height: 2px;
         background-color: #3498db;
-        margin: 10px auto; 
-        position: absolute; 
-        bottom: -20px; 
+        margin: 10px auto;
+        position: absolute;
+        bottom: -20px;
     }
-    
+
     h3 {
-        margin-bottom: 30px; 
+        margin-bottom: 30px;
         font-size: 16px;
     }
-    h1{
+
+    h1 {
         font-size: 38px !important;
     }
+
     .contact-details .contact-name {
-    
         font-size: 28px;
-        font-style:normal;
-        font-family:"PT Sans";
+        font-style: normal;
+        font-family: "PT Sans";
         color: black;
         font-weight: bold;
     }
-    .contact-initials{
+
+    .contact-initials {
         width: 50px;
         height: 50px;
     }
-    .contact-name-container{
+
+    .contact-name-container {
         padding-left: 0;
     }
-    .contact-details h2{
-        font-size:18px;
+
+    .contact-details h2 {
+        font-size: 18px;
         font-weight: bold;
     }
+
     .contact-overlay-buttons {
         display: flex;
-        gap: 20px; /* Adjust as needed */
-        margin-left:0px;
+        gap: 20px;
+        /* Adjust as needed */
+        margin-left: 0px;
+    }
+}
+
+@media(max-width:480px) {
+
+    .close-button {
+        font-size: 16px;
+        width: 28px;
+        height: 28px;
+        top: 8px;
+        right: 8px;
     }
 
-    
-}
-@media(max-width:480px){
-    .close-button {
-        font-size: 16px; 
-        width: 28px; 
-        height: 28px; 
-        top: 8px; 
-        right: 8px; 
-    }
     .contact-initials {
         width: 45px;
         height: 45px;
     }
+
     #contactName {
         font-size: 24px;
         font-weight: bold;
         margin-left: -20px;
     }
+
     .back-button img {
         height: 25px;
         width: 25px;
     }
+
     .mobileEdit-button {
         height: 60px;
         width: 60px;
         display: flex;
         justify-content: center;
         align-items: center;
-
     }
-    .mobileEdit-button img{
+
+    .mobileEdit-button img {
         height: 30px;
         width: 30px;
         justify-content: center;
         align-items: center;
     }
-    .mobileEdit-overlay{
+
+    .mobileEdit-overlay {
         height: 70px;
         width: 70px;
     }
+
     #editLinkOverlay i,
     #deleteLinkOverlay i {
-        font-size: 12px; 
+        font-size: 12px;
     }
-    #editLinkOverlay ,
-    #deleteLinkOverlay  {
-        font-size: 14px; 
+
+    #editLinkOverlay,
+    #deleteLinkOverlay {
+        font-size: 14px;
     }
+
     .add-contact-circle {
-        
         width: 60px;
         height: 60px;
-        
     }
-    
-
-
 }
-@media(max-width:400px){
+
+@media(max-width:400px) {
+
     .contactOverlayRight input[type="text"],
     .contactOverlayRight input[type="email"],
     .contactOverlayRight input[type="tel"] {
-        width: 100%; 
-        max-width: 200px; 
+        width: 100%;
+        max-width: 200px;
         padding: 5px;
         font-size: 16px;
         border: 1px solid #ccc;
@@ -815,8 +805,8 @@
         box-sizing: border-box;
         display: block;
         margin-top: 5px;
-
     }
+
     input[type="text"],
     input[type="email"],
     input[type="tel"] {
@@ -829,9 +819,8 @@
         border-radius: 5px;
         font-size: 16px;
     }
-    .contactOverlayLeft h2{
-      font-size: 28px;  
 
+    .contactOverlayLeft h2 {
+        font-size: 28px;
     }
-
 }

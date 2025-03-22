@@ -33,12 +33,15 @@ mark {
 
 .back-arrow {
   margin-left: auto;
+  margin-right: 2px;
   height: 32px;
   width: 32px;
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
+  border: none;
+  background-color: #f6f7f8;
 }
 
 .back-arrow:hover {

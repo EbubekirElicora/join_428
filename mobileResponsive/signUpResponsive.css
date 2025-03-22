@@ -17,6 +17,20 @@
         font-size: 14px;
         padding: 10px 35px 10px 8px;
     }
+    
+.input-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    position: relative;
+}
+.signup-button button {
+    
+
+    padding:5px 40px; 
+    
+     margin-bottom: 0px; 
+}
 }
 
 @media (max-width: 780px){
@@ -33,7 +47,7 @@
 
     #signup-logoContainer {
         position: absolute;
-        top: 10px;
+        top: -7px;
         left: 10%; 
         z-index: 3000;
         transform: translateX(0); 
@@ -87,8 +101,8 @@
 
     .legalPolicy {
         gap: 8px;
-        margin-top: 0px;
-        font-size: 12px;
+        
+        font-size: 12px;margin-bottom: 0;
     }
 
     .checkbox-group {

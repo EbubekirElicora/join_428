@@ -1,7 +1,5 @@
 function isUserLoggedIn() {
     const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
-    console.log('isUserLoggedIn() returned:', isLoggedIn);
-    console.log('localStorage isLoggedIn value:', localStorage.getItem('isLoggedIn'));
     return isLoggedIn;
 }
 
@@ -10,20 +8,12 @@ function checkIfNavigatedFromSignup() {
     const fromSignup = urlParams.get("from") === "signup";
     const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
 
-    console.log("Navigated from signup:", fromSignup);
-    console.log("Is user logged in?", isLoggedIn);
-    console.log("localStorage isLoggedIn value:", localStorage.getItem("isLoggedIn"));
-
     if (fromSignup && !isLoggedIn) {
-        console.log("User is not logged in and navigated from signup, showing privacy/legal notice links on mobile...");
-
         const sidebar = document.getElementById("sidebar");
         if (sidebar) {
             sidebar.classList.add("show-privacy-links-mobile");
-            console.log("Added class to show privacy/legal notice links on mobile.");
-            console.log("Sidebar classes:", sidebar.classList);
         } else {
-            console.log("Sidebar not found.");
+            console.error("Sidebar not found.");
         }
 
         const hideElements = () => {
@@ -83,9 +73,7 @@ function checkIfNavigatedFromSignup() {
 
             const sidebar = document.getElementById("sidebar");
             if (sidebar) {
-                console.log("Sidebar found dynamically!");
                 sidebar.classList.add("show-privacy-links-mobile");
-                console.log("Added class to show privacy/legal notice links on mobile.");
                 globalObserver.disconnect();
             }
 
@@ -93,8 +81,6 @@ function checkIfNavigatedFromSignup() {
         });
 
         globalObserver.observe(document.body, { childList: true, subtree: true });
-        console.log("Global mutation observer started on document body.");
-
         const sidebarObserver = new MutationObserver((mutations, observer) => {
             const sidebar = document.getElementById("sidebar");
             if (sidebar) {
@@ -105,7 +91,7 @@ function checkIfNavigatedFromSignup() {
 
         sidebarObserver.observe(document.body, { childList: true, subtree: true });
     } else {
-        console.log("User is logged in or not from signup, skipping showing privacy/legal notice links.");
+        console.error("User is logged in or not from signup, skipping showing privacy/legal notice links.");
     }
 }
 function modifySidebar() {
@@ -141,13 +127,11 @@ function modifySidebar() {
         loginLinkContainer.style.marginLeft = '-90px'; 
         sidebarLogoContainer.appendChild(loginLinkContainer);
 
-        console.log('Login link added below the logo.');
     }
 }
 
 // Run the function after the DOM is fully loaded
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('DOM fully loaded');
     checkIfNavigatedFromSignup();
 });
 

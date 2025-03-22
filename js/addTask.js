@@ -272,16 +272,22 @@ function resetForm() {
     setPrio('medium');
 }
 
-//create task functions//
 function to_open_category_dropdown() {
-    if (isDropdownClosed) return;
     let elements = getCategoryElements();
-    setupCategoryEventListeners(elements);
+    if (elements.selected_txt.textContent !== 'Select task category') {
+        resetCategorySelector();
+    }
+    if (elements.category_dropdown.classList.contains('show')) {
+        closeCategoryDropdown(elements);
+        return;
+    }
+    elements.category_dropdown.innerHTML = '';
     addCategoryOptions(elements.category_dropdown);
-    isDropdownClosed = true;
-    document.addEventListener('click', (event) => {
+    toggleCategoryDropdown(elements);
+    document.addEventListener('click', function closeDropdown(event) {
         if (!elements.category_select.contains(event.target) && !elements.category_dropdown.contains(event.target)) {
             closeCategoryDropdown(elements);
+            document.removeEventListener('click', closeDropdown);
         }
     });
 }

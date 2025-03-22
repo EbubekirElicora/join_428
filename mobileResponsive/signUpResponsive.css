@@ -47,7 +47,6 @@
 
     #signup-logoContainer {
         position: absolute;
-        top: -7px;
         left: 10%; 
         z-index: 3000;
         transform: translateX(0); 
@@ -55,7 +54,6 @@
 
     .joinLogo img {
         width: 90px;
-        height: 90px;
     }
 }
 
@@ -76,7 +74,8 @@
 
     .signup-joinContainer h1 {
         font-size: 28px;
-        margin-bottom: px; 
+        margin-bottom: 40px; 
+        margin-top: 0;
     }
 
     .input-group input {
@@ -86,7 +85,6 @@
 
     #signup-logoContainer img {
         width: 70px; 
-        height: 70px;
     }
 
     .go-to-login {

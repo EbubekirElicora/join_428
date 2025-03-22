@@ -613,7 +613,36 @@
     pointer-events: none;
     opacity: 0.7;
 }
-
+/*keyframe not working as it should*/
 .contact-input-container input:focus {
     border-color: #3498db;
     outline: none;}
+    @keyframes slideInFromRight {
+        from {
+            right: -400%;
+        }
+    
+        to {
+            right: 0;
+        }
+    }
+    
+    @keyframes slideOutToRight {
+        from {
+            right: 0;
+        }
+    
+        to {
+            right: -100%;
+        }
+    }
+    
+    @keyframes slideIn {
+        from {
+            transform: translate(50%, -50%);
+        }
+    
+        to {
+            transform: translate(-50%, -50%);
+        }
+    }

@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
+    updateSummary();
     const isGuest = localStorage.getItem("isGuest");
     const greetedUserElement = document.getElementById('greeted_user');
     const greetText = document.getElementById('greets_text');
@@ -49,6 +50,12 @@ function loadUserInfo() {
 }
 
 document.addEventListener("DOMContentLoaded", loadUserInfo);
+
+
+/**
+* Lädt Aufgaben von Firebase.
+* @returns {Promise<Array>} Liste der Aufgaben.
+*/
 
 document.addEventListener('DOMContentLoaded', () => {
     updateSummary();
@@ -128,4 +135,3 @@ async function updateSummary() {
         console.error('Error updating summary:', error);
     }
 }
-

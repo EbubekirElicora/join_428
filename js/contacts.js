@@ -18,12 +18,21 @@ function showOverlay() {
 document.addEventListener('DOMContentLoaded', () => {
     const BASE_URL = "https://join-428-default-rtdb.europe-west1.firebasedatabase.app/";
 
-
+    /**
+     * Generates initials from a given name.
+     * 
+     * @param {string} name - The full name of the contact.
+     * @returns {string} - The initials of the name.
+     */
     function getInitials(name) {
         return name.split(' ').map(part => part[0]).join('').toUpperCase();
     }
 
-    // Function to generate a random color
+    /**
+     * Generates a random hex color code.
+     * 
+     * @returns {string} - A random hex color code.
+     */
     function getRandomColor() {
         const letters = '0123456789ABCDEF';
         let color = '#';
@@ -31,10 +40,14 @@ document.addEventListener('DOMContentLoaded', () => {
             color += letters[Math.floor(Math.random() * 16)];
         }
         return color;
-    }
-
-    // Function to save the contact to Firebase
-    function saveContact(contact) {
+    } 
+     /**
+     * Saves a contact to Firebase.
+     * 
+     * @param {object} contact - The contact object to save.
+     * @returns {Promise} - A promise that resolves with the saved contact data.
+     */
+     function saveContact(contact) {
         return fetch(`${BASE_URL}/contacts.json`, {
             method: 'POST',
             headers: {
@@ -45,137 +58,144 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(response => response.json())
             .then(data => {
                 console.log('Contact saved successfully:', data);
-
                 return data;
             })
             .catch(error => {
                 console.error('Error saving contact:', error);
                 throw error;
             });
-    }
-
-    // Function to fetch contacts from Firebase
-    function fetchContacts() {
-        return fetch(`${BASE_URL}/contacts.json`)
-            .then(response => response.json())
-            .then(data => {
-                const contacts = [];
-                for (const key in data) {
-                    contacts.push({ id: key, ...data[key] });
+    } 
+        /**
+     * Fetches contacts from Firebase.
+     * 
+     * @returns {Promise<Array>} - A promise that resolves with an array of contacts.
+     */
+        function fetchContacts() {
+            return fetch(`${BASE_URL}/contacts.json`)
+                .then(response => response.json())
+                .then(data => {
+                    const contacts = [];
+                    for (const key in data) {
+                        contacts.push({ id: key, ...data[key] });
+                    }
+                    return contacts;
+                })
+                .catch(error => {
+                    console.error('Error fetching contacts:', error);
+                    return [];
+                });
+        }
+    
+        /**
+         * Renders contacts into the content div, grouped by the first letter of the name.
+         */
+        function renderContacts() {
+            const contentDiv = document.getElementById('content');
+            if (!contentDiv) {
+                console.error('Content div not found!');
+                return;
+            }
+            contentDiv.innerHTML = '';
+    
+            fetchContacts().then(contacts => {
+                contacts.sort((a, b) => a.name.localeCompare(b.name));
+                const groupedContacts = {};
+                for (const contact of contacts) {
+                    const firstLetter = contact.name[0].toUpperCase();
+                    if (!groupedContacts[firstLetter]) {
+                        groupedContacts[firstLetter] = [];
+                    }
+                    groupedContacts[firstLetter].push(contact);
                 }
-                return contacts;
-            })
-            .catch(error => {
-                console.error('Error fetching contacts:', error);
-                return [];
+    
+                for (const letter in groupedContacts) {
+                    const header = document.createElement('div');
+                    header.classList.add('letter-header');
+                    header.textContent = letter;
+                    contentDiv.appendChild(header);
+    
+                    for (const contact of groupedContacts[letter]) {
+                        const newContact = document.createElement('div');
+                        newContact.classList.add('contact-item');
+                        newContact.innerHTML = `
+                            <div class="contact-initials" style="background-color: ${contact.color};">${contact.initials}</div>
+                            <div class="contact-details">
+                                <h3>${contact.name}</h3>
+                                <p>${contact.email}</p>
+                            </div>
+                        `;
+                        newContact.addEventListener('click', () => showContactDetails(contact));
+                        contentDiv.appendChild(newContact);
+                    }
+                }
             });
-    }
-
-    function renderContacts() {
-        const contentDiv = document.getElementById('content');
-        if (!contentDiv) {
-            console.error('Content div not found!');
-            return;
         }
-        contentDiv.innerHTML = '';
+    
 
-        fetchContacts().then(contacts => {
-
-            contacts.sort((a, b) => a.name.localeCompare(b.name));
-            const groupedContacts = {};
-            for (const contact of contacts) {
-                const firstLetter = contact.name[0].toUpperCase();
-                if (!groupedContacts[firstLetter]) {
-                    groupedContacts[firstLetter] = [];
-                }
-                groupedContacts[firstLetter].push(contact);
+        /**
+     * Displays detailed information about a contact.
+     * 
+     * @param {object} contact - The contact object to display.
+     */
+        function showContactDetails(contact) {
+            const showDetailsDiv = document.getElementById('showDetails');
+            const contactInitials = document.getElementById('contactInitials');
+            const contactName = document.getElementById('contactName');
+            const contactEmail = document.getElementById('contactEmail');
+            const contactPhone = document.getElementById('contactPhone');
+    
+            if (!showDetailsDiv || !contactInitials || !contactName || !contactEmail || !contactPhone) {
+                console.error('One or more elements not found in the DOM!');
+                return;
             }
-
-            // Render the grouped contacts
-            for (const letter in groupedContacts) {
-
-                const header = document.createElement('div');
-                header.classList.add('letter-header');
-                header.textContent = letter;
-                contentDiv.appendChild(header);
-
-                // Add contacts for this letter
-                for (const contact of groupedContacts[letter]) {
-                    const newContact = document.createElement('div');
-                    newContact.classList.add('contact-item');
-                    newContact.innerHTML = `
-                        <div class="contact-initials" style="background-color: ${contact.color};">${contact.initials}</div>
-                        <div class="contact-details">
-                            <h3>${contact.name}</h3>
-                            <p>${contact.email}</p>
-                        
-                        </div>
-                    `;
-                    // Add click event to show details
-                    newContact.addEventListener('click', () => showContactDetails(contact));
-                    contentDiv.appendChild(newContact);
-                }
+    
+            showDetailsDiv.classList.remove('hidden');
+    
+            contactInitials.textContent = contact.initials;
+            contactInitials.style.backgroundColor = contact.color;
+            contactName.textContent = contact.name;
+            contactEmail.textContent = contact.email;
+            contactPhone.textContent = contact.phone;
+    
+            const editLink = document.getElementById('editLink');
+            const deleteLink = document.getElementById('deleteLink');
+    
+            if (editLink && deleteLink) {
+                editLink.onclick = (event) => {
+                    event.preventDefault();
+                    openEditOverlay(contact);
+                };
+                deleteLink.onclick = (event) => {
+                    event.preventDefault();
+                    deleteContact(contact);
+                };
+            } else {
+                console.error('Edit or delete links not found!');
             }
-        });
-    }
-
-    // Function to show contact details
-    function showContactDetails(contact) {
-        const showDetailsDiv = document.getElementById('showDetails');
-        const contactInitials = document.getElementById('contactInitials');
-        const contactName = document.getElementById('contactName');
-        const contactEmail = document.getElementById('contactEmail');
-        const contactPhone = document.getElementById('contactPhone');
-
-
-        if (!showDetailsDiv || !contactInitials || !contactName || !contactEmail || !contactPhone) {
-            console.error('One or more elements not found in the DOM!');
-            return;
+    
+            const editLinkOverlay = document.getElementById('editLinkOverlay');
+            const deleteLinkOverlay = document.getElementById('deleteLinkOverlay');
+    
+            if (editLinkOverlay && deleteLinkOverlay) {
+                editLinkOverlay.onclick = (event) => {
+                    event.preventDefault();
+                    openEditOverlay(contact);
+                };
+                deleteLinkOverlay.onclick = (event) => {
+                    event.preventDefault();
+                    deleteContact(contact);
+                };
+            } else {
+                console.error('Mobile overlay Edit or Delete links not found!');
+            }
         }
+    
 
-        showDetailsDiv.classList.remove('hidden');
-
-        contactInitials.textContent = contact.initials;
-        contactInitials.style.backgroundColor = contact.color;
-        contactName.textContent = contact.name;
-        contactEmail.textContent = contact.email;
-        contactPhone.textContent = contact.phone;
-
-        const editLink = document.getElementById('editLink');
-        const deleteLink = document.getElementById('deleteLink');
-
-        if (editLink && deleteLink) {
-            editLink.onclick = (event) => {
-                event.preventDefault();
-                openEditOverlay(contact);
-            };
-            deleteLink.onclick = (event) => {
-                event.preventDefault();
-                deleteContact(contact);
-            };
-        } else {
-            console.error('Edit or delete links not found!');
-        }
-
-        // Set up mobile overlay edit and delete links
-        const editLinkOverlay = document.getElementById('editLinkOverlay');
-        const deleteLinkOverlay = document.getElementById('deleteLinkOverlay');
-
-        if (editLinkOverlay && deleteLinkOverlay) {
-            editLinkOverlay.onclick = (event) => {
-                event.preventDefault();
-                openEditOverlay(contact);
-            };
-            deleteLinkOverlay.onclick = (event) => {
-                event.preventDefault();
-                deleteContact(contact);
-            };
-        } else {
-            console.error('Mobile overlay Edit or Delete links not found!');
-        }
-    }
-
-    // Function to open the edit overlay
+    /**
+     * Opens the edit overlay for a contact.
+     * 
+     * @param {object} contact - The contact object to edit.
+     */
     function openEditOverlay(contact) {
         const editLink = document.getElementById('editLinkOverlay');
         const overlay = document.getElementById('contact-overlay');
@@ -185,11 +205,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const editContactPhone = document.getElementById('edit-contact-phone');
     
         if (editLink) {
-            // Add the active class to turn the Edit link blue
             editLink.classList.add('active');
-        }
-    
-        // Populate the overlay with contact details
+        } 
+        
         if (contactInitialsOverlay) {
             contactInitialsOverlay.textContent = contact.initials;
             contactInitialsOverlay.style.backgroundColor = contact.color;
@@ -202,34 +220,28 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         if (editContactPhone) {
             editContactPhone.value = contact.phone;
-        }
-    
-        // Wait for 2 seconds (2000 milliseconds) before opening the overlay
+        }        
         setTimeout(() => {
             if (overlay) {
                 overlay.style.display = 'block';
                 overlay.classList.add('active');
-            }
-    
-            // Optional: Remove the active class after opening the overlay
+            }              
             if (editLink) {
                 editLink.classList.remove('active');
             }
-        }, 1000); // 2-second delay
-    
-        // Set up the save button
+        }, 1000);        
         const saveButton = document.getElementById('save-contact-button');
         if (saveButton) {
             saveButton.onclick = () => saveEditedContact(contact);
-        }
-    
-        // Set up the delete button
+        }        
         const deleteButton = document.getElementById('delete-contact-button');
         if (deleteButton) {
             deleteButton.onclick = () => deleteContact(contact);
         }
     }
-    
+    /**
+     * Hides the contact overlay.
+     */
     function hideContactOverlay() {
         const contactOverlay = document.getElementById('contact-overlay');
         if (contactOverlay) {
@@ -240,8 +252,11 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error('Contact overlay element not found!');
         }
     }
-
-
+        /**
+     * Saves the edited contact details to Firebase.
+     * 
+     * @param {object} contact - The contact object to update.
+     */
 
     function saveEditedContact(contact) {
         const editContactName = document.getElementById('edit-contact-name').value;
@@ -274,7 +289,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.error('Error updating contact:', error);
             });
     }
-    // Function to delete a contact with contact-overlay integration
+    /**
+     * Deletes a contact from Firebase.
+     * 
+     * @param {object} contact - The contact object to delete.
+     */
     function deleteContact(contact) {
         fetch(`${BASE_URL}/contacts/${contact.id}.json`, {
             method: 'DELETE',
@@ -308,8 +327,11 @@ document.addEventListener('DOMContentLoaded', () => {
             hideContactOverlay();
         });
     }
-
-    // Function to handle form submission
+        /**
+     * Handles form submission to create a new contact.
+     * 
+     * @param {Event} event - The form submission event.
+     */    
     function createContact(event) {
         event.preventDefault();
         const name = document.getElementById('name').value;
@@ -323,8 +345,7 @@ document.addEventListener('DOMContentLoaded', () => {
             initials: getInitials(name),
             color: getRandomColor(),
         };
-
-        // Save the contact to Firebase
+    
         saveContact(newContact)
             .then((data) => {                
                 showToast('Contact created successfully!');                
@@ -338,26 +359,24 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             })
             .catch(error => {
-                // Show error toast
+                
                 showToast('Error saving contact. Please try again.');
                 console.error('Error saving contact:', error);
             });
     }
-
-
-
-    // Attach form submission handler
+    
     const contactForm = document.getElementById('contact-form');
     if (contactForm) {
         contactForm.addEventListener('submit', createContact);
     } else {
         console.error('Contact form not found!');
-    }
-
-    // Render contacts on page load
+    }    
     renderContacts();
     hideOverlay();
 });
+/**
+ * Hides the overlay and contact overlay.
+ */
 
 function hideOverlay() {
     const overlay = document.getElementById('overlay');
@@ -365,22 +384,21 @@ function hideOverlay() {
 
     function hideElement(overlayElement) {
         if (overlayElement) {
-            overlayElement.style.display = 'none'; // Hide the overlay
-            overlayElement.classList.remove('active'); // Remove active class from overlay
+            overlayElement.style.display = 'none'; 
+            overlayElement.classList.remove('active'); 
         }
-    }
-
-    // Handle the main overlay
+    }    
     if (overlay && overlay.style.display === 'block') {
         hideElement(overlay);
     }
-
-    // Handle the contact overlay
     if (contactOverlay && contactOverlay.style.display === 'block') {
         hideElement(contactOverlay);
     }
 }
-document.addEventListener('DOMContentLoaded', function () {
+/**
+* Toggles visibility of the left and right columns on small screens.
+*/
+document.addEventListener('DOMContentLoaded', function () {    
     function toggleColumns() {
         const leftColumn = document.querySelector('.left-column');
         const rightColumn = document.querySelector('.right-column');
@@ -403,6 +421,10 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
+/**
+ * Toggles visibility of the left and right columns.
+ * Adds/removes the 'hidden' class to the left column and the 'active' class to the right column.
+ */
 function toggleColumns() {
     const leftColumn = document.querySelector('.left-column');
     const rightColumn = document.querySelector('.right-column');
@@ -413,22 +435,19 @@ function toggleColumns() {
     leftColumn.classList.toggle('hidden');
     rightColumn.classList.toggle('active');
 }
-
+/**
+ * Toggles the mobile edit overlay and changes the button color temporarily.
+ */
 function toggleOverlay() {
     const mobileEditOverlay = document.getElementById('mobileEditOverlay');
     const mobileEditButton = document.querySelector('.mobileEdit-button');
 
     if (mobileEditOverlay) {
-        // Change button color
         mobileEditButton.style.backgroundColor = '#3498db';
-
-        // Toggle the overlay
         mobileEditOverlay.classList.toggle('active');
-
-        // Reset button color after a short delay (optional)
         setTimeout(() => {
             mobileEditButton.style.backgroundColor = '';
-        }, 300); // Adjust time if needed
+        }, 300);
     }
 }
 
@@ -445,6 +464,9 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
  
+/**
+ * Adds a click event listener to the edit link to open the contact overlay after a delay.
+ */
 const editLink = document.getElementById('editLinkOverlay');
 if (editLink) {
     editLink.addEventListener('click', function (e) {
@@ -470,9 +492,15 @@ document.addEventListener('click', function (event) {
     }
 });
 
+/**
+     * Handles click events on contact items in the content area.
+     * Adds the 'active' class to the clicked contact item and removes it from others.
+     * 
+     * @param {Event} event - The click event.
+     */
 document.addEventListener('DOMContentLoaded', function () {
     const BASE_URL = "https://join-428-default-rtdb.europe-west1.firebasedatabase.app/";
-
+    
     document.getElementById('content').addEventListener('click', function (event) {
         const contactItem = event.target.closest('.contact-item');
         if (contactItem) {
@@ -486,9 +514,10 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
-// Function to close overlays when clicking outside
 document.addEventListener('DOMContentLoaded', function () {
-    // Define the function
+    /**
+     * Hides the contact overlay.
+     */
     function hideContactOverlay() {
         const contactOverlay = document.getElementById('contact-overlay');
         if (contactOverlay) {
@@ -500,23 +529,24 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // Add the event listener
+    /**
+     * Handles clicks outside overlays to close them.
+     * 
+     * @param {Event} event - The click event.
+     */
     document.addEventListener('click', function (event) {
         const overlay = document.getElementById('overlay');
         const contactOverlay = document.getElementById('contact-overlay');
         const mobileEditOverlay = document.getElementById('mobileEditOverlay');
 
-        // Check if the click is outside the main overlay
         if (overlay && overlay.style.display === 'block' && !overlay.contains(event.target)) {
             hideOverlay();
         }
 
-        // Check if the click is outside the contact overlay
         if (contactOverlay && contactOverlay.style.display === 'block' && !contactOverlay.contains(event.target)) {
-            hideContactOverlay(); // Now this will work
+            hideContactOverlay();
         }
 
-        // Check if the click is outside the mobile edit overlay
         if (
             mobileEditOverlay &&
             !mobileEditOverlay.contains(event.target) &&

@@ -1,14 +1,7 @@
 const BASE_URL = "https://join-428-default-rtdb.europe-west1.firebasedatabase.app/";
 
 document.addEventListener("DOMContentLoaded", function () {
-    const signUpButton = document.getElementById("signup-btn");
-    const termsCheckbox = document.getElementById("terms-checkbox");
     const signUpForm = document.getElementById("join-form");
-
-    // Enable signup button only when checkbox is checked
-    termsCheckbox.addEventListener("change", function () {
-        signUpButton.disabled = !this.checked;
-    });
 
     // Attach event listener to form submission
     signUpForm.addEventListener("submit", function (event) {
@@ -17,35 +10,58 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
+/**
+ * Toggles the terms checkbox icon and enables/disables the signup button.
+ */
+function toggleTermsCheckbox() {
+    const termsIcon = document.getElementById('terms-icon');
+    const signupButton = document.getElementById('signup-btn');
+    const isChecked = termsIcon.classList.contains('fa-square-check');
+
+    if (isChecked) {
+        termsIcon.classList.remove('fa-square-check');
+        termsIcon.classList.add('fa-square');
+        signupButton.disabled = true; // Disable the button if unchecked
+    } else {
+        termsIcon.classList.remove('fa-square');
+        termsIcon.classList.add('fa-square-check');
+        signupButton.disabled = false; // Enable the button if checked
+    }
+}
+
+/**
+ * Handles the signup process.
+ */
 async function signUp() {
     const name = document.getElementById("name").value.trim();
     const email = document.getElementById("email").value.trim();
     const password = document.getElementById("password").value.trim();
     const confirmPassword = document.getElementById("confirm-password").value.trim();
 
+    // Clear any existing error messages
+    clearError();
+
     // Validate input fields
     if (!name || !email || !password || !confirmPassword) {
-        showToast("Please fill in all fields.", "error");
+        showError("Please fill in all fields.", "name");
         return;
     }
 
     // Validate email format
     if (!validateEmail(email)) {
-        showToast("Invalid email format.", "error");
-        clearForm();
+        showError("Invalid email format.", "email");
         return;
     }
 
     // Validate password match
     if (password !== confirmPassword) {
-        showToast("Passwords do not match.", "error");
+        showError("Passwords do not match.", "confirm-password");
         return;
     }
 
     // Check if user already exists
     if (await userExists(email)) {
-        showToast("Email already registered.", "error");
-        clearForm();
+        showError("Email already registered.", "email");
         return;
     }
 
@@ -70,8 +86,39 @@ async function signUp() {
         }, 2000);
     } catch (error) {
         console.error("Error signing up:", error);
-        showToast("Error signing up. Try again later.", "error");
+        showError("Error signing up. Try again later.", "confirm-password");
     }
+}
+
+/**
+ * Displays an error message below the specified input field.
+ * 
+ * @param {string} message - The error message to display.
+ * @param {string} inputId - The ID of the input field to display the error under.
+ */
+function showError(message, inputId) {
+    const inputField = document.getElementById(inputId);
+    if (!inputField) return;
+
+    // Remove any existing error message
+    const existingError = inputField.nextElementSibling;
+    if (existingError && existingError.classList.contains("error-message")) {
+        existingError.remove();
+    }
+
+    // Create and insert the error message
+    const errorMessage = document.createElement("div");
+    errorMessage.className = "error-message";
+    errorMessage.textContent = message;
+    inputField.insertAdjacentElement("afterend", errorMessage);
+}
+
+/**
+ * Clears all error messages.
+ */
+function clearError() {
+    const errorMessages = document.querySelectorAll(".error-message");
+    errorMessages.forEach(error => error.remove());
 }
 
 // Helper functions

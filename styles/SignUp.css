@@ -72,24 +72,24 @@
 
 .input-group {
     display: flex;
-    align-items: center;
-    margin-bottom: 20px;  
+    flex-direction: column; /* Stack input and error message vertically */
+    align-items: flex-start; /* Align items to the left */
+    margin-bottom: 20px; /* Add spacing between input groups */
     position: relative;
 }
 
 .input-group input {
     width: 100%;
-    padding: 10px 15px;  
-    margin: 0;  
-    border: 2px solid #ccc;  
+    padding: 10px 15px;
+    margin: 0;
+    border: 2px solid #ccc;
     border-radius: 8px;
     font-size: 16px;
 }
 
 .input-group input:focus {
-    border-color: #73aace; 
-    outline: none; 
-    
+    border-color: #73aace;
+    outline: none;
 }
 
 .input-group .icon {
@@ -97,6 +97,13 @@
     right: 10px;
     top: 50%;
     transform: translateY(-50%);
+}
+
+.error-message {
+    color: red;
+    font-size: 14px;
+    margin-top: 4px; /* Add spacing between input and error message */
+    display: block; /* Ensure the error message is visible */
 }
 
 .signup-button {

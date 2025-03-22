@@ -337,7 +337,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const name = document.getElementById('name').value;
         const email = document.getElementById('email').value;
         const phone = document.getElementById('phone').value;
-
         const newContact = {
             name: name,
             email: email,
@@ -358,8 +357,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     toggleColumns();
                 }
             })
-            .catch(error => {
-                
+            .catch(error => {                
                 showToast('Error saving contact. Please try again.');
                 console.error('Error saving contact:', error);
             });

@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="../styles/SignUp.css">
     <link rel="stylesheet" href="../styles/template.css">
     <link rel="stylesheet" href="../mobileResponsive/signUpResponsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="../js/signUp.js"></script>
     <script src="../js/sidebar.js"></script>
     <title>Sign-Up</title>
@@ -17,7 +18,11 @@
 <body>
     <div class="join">
         <div class="joinLogo" id="signup-logoContainer">
+<<<<<<< HEAD
+            <img src="../Assets/joinLogo.svg" alt="Join Logo">
+=======
             <img src="../assets/img/Capa 2.png" alt="Join Logo">
+>>>>>>> 5dfabaf8a43132e50f4860a24d345ea02fcf1070
         </div>
 
         <div class="signup-joinContainer">
@@ -58,12 +63,13 @@
                         <img class="cursorPointer" src="../assets/visibility_off - Copy.svg" alt="Show Password"
                             style="cursor: pointer;">
                     </span>
+                 
                 </div>
                 <div id="error-message" class="error-message"></div>
+
                 <div class="checkbox-group">
-                    <input class="checkbox" type="checkbox" id="terms-checkbox" name="terms-checkbox" required>
-                    <span for="terms-checkbox"> I accept the <a href="../html/privacypolicy.html?from=signup"
-                            target="_blank">Privacy Policy</a></span>
+                    <i id="terms-icon" class="far fa-square" onclick="toggleTermsCheckbox()"></i>
+                    <span> I accept the <a href="../html/privacypolicy.html?from=signup" target="_blank">Privacy Policy</a></span>
                 </div>
                 <div class="signup-button">
                     <button type="submit" id="signup-btn" class="btn" disabled>Sign up</button>
@@ -75,6 +81,10 @@
             <a class="sidebartext widget" href="../html/legalnotice.html?from=signup">Legal Notice</a>
         </div>
     </div>
+
+    <script>
+      
+    </script>
 </body>
 
 </html>

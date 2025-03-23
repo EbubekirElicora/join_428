@@ -62,12 +62,13 @@ function hideElements() {
     const pageBackButton = document.getElementById("pageBackButton");
     const helpIcon = document.querySelector(".help_icon");
     const posContHeadRight = document.querySelector(".pos_cont_head_right");
+    const navPositionButton = document.querySelector(".nav_position_button")
 
     if (helpUserContainer) helpUserContainer.style.display = "none";
     if (nameMenu) nameMenu.style.display = "none";
     if (pageBackButton) pageBackButton.style.display = "none";
     if (helpIcon) helpIcon.style.display = "none";
-
+    if (navPositionButton) navPositionButton.style.paddingLeft = "0";
     if (posContHeadRight) {
         posContHeadRight.style.display = "none";
     } else {
@@ -96,14 +97,12 @@ function modifySidebar() {
     const sidebarLinks = document.querySelectorAll('.menu_bar a');
     const sidebarLogoContainer = document.querySelector('.sidebar_img_container');
     const privacyLinks = document.querySelectorAll('.privacy_and_noticy_container a');
-
     widgets.forEach(widget => widget.style.display = 'none');
     sidebarLinks.forEach(link => {
         if (![...privacyLinks].includes(link)) {
             link.style.display = 'none';
         }
     });
-
     if (sidebarLogoContainer) {
         const loginLinkContainer = document.createElement('div');
         loginLinkContainer.innerHTML = `
@@ -111,8 +110,11 @@ function modifySidebar() {
                 <img src="../assets/login icon.svg" alt="Login Icon" class="login-icon">
                 <span>Login</span>
             </a>`;
+        loginLinkContainer.style.display = 'flex'
+        loginLinkContainer.style.justifyContent = 'center'
+        loginLinkContainer.style.alignItems = 'center'
         loginLinkContainer.style.marginTop = '40px'; 
-        loginLinkContainer.style.marginLeft = '-90px'; 
+        loginLinkContainer.style.marginLeft = '-50px'; 
         sidebarLogoContainer.appendChild(loginLinkContainer);
     }
 }

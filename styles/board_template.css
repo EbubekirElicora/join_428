@@ -1,6 +1,5 @@
-
 .task {
-    width: 170px;
+    width: 216px;
     background-color: white;
     display: flex;
     flex-direction: column;
@@ -20,12 +19,12 @@
 
 .bg_Technical {
     background-color: #23D8C2;
-    width: 50%;
+    width: 56%;
 }
 
 .bg_User {
-    background-color: rgb(69,137,255);
-    width: 35%;
+    background-color: rgb(69, 137, 255);
+    width: 40%;
 }
 
 .category {
@@ -36,7 +35,6 @@
 
 .assigned-contacts {
     display: flex;
-    margin-top: 12px;
     position: relative;
 }
 
@@ -63,7 +61,7 @@
     font-weight: 600;
     font-size: 14px;
     margin-left: -8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     transition: margin 0.2s;
 }
 
@@ -77,7 +75,9 @@
     justify-content: space-between;
     align-items: center;
     max-width: 100%;
+    margin-top: 12px;
 }
+
 .priority-options {
     display: flex;
     gap: 10px;
@@ -92,7 +92,8 @@
 }
 
 .priority-option.selected {
-    border-color: #007BFF; /* Highlight selected priority */
+    border-color: #007BFF;
+    /* Highlight selected priority */
 }
 
 .priority-option img {
@@ -159,17 +160,26 @@
 .header_board_overlay img:hover {
     transform: scale(1.1);
     opacity: 0.8;
-} 
+}
 
 p {
     font-size: 18px;
-    color: #2a3647;
+    color: rgba(168, 168, 168, 1);
+
 }
 
 .priority_overlay {
     display: flex;
     align-items: center;
     gap: 32px;
+}
+ 
+.contact_overlay  p,
+.priority_overlay p,
+.date_olerlay p,
+.subtasks_overlay p,
+.img_p p  {
+    color: black !important;
 }
 
 .date_olerlay {
@@ -182,6 +192,10 @@ p {
     display: flex;
     gap: 8px;
     align-items: center;
+}
+
+.priority_icons p {
+    color: black !important;
 }
 
 .contact_item {
@@ -239,4 +253,3 @@ p {
     background-color: #d1d1d1;
     margin: 0 2px;
 }
-

@@ -82,10 +82,6 @@ h1 {
     align-items: center;
 }
 
-.nav_board {
-    width: 250px;
-}
-
 .board_tasks {
     display: flex;
     flex-direction: column;
@@ -107,6 +103,7 @@ h1 {
 .text_board {
     font-weight: 700;
     font-size: 24px;
+    color:rgba(66, 82, 110, 1) !important;
 }
 
 .img_board {

@@ -143,11 +143,16 @@ header p {
     display: flex;
     align-items: center;
     align-content: center;
+    transition: transform 0.3s;
 }
 
 .help_icon img {
     height: 20px;
     width: 20px;
+}
+
+.help_icon img:hover {
+    transform: scale(1.2);
 }
 
 .hide-header-right {

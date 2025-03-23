@@ -5,12 +5,9 @@ html {
 
 ::-webkit-scrollbar {
   width: 0;
-  /* Remove scrollbar space */
   background: transparent;
-  /* Optional: just make scrollbar invisible */
 }
 
-/* Optional: show position indicator in red */
 ::-webkit-scrollbar-thumb {
   background: #f6f7f8;
 }
@@ -92,10 +89,10 @@ a {
 .container_pos {
   display: flex;
   align-items: center;
-  justify-content: center;
   flex-direction: column;
   height: 100vh;
   margin-left: 232px;
+  margin-top: 95px;
 }
 
 .container_size {
@@ -218,7 +215,7 @@ label,
 .btn_container_addTask {
   display: flex;
   justify-content: space-between;
-  margin-block-start: 80px;
+  margin-block-start: 64px;
 }
 
 .btn_position {

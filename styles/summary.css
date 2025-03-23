@@ -1,12 +1,12 @@
 @font-face {
-    font-family: "Figtree";
+    font-family: "Inter", sans-serif;
     src: url(../assets/fonts/Figtree-VariableFont_wght.ttf);
 }
+
 
 body {
     margin: 0;
     padding: 0;
-    font-family: "Figtree";
     box-sizing: border-box;
     height: 100vh;
     background-color: #f6f7f8;
@@ -89,6 +89,16 @@ button:hover a {
     display: inline;
 }
 
+.done_container:hover,
+.to_do_container:hover,
+.urgent_container:hover,
+.tasks_in_board_container:hover,
+.tasks_in_progress_container:hover,
+.tasks_in_awaiting_container:hover {
+    transform: scale(1.05);
+    transition: transform 0.3s ease;
+}
+
 .to_do_container {
     display: flex;
     justify-content: center;
@@ -100,6 +110,7 @@ button:hover a {
     margin-right: 32px;
     border-color: rgb(0, 0, 0, 0.1);
     box-shadow: 0px 0px 4px 0px #0000001A;
+    transition: 64ms all;
 }
 
 .done_container {
@@ -112,6 +123,7 @@ button:hover a {
     margin-bottom: 8px;
     border-color: rgb(0, 0, 0, 0.1);
     box-shadow: 0px 0px 4px 0px #0000001A;
+    transition: 64ms all;
 }
 
 .urgent_container {
@@ -124,6 +136,7 @@ button:hover a {
     margin-bottom: 8px;
     border-color: rgb(0, 0, 0, 0.1);
     box-shadow: 0px 0px 4px 0px #0000001A;
+    transition: 64ms all;
 }
 
 .tasks_container {
@@ -141,6 +154,7 @@ button:hover a {
     gap: 6px;
     border-color: rgb(0, 0, 0, 0.1);
     box-shadow: 0px 0px 4px 0px #0000001A;
+    transition: 64ms all;
 }
 
 .tasks_in_progress_container,
@@ -156,6 +170,7 @@ button:hover a {
     margin-left: 32px;
     border-color: rgb(0, 0, 0, 0.1);
     box-shadow: 0px 0px 4px 0px #0000001A;
+    transition: 64ms all;
 }
 
 .headline {

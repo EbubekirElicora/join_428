@@ -15,7 +15,13 @@
 
 @media(max-width: 1060px) {
     .finish_logo {
-        width: 90px;
+        width: 80px;
+        top: 56px;
+        left: 80px;
+    }
+
+    .container {
+        height: 800px;
     }
 
     .animation_logo {
@@ -26,12 +32,12 @@
         position: fixed;
         left: 0;
         right: 0;
-        top: 800px;
+        top: 656px;
     }
 
     .container_main {
         position: fixed;
-        top: 350px;
+        top: 200px;
         width: 450px;
         height: 500px;
         justify-content: flex-start;
@@ -72,6 +78,7 @@
         0% {
             transform: translate(-50%, -50%) scale(3);
         }
+
         100% {
             top: 50px;
             left: 50px;
@@ -79,21 +86,12 @@
         }
     }
 
-    .header {
-        top: 730px;
-    }
-
-    .container_main {
-        top: 250px;
-    }
-
     .footer_content {
         position: fixed;
         left: 0;
         right: 0;
-        top: 900px;
     }
-   
+
 }
 
 @media(max-width: 550px) {
@@ -101,6 +99,10 @@
         width: 70px;
         top: 50px;
         left: 30px;
+    }
+
+    .header {
+        top: 630px
     }
 
     .animation_logo {
@@ -111,6 +113,7 @@
         0% {
             transform: translate(-50%, -50%) scale(3);
         }
+
         100% {
             top: 50px;
             left: 30px;
@@ -119,8 +122,8 @@
     }
 
     .container_main {
-      width: 396px;
-      height: 475px;  
+        width: 396px;
+        height: 475px;
     }
 
     .label_user {
@@ -138,6 +141,19 @@
 }
 
 @media(max-width: 450px) {
+
+    @keyframes logoMove {
+        0% {
+            transform: translate(-50%, -50%) scale(3);
+        }
+
+        100% {
+            top: 30px;
+            left: 30px;
+            transform: translate(0, 0) scale(1);
+        }
+    }
+
     .finish_logo {
         width: 60px;
         top: 30px;
@@ -148,52 +164,43 @@
         width: 60px;
     }
 
-    @keyframes logoMove {
-        0% {
-            transform: translate(-50%, -50%) scale(3);
-        }
-        100% {
-            top: 30px;
-            left: 30px;
-            transform: translate(0, 0) scale(1);
-        }
-    }
-
     .container_main {
         width: 280px;
-        top: 150px; 
-        height: 430px; 
-      }
+        top: 170px;
+        height: 430px;
+    }
 
-      .label_user {
-        width: auto;
+    .label_user {
+        width: 180px;
         height: 10px;
-      }
+    }
 
-      .label_user img {
+    .label_user img {
         width: 16px;
-      }
+    }
 
-      .input_user {
+    .input_user {
         font-size: 16px;
-      }
+        width: 160px;
+    }
 
-      .alert {
+    .alert {
         font-size: 11px;
-      }
+    }
 
-      .header p {
+    .header p {
         font-size: 15px;
-      }
+    }
 
-      .header {
-        top: 550px;
-      }
+    .header {
+        top: 570px;
+    }
 
-      .footer_content {
+    .footer_content {
         top: 700px;
-      }
-        
+        font-size: 15px;
+    }
+
 }
 
 @media(max-width: 377px) {
@@ -222,10 +229,10 @@
     }
 
     .header {
-        top: 480px;
+        top: 495px;
     }
 
     .footer_content {
         top: 620px;
     }
- }
+}

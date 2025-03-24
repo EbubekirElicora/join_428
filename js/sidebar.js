@@ -48,8 +48,6 @@ function checkIfNavigatedFromSignup() {
         });
 
         sidebarObserver.observe(document.body, { childList: true, subtree: true });
-    } else {
-        console.log("User is logged in or not from signup, skipping showing privacy/legal notice links.");
     }
 }
 

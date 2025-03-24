@@ -315,14 +315,23 @@ document.addEventListener('DOMContentLoaded', () => {
     }
         
     function saveEditedContact(contact) {
-            const updatedContact = gatherUpdatedContactData(contact);
-        
-            updateContactAPI(contact.id, updatedContact)
-                .then(() => {
-                    console.log('Contact updated successfully!');
-                    handleUIUpdates(updatedContact);
-                })
-                .catch(handleError);
+        const editForm = document.querySelector('#contact-overlay .contact-details-inputs'); 
+        const emailInput = document.getElementById('edit-contact-email');
+    
+        // Check if email is valid (browser handles the @ check)
+        if (!emailInput.checkValidity()) {
+            emailInput.reportValidity(); 
+            return; 
+        }
+    
+        // Proceed if valid
+        const updatedContact = gatherUpdatedContactData(contact);
+        updateContactAPI(contact.id, updatedContact)
+            .then(() => {
+                console.log('Contact updated successfully!');
+                handleUIUpdates(updatedContact);
+            })
+            .catch(handleError);
     }
 
     /**

@@ -201,4 +201,30 @@ document.addEventListener('DOMContentLoaded', function () {
         console.error('Cancel button not found!');
     }
 });
+// Add this to your DOMContentLoaded event listener
+document.addEventListener('DOMContentLoaded', () => {
+    // ... your existing code ...
+    
+    // Restrict phone input to numbers only
+    const phoneInput = document.getElementById('phone');
+    const editPhoneInput = document.getElementById('edit-contact-phone');
+    
+    if (phoneInput) {
+        phoneInput.addEventListener('input', restrictToNumbers);
+    }
+    
+    if (editPhoneInput) {
+        editPhoneInput.addEventListener('input', restrictToNumbers);
+    }
+    
+    // ... rest of your existing code ...
+});
+
+/**
+ * Restricts input to only numbers
+ * @param {Event} event - The input event
+ */
+function restrictToNumbers(event) {
+    event.target.value = event.target.value.replace(/[^0-9]/g, '');
+}
 

@@ -62,7 +62,7 @@ function hideElements() {
     const pageBackButton = document.getElementById("pageBackButton");
     const helpIcon = document.querySelector(".help_icon");
     const posContHeadRight = document.querySelector(".pos_cont_head_right");
-    const navPositionButton = document.querySelector(".nav_position_button")
+    const navPositionButton = document.getElementsByClassName("nav_position_button")
 
     if (helpUserContainer) helpUserContainer.style.display = "none";
     if (nameMenu) nameMenu.style.display = "none";

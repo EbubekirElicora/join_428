@@ -130,7 +130,7 @@ textarea {
   box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
   box-sizing: border-box;
   resize: none;
-  background-image: url(/assets/icons/textarea_icon.png);
+  background-image: url(../assets/icons/textarea_icon.png);
   background-repeat: no-repeat;
   background-position: right 4px bottom 4px;
   background-size: 18px;

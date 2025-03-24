@@ -1,3 +1,4 @@
+
 function showOverlay() {
     const overlay = document.getElementById('overlay');
     const addContactCircle = document.querySelector('.add-contact-circle');
@@ -126,9 +127,6 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-
-
-
 /**
 * Toggles visibility of the left and right columns on small screens.
 */
@@ -203,3 +201,4 @@ document.addEventListener('DOMContentLoaded', function () {
         console.error('Cancel button not found!');
     }
 });
+

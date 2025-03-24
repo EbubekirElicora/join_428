@@ -3,6 +3,8 @@
     .content_container_size {
         width: 896px;
         margin-left: 0;
+        
+    
     }
 
     .divider_line {
@@ -38,10 +40,14 @@
 
     .content_container_size {
         width: 800px;
+        overflow-y: auto;
+        height: 55vh;
+        
     }
 
     .btn_position {
         padding-right: 16px;
+        margin-bottom: 30px;
     }
 
     .left_container,
@@ -58,6 +64,8 @@
 
     .subtask_input_container {
         margin-bottom: 8px;
+    
+        
     }
 
     .headline_addTask_position {
@@ -73,6 +81,9 @@
 @media (max-width: 840px) {
     .content_container_size {
         width: 664px;
+        overflow-y: auto;
+        height: 75vh;
+        margin-bottom: 40px;
     }
 
     .left_container,

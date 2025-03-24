@@ -36,6 +36,13 @@
     font-size: 24px;
     font-weight: 400;
 }
+.contact-details h3 {
+    margin-bottom: -10px;
+}
+.contact-details h3{
+    font-size: 14px;
+}
+
 
 .separator {
     width: 3px;
@@ -137,6 +144,7 @@
 
 .contact-item.active {
     background-color: #1a2b47;
+    height: inherit;
 }
 
 .letter-header {

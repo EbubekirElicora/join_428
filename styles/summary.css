@@ -4,14 +4,16 @@
 }
 
 
-body {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+
+body, html {
+    overflow-y: auto;
+    height: 100%;
+}
+
+.content_container_size {
     height: 100vh;
-    background-color: #f6f7f8;
-    scroll-behavior: smooth;
-    overflow: hidden;
+    overflow-y: auto;
+    padding: 20px;
 }
 
 .max_width {
@@ -55,6 +57,7 @@ body {
     align-content: space-around;
     margin-left: 348px;
 }
+
 
 button {
     border-radius: 30px;

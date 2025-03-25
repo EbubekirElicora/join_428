@@ -3,23 +3,48 @@
     src: url(../assets/fonts/Figtree-VariableFont_wght.ttf);
 }
 
-
-
-body, html {
-    overflow-y: auto;
-    height: 100%;
+/* Reset and base styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
-.content_container_size {
-    height: 100vh;
-    overflow-y: auto;
+body, html {
+    height: 100%;
+    width: 100%;
+    font-family: "Inter", sans-serif;
+    
+}
+
+/* Scrollable content area */
+.summary-content {
+    margin-top: 120px;
+    margin-left: 240px;
+    bottom: 30px;
+    overflow-y: auto; /* Enable vertical scrolling */
     padding: 20px;
 }
 
-.max_width {
-    max-width: 1440px;
-    margin: auto;
+/* Memory container - remove all height/overflow declarations */
+.memory_container {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+
+    margin: 0 auto;
+    padding-bottom: 40px; /* Extra space at bottom */
 }
+
+
+
+/* Keep all your other existing styles */
+/* ... rest of your CSS ... */
+
+
+
+
+
 
 
 .container_position {

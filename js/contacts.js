@@ -315,16 +315,22 @@ document.addEventListener('DOMContentLoaded', () => {
     }
         
     function saveEditedContact(contact) {
-        const editForm = document.querySelector('#contact-overlay .contact-details-inputs'); 
+        const editForm = document.querySelector('#contact-overlay .contact-details-inputs');
         const emailInput = document.getElementById('edit-contact-email');
+        const email = emailInput.value;
     
-        // Check if email is valid (browser handles the @ check)
+        // First check if form is valid (structural validation)
         if (!emailInput.checkValidity()) {
-            emailInput.reportValidity(); 
-            return; 
-        }
-    
-        // Proceed if valid
+            emailInput.reportValidity();
+            return;
+        }   
+        
+        if (!email.includes('@') || !email.includes('.')) {
+            emailInput.setCustomValidity('Email must contain both @ and .');
+            emailInput.reportValidity();
+            return;
+        }        
+        emailInput.setCustomValidity('');        
         const updatedContact = gatherUpdatedContactData(contact);
         updateContactAPI(contact.id, updatedContact)
             .then(() => {
@@ -333,7 +339,6 @@ document.addEventListener('DOMContentLoaded', () => {
             })
             .catch(handleError);
     }
-
     /**
      * Deletes a contact from Firebase.
      * 
@@ -412,11 +417,22 @@ document.addEventListener('DOMContentLoaded', () => {
     }
         
     function createContact(event) {
-            event.preventDefault();
-            const newContact = gatherContactData();
-            saveAndUpdateUI(newContact);
+        event.preventDefault();
+        const emailInput = document.getElementById('email');
+        
+        // Check if email is valid (contains @ and .)
+        if (!emailInput.value.includes('@') || !emailInput.value.includes('.')) {
+            emailInput.setCustomValidity('Email must contain both @ and .');
+            emailInput.reportValidity();
+            return;
+        }
+        
+        // Clear any previous validation messages
+        emailInput.setCustomValidity('');
+        
+        const newContact = gatherContactData();
+        saveAndUpdateUI(newContact);
     }
-
     const contactForm = document.getElementById('contact-form');
     if (contactForm) {
         contactForm.addEventListener('submit', createContact);

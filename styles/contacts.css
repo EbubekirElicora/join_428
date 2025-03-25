@@ -275,3 +275,7 @@
     border-radius: 100%;
     overflow: hidden;
 }
+
+#content {
+    padding-bottom: 30px !important;
+}

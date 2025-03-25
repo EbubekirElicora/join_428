@@ -437,6 +437,7 @@
         box-sizing: border-box;
         position: relative;
     }
+  
 
     #contact-overlay {
         width: 70%;
@@ -743,6 +744,15 @@
 }
 
 @media(max-width:480px) {
+    #contact-overlay {
+        width: 80%;
+        
+    }
+    .overlay {
+        width: 80%;
+        
+    }
+
 
     .close-button {
         font-size: 16px;

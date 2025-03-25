@@ -47,7 +47,7 @@
 @media (max-width: 1130px) {
 
     .button_container {
-        margin-left: 256px;
+        
     }
 
     .greets_container {
@@ -56,6 +56,9 @@
 }
 
 @media (max-width: 1080px) {
+    .memory_container{
+        margin-left: 10px;
+    }
 
     .button_container {
         margin-left: 0;

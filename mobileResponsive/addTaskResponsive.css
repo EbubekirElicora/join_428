@@ -3,8 +3,8 @@
     .content_container_size {
         width: 896px;
         margin-left: 0;
-        
-    
+        overflow-y: auto;
+        height: calc(100vh - 100px);
     }
 
     .divider_line {
@@ -40,9 +40,6 @@
 
     .content_container_size {
         width: 800px;
-        overflow-y: auto;
-        height: 100%;
-        
     }
 
     .btn_position {

@@ -3,7 +3,7 @@
     .button_container {
         margin-left: 60px;
         overflow-y: auto;
-        height: 80vh;
+        height: calc(100vh - 200px);
     }
 }
 
@@ -37,7 +37,6 @@
     .button_container {
         margin-left: 0;
         margin-block-start: 0;
-        height: 80vh;
     }
 
     .memory_container {
@@ -48,6 +47,7 @@
         overflow-y: auto;
         align-items: center;
         margin-left: auto;
+        margin-top: 112px;
     }
 
     .tasks_container {

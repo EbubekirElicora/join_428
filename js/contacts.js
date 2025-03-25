@@ -203,15 +203,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
         
     function setupMobileDeleteLink(contact) {
-            const deleteLinkOverlay = document.getElementById('deleteLinkOverlay');
-            if (!deleteLinkOverlay) {
-                console.error('Mobile delete link not found!');
-                return;
-            }
-            deleteLinkOverlay.onclick = (event) => {
-                event.preventDefault();
-                deleteContact(contact);
-            };
+        const deleteLinkOverlay = document.getElementById('deleteLinkOverlay');
+        if (!deleteLinkOverlay) return; // Silent fail
+        
+        deleteLinkOverlay.onclick = (event) => {
+            event.preventDefault();
+            deleteContact(contact);
+        };
     }
         
     function showContactDetails(contact) {
@@ -348,16 +346,14 @@ document.addEventListener('DOMContentLoaded', () => {
         fetch(`${BASE_URL}/contacts/${contact.id}.json`, {
             method: 'DELETE',
         }).then(() => {
-            console.log('Contact deleted successfully!');
             renderContacts();
             hideContactOverlay();
             document.getElementById('showDetails').classList.add('hidden');
             if (window.innerWidth <= 1060) {
-                console.log('Small screen detected. Toggling back to left column...');
                 toggleColumns(); 
             }
         }).catch(error => {
-            console.error('Error deleting contact:', error);
+            
         });
     }
 
@@ -435,8 +431,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const contactForm = document.getElementById('contact-form');
     if (contactForm) {
         contactForm.addEventListener('submit', createContact);
-    } else {
-        console.error('Contact form not found!');
     }    
     renderContacts();
     hideOverlay();

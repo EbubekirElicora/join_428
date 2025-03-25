@@ -31,7 +31,7 @@ function validateDate(input) {
     if (selectedDate < currentDate) {
         input.value = currentDate.toISOString().split('T')[0];
     } else if (selectedDate.getFullYear() > maxYear) {
-        input.value = `${maxYear}-${(selectedDate.getMonth() + 1).toString().padStart(2, '0')}-${selectedDate.getDate().toString().padStart(2, '0')}`;
+        input.value = `${maxYear}-${(selectedDate.getMonth() + 1 ).toString().padStart(2, '0')}-${selectedDate.getDate().toString().padStart(2, '0')}`;
     }
 }
 

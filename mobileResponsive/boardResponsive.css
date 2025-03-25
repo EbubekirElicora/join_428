@@ -18,6 +18,10 @@
     .bg_User {
         width: 48%;
     }
+
+    .nav_board {
+        width: 216px;
+    }
 }
 
 @media(max-width: 1220px) {

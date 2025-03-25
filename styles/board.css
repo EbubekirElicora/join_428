@@ -143,6 +143,10 @@ h1 {
     display: none;
 }
 
+.nav_board {
+    width: 248px;
+}
+
 .close_img {
     position: absolute;
     top: 60px;

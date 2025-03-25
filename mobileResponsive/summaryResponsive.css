@@ -2,7 +2,7 @@
 
     .button_container {
         margin-left: 332px;
-        margin-block-start: 40px;
+        margin-block-start: 96px;
     }
 }
 
@@ -53,7 +53,7 @@
 
     .button_container {
         margin-left: 0;
-        margin-block-start: 0;
+        margin-block-start: 56px;
     }
 
     .memory_container {

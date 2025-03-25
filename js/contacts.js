@@ -398,22 +398,21 @@ document.addEventListener('DOMContentLoaded', () => {
     }
         
     function saveAndUpdateUI(newContact) {
-            saveContact(newContact)
-                .then((data) => {
-                    showToast('Contact created successfully!');
-                    newContact.id = data.name;
-                    document.getElementById('contact-form').reset();
-                    hideOverlay();
-                    renderContacts();
-                    showContactDetails(newContact);
-                    if (window.innerWidth <= 1060) {
-                        toggleColumns();
-                    }
-                })
-                .catch(error => {
-                    showToast('Error saving contact. Please try again.');
-                    console.error('Error saving contact:', error);
-                });
+        saveContact(newContact)
+            .then((data) => {
+                showToast('Contact created successfully!');
+                newContact.id = data.name;
+                document.getElementById('contact-form').reset();
+                hideOverlay();
+                renderContacts();
+                showContactDetails(newContact);
+                if (window.innerWidth <= 1060) {
+                    toggleColumns();
+                }
+            })
+            .catch(error => {
+                showToast('Error saving contact. Please try again.');
+            });
     }
         
     function createContact(event) {

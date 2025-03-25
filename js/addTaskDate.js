@@ -12,8 +12,29 @@ function getDateToday() {
             }
             updateDateColor.call(this);
         };
+        dateInput.onchange = function () {
+            validateDate(this);
+            updateDateColor.call(this);
+        };
     }
 }
+
+/**
+ * This function validates the selected date
+ * 
+ * @param {HTMLInputElement} input - The date input element
+ */
+function validateDate(input) {
+    let selectedDate = new Date(input.value);
+    let currentDate = new Date();
+    let maxYear = 2999;
+    if (selectedDate < currentDate) {
+        input.value = currentDate.toISOString().split('T')[0];
+    } else if (selectedDate.getFullYear() > maxYear) {
+        input.value = `${maxYear}-${(selectedDate.getMonth() + 1).toString().padStart(2, '0')}-${selectedDate.getDate().toString().padStart(2, '0')}`;
+    }
+}
+
 
 /**
  * This function updates the color of the date input

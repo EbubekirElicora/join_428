@@ -67,7 +67,7 @@ a {
   justify-content: flex-start;
   width: 100%;
   margin-bottom: 32px;
-  margin-top: 32px;
+  margin-top: 64px;
 }
 
 .headline_txt_addTask {
@@ -97,6 +97,8 @@ a {
 
 .container_size {
   display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
 }
 
@@ -214,7 +216,7 @@ label,
 .btn_container_addTask {
   display: flex;
   justify-content: space-between;
-  margin-block-start: 56px;
+  margin-block-start: 64px;
 }
 
 .btn_position {
@@ -417,7 +419,7 @@ label select {
 .required_container {
   display: flex;
   height: 100%;
-  align-items: flex-start;
+  align-items: flex-end;
 }
 
 input[type="text"]:focus,

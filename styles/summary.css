@@ -3,29 +3,17 @@
     src: url(../assets/fonts/Figtree-VariableFont_wght.ttf);
 }
 
-html {
-    overflow: scroll;
-    overflow-y: hidden;
+
+
+body, html {
+    overflow-y: auto;
+    height: 100%;
 }
 
-::-webkit-scrollbar {
-    width: 0;
-    background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-    background: #f6f7f8;
-}
-
-body {
-    margin: 0;
-    padding: 0;
-    font-family: "Figtree";
-    box-sizing: border-box;
+.content_container_size {
     height: 100vh;
-    background-color: #f6f7f8;
-    scroll-behavior: smooth;
-    overflow: hidden;
+    overflow-y: auto;
+    padding: 20px;
 }
 
 .max_width {
@@ -50,12 +38,11 @@ body {
 
 .memory_container {
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-content: center;
     max-width: 1440px;
-    height: 100vh;
-    overflow-y: auto;
-    margin-left: 232px;
-    margin-top: 95px;
+    height: 100%;
 }
 
 .txt_container {
@@ -65,8 +52,10 @@ body {
 
 .button_container {
     display: flex;
+    flex-wrap: wrap;
     flex-direction: column;
-    margin-left: 96px;
+    align-content: space-around;
+    margin-left: 348px;
 }
 
 
@@ -155,7 +144,6 @@ button:hover a {
 
 .tasks_container {
     display: flex;
-    margin-bottom: 70px;
 }
 
 .tasks_in_board_container {

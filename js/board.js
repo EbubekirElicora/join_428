@@ -1,3 +1,4 @@
+let getDateToday; // Forward declaration
 
 /**
  * Wartet, bis das DOM vollständig geladen ist, und führt dann die Initialisierungsfunktionen aus.

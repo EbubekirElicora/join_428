@@ -1,10 +1,8 @@
 @font-face {
-    font-family: "Figtree";
     font-family: "Inter", sans-serif;
     src: url(../assets/fonts/Figtree-VariableFont_wght.ttf);
 }
 
-<<<<<<< HEAD
 /* Ensure the body allows scrolling */
 body {
     height: 100vh;
@@ -44,19 +42,6 @@ body {
 }
 
 
-=======
-
-body {
-    margin: 0;
-    padding: 0;
-    font-family: "Figtree";
-    box-sizing: border-box;
-    height: 100vh;
-    background-color: #f6f7f8;
-    scroll-behavior: smooth;
-    overflow: hidden;
-}
->>>>>>> bcccba604cb1942658277da9bb645f9c0d04ced7
 
 .max_width {
     max-width: 1440px;
@@ -92,6 +77,7 @@ body {
     align-content: space-around;
     margin-left: 348px;
 }
+
 
 button {
     border-radius: 30px;
@@ -178,6 +164,7 @@ button:hover a {
 
 .tasks_container {
     display: flex;
+    margin-bottom: 70px;
 }
 
 .tasks_in_board_container {

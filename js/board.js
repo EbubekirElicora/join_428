@@ -1,5 +1,7 @@
 
-
+/**
+ * Wartet, bis das DOM vollständig geladen ist, und führt dann die Initialisierungsfunktionen aus.
+ */
 document.addEventListener('DOMContentLoaded', () => {
     getDateToday();
     initializeCategorySelector();
@@ -7,12 +9,25 @@ document.addEventListener('DOMContentLoaded', () => {
     init();
 });
 
+/**
+ * Öffnet das Overlay und zeigt das Pop-up-Fenster an.
+ * Entfernt die CSS-Klasse 'd_none', um die Elemente sichtbar zu machen.
+ */
 function openOverlay() {
     document.getElementById('overlay').classList.remove('d_none');
     document.getElementById('popup_container').classList.remove('d_none');
     document.getElementById('close_img').classList.remove('d_none');
 }
 
+/**
+ * Lädt den Inhalt der Datei `addTask.html` und fügt ihn in das Pop-up-Fenster ein.
+ * Danach werden die benötigten JavaScript-Dateien dynamisch geladen.
+ * Falls `initAddTask` definiert ist, wird es nach dem Laden ausgeführt.
+ * 
+ * @async
+ * @function loadAddTaskContent
+ * @returns {Promise<void>} Gibt eine Promise zurück, die nach dem Laden und Initialisieren aufgelöst wird.
+ */
 async function loadAddTaskContent() {
     try {
         const response = await fetch('../html/addTask.html');
@@ -23,42 +38,87 @@ async function loadAddTaskContent() {
         const addTaskContent = doc.querySelector('.content_container_size');
         if (addTaskContent) {
             document.getElementById('popup_container').innerHTML = addTaskContent.outerHTML;
-            const script = document.createElement('script');
-            script.src = '../js/addTask.js';
-            script.onload = () => {
-                if (typeof initAddTask === 'function') {
-                    initAddTask();
-                } else {
-                    console.error('initAddTask is not defined!');
-                }
+            const loadScript = (src) => {
+                return new Promise((resolve, reject) => {
+                    const script = document.createElement('script');
+                    script.src = src;
+                    script.onload = resolve;
+                    script.onerror = () => reject(new Error(`Failed to load ${src}`));
+                    document.body.appendChild(script);
+                });
             };
-            document.body.appendChild(script);
+            await loadScript('../js/addTaskPriority.js');
+            await loadScript('../js/addTaskValidation.js');
+            await loadScript('../js/addTask.js');
+            if (typeof initAddTask === 'function') {
+                initAddTask();
+            } else {
+                console.error('initAddTask is not defined!');
+            }
         }
     } catch (error) {
         console.error('Error loading addTask.html:', error);
     }
 }
 
+/**
+ * Öffnet das Overlay und lädt das Formular zur Erstellung einer neuen Aufgabe.
+ * Ruft `openOverlay()` auf, um das Pop-up-Fenster sichtbar zu machen,
+ * und lädt anschließend den Inhalt von `addTask.html` mit `loadAddTaskContent()`.
+ */
 function addTask() {
     openOverlay();
     loadAddTaskContent();
 }
 
+/**
+ * Schließt das Overlay und das Pop-up-Fenster.
+ * Fügt die CSS-Klasse 'd_none' hinzu, um die Elemente auszublenden,
+ * und leert den Inhalt des Pop-up-Containers.
+ */
 function closeOverlay() {
     document.getElementById('overlay').classList.add('d_none');
     document.getElementById('popup_container').classList.add('d_none');
     document.getElementById('popup_container').innerHTML = '';
 }
 
+/** 
+ * Speichert das aktuell gezogene (dragged) Element für die Drag-and-Drop-Funktionalität.
+ * @type {HTMLElement | null}
+ */
 let currentDraggedElement;
+
+/**
+ * Enthält die Liste aller Aufgaben (Tasks).
+ * @type {Array<Object>}
+ */
 let todos = [];
+
+/**
+ * Definiert die verschiedenen Phasen (Stages) einer Aufgabe im Workflow.
+ * @type {Array<string>}
+ * @constant
+ */
 const stages = ["todo", "progress", "feedback", "done"]; 
 
+/**
+ * Initialisiert die Anwendung, indem die Aufgaben geladen und die HTML-Anzeige aktualisiert wird.
+ * @async
+ * @function init
+ * @returns {Promise<void>} Eine Promise, die nach der Initialisierung aufgelöst wird.
+ */
 async function init() {
     todosLoaded();
     updateHTML();
 }
 
+/**
+ * Lädt die Aufgaben aus dem Speicher und aktualisiert die Anzeige.
+ * Falls keine Daten vorhanden sind, wird `todos` als leeres Array gesetzt.
+ * @async
+ * @function todosLoaded
+ * @returns {Promise<void>} Eine Promise, die nach dem Laden der Daten aufgelöst wird.
+ */
 async function todosLoaded() {
     try {
         const loadedTodos = await loadData("tasks");
@@ -69,6 +129,10 @@ async function todosLoaded() {
     }
 }
 
+/**
+ * Aktualisiert die HTML-Darstellung der Aufgaben für jede Stage.
+ * Weist die Aufgaben basierend auf ihrer Kategorie oder Stage den richtigen Containern zu.
+ */
 function updateHTML() {
     const categoryMapping = {
         "Technical Task": "todo",
@@ -89,10 +153,28 @@ function updateHTML() {
     });
 }
 
+/**
+ * Speichert die ID des aktuell gezogenen (dragged) Elements.
+ * @param {string} id - Die ID des zu ziehenden Elements.
+ */
 function startDragging(id) {
     currentDraggedElement = id;
 }
 
+/**
+ * Erstellt eine neue Aufgabe und speichert sie im Backend.
+ * Fügt die neue Aufgabe zu `todos` hinzu und aktualisiert die HTML-Darstellung.
+ * 
+ * @async
+ * @function createTask
+ * @param {string} title - Der Titel der Aufgabe.
+ * @param {string} category - Die Kategorie der Aufgabe.
+ * @param {string} dueDate - Das Fälligkeitsdatum der Aufgabe.
+ * @param {string} priority - Die Priorität der Aufgabe.
+ * @param {Array<string>} assignedContacts - Die Kontakte, die der Aufgabe zugewiesen sind.
+ * @param {Array<string>} subtasksArray - Die Unteraufgaben der Aufgabe.
+ * @returns {Promise<void>} Eine Promise, die nach dem Erstellen der Aufgabe und dem Aktualisieren der Anzeige aufgelöst wird.
+ */
 async function createTask(title, category, dueDate, priority, assignedContacts, subtasksArray) {
     const newTask = {
       id: Date.now().toString(),
@@ -114,7 +196,11 @@ async function createTask(title, category, dueDate, priority, assignedContacts, 
     updateHTML();
   }
 
-
+/**
+ * Setzt das Formular zurück, indem alle Eingabefelder und Auswahlmöglichkeiten gelöscht werden.
+ * Aktualisiert auch die Anzeige der zugewiesenen Kontakte und Unteraufgaben.
+ * @function resetForm
+ */
 function resetForm() {
     document.getElementById("taskTitle").value = '';
     document.getElementById("taskDescription").value = '';
@@ -125,10 +211,26 @@ function resetForm() {
     updateSubtasksDisplay();
 }
 
+/**
+ * Ermöglicht das Ablegen von Elementen auf einem Zielbereich.
+ * Verhindert die Standardaktionen des Browsers, die das Ablegen verhindern würden.
+ * 
+ * @param {DragEvent} ev - Das Drag-and-Drop-Ereignis.
+ * @function allowDrop
+ */
 function allowDrop(ev) {
     ev.preventDefault();
 }
 
+/**
+ * Verschiebt eine Aufgabe in eine neue Stage.
+ * Aktualisiert die Aufgabe im Backend und ruft anschließend die Aufgaben erneut ab.
+ * 
+ * @async
+ * @function moveToStage
+ * @param {string} targetStage - Die Ziel-Stage, in die die Aufgabe verschoben werden soll (z.B. "todo", "progress").
+ * @returns {Promise<void>} Eine Promise, die aufgelöst wird, wenn die Aufgabe erfolgreich verschoben wurde.
+ */
 async function moveToStage(targetStage) {
     if (!currentDraggedElement) return;
     try {
@@ -143,14 +245,35 @@ async function moveToStage(targetStage) {
     }
 }
 
+/**
+ * Hebt das Element mit der angegebenen ID hervor, um anzuzeigen, dass es ein Zielbereich für Drag-and-Drop ist.
+ * 
+ * @function highlight
+ * @param {string} id - Die ID des Elements, das hervorgehoben werden soll.
+ */
 function highlight(id) {
     document.getElementById(id).classList.add("drag-area-highlight");
 }
 
+/**
+ * Entfernt die Hervorhebung vom Element mit der angegebenen ID.
+ * 
+ * @function removeHighlight
+ * @param {string} id - Die ID des Elements, von dem die Hervorhebung entfernt werden soll.
+ */
 function removeHighlight(id) {
     document.getElementById(id).classList.remove("drag-area-highlight");
 }
 
+/**
+ * Lädt die Aufgaben aus dem Backend und aktualisiert das `todos` Array.
+ * Überprüft und korrigiert subtasks, falls sie als Strings gespeichert sind.
+ * Ruft anschließend `updateHTML()` auf, um die Anzeige zu aktualisieren.
+ * 
+ * @async
+ * @function fetchTasks
+ * @returns {Promise<void>} Eine Promise, die nach dem Laden der Aufgaben und dem Aktualisieren der Anzeige aufgelöst wird.
+ */
 async function fetchTasks() {
     try {
       const data = await loadData("tasks");
@@ -173,27 +296,36 @@ async function fetchTasks() {
       console.error("Task update error:", error);
     }
   }
-
-
 let filteredTasks = todos.filter(task => {
     const taskCategory = task.category.toLowerCase();
     return taskCategory === category;
 });
 
+/**
+ * Filtert Aufgaben basierend auf dem Suchbegriff, der im Eingabefeld 'find_task' eingegeben wurde.
+ * Zeigt nur die Aufgaben an, deren Titel oder Beschreibung den Suchbegriff enthalten.
+ * 
+ * @function taskFilter
+ */
 function taskFilter() {
     const searchTerm = document.getElementById('find_task').value.toLowerCase();
     const allTasks = document.querySelectorAll('.task');
     allTasks.forEach(task => {
         const title = task.querySelector('.title_find')?.textContent.toLowerCase() || '';
         const description = task.querySelector('.description_find')?.textContent.toLowerCase() || '';
-        const isVisible = title.includes(searchTerm) || description.includes(searchTerm);
-        
+        const isVisible = title.includes(searchTerm) || description.includes(searchTerm); 
         task.style.display = isVisible ? 'block' : 'none';
     });
-    
     updateEmptyStates();
 }
 
+/**
+ * Überprüft, ob in jeder Spalte des Boards Aufgaben angezeigt werden.
+ * Wenn keine Aufgaben angezeigt werden, wird eine entsprechende Nachricht angezeigt.
+ * Andernfalls wird die Nachricht ausgeblendet.
+ * 
+ * @function updateEmptyStates
+ */
 function updateEmptyStates() {
     document.querySelectorAll('.nav_board').forEach(column => {
         const tasksContainer = column.querySelector('.board_tasks');

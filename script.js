@@ -1,5 +1,16 @@
-
-// Initialize the "Add Task" form
+/**
+ * Initialisiert die erforderlichen Komponenten auf der Seite für das Hinzufügen einer Aufgabe.
+ * Diese Funktion richtet das Datum, Dropdown-Menüs, das Aufgabenkategoriefeld und andere UI-Elemente ein.
+ * 
+ * 1. Setzt das heutige Datum.
+ * 2. Initialisiert die Dropdown-Menüs.
+ * 3. Initialisiert den Kategorieselector für Aufgaben.
+ * 4. Konfiguriert das Aufgabenformular.
+ * 5. Fügt einen Ereignishandler hinzu, um das Eingabefeld für Unteraufgaben auszublenden, wenn außerhalb des Eingabebereichs geklickt wird.
+ * 6. Lädt die Liste der Kontakte.
+ * 
+ * @function initAddTask
+ */
 function initAddTask() {
     getDateToday();
     initializeDropdown();
@@ -9,7 +20,11 @@ function initAddTask() {
     loadContacts();
 }
 
-// Set priority for the task
+/**
+ * This function sets the button to activated
+ * 
+ * @param {string} priority - The priority level to set
+ */
 function setPrio(prio) {
     document.querySelectorAll('.prioBtnUrgent, .prioBtnMedium, .prioBtnLow').forEach(btn => {
         btn.classList.remove('active');
@@ -17,16 +32,16 @@ function setPrio(prio) {
     document.querySelector(`.prioBtn${prio.charAt(0).toUpperCase() + prio.slice(1)}`).classList.add('active');
 }
 
-// Set today's date as the minimum date for the date input
-function getDateToday() {
-    const dateInput = document.getElementById('date');
-    if (dateInput) {
-        dateInput.min = new Date().toISOString().split('T')[0];
-    }
-}
-
-
-// Initialize the contacts dropdown
+/**
+ * Initialisiert das Dropdown-Menü und fügt Ereignishandler hinzu, um das Dropdown anzuzeigen oder auszublenden.
+ * 
+ * Diese Funktion setzt Ereignisse auf das Dropdown-Symbol und das umgekehrte Dropdown-Symbol:
+ * 1. Zeigt das Dropdown-Menü an, wenn eines der Symbole geklickt wird.
+ * 2. Blendet das Dropdown-Menü aus, wenn außerhalb des Dropdowns oder der Symbole geklickt wird.
+ * 3. Wechselt das Dropdown-Symbol zwischen zwei Zuständen (auf und ab).
+ * 
+ * @function initializeDropdown
+ */
 function initializeDropdown() {
     const dropdownIcon = document.getElementById('dropdownIcon');
     const dropdownIconUp = document.getElementById('dropdownIconUp');
@@ -34,8 +49,6 @@ function initializeDropdown() {
     if (dropdownIcon && dropdownIconUp && dropdownContent) {
         dropdownIcon.addEventListener('click', toggleDropdown);
         dropdownIconUp.addEventListener('click', toggleDropdown);
-
-        // Close dropdown when clicking outside
         document.addEventListener('click', (event) => {
             if (!dropdownContent.contains(event.target) &&
                 !dropdownIcon.contains(event.target) &&
@@ -50,14 +63,21 @@ function initializeDropdown() {
     }
 }
 
-// Toggle the contacts dropdown
+/**
+ * Schaltet das Dropdown-Menü um, zeigt es an oder blendet es aus.
+ * Diese Funktion überprüft den aktuellen Anzeigestatus des Dropdowns und wechselt diesen.
+ * 
+ * 1. Wenn das Dropdown-Menü sichtbar ist, wird es ausgeblendet.
+ * 2. Wenn das Dropdown-Menü nicht sichtbar ist, wird es angezeigt.
+ * 3. Wechselt das Dropdown-Symbol (nach oben und nach unten) je nach Status des Menüs.
+ * 
+ * @function toggleDropdown
+ */
 function toggleDropdown() {
     const dropdownContent = document.getElementById('dropdownContent');
     const dropdownIcon = document.getElementById('dropdownIcon');
     const dropdownIconUp = document.getElementById('dropdownIconUp');
-
     if (!dropdownContent || !dropdownIcon || !dropdownIconUp) return;
-
     if (dropdownContent.style.display === 'block') {
         dropdownContent.style.display = 'none';
         dropdownIcon.classList.remove('d-none');
@@ -69,7 +89,12 @@ function toggleDropdown() {
     }
 }
 
-// Initialize the category selector dropdown
+/**
+ * Initialisiert den Kategorien-Selektor, indem ein Klick-Ereignis auf das Element hinzugefügt wird.
+ * Beim Klicken wird das Dropdown für die Kategorien angezeigt oder ausgeblendet.
+ * 
+ * @function initializeCategorySelector
+ */
 function initializeCategorySelector() {
     const categorySelect = document.getElementById('category_select');
     if (categorySelect) {
@@ -80,7 +105,15 @@ function initializeCategorySelector() {
     }
 }
 
-// Toggle the category dropdown
+/**
+ * Schaltet das Kategorien-Dropdown um, zeigt es an oder blendet es aus.
+ * Wenn das Dropdown leer ist, wird es mit den verfügbaren Kategorien befüllt.
+ * 
+ * 1. Wenn das Dropdown-Menü nicht sichtbar ist oder leer ist, wird es angezeigt und mit den Kategorien "Technical Task" und "User Story" gefüllt.
+ * 2. Wenn das Dropdown-Menü bereits sichtbar ist, wird es ausgeblendet.
+ * 
+ * @function toggleCategoryDropdown
+ */
 function toggleCategoryDropdown() {
     let dropdown = document.getElementById("category_dropdown");
     if (dropdown) {
@@ -98,13 +131,27 @@ function toggleCategoryDropdown() {
     }
 }
 
-// Select a category
+/**
+ * Wählt eine Kategorie aus und zeigt sie im Dropdown-Auswahlbereich an.
+ * Diese Funktion aktualisiert den Text des angezeigten Kategorieauswahlbereichs
+ * und blendet das Dropdown-Menü aus.
+ * 
+ * @param {string} category - Die ausgewählte Kategorie, die im Dropdown angezeigt wird.
+ * @function selectCategory
+ */
 function selectCategory(category) {
     document.getElementById("select_txt").innerText = category;
     document.getElementById("category_dropdown").style.display = "none";
 }
 
-// Open the category dropdown
+/**
+ * Öffnet oder schließt das Kategorien-Dropdown-Menü.
+ * Diese Funktion verwendet die CSS-Klasse "visible", um das Dropdown-Menü anzuzeigen oder auszublenden.
+ * 
+ * Wenn das Dropdown-Element nicht gefunden wird, wird eine Fehlermeldung in der Konsole ausgegeben.
+ * 
+ * @function to_open_category_dropdown
+ */
 function to_open_category_dropdown() {
     let dropdown = document.getElementById("category_dropdown");
     if (dropdown) {
@@ -114,18 +161,37 @@ function to_open_category_dropdown() {
     }
 }
 
-// Initialize the task form
+/**
+ * Initialisiert das Aufgabenformular, sobald die DOM-Inhalte vollständig geladen sind.
+ * Diese Funktion wird aufgerufen, wenn das 'DOMContentLoaded'-Ereignis ausgelöst wird.
+ * 
+ * @function initializeTaskForm
+ */
 document.addEventListener('DOMContentLoaded', () => {
     initializeTaskForm();
 });
 
+/**
+ * Initialisiert das Aufgabenformular, indem ein Klick-Ereignis auf die Schaltfläche "Create Task" hinzugefügt wird.
+ * Wenn der Benutzer auf die Schaltfläche klickt, wird das Formular überprüft und die Aufgabe im Firebase-Datenbank gespeichert.
+ * 
+ * 1. Verhindert das Standardverhalten des Buttons (Seitenaktualisierung).
+ * 2. Sammelt die Aufgabeninformationen aus dem Formular.
+ * 3. Überprüft die gesammelten Daten.
+ * 4. Speichert die Aufgabe in Firebase, wenn die Daten gültig sind.
+ * 5. Leitet den Benutzer auf das Board weiter, wenn die Aufgabe erfolgreich gespeichert wurde.
+ * 6. Zeigt eine Fehlermeldung an, wenn das Speichern der Aufgabe fehlschlägt.
+ * 
+ * @function initializeTaskForm
+ */
 function initializeTaskForm() {
     const createTaskBtn = document.getElementById('createTaskBtn');
     if (createTaskBtn) {
         createTaskBtn.addEventListener('click', async (event) => {
             event.preventDefault();
             const taskData = collectTaskData();
-            if (validateTaskData(taskData)) {
+            const isValid = validateTaskForm(taskData.title, taskData.dueDate, taskData.category); 
+            if (isValid) {
                 const savedTask = await saveTaskToFirebase(taskData);
                 if (savedTask) {
                     window.location.href = "/html/board.html";
@@ -137,18 +203,46 @@ function initializeTaskForm() {
     }
 }
 
+/**
+ * Sammelt die Daten für die Aufgabe aus den Formularfeldern.
+ * Diese Funktion liest die Eingabewerte und gibt ein Aufgabenobjekt zurück.
+ * 
+ * 1. Holt sich den Titel, die Kategorie, das Fälligkeitsdatum, die Priorität, die zugewiesenen Kontakte und die Unteraufgaben.
+ * 2. Setzt den Status der Aufgabe auf "todo".
+ * 3. Gibt das Aufgabenobjekt zurück.
+ * 
+ * @returns {Object} Das Aufgabenobjekt mit allen gesammelten Informationen.
+ * @function collectTaskData
+ */
 function collectTaskData() {
     const title = document.getElementById('title')?.value.trim();
     const category = document.getElementById('select_txt')?.textContent.trim();
     const dueDate = document.getElementById('date')?.value.trim();
-    const priority = getSelectedPriority(); // Ensure you have a function to get the selected priority
+    const priority = getSelectedPriority();
     const assignedContacts = selectedContacts;
     const subtasksArray = subtasks;
-    const stage = 'todo'; // Or get the stage from a dropdown/input if needed
-
+    const stage = 'todo';
     return createTask(title, category, dueDate, priority, assignedContacts, subtasksArray, stage);
 }
 
+/**
+ * Erstellt eine neue Aufgabe mit den angegebenen Daten.
+ * Diese Funktion erstellt ein Aufgabenobjekt mit einem eindeutigen ID (auf Grundlage der aktuellen Zeit),
+ * der Titel, Kategorie, das Fälligkeitsdatum, die Priorität, zugewiesene Kontakte, Unteraufgaben und den Status der Aufgabe.
+ * 
+ * Der Standardwert für den Status ist 'todo', wenn er nicht angegeben wird.
+ * 
+ * @param {string} title - Der Titel der Aufgabe.
+ * @param {string} category - Die Kategorie der Aufgabe (z.B. 'Technical Task', 'User Story').
+ * @param {string} dueDate - Das Fälligkeitsdatum der Aufgabe.
+ * @param {string} priority - Die Priorität der Aufgabe.
+ * @param {Array} assignedContacts - Die Kontakte, die der Aufgabe zugewiesen sind.
+ * @param {Array} subtasksArray - Ein Array von Unteraufgaben.
+ * @param {string} [stage='todo'] - Der Status der Aufgabe (Standardwert ist 'todo').
+ * 
+ * @returns {Object} Das erstellte Aufgabenobjekt.
+ * @function createTask
+ */
 function createTask(title, category, dueDate, priority, assignedContacts, subtasksArray, stage = 'todo') {
     const newTask = {
         id: Date.now().toString(),
@@ -167,26 +261,16 @@ function createTask(title, category, dueDate, priority, assignedContacts, subtas
         }, {})
     };
     return newTask;
-}// Validate task data
-
-
-function validateTaskData(taskData) {
-    if (!taskData.title) {
-        alert('Please fill in the Title');
-        return false;
-    }
-    if (!taskData.dueDate) {
-        alert('Please fill in the Due Date');
-        return false;
-    }
-    if (!taskData.category || taskData.category === 'Select task category') {
-        alert('Please fill in the Category');
-        return false;
-    }
-    return true;
 }
 
-// Reset the form
+/**
+ * Setzt das Formular für die Erstellung einer neuen Aufgabe zurück.
+ * Diese Funktion löscht die Werte und Textinhalte aller relevanten Felder im Formular,
+ * einschließlich des Titels, der Beschreibung, des Fälligkeitsdatums, der Kategorie, der hinzugefügten Texte,
+ * der zugewiesenen Kontakte und der Unteraufgaben.
+ * 
+ * @function resetForm
+ */
 function resetForm() {
     document.getElementById('title').value = '';
     document.getElementById('description').value = '';
@@ -199,7 +283,16 @@ function resetForm() {
     subtasks = [];
 }
 
-// Save task to Firebase
+/**
+ * Speichert die Aufgaben-Daten in Firebase Realtime Database.
+ * Diese Funktion sendet die Aufgaben-Daten an Firebase, um sie dort zu speichern.
+ * Wenn der Speichervorgang erfolgreich ist, gibt sie die gespeicherten Daten zurück,
+ * andernfalls gibt sie null zurück.
+ * 
+ * @param {Object} taskData - Die zu speichernden Aufgaben-Daten.
+ * @returns {Promise<Object|null>} Die gespeicherten Daten von Firebase oder null im Fehlerfall.
+ * @function saveTaskToFirebase
+ */
 async function saveTaskToFirebase(taskData) {
     const BASE_URL = 'https://join-428-default-rtdb.europe-west1.firebasedatabase.app/';
     const TASKS_ENDPOINT = 'tasks.json';
@@ -223,216 +316,16 @@ async function saveTaskToFirebase(taskData) {
     }
 }
 
-// Load contacts from Firebase
-async function loadContacts() {
-    const dropdownContent = document.getElementById('dropdownContent');
-    if (!dropdownContent) {
-        console.error('Dropdown content element not found!');
-        return;
-    }
-    const contactsData = await loadData('contacts');
-    if (contactsData) {
-        const contactsArray = Object.values(contactsData);
-        dropdownContent.innerHTML = '';
-
-        contactsArray.forEach(contact => {
-            const contactDiv = document.createElement('div');
-            contactDiv.classList.add('dropdown-item');
-
-            contactDiv.innerHTML = `
-                <div class="contact-info">
-                    <div class="contact-initials-container" style="background-color: ${getRandomColor()}">
-                        <div class="contact-initials">${getInitials(contact.name)}</div>
-                    </div>
-                    <span class="contact-name">${contact.name}</span>
-                </div>
-                <input type="checkbox" class="contact-checkbox">
-            `;
-
-            const checkbox = contactDiv.querySelector('.contact-checkbox');
-
-            checkbox.addEventListener('change', (event) => {
-                if (checkbox.checked) {
-                    // Add the selected-contact-item class
-                    contactDiv.classList.add('selected-contact-item');
-                    if (!selectedContacts.find(c => c.name === contact.name)) {
-                        selectedContacts.push(contact);
-                    }
-                } else {
-                    // Remove the selected-contact-item class
-                    contactDiv.classList.remove('selected-contact-item');
-                    selectedContacts = selectedContacts.filter(c => c.name !== contact.name);
-                }
-
-                updateSelectedContacts();
-            });
-
-            dropdownContent.appendChild(contactDiv);
-        });
-    } else {
-        dropdownContent.innerHTML = '<div class="dropdown-item">No contacts available</div>';
-    }
-}
-// Select a contact
-
-function selectContact(contact) {
-    if (!selectedContacts.find(c => c.name === contact.name)) {
-        selectedContacts.push(contact);
-        updateSelectedContacts();
-        console.log('Contact selected:', contact.name);
-    } else {
-        console.log('Contact already selected:', contact.name);
-    }
-   
-}
-
-function updateSelectedContacts() {
-    const inputField = document.getElementById('contactInput');
-    const initialsContainer = document.getElementById('selectedContactsInitials');
-
-    if (!inputField || !initialsContainer) {
-        console.error('Input field or initials container not found!');
-        return;
-    }
-
-    // Update the input field with selected contact names
-    const selectedNames = selectedContacts.map(contact => contact.name).join(', ');
-    inputField.value = selectedNames;
-
-    // Update the initials container
-    initialsContainer.innerHTML = '';
-    selectedContacts.forEach(contact => {
-        const span = document.createElement('span');
-        span.classList.add('contact-initial');
-
-        span.innerHTML = `
-            <div class="contact-initials-container" style="background-color: ${getRandomColor()}">
-                <div class="contact-initials">${getInitials(contact.name)}</div>
-            </div>
-        `;
-
-        initialsContainer.appendChild(span);
-    });
-}
-
-function getInitials(name) {
-    if (!name) return ''; // Handle undefined or empty names
-    const names = name.split(' ');
-    const initials = names.map(n => n[0]).join('');
-    return initials.toUpperCase();
-}
-function getRandomColor() {
-    const letters = '0123456789ABCDEF';
-    let color = '#';
-    for (let i = 0; i < 6; i++) {
-        color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
-}
-
-
-
-// Close the "Add Task" pop-up
+/**
+ * Schließt das Overlay und das Popup-Fenster.
+ * Diese Funktion blendet das Overlay und das Popup-Fenster aus, indem sie die entsprechenden
+ * Klassen hinzufügt, die das Element unsichtbar machen.
+ * 
+ * @function closeOverlay
+ */
 function closeOverlay() {
     const overlay = document.getElementById('overlay');
     const popupContainer = document.getElementById('popup_container');
-
-    // Hide the overlay and pop-up
     overlay.classList.add('d_none');
     popupContainer.classList.add('d_none');
-}
-
-window.subtasks = window.subtasks || {};
-
-function show_subtask_container() {
-    let add_delete_container = document.getElementById('add_delete_container');
-    let show_subtask_container = document.getElementById('show_subtask_container');
-    let add_subtask_container = document.querySelector('.add_subtask_container');
-    let subtask_input = document.getElementById('subtask_input');
-    add_delete_container.classList.add('visible');
-    show_subtask_container.style.display = 'none';
-    add_subtask_container.classList.add('no-hover');
-    subtask_input.addEventListener('click', show_subtask_container);
-}
-
-function delete_text() {
-    let add_delete_container = document.getElementById('add_delete_container');
-    let show_subtask_container = document.getElementById('show_subtask_container');
-    let add_subtask_container = document.querySelector('.add_subtask_container');
-    let subtask_input = document.getElementById('subtask_input');
-    subtask_input.value = "";
-    show_subtask_container.style.display = 'block';
-    add_delete_container.classList.remove('visible');
-    add_subtask_container.classList.remove('no-hover');
-    subtask_input.removeEventListener('click', show_subtask_container);
-}
-
-function add_new_text(event) {
-    let newSubTask = document.getElementById('subtask_input');
-    if (!newSubTask.value.trim()) return;
-
-    let id = Date.now();
-    subtasks[id] = {
-        title: newSubTask.value,
-        completed: false,
-        isEditing: false
-    };
-
-    newSubTask.value = '';
-    renderSubtasks();
-}
-
-
-function hideInputSubTaksClickContainerOnOutsideClick() {
-    document.addEventListener('click', function (event) {
-        let add_delete_container = document.getElementById('add_delete_container');
-        let show_subtask_container = document.getElementById('show_subtask_container');
-        let add_subtask_container = document.querySelector('.add_subtask_container');
-        let subtask_input = document.getElementById('subtask_input');
-        if (!add_delete_container.contains(event.target) &&
-            !subtask_input.contains(event.target) &&
-            !show_subtask_container.contains(event.target)) {
-            add_delete_container.classList.remove('visible');
-            show_subtask_container.style.display = 'block';
-            add_subtask_container.classList.remove('no-hover');
-        }
-    });
-}
-
-function renderSubtasks(editIndex = null) {
-    let subtask_list = document.getElementById('added_text');
-    subtask_list.innerHTML = '';
-
-    Object.keys(subtasks).forEach(id => {
-        let subtask = subtasks[id];
-
-        if (typeof subtask === 'string') {
-            subtask = { title: subtask, completed: false, isEditing: false };
-            subtasks[id] = subtask;
-        }
-
-        if (id == editIndex) {
-            subtask_list.innerHTML += subTaskProgressTemplate(id, subtask.title);
-        } else {
-            subtask_list.innerHTML += subTaskCreatedTemplate(id, subtask.title);
-        }
-    });
-}
-
-
-function editSubTask(id) {
-    renderSubtasks(id);
-}
-
-function saveSubTask(id) {
-    let input = document.getElementById(`editInput${id}`);
-    if (!input.value.trim()) return;
-    
-    subtasksBoard[id] = input.value;
-    renderSubtasks();
-}
-
-function deleteSubTask(id) {
-    delete subtasksBoard[id];
-    renderSubtasks();
 }

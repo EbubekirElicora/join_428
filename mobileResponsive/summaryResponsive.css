@@ -46,7 +46,9 @@
 
 @media (max-width: 1130px) {
 
-    
+    .button_container {
+        margin-left: 256px;
+    }
 
     .greets_container {
         margin-left: 32px
@@ -54,9 +56,6 @@
 }
 
 @media (max-width: 1080px) {
-    .memory_container{
-        margin-left: 10px;
-    }
 
     .button_container {
         margin-left: 0;
@@ -149,7 +148,6 @@
         align-items: flex-start;
         margin-block-start: 0;
         margin-block-end: 0;
-        justify-content: flex-end;
     }
 
     .dividing_line {

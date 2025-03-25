@@ -1,6 +1,6 @@
 html {
   overflow: scroll;
-  overflow-x: hidden;
+  overflow-y: hidden;
 }
 
 ::-webkit-scrollbar {
@@ -179,6 +179,7 @@ label,
   display: flex;
   justify-content: flex-end;
   width: 100%;
+  margin-bottom: 80px;
 }
 
 .clear_task_btn_container:hover .clear_icon {

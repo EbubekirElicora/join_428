@@ -46,7 +46,9 @@
 
 @media (max-width: 1130px) {
 
-    
+    .button_container {
+        margin-left: 256px;
+    }
 
     .greets_container {
         margin-left: 32px
@@ -54,12 +56,15 @@
 }
 
 @media (max-width: 1080px) {
+<<<<<<< HEAD
     .summary-content {
         position: absolute;
         top: 90px; /* Below the fixed header */
         left: 20px; /* Next to the sidebar */
         /
     }
+=======
+>>>>>>> bcccba604cb1942658277da9bb645f9c0d04ced7
 
     .button_container {
         margin-left: 0;
@@ -152,7 +157,6 @@
         align-items: flex-start;
         margin-block-start: 0;
         margin-block-end: 0;
-        justify-content: flex-end;
     }
 
     .dividing_line {

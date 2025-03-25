@@ -67,7 +67,7 @@ function getOverlayHtml(task) {
 
         return `
             <div class="subtask_item" data-subtask-id="${subtaskId}" onclick="toggleSubtask('${task.id}', '${subtaskId}')">
-                <img src="/assets/icons/contact_icon_${completed ? 'check' : 'uncheck'}.png" 
+                <img src="../assets/icons/contact_icon_${completed ? 'check' : 'uncheck'}.png" 
                      class="subtask-icon" 
                      alt="${completed ? 'Completed' : 'Uncompleted'}">
                 <span>${title}</span>
@@ -110,12 +110,12 @@ function getOverlayHtml(task) {
 
             <div class="buttons">
                 <button onclick="editOverlay('${task.id}')" class="img_p">
-                    <img src="/assets/icons/edit.png" alt="">
+                    <img src="../assets/icons/edit.png" alt="">
                     <p>Edit</p>
                 </button>
                 <div class="shadow_box"></div>
                 <button onclick="deleteTask('${task.id}')" class="img_p">
-                    <img src="/assets/icons/delete.png" alt="">
+                    <img src="../assets/icons/delete.png" alt="">
                     <p>Delete</p>
                 </button>
             </div>
@@ -209,7 +209,7 @@ function getOverlayEdit(task) {
         <div onclick="editProtection(event)" class="inner_content">
             <div class="edit_close">
                 <h2>Bearbeiten der Aufgabe</h2>
-                <img onclick="editOverlay()" src="/assets/icons/close.png" alt="">
+                <img onclick="editOverlay()" src="../assets/icons/close.png" alt="">
             </div>
 
             <form id="edit_form">

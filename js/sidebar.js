@@ -1,15 +1,18 @@
 /**
- * Checks if the user is logged in by verifying the 'isLoggedIn' value in localStorage.
- * 
- * @returns {boolean} - True if the user is logged in, otherwise false.
+ * AUTHENTICATION HELPER FUNCTIONS
+ */
+
+/**
+ * Checks if user is logged in by verifying localStorage flag
+ * @returns {boolean} True if user is logged in, false otherwise
  */
 function isUserLoggedIn() {
     return localStorage.getItem('isLoggedIn') === 'true';
 }
 
 /**
- * Checks if the user navigated from the signup page and modifies the DOM accordingly.
- * Hides specific elements and adds privacy/legal notice links if the user is not logged in.
+ * SIGNUP NAVIGATION HANDLER
+ * Handles special case when user arrives from signup page but isn't logged in
  */
 function checkIfNavigatedFromSignup() {
     const urlParams = new URLSearchParams(window.location.search);
@@ -17,17 +20,43 @@ function checkIfNavigatedFromSignup() {
     const isLoggedIn = isUserLoggedIn();
 
     if (fromSignup && !isLoggedIn) {
+        // Show privacy/legal links in mobile sidebar
         const sidebar = document.getElementById("sidebar");
-
-        // If sidebar is not found, skip and let the MutationObserver handle it
-        if (!sidebar) {
-            console.log("Sidebar not found yet. Waiting for DOM update...");
-        } else {
+        if (sidebar) {
             sidebar.classList.add("show-privacy-links-mobile");
         }
 
+        /**
+         * Hides various UI elements that shouldn't be visible in this state
+         */
+        const hideElements = () => {
+            const elementsToHide = [
+                ".help_user_container",
+                "#name_menu",
+                "#pageBackButton",
+                ".help_icon",
+                ".pos_cont_head_right"
+            ];
+
+            elementsToHide.forEach(selector => {
+                const element = document.querySelector(selector);
+                if (element) element.style.display = "none";
+            });
+
+            
+            const observer = new MutationObserver(() => {
+                const posContHeadRight = document.querySelector(".pos_cont_head_right");
+                if (posContHeadRight) {
+                    posContHeadRight.style.display = "none";
+                    observer.disconnect();
+                }
+            });
+            observer.observe(document.body, { childList: true, subtree: true });
+        };
+
         hideElements();
 
+        
         const globalObserver = new MutationObserver(() => {
             const sidebar = document.getElementById("sidebar");
             if (sidebar) {
@@ -36,71 +65,41 @@ function checkIfNavigatedFromSignup() {
             }
             hideElements();
         });
-
         globalObserver.observe(document.body, { childList: true, subtree: true });
 
-        const sidebarObserver = new MutationObserver((mutations, observer) => {
+        
+        const sidebarObserver = new MutationObserver((_, observer) => {
             const sidebar = document.getElementById("sidebar");
             if (sidebar) {
                 observer.disconnect();
                 modifySidebar();
             }
         });
-
         sidebarObserver.observe(document.body, { childList: true, subtree: true });
     }
 }
 
 /**
- * Hides specific elements in the DOM that are not needed when the user navigates from the signup page.
- */
-function hideElements() {
-    const helpUserContainer = document.querySelector(".help_user_container");
-    const nameMenu = document.getElementById("name_menu");
-    const pageBackButton = document.getElementById("pageBackButton");
-    const helpIcon = document.querySelector(".help_icon");
-    const posContHeadRight = document.querySelector(".pos_cont_head_right");
-    const navPositionButton = document.getElementsByClassName("nav_position_button")
-
-    if (helpUserContainer) helpUserContainer.style.display = "none";
-    if (nameMenu) nameMenu.style.display = "none";
-    if (pageBackButton) pageBackButton.style.display = "none";
-    if (helpIcon) helpIcon.style.display = "none";
-    if (navPositionButton) navPositionButton.style.paddingLeft = "0";
-    if (posContHeadRight) {
-        posContHeadRight.style.display = "none";
-    } else {
-        const observer = new MutationObserver(() => {
-            const posContHeadRight = document.querySelector(".pos_cont_head_right");
-            if (posContHeadRight) {
-                posContHeadRight.style.display = "none";
-                observer.disconnect();
-            }
-        });
-        observer.observe(document.body, { childList: true, subtree: true });
-    }
-}
-
-/**
- * Modifies the sidebar to hide all elements except privacy/legal notice links and adds a login link.
+ * SIDEBAR MODIFICATION FUNCTION
+ * Modifies the sidebar to show only privacy links and login option
  */
 function modifySidebar() {
     const sidebar = document.getElementById('sidebar');
-    if (!sidebar) {
-        console.error('Sidebar not found!');
-        return;
-    }
+    if (!sidebar) return;
 
-    const widgets = document.querySelectorAll('.widget');
-    const sidebarLinks = document.querySelectorAll('.menu_bar a');
-    const sidebarLogoContainer = document.querySelector('.sidebar_img_container');
+    // Hide all regular sidebar content
+    document.querySelectorAll('.widget').forEach(widget => widget.style.display = 'none');
+    
+    // Hide all menu links except privacy/legal notices
     const privacyLinks = document.querySelectorAll('.privacy_and_noticy_container a');
-    widgets.forEach(widget => widget.style.display = 'none');
-    sidebarLinks.forEach(link => {
+    document.querySelectorAll('.menu_bar a').forEach(link => {
         if (![...privacyLinks].includes(link)) {
             link.style.display = 'none';
         }
     });
+
+    // Add login link below logo
+    const sidebarLogoContainer = document.querySelector('.sidebar_img_container');
     if (sidebarLogoContainer) {
         const loginLinkContainer = document.createElement('div');
         loginLinkContainer.innerHTML = `
@@ -108,16 +107,16 @@ function modifySidebar() {
                 <img src="../assets/login icon.svg" alt="Login Icon" class="login-icon">
                 <span>Login</span>
             </a>`;
-        loginLinkContainer.style.display = 'flex'
-        loginLinkContainer.style.justifyContent = 'center'
-        loginLinkContainer.style.alignItems = 'center'
         loginLinkContainer.style.marginTop = '40px'; 
-        loginLinkContainer.style.marginLeft = '-50px'; 
+        loginLinkContainer.style.marginLeft = '-90px'; 
         sidebarLogoContainer.appendChild(loginLinkContainer);
     }
 }
 
-// Run the function after the DOM is fully loaded
+/**
+ * INITIALIZATION
+ * Runs when DOM is fully loaded
+ */
 document.addEventListener('DOMContentLoaded', () => {
     checkIfNavigatedFromSignup();
 });

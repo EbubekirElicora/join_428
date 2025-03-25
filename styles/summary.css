@@ -3,13 +3,31 @@
     src: url(../assets/fonts/Figtree-VariableFont_wght.ttf);
 }
 
-/* Remove overflow from body/html (or adjust as shown below) */
-body, html {
-    height: 100%;
+html {
+    overflow: scroll;
+    overflow-y: auto !important;
+  }
+  
+  ::-webkit-scrollbar {
+    width: 0;
+    background: transparent;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: #f6f7f8;
+  }
+  
+  
+  body {
     margin: 0;
     padding: 0;
-    font-family: "Inter", sans-serif;
-}
+    box-sizing: border-box;
+    background-color: #f6f7f8;
+    scroll-behavior: smooth;
+    overflow: hidden;
+    height: 100vh;
+    max-width: 1420px !important;
+  }
 
 /* Ensure the main container takes full height */
 .memory_container {
@@ -173,6 +191,7 @@ button:hover a {
 
 .tasks_container {
     display: flex;
+    margin-bottom: 70px;
 }
 
 .tasks_in_board_container {

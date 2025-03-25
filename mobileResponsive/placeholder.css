@@ -655,3 +655,28 @@ button:hover a {
         height: 108px;
     }
 }
+/* Ensure the body allows scrolling */
+body {
+    height: 100vh;
+    overflow: hidden; /* Prevents double scrollbars */
+}
+
+/* Ensure the content below header is scrollable */
+.summary-content {
+    position: absolute;
+    top: 90px; /* Below the fixed header */
+    left: 232px; /* Next to the sidebar */
+    right: 0;
+    bottom: 0;
+    overflow-y: auto; /* Enables scrolling */
+    padding: 20px;
+    background-color: #fff; /* Visibility */
+}
+::-webkit-scrollbar {
+    width: 0;
+    background: transparent;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: #f6f7f8;
+  }

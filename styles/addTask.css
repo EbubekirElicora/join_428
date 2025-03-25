@@ -451,7 +451,7 @@ input[type="date"],
 input[type="checkbox"] {
   display: inline-block;
   border: 0px !important;
-  background-image: url(/assets/icons/contact_icon_uncheck.png);
+  background-image: url(../assets/icons/contact_icon_uncheck.png);
   background-size: cover;
   cursor: pointer;
   -webkit-appearance: none;
@@ -461,7 +461,7 @@ input[type="checkbox"] {
 }
 
 input[type="checkbox"]:checked {
-  background-image: url(/assets/icons/contact_icon_check.png);
+  background-image: url(../assets/icons/contact_icon_check.png);
 }
 
 .checkbox_class {

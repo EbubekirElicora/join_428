@@ -520,7 +520,7 @@ document.addEventListener('DOMContentLoaded', function () {
             console.log('Task saved. Resetting form...');
             resetForm();
             setTimeout(() => {
-                window.location.href = '/html/board.html';
+                window.location.href = '../html/board.html';
             }, 2000);
         } else {
             alert('Failed to create task. Please try again.');

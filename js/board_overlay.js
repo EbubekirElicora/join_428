@@ -55,7 +55,7 @@ window.toggleSubtask = async function (taskId, subtaskId) {
     // UI-Update für Subtask-Checkbox
     const icon = document.querySelector(`[onclick*="${subtaskId}"] .subtask-icon`);
     if (icon) {
-      icon.src = `/assets/icons/contact_icon_${task.subtasks[subtaskId].completed ? 'check' : 'uncheck'}.png`;
+      icon.src = `../assets/icons/contact_icon_${task.subtasks[subtaskId].completed ? 'check' : 'uncheck'}.png`;
     }
 
     updateHTML();

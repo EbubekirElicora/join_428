@@ -209,12 +209,12 @@ function getOverlayHtml(task) {
 
             <div class="buttons">
                 <button onclick="editOverlay('${task.id}')" class="img_p">
-                    <img src="/assets/icons/edit.png" alt="">
+                    <img src="../assets/icons/edit.png" alt="">
                     <p>Edit</p>
                 </button>
                 <div class="shadow_box"></div>
                 <button onclick="deleteTask('${task.id}')" class="img_p">
-                    <img src="/assets/icons/delete.png" alt="">
+                    <img src="../assets/icons/delete.png" alt="">
                     <p>Delete</p>
                 </button>
             </div>

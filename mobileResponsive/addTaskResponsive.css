@@ -4,7 +4,7 @@
         width: 896px;
         margin-left: 0;
         overflow-y: auto;
-        height: calc(100vh - 100px);
+        height: calc(100vh - 80px);
     }
 
     .divider_line {

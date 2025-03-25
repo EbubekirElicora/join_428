@@ -97,8 +97,6 @@ a {
 
 .container_size {
   display: flex;
-  align-items: center;
-  justify-content: center;
   width: 100%;
 }
 
@@ -419,7 +417,7 @@ label select {
 .required_container {
   display: flex;
   height: 100%;
-  align-items: flex-end;
+  align-items: flex-start;
 }
 
 input[type="text"]:focus,

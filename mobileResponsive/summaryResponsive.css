@@ -54,8 +54,11 @@
 }
 
 @media (max-width: 1080px) {
-    .memory_container{
-        margin-left: 10px;
+    .summary-content {
+        position: absolute;
+        top: 90px; /* Below the fixed header */
+        left: 20px; /* Next to the sidebar */
+        /
     }
 
     .button_container {
@@ -301,4 +304,11 @@
     .tasks_in_awaiting_container {
         height: 108px;
     }
+    .summary-content {
+        position: absolute;
+        top: 90px; 
+        left: 0px; 
+    
+    }
+
 }

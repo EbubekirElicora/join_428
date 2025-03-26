@@ -46,6 +46,9 @@ async function loadAddTaskContent() {
                     document.body.appendChild(script);
                 });
             };
+            await loadScript('../js/addTaskSubTasks.js');
+            await loadScript('../js/addTaskCategory.js');
+            await loadScript('../js/addTaskDate.js');
             await loadScript('../js/addTaskPriority.js');
             await loadScript('../js/addTaskValidation.js');
             await loadScript('../js/addTask.js');

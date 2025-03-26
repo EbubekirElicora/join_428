@@ -6,7 +6,8 @@ body {
 .board_main {
     max-width: 1440px;
     margin-top: 180px;
-    margin-left: 350px;
+    margin-left: 320px;
+    padding: 16px;
 }
 
 h1 {

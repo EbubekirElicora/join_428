@@ -32,6 +32,13 @@ function setPrio(prio) {
     document.querySelector(`.prioBtn${prio.charAt(0).toUpperCase() + prio.slice(1)}`).classList.add('active');
 }
 
+function getDateToday() {
+    const dateInput = document.getElementById('date');
+    if (dateInput) {
+        dateInput.min = new Date().toISOString().split('T')[0];
+    }
+}
+
 /**
  * Initialisiert das Dropdown-Menü und fügt Ereignishandler hinzu, um das Dropdown anzuzeigen oder auszublenden.
  * 
@@ -186,21 +193,19 @@ document.addEventListener('DOMContentLoaded', () => {
  */
 function initializeTaskForm() {
     const createTaskBtn = document.getElementById('createTaskBtn');
-    if (createTaskBtn) {
-        createTaskBtn.addEventListener('click', async (event) => {
-            event.preventDefault();
-            const taskData = collectTaskData();
-            const isValid = validateTaskForm(taskData.title, taskData.dueDate, taskData.category); 
-            if (isValid) {
-                const savedTask = await saveTaskToFirebase(taskData);
-                if (savedTask) {
-                    window.location.href = "../html/board.html";
-                } else {
-                    alert('Failed to create task. Please try again.');
-                }
-            }
-        });
-    }
+    if (!createTaskBtn) return;
+    createTaskBtn.addEventListener('click', async (event) => {
+        event.preventDefault();
+        const taskData = collectTaskData();
+        if (!taskData) return;
+        const savedTask = await saveTaskToFirebase(taskData);
+        if (savedTask) {
+            resetForm();
+            window.location.href = "../html/board.html";
+        } else {
+            alert('Failed to create task. Please try again.');
+        }
+    });
 }
 
 /**
@@ -250,7 +255,7 @@ function createTask(title, category, dueDate, priority, assignedContacts, subtas
         category,
         dueDate,
         priority,
-        stage, // Default to 'todo' if not provided
+        stage,
         assignedContacts,
         subtasks: subtasksArray.reduce((acc, title, index) => {
             acc[index] = {
@@ -329,3 +334,7 @@ function closeOverlay() {
     overlay.classList.add('d_none');
     popupContainer.classList.add('d_none');
 }
+
+
+
+

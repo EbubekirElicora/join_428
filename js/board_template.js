@@ -18,18 +18,21 @@ function generateTodoHTML(task) {
     const total = subtaskKeys.length;
     const done = subtaskKeys.filter(key => subtasks[key].completed).length;
     const progress = total > 0 ? (done / total) * 100 : 0;
+    const progressHTML = total > 0 ? `
+        <div id="progress_container" class="progress_container">
+            <div class="progress_bar">
+                <div class="progress_fill" style="width:${progress}%"></div>
+            </div>
+            <div class="subtasks_counter">${done}/${total} Subtasks</div>
+        </div>
+    ` : '';
 
     return `
         <div draggable="true" onclick="overlayBoard('${task.id}')" ondragstart="startDragging('${task.id}')" class="task">
             <div class="category bg_${task.category}">${task.category}</div>
-            <h2>${task.title}</h2>
-            <p>${task.description || ''}</p>
-            <div class="progress_container">
-                <div class="progress_bar">
-                    <div class="progress_fill" style="width:${progress}%"></div>
-                </div>
-                <div class="subtasks_counter">${done}/${total} Subtasks</div>
-            </div>
+            <h2 class="title_find">${task.title}</h2>
+            <p class="description_find">${task.description || ''}</p>
+             ${progressHTML}
             <div class="priority_contact">
                 ${task.assignedContacts?.length > 0 ? `
                     <div class="assigned-contacts">

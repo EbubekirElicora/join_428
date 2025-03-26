@@ -28,7 +28,13 @@ function generateTodoHTML(task) {
     ` : '';
 
     return `
-        <div draggable="true" onclick="overlayBoard('${task.id}')" ondragstart="startDragging('${task.id}')" class="task">
+        <div draggable="true" 
+            onclick="overlayBoard('${task.id}')" 
+            ondragstart="startDragging('${task.id}')"
+            ontouchstart="handleTouchStart(event, '${task.id}')"
+            ontouchmove="handleTouchMove(event)"
+            ontouchend="handleTouchEnd(event)"
+            class="task">
             <div class="category bg_${task.category}">${task.category}</div>
             <h2 class="title_find">${task.title}</h2>
             <p class="description_find">${task.description || ''}</p>

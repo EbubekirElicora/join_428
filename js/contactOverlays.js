@@ -1,7 +1,14 @@
-
 function showOverlay() {
     const overlay = document.getElementById('overlay');
     const addContactCircle = document.querySelector('.add-contact-circle');
+    
+    // Create and show backdrop
+    const backdrop = document.createElement('div');
+    backdrop.id = 'overlay-backdrop';
+    backdrop.className = 'overlay-backdrop';
+    backdrop.onclick = hideOverlay; // Close when clicking backdrop
+    document.body.appendChild(backdrop);
+    backdrop.style.display = 'block';
 
     if (addContactCircle) {
         addContactCircle.classList.add('clicked');
@@ -14,34 +21,57 @@ function showOverlay() {
         }
     }, 200);
 }
+
+function createBackdrop() {
+    const backdrop = document.createElement('div');
+    backdrop.id = 'overlay-backdrop';
+    backdrop.className = 'overlay-backdrop';
+    backdrop.onclick = hideOverlay;
+    document.body.appendChild(backdrop);
+    return backdrop;
+}
 /**
      * Hides the contact overlay.
      */
 function hideContactOverlay() {
     const contactOverlay = document.getElementById('contact-overlay');
+    const backdrop = document.getElementById('overlay-backdrop');
+    
     if (contactOverlay) {
         contactOverlay.style.display = 'none';
         contactOverlay.classList.remove('active');
     }
+    
+    // Add this to remove the backdrop
+    if (backdrop) {
+        backdrop.remove();
+    }
 }
-
 /**
  * Hides the overlay and contact overlay.
  */
 function hideOverlay() {
     const overlay = document.getElementById('overlay');
     const contactOverlay = document.getElementById('contact-overlay');
+    const backdrop = document.getElementById('overlay-backdrop'); // Add this line
+    
     function hideElement(overlayElement) {
         if (overlayElement) {
             overlayElement.style.display = 'none'; 
             overlayElement.classList.remove('active'); 
         }
     }    
+    
     if (overlay && overlay.style.display === 'block') {
         hideElement(overlay);
     }
     if (contactOverlay && contactOverlay.style.display === 'block') {
         hideElement(contactOverlay);
+    }
+    
+    // Only add this backdrop removal part:
+    if (backdrop) {
+        backdrop.remove();
     }
 }
 /**
@@ -73,7 +103,7 @@ if (editLink) {
                 contactOverlay.style.display = 'block';
                 contactOverlay.classList.add('active');
             }
-        }, 2000);
+        }, 10);
     });
 }
 

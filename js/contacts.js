@@ -224,11 +224,6 @@ document.addEventListener('DOMContentLoaded', () => {
             setupMobileDeleteLink(contact);
     }    
 
-    /**
-     * Opens the edit overlay for a contact.
-     * 
-     * @param {object} contact - The contact object to edit.
-     */
     function openEditOverlay(contact) {
         const editLink = document.getElementById('editLinkOverlay');
         const overlay = document.getElementById('contact-overlay');
@@ -236,6 +231,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const editContactName = document.getElementById('edit-contact-name');
         const editContactEmail = document.getElementById('edit-contact-email');
         const editContactPhone = document.getElementById('edit-contact-phone');
+        
+        // Create and show backdrop (same as in showOverlay)
+        const backdrop = document.createElement('div');
+        backdrop.id = 'overlay-backdrop';
+        backdrop.className = 'overlay-backdrop';
+        backdrop.onclick = hideOverlay; // Close when clicking backdrop
+        document.body.appendChild(backdrop);
+        backdrop.style.display = 'block';
     
         if (editLink) {
             editLink.classList.add('active');
@@ -262,7 +265,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (editLink) {
                 editLink.classList.remove('active');
             }
-        }, 1000);        
+        }, 100);        
         const saveButton = document.getElementById('save-contact-button');
         if (saveButton) {
             saveButton.onclick = () => saveEditedContact(contact);
@@ -435,7 +438,34 @@ document.addEventListener('DOMContentLoaded', () => {
     renderContacts();
     hideOverlay();
 });
+function setupEmailValidation() {
+    const emailInput = document.getElementById('email');
+    const editEmailInput = document.getElementById('edit-contact-email');
 
+    // For add contact form
+    if (emailInput) {
+        emailInput.addEventListener('input', () => {
+            if (emailInput.value.includes('@') && emailInput.value.includes('.')) {
+                emailInput.setCustomValidity('');
+            }
+        });
+    }
+
+    // For edit contact form
+    if (editEmailInput) {
+        editEmailInput.addEventListener('input', () => {
+            if (editEmailInput.value.includes('@') && editEmailInput.value.includes('.')) {
+                editEmailInput.setCustomValidity('');
+            }
+        });
+    }
+}
+
+// Call this in DOMContentLoaded
+document.addEventListener('DOMContentLoaded', () => {
+    setupEmailValidation();
+    // ... rest of your existing code
+});
 
 
 

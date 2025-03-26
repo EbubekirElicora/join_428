@@ -359,6 +359,7 @@
 
     .contact-list .contact-item:last-of-type+.divider {
         display: block;
+        
     }
 
     .add-contact-icon {
@@ -494,7 +495,12 @@
         padding: 20px;
         box-sizing: border-box;
         overflow: hidden;
+        border-top-right-radius: 0px;
+        border-bottom-right-radius: 20px;
+        border-bottom-left-radius: 20px;
     }
+   
+    
 
     .left-section {
         width: 100%;
@@ -745,11 +751,11 @@
 
 @media(max-width:480px) {
     #contact-overlay {
-        width: 80%;
+        width: 90%;
         
     }
     .overlay {
-        width: 80%;
+        width: 90%;
         
     }
 

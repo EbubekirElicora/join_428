@@ -156,8 +156,8 @@
 
     .finish_logo {
         width: 60px;
-        top: 30px;
-        left: 30px;
+        top: 16px;
+        left: 16px;
     }
 
     .animation_logo {
@@ -166,7 +166,7 @@
 
     .container_main {
         width: 280px;
-        top: 170px;
+        top: 120px;
         height: 430px;
     }
 
@@ -194,10 +194,11 @@
 
     .header {
         top: 570px;
+        padding-top: 0;
     }
 
     .footer_content {
-        top: 700px;
+        top: 640px;
         font-size: 15px;
     }
 
@@ -229,10 +230,10 @@
     }
 
     .header {
-        top: 495px;
+        top: 520px;
     }
 
     .footer_content {
-        top: 620px;
+        top: 588px;
     }
 }

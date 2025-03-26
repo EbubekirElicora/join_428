@@ -330,6 +330,8 @@ label select {
 
 .datepicker_container {
   margin-block-end: 26px;
+  position: relative;
+  width: 100%;
 }
 
 .prio_container {

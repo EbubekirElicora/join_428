@@ -1,10 +1,17 @@
+
+@media (max-width: 1420px) {
+
+    .content_container_size {
+        margin-left: 0;
+        overflow-y: auto;
+        height: calc(100vh - 100px);
+    }
+}
+
 @media (max-width: 1350px) {
 
     .content_container_size {
         width: 896px;
-        margin-left: 0;
-        overflow-y: auto;
-        height: calc(100vh - 100px);
     }
 
     .divider_line {
@@ -61,8 +68,10 @@
 
     .subtask_input_container {
         margin-bottom: 8px;
-    
-        
+    }
+
+    .content_container_size {
+        height: calc(100vh - 140px);
     }
 
     .headline_addTask_position {

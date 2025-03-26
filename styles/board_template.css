@@ -9,12 +9,12 @@
     cursor: pointer;
     margin-top: 24px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-    transition: transform 0.2s, box-shadow 0.2s;
+    transition: transform 0.5s, box-shadow 0.5s;
 }
 
 .task:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+    transform: rotate(5deg);
+    transition: transform 0.5s;
 }
 
 .bg_Technical {

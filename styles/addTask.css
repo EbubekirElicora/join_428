@@ -67,7 +67,7 @@ a {
   justify-content: flex-start;
   width: 100%;
   margin-bottom: 32px;
-  margin-top: 64px;
+  margin-top: 32px;
 }
 
 .headline_txt_addTask {
@@ -97,8 +97,6 @@ a {
 
 .container_size {
   display: flex;
-  align-items: center;
-  justify-content: center;
   width: 100%;
 }
 
@@ -179,7 +177,6 @@ label,
   display: flex;
   justify-content: flex-end;
   width: 100%;
-  margin-bottom: 80px;
 }
 
 .clear_task_btn_container:hover .clear_icon {
@@ -216,7 +213,7 @@ label,
 .btn_container_addTask {
   display: flex;
   justify-content: space-between;
-  margin-block-start: 64px;
+  margin-block-start: 40px;
 }
 
 .btn_position {
@@ -332,6 +329,8 @@ label select {
 
 .datepicker_container {
   margin-block-end: 26px;
+  position: relative;
+  width: 100%;
 }
 
 .prio_container {
@@ -419,7 +418,7 @@ label select {
 .required_container {
   display: flex;
   height: 100%;
-  align-items: flex-end;
+  align-items: flex-start;
 }
 
 input[type="text"]:focus,
@@ -658,7 +657,7 @@ input[type="checkbox"]:checked {
 }
 
 .added_text {
-  max-height: 150px;
+  height: 120px;
   overflow-y: auto;
   margin-top: 10px;
   scrollbar-width: none;

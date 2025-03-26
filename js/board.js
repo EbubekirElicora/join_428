@@ -1,5 +1,8 @@
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> b3ee0bcdf0b44c945eedc6258150b46924d6937b
 /**
  * Wartet, bis das DOM vollständig geladen ist, und führt dann die Initialisierungsfunktionen aus.
  */
@@ -48,6 +51,9 @@ async function loadAddTaskContent() {
                     document.body.appendChild(script);
                 });
             };
+            await loadScript('../js/addTaskSubTasks.js');
+            await loadScript('../js/addTaskCategory.js');
+            await loadScript('../js/addTaskDate.js');
             await loadScript('../js/addTaskPriority.js');
             await loadScript('../js/addTaskValidation.js');
             await loadScript('../js/addTask.js');

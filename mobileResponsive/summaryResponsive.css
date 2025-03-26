@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 
 @media (max-width: 1440px) {
@@ -16,6 +17,19 @@
 
     .button_container {
         margin-left: 300px;
+=======
+@media (max-width: 1350px) {
+
+    .button_container {
+        overflow-y: auto;
+        height: calc(100vh - 100px);
+    }
+}
+
+@media (max-width: 1230px) {
+    .button_container {
+        margin-left: 60px;
+>>>>>>> b3ee0bcdf0b44c945eedc6258150b46924d6937b
     }
 }
 
@@ -66,6 +80,7 @@
     .button_container {
         margin-left: 0;
         margin-block-start: 0;
+        height: calc(100vh - 200px);
     }
 
     .memory_container {

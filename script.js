@@ -215,12 +215,12 @@ function initializeTaskForm() {
  * @function collectTaskData
  */
 function collectTaskData() {
-    const title = document.getElementById('title')?.value.trim();
-    const category = document.getElementById('select_txt')?.textContent.trim();
-    const dueDate = document.getElementById('date')?.value.trim();
+    const title = document.getElementById('title')?.value?.trim();
+    const category = document.getElementById('select_txt')?.textContent?.trim();
+    const dueDate = document.getElementById('date')?.value?.trim();
     const priority = getSelectedPriority();
-    const assignedContacts = selectedContacts;
-    const subtasksArray = subtasks;
+    const assignedContacts = selectedContacts || [];
+    const subtasksArray = subtasks || [];
     const stage = 'todo';
     return createTask(title, category, dueDate, priority, assignedContacts, subtasksArray, stage);
 }

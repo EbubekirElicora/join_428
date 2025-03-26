@@ -22,13 +22,13 @@
     .nav_board {
         width: 216px;
     }
+    
+    .content_container_size {
+        height: auto;
+    }
 }
 
-@media(max-width: 1220px) {
-
-    .bg_Technical {
-        width: auto;
-    }
+@media(max-width: 1270px) {
 
     .category {
         padding: 5px;
@@ -55,7 +55,7 @@
     .board_tasks {
         display: flex;
         flex-direction: row;
-        gap: 16px;
+        gap: 20px;
         overflow-x: auto;
         white-space: nowrap;
         padding-bottom: 10px;
@@ -198,5 +198,9 @@
     .inner_content {
         width: 300px;
         height: 450px;
+    }
+
+    .btn_position{
+        justify-content: center;
     }
 }

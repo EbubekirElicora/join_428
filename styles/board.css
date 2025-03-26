@@ -298,4 +298,8 @@ h1 {
     transform: scale(0.98);
 }
 
+.task {
+    touch-action: manipulation;
+    user-select: none;
+}
 

@@ -7,6 +7,7 @@
 }
 
 @media(max-width: 1360px) {
+
     .task {
         width: 184px;
     }
@@ -23,9 +24,6 @@
         width: 216px;
     }
     
-    .content_container_size {
-        height: auto;
-    }
 }
 
 @media(max-width: 1270px) {

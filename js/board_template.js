@@ -28,7 +28,8 @@ function generateTodoHTML(task) {
     ` : '';
 
     return `
-        <div draggable="true" 
+        <div draggable="true"
+            data-task-id="${task.id}" 
             onclick="overlayBoard('${task.id}')" 
             ondragstart="startDragging('${task.id}')"
             ontouchstart="handleTouchStart(event, '${task.id}')"

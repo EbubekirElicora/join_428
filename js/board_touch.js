@@ -67,8 +67,8 @@ function findParentStageColumn(element) {
 }
 
 /**
- * Verarbeitet das Ende der Berührung
- * @param {TouchEvent} event - Das Endereignis
+ * Verarbeitet das Ende der Berührung mit Click-Fallback
+ * @param {TouchEvent|MouseEvent} event - Das Endereignis
  */
 function handleTouchEnd(event) {
     clearTimeout(touchStartTimeout);
@@ -81,5 +81,10 @@ function handleTouchEnd(event) {
         }
         document.querySelector('.dragging')?.classList.remove('dragging');
         currentDraggedElement = null;
+    } else {
+        if (event.type === 'touchend') {
+            const taskId = event.currentTarget.getAttribute('data-task-id');
+            overlayBoard(taskId);
+        }
     }
 }

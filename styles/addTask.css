@@ -67,7 +67,7 @@ a {
   justify-content: flex-start;
   width: 100%;
   margin-bottom: 32px;
-  margin-top: 64px;
+  margin-top: 32px;
 }
 
 .headline_txt_addTask {
@@ -177,7 +177,6 @@ label,
   display: flex;
   justify-content: flex-end;
   width: 100%;
-  margin-bottom: 80px;
 }
 
 .clear_task_btn_container:hover .clear_icon {
@@ -214,7 +213,7 @@ label,
 .btn_container_addTask {
   display: flex;
   justify-content: space-between;
-  margin-block-start: 64px;
+  margin-block-start: 40px;
 }
 
 .btn_position {
@@ -658,7 +657,7 @@ input[type="checkbox"]:checked {
 }
 
 .added_text {
-  max-height: 150px;
+  height: 120px;
   overflow-y: auto;
   margin-top: 10px;
   scrollbar-width: none;

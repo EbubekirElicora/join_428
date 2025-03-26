@@ -64,6 +64,14 @@
 }
 
 @media(max-width: 650px) {
+    .animation {
+        background-color: #2a3647;
+    }
+
+    .logo_none {
+        display: block;
+    }
+
     .finish_logo {
         width: 80px;
         top: 50px;

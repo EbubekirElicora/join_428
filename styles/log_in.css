@@ -151,7 +151,9 @@
     cursor: pointer; 
 }
 
-
+.logo_none {
+    display: none;
+}
 
 
 

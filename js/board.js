@@ -342,3 +342,4 @@ function updateEmptyStates() {
         noTaskElement.style.display = hasVisibleTasks ? 'none' : 'block';
     });
 }
+

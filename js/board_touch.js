@@ -17,9 +17,12 @@ let currentHighlightedStage = null;
  */
 function handleTouchStart(event, taskId) {
     event.preventDefault();
+    const taskElement = event.currentTarget;
+    taskElement.style.transform = 'rotate(2deg)'; 
     touchStartTimeout = setTimeout(() => {
         currentDraggedElement = taskId;
-        event.target.classList.add('dragging');
+        taskElement.classList.add('dragging');
+        taskElement.style.transform = 'rotate(5deg)';
     }, 500);
 }
 
@@ -32,6 +35,11 @@ function handleTouchMove(event) {
     event.preventDefault();
     const touch = event.touches[0];
     highlightStageUnderTouch(touch.clientX, touch.clientY);
+    const taskElement = document.querySelector('.dragging');
+    if (taskElement) {
+        const rotation = Math.min(8, Math.max(-8, touch.clientX % 10));
+        taskElement.style.transform = `rotate(${rotation}deg) scale(1.02)`;
+    }
 }
 
 /**
@@ -72,6 +80,7 @@ function findParentStageColumn(element) {
  */
 function handleTouchEnd(event) {
     clearTimeout(touchStartTimeout);
+    
     if (currentDraggedElement) {
         event.preventDefault();
         if (currentHighlightedStage) {

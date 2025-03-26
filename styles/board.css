@@ -293,12 +293,14 @@ h1 {
     touch-action: none;
 }
 
-.dragging {
-    opacity: 0.5;
-    transform: scale(0.98);
+.task.dragging {
+    transform: rotate(5deg) scale(1.02);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    z-index: 100;
 }
 
 .task {
+    transition: transform 0.3s ease;
     touch-action: manipulation;
     user-select: none;
 }

@@ -86,6 +86,8 @@ a {
   justify-content: center;
 }
 
+
+
 .container_pos {
   display: flex;
   align-items: center;
@@ -662,6 +664,23 @@ input[type="checkbox"]:checked {
   margin-top: 10px;
   scrollbar-width: none;
   border-radius: 10px;
+  scrollbar-width: thin;
+}
+
+.added_text::-webkit-scrollbar {
+  width: 8px !important;
+}
+
+.added_text::-webkit-scrollbar-track {
+  background: #f1f1f1 !important;
+}
+
+.added_text::-webkit-scrollbar-thumb {
+  background: #888 !important;
+}
+
+.added_text::-webkit-scrollbar-thumb:hover {
+  background: #555 !important;
 }
 
 .visible {
@@ -737,8 +756,11 @@ input[type="checkbox"]:checked {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-left: 16px;
   border-radius: 10px;
+}
+
+.leftContainerSubTask {
+  padding-left: 16px;
 }
 
 .subTaskButtons {
@@ -784,7 +806,7 @@ input[type="checkbox"]:checked {
 }
 
 .subTaskDeleteButton {
-  padding-right: 24px;
+  padding-right: 8px;
 }
 
 .subTaskSaveButton {
@@ -835,6 +857,26 @@ input[type="checkbox"]:checked {
   max-height: 232px;
   overflow-y: auto;
   z-index: 1;
+  scrollbar-width: thin; 
+  scrollbar-color: #888 #f1f1f1; 
+}
+
+.dropdown-content::-webkit-scrollbar {
+  width: 8px; 
+}
+
+.dropdown-content::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+  border-radius: 5px;
+}
+
+.dropdown-content::-webkit-scrollbar-thumb {
+  background: #888; 
+  border-radius: 5px;
+}
+
+.dropdown-content::-webkit-scrollbar-thumb:hover {
+  background: #555; 
 }
 
 .selected-dropdown-item .checkbox_class {

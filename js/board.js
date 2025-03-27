@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-
-
-=======
->>>>>>> b3ee0bcdf0b44c945eedc6258150b46924d6937b
 /**
  * Wartet, bis das DOM vollständig geladen ist, und führt dann die Initialisierungsfunktionen aus.
  */

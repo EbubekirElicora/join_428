@@ -306,11 +306,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }   
         
     function handleUIUpdates(updatedContact) {
-            hideContactOverlay();
-            renderContacts();
-            showContactDetails(updatedContact);
-    }
-        
+        hideContactOverlay();
+        renderContacts();
+        document.getElementById('showDetails').classList.add('hidden'); // Force hide
+    }   
     function handleError(error) {
             console.error('Error updating contact:', error);
     }

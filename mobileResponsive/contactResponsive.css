@@ -156,6 +156,16 @@
         width: 60px;
         border-bottom: 2px solid #3498db;
     }
+    #showDetails{
+        margin-left: 0px;
+        margin-top: 20px;
+        padding: 20px;
+        display: grid
+    ;
+        justify-content: flex-start;
+        
+        border-radius: 5px;  
+    }
 
     .separator {
         display: none;
@@ -199,6 +209,9 @@
     .left-column.hidden {
         display: none;
     }
+    .contact-item{
+        margin-bottom: 26px;
+    }
 
     .back-button {
         display: block;
@@ -236,20 +249,11 @@
 
     .add-contact-circle {
         display: block;
-        left: 70%;
+        left: 85%;
     }
 
-    .mobileEdit-button {
-        display: block;
-        background-color: #2A3647;
+    #showDetails:not(.hidden) .mobileEdit-button {
         display: flex;
-        justify-content: center;
-        height: 70px;
-        width: 70px;
-        border-radius: 50%;
-        transform: translateY(-90px);
-        position: fixed;
-        left: 70%;
     }
 }
 
@@ -333,10 +337,10 @@
         border-width: 100%;
         margin-top: 10px;
         display: flex;
-        flex-direction: column;
+        
         justify-content: flex-start;
         align-items: flex-start;
-        box-sizing: border-box;
+
         flex-grow: 1;
     }
 
@@ -390,7 +394,7 @@
     }
     .letter-header {
         font-size: 22px;
-        margin-top: -20px;
+        margin-top: 30px;
         margin-bottom: 10px;
         
     }

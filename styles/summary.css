@@ -3,12 +3,6 @@
     src: url(../assets/fonts/Figtree-VariableFont_wght.ttf);
 }
 
-<<<<<<< HEAD
-/* Ensure the body allows scrolling */
-body {
-    height: 100vh;
-    overflow: hidden;
-=======
 html {
     overflow: scroll;
     overflow-y: hidden;
@@ -34,7 +28,6 @@ body {
     overflow: hidden;
     overflow-y: auto;
     padding: 20px;
->>>>>>> b3ee0bcdf0b44c945eedc6258150b46924d6937b
 }
 
 /* Ensure the content below header is scrollable */
@@ -91,9 +84,6 @@ body {
     display: none;
 }
 
-<<<<<<< HEAD
-
-=======
 .memory_container {
     display: flex;
     max-width: 1440px;
@@ -102,7 +92,6 @@ body {
     margin-left: 232px;
     margin-top: 95px;
 }
->>>>>>> b3ee0bcdf0b44c945eedc6258150b46924d6937b
 
 .txt_container {
     display: flex;

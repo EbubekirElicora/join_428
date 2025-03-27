@@ -1,6 +1,3 @@
-
-
-
 document.addEventListener('DOMContentLoaded', () => {
     const BASE_URL = "https://join-428-default-rtdb.europe-west1.firebasedatabase.app/";
 
@@ -206,15 +203,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
         
     function setupMobileDeleteLink(contact) {
-            const deleteLinkOverlay = document.getElementById('deleteLinkOverlay');
-            if (!deleteLinkOverlay) {
-                console.error('Mobile delete link not found!');
-                return;
-            }
-            deleteLinkOverlay.onclick = (event) => {
-                event.preventDefault();
-                deleteContact(contact);
-            };
+        const deleteLinkOverlay = document.getElementById('deleteLinkOverlay');
+        if (!deleteLinkOverlay) return; // Silent fail
+        
+        deleteLinkOverlay.onclick = (event) => {
+            event.preventDefault();
+            deleteContact(contact);
+        };
     }
         
     function showContactDetails(contact) {
@@ -229,11 +224,6 @@ document.addEventListener('DOMContentLoaded', () => {
             setupMobileDeleteLink(contact);
     }    
 
-    /**
-     * Opens the edit overlay for a contact.
-     * 
-     * @param {object} contact - The contact object to edit.
-     */
     function openEditOverlay(contact) {
         const editLink = document.getElementById('editLinkOverlay');
         const overlay = document.getElementById('contact-overlay');
@@ -241,6 +231,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const editContactName = document.getElementById('edit-contact-name');
         const editContactEmail = document.getElementById('edit-contact-email');
         const editContactPhone = document.getElementById('edit-contact-phone');
+        
+        // Create and show backdrop (same as in showOverlay)
+        const backdrop = document.createElement('div');
+        backdrop.id = 'overlay-backdrop';
+        backdrop.className = 'overlay-backdrop';
+        backdrop.onclick = hideOverlay; // Close when clicking backdrop
+        document.body.appendChild(backdrop);
+        backdrop.style.display = 'block';
     
         if (editLink) {
             editLink.classList.add('active');
@@ -267,7 +265,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (editLink) {
                 editLink.classList.remove('active');
             }
-        }, 1000);        
+        }, 100);        
         const saveButton = document.getElementById('save-contact-button');
         if (saveButton) {
             saveButton.onclick = () => saveEditedContact(contact);
@@ -318,16 +316,30 @@ document.addEventListener('DOMContentLoaded', () => {
     }
         
     function saveEditedContact(contact) {
-            const updatedContact = gatherUpdatedContactData(contact);
+        const editForm = document.querySelector('#contact-overlay .contact-details-inputs');
+        const emailInput = document.getElementById('edit-contact-email');
+        const email = emailInput.value;
+    
+        // First check if form is valid (structural validation)
+        if (!emailInput.checkValidity()) {
+            emailInput.reportValidity();
+            return;
+        }   
         
-            updateContactAPI(contact.id, updatedContact)
-                .then(() => {
-                    console.log('Contact updated successfully!');
-                    handleUIUpdates(updatedContact);
-                })
-                .catch(handleError);
+        if (!email.includes('@') || !email.includes('.')) {
+            emailInput.setCustomValidity('Email must contain both @ and .');
+            emailInput.reportValidity();
+            return;
+        }        
+        emailInput.setCustomValidity('');        
+        const updatedContact = gatherUpdatedContactData(contact);
+        updateContactAPI(contact.id, updatedContact)
+            .then(() => {
+                console.log('Contact updated successfully!');
+                handleUIUpdates(updatedContact);
+            })
+            .catch(handleError);
     }
-
     /**
      * Deletes a contact from Firebase.
      * 
@@ -337,16 +349,14 @@ document.addEventListener('DOMContentLoaded', () => {
         fetch(`${BASE_URL}/contacts/${contact.id}.json`, {
             method: 'DELETE',
         }).then(() => {
-            console.log('Contact deleted successfully!');
             renderContacts();
             hideContactOverlay();
             document.getElementById('showDetails').classList.add('hidden');
             if (window.innerWidth <= 1060) {
-                console.log('Small screen detected. Toggling back to left column...');
                 toggleColumns(); 
             }
         }).catch(error => {
-            console.error('Error deleting contact:', error);
+            
         });
     }
 
@@ -387,248 +397,79 @@ document.addEventListener('DOMContentLoaded', () => {
     }
         
     function saveAndUpdateUI(newContact) {
-            saveContact(newContact)
-                .then((data) => {
-                    showToast('Contact created successfully!');
-                    newContact.id = data.name;
-                    document.getElementById('contact-form').reset();
-                    hideOverlay();
-                    renderContacts();
-                    showContactDetails(newContact);
-                    if (window.innerWidth <= 1060) {
-                        toggleColumns();
-                    }
-                })
-                .catch(error => {
-                    showToast('Error saving contact. Please try again.');
-                    console.error('Error saving contact:', error);
-                });
+        saveContact(newContact)
+            .then((data) => {
+                showToast('Contact created successfully!');
+                newContact.id = data.name;
+                document.getElementById('contact-form').reset();
+                hideOverlay();
+                renderContacts();
+                showContactDetails(newContact);
+                if (window.innerWidth <= 1060) {
+                    toggleColumns();
+                }
+            })
+            .catch(error => {
+                showToast('Error saving contact. Please try again.');
+            });
     }
         
     function createContact(event) {
-            event.preventDefault();
-            const newContact = gatherContactData();
-            saveAndUpdateUI(newContact);
+        event.preventDefault();
+        const emailInput = document.getElementById('email');
+        
+        // Check if email is valid (contains @ and .)
+        if (!emailInput.value.includes('@') || !emailInput.value.includes('.')) {
+            emailInput.setCustomValidity('Email must contain both @ and .');
+            emailInput.reportValidity();
+            return;
+        }
+        
+        // Clear any previous validation messages
+        emailInput.setCustomValidity('');
+        
+        const newContact = gatherContactData();
+        saveAndUpdateUI(newContact);
     }
-
     const contactForm = document.getElementById('contact-form');
     if (contactForm) {
         contactForm.addEventListener('submit', createContact);
-    } else {
-        console.error('Contact form not found!');
     }    
     renderContacts();
     hideOverlay();
 });
+function setupEmailValidation() {
+    const emailInput = document.getElementById('email');
+    const editEmailInput = document.getElementById('edit-contact-email');
 
-
-
-
-function showOverlay() {
-    const overlay = document.getElementById('overlay');
-    const addContactCircle = document.querySelector('.add-contact-circle');
-
-    if (addContactCircle) {
-        addContactCircle.classList.add('clicked');
-    }
-
-    setTimeout(() => {
-        if (overlay) {
-            overlay.style.display = 'block';
-            overlay.classList.add('active');
-        }
-    }, 200);
-}
-/**
-     * Hides the contact overlay.
-     */
-function hideContactOverlay() {
-    const contactOverlay = document.getElementById('contact-overlay');
-    if (contactOverlay) {
-        contactOverlay.style.display = 'none';
-        contactOverlay.classList.remove('active');
-        console.log('Contact overlay hidden');
-    } else {
-        console.error('Contact overlay element not found!');
-    }
-}
-
-/**
- * Hides the overlay and contact overlay.
- */
-function hideOverlay() {
-    const overlay = document.getElementById('overlay');
-    const contactOverlay = document.getElementById('contact-overlay');
-    function hideElement(overlayElement) {
-        if (overlayElement) {
-            overlayElement.style.display = 'none'; 
-            overlayElement.classList.remove('active'); 
-        }
-    }    
-    if (overlay && overlay.style.display === 'block') {
-        hideElement(overlay);
-    }
-    if (contactOverlay && contactOverlay.style.display === 'block') {
-        hideElement(contactOverlay);
-    }
-}
-/**
- * Toggles the mobile edit overlay and changes the button color temporarily.
- */
-function toggleOverlay() {
-    const mobileEditOverlay = document.getElementById('mobileEditOverlay');
-    const mobileEditButton = document.querySelector('.mobileEdit-button');
-
-    if (mobileEditOverlay) {
-        mobileEditButton.style.backgroundColor = '#3498db';
-        mobileEditOverlay.classList.toggle('active');
-        setTimeout(() => {
-            mobileEditButton.style.backgroundColor = '';
-        }, 300);
-    }
-}
-/**
- * Adds a click event listener to the edit link to open the contact overlay after a delay.
- */
-const editLink = document.getElementById('editLinkOverlay');
-if (editLink) {
-    editLink.addEventListener('click', function (e) {
-        e.preventDefault();
-        editLink.classList.add('active');
-        setTimeout(() => {
-            const contactOverlay = document.getElementById('contact-overlay');
-            if (contactOverlay) {
-                contactOverlay.style.display = 'block';
-                contactOverlay.classList.add('active');
-            }
-        }, 2000);
-    });
-}
-
-document.addEventListener('click', function (event) {
-    const overlay = document.getElementById('mobileEditOverlay');
-    const threeDotsButton = document.querySelector('.mobileEdit-button img');
-    if (!overlay.contains(event.target) && event.target !== threeDotsButton) {
-        overlay.classList.remove('active');
-    }
-});
-document.addEventListener('DOMContentLoaded', function () {
-    /**
-     * Hides the contact overlay.
-     */
-    function hideContactOverlay() {
-        const contactOverlay = document.getElementById('contact-overlay');
-        if (contactOverlay) {
-            contactOverlay.style.display = 'none';
-            contactOverlay.classList.remove('active');
-            console.log('Contact overlay hidden');
-        } else {
-            console.error('Contact overlay element not found!');
-        }
-    }
-
-    /**
-     * Handles clicks outside overlays to close them.
-     * 
-     * @param {Event} event - The click event.
-     */
-    document.addEventListener('click', function (event) {
-        const overlay = document.getElementById('overlay');
-        const contactOverlay = document.getElementById('contact-overlay');
-        const mobileEditOverlay = document.getElementById('mobileEditOverlay');
-        if (overlay && overlay.style.display === 'block' && !overlay.contains(event.target)) {
-            hideOverlay();
-        }
-        if (contactOverlay && contactOverlay.style.display === 'block' && !contactOverlay.contains(event.target)) {
-            hideContactOverlay();
-        }
-        if (
-            mobileEditOverlay &&
-            !mobileEditOverlay.contains(event.target) &&
-            !event.target.closest('.mobileEdit-button')
-        ) {
-            mobileEditOverlay.classList.remove('active');
-        }
-    });
-});
-
-
-
-
-/**
-* Toggles visibility of the left and right columns on small screens.
-*/
-document.addEventListener('DOMContentLoaded', function () {    
-    function toggleColumns() {
-        const leftColumn = document.querySelector('.left-column');
-        const rightColumn = document.querySelector('.right-column');
-
-        if (window.innerWidth <= 1080) {
-            leftColumn.classList.toggle('hidden');
-            rightColumn.classList.toggle('active');
-        }
-    }
-
-    const content = document.getElementById('content');
-    if (content) {
-        content.addEventListener('click', function (event) {
-            if (event.target.closest('.contact-item')) {
-                toggleColumns();
+    // For add contact form
+    if (emailInput) {
+        emailInput.addEventListener('input', () => {
+            if (emailInput.value.includes('@') && emailInput.value.includes('.')) {
+                emailInput.setCustomValidity('');
             }
         });
-    } else {
-        console.error('Element with ID "content" not found.');
     }
-    
-});
-/**
- * Toggles visibility of the left and right columns.
- * Adds/removes the 'hidden' class to the left column and the 'active' class to the right column.
- */
-function toggleColumns() {
-    const leftColumn = document.querySelector('.left-column');
-    const rightColumn = document.querySelector('.right-column');
 
-    console.log('Left Column:', leftColumn.classList);
-    console.log('Right Column:', rightColumn.classList);
-
-    leftColumn.classList.toggle('hidden');
-    rightColumn.classList.toggle('active');
-}
-/**
-     * Handles click events on contact items in the content area.
-     * Adds the 'active' class to the clicked contact item and removes it from others.
-     * 
-     * @param {Event} event - The click event.
-     */
-document.addEventListener('DOMContentLoaded', function () {
-    const BASE_URL = "https://join-428-default-rtdb.europe-west1.firebasedatabase.app/";
-    
-    document.getElementById('content').addEventListener('click', function (event) {
-        const contactItem = event.target.closest('.contact-item');
-        if (contactItem) {
-            document.querySelectorAll('.contact-item').forEach(item => {
-                item.classList.remove('active');
-            });
-            contactItem.classList.add('active');
-            console.log('Clicked on:', contactItem);
-        }
-    });
-});
-
-
-
-document.addEventListener('DOMContentLoaded', function () {
-    const cancelButton = document.getElementById('cancel');
-    if (cancelButton) {
-        cancelButton.addEventListener('click', function (event) {
-            event.preventDefault();
-            hideOverlay();
+    // For edit contact form
+    if (editEmailInput) {
+        editEmailInput.addEventListener('input', () => {
+            if (editEmailInput.value.includes('@') && editEmailInput.value.includes('.')) {
+                editEmailInput.setCustomValidity('');
+            }
         });
-    } else {
-        console.error('Cancel button not found!');
     }
+}
+
+// Call this in DOMContentLoaded
+document.addEventListener('DOMContentLoaded', () => {
+    setupEmailValidation();
+    // ... rest of your existing code
 });
+
+
+
+
 
 
 

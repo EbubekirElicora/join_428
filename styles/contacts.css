@@ -60,7 +60,8 @@
     border-radius: 50%;
     transform: translateY(-120px);
     position: fixed;
-    left: 70%;
+    left: 80%;
+    top: 90%;
     display: none;
     cursor: pointer;
     position: relative;
@@ -69,6 +70,7 @@
 .left-column {
     position: fixed;
     width: 320px;
+    height: 100vh;
     max-height: calc(100vh - 100px);
     background-color: #fff;
     border-right: 2px solid #ccc;
@@ -79,7 +81,7 @@
     margin-bottom: 10px;
     margin-top: 10px;
     overflow-x: hidden;    
-    box-sizing: border-box;
+    
 
 
     
@@ -181,14 +183,16 @@
     padding: 20px;
 }
 
-.hidden {
-    display: none;
+#showDetails.hidden {
+    display: none !important; 
 }
 
 #showDetails {
     margin-top: 20px;
     padding: 20px;
-    
+    display: grid;
+    justify-content: center;
+    margin-left: -170px;
     border-radius: 5px;
 }
 
@@ -246,7 +250,9 @@
     font-weight: bold;
     padding-left: 20px;
 }
-
+.contact_link_container{
+    margin-top: 15px;
+}
 .details-columns p {
     margin: 0;
     padding: 0;

@@ -182,11 +182,31 @@ document.addEventListener('DOMContentLoaded', function () {
  */
 function toggleColumns() {
     const leftColumn = document.querySelector('.left-column');
-    const rightColumn = document.querySelector('.right-column'); 
-
+    const rightColumn = document.querySelector('.right-column');
+    
+    // Toggle visibility
     leftColumn.classList.toggle('hidden');
     rightColumn.classList.toggle('active');
+    
+    // On mobile, sync the mobileEdit-button with right column state
+    if (window.innerWidth <= 1080) {
+        const mobileEditButton = document.querySelector('.mobileEdit-button');
+        if (rightColumn.classList.contains('active')) {
+            document.getElementById('showDetails').classList.remove('hidden');
+        } else {
+            document.getElementById('showDetails').classList.add('hidden');
+        }
+    }
 }
+window.addEventListener('resize', function() {
+    if (window.innerWidth > 1080) {
+        // Force hide on desktop
+        document.querySelector('.mobileEdit-button').style.display = 'none';
+    } else if (document.querySelector('.right-column').classList.contains('active')) {
+        // Show only if right column is active on mobile
+        document.querySelector('.mobileEdit-button').style.display = 'flex';
+    }
+});
 /**
      * Handles click events on contact items in the content area.
      * Adds the 'active' class to the clicked contact item and removes it from others.

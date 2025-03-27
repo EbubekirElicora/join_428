@@ -185,8 +185,8 @@
 #contact-overlay {
     display: none;
     position: fixed;
-    top: 65%;
-    left: 52.5%;
+    top: 50%;
+    left: 50%;
     transform: translate(-50%, -50%); 
     z-index: 1001;
     transition: transform 0.5s ease-in-out; 
@@ -309,7 +309,7 @@
 
 .contact-input-container .contact-input-icon {
     position: absolute;
-    top: 50%;
+    top: 40%;
     right: 10px;
     transform: translateY(-50%);
     width: 20px;

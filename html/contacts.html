@@ -51,14 +51,15 @@
                         <img src="../assets/icons/arrowLeft.svg" alt="Back Arrow">
                     </div>
                 </div>
+                
+                <!-- Show Details Content -->
                 <div id="showDetails" class="hidden">
                     <div style="display: flex;">
                         <h1>
                             <div id="contactInitials" class="contact-initials"></div>
                         </h1>
                         <div class="contact_link_container">
-                            <span id="contactName">
-                            </span>
+                            <span id="contactName"></span>
                             <div class="links">
                                 <div>
                                     <a href="#" id="editLink">
@@ -70,7 +71,6 @@
                                         <img src="../assets/icons/delete_contact_icon.png">Delete
                                     </a>
                                 </div>
-
                             </div>
                         </div>
                     </div>
@@ -79,18 +79,21 @@
                         <p><strong>Email:</strong><a id="contactEmail"></a></p>
                         <p><strong>Phone:</strong><span id="contactPhone"></span></p>
                     </div>
-                    <div class="mobileEdit-button">
-                        <img src="../assets/icons/3dots.svg" alt="" onclick="toggleOverlay()">
-                        <div id="mobileEditOverlay" class="mobileEdit-overlay">
-                            <a href="#" id="editLinkOverlay" class="edit-link"><i class="fas fa-pencil"></i>Edit</a>
-                            <a href="#" id="deleteLinkOverlay" class="delete-link"> <i
-                                    class="fas fa-trash-alt"></i>Delete</a>
-                        </div>
+                </div>
+                
+                <!-- Mobile Edit Button - Moved outside showDetails but still in right-column -->
+                <div class="mobileEdit-button">
+                    <img src="../assets/icons/3dots.svg" alt="" onclick="toggleOverlay()">
+                    <div id="mobileEditOverlay" class="mobileEdit-overlay">
+                        <a href="#" id="editLinkOverlay" class="edit-link"><i class="fas fa-pencil"></i>Edit</a>
+                        <a href="#" id="deleteLinkOverlay" class="delete-link"><i class="fas fa-trash-alt"></i>Delete</a>
                     </div>
                 </div>
+                
             </div>
+
         </div>
-        <div id="overlay-backdrop" class="overlay-backdrop"></div>
+       
         <div id="overlay" class="overlay">
             <div class="overlay-content">
                 <div class="left-section">
@@ -171,6 +174,9 @@
             </div>
         </div>
         <div id="toast" class="toast"></div>
+        <div class="mobileEdit-button-container"> 
+            
+        </div>
     </main>
     <script src="https://www.w3schools.com/lib/w3.js"></script>
     <script>includeHTML();</script>

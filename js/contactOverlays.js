@@ -74,21 +74,7 @@ function hideOverlay() {
         backdrop.remove();
     }
 }
-/**
- * Toggles the mobile edit overlay and changes the button color temporarily.
- */
-function toggleOverlay() {
-    const mobileEditOverlay = document.getElementById('mobileEditOverlay');
-    const mobileEditButton = document.querySelector('.mobileEdit-button');
 
-    if (mobileEditOverlay) {
-        mobileEditButton.style.backgroundColor = '#3498db';
-        mobileEditOverlay.classList.toggle('active');
-        setTimeout(() => {
-            mobileEditButton.style.backgroundColor = '';
-        }, 300);
-    }
-}
 /**
  * Adds a click event listener to the edit link to open the contact overlay after a delay.
  */
@@ -177,34 +163,55 @@ document.addEventListener('DOMContentLoaded', function () {
     
 });
 /**
+ * Toggles the mobile edit overlay and changes the button color temporarily.
+ */
+function toggleOverlay() {
+    const mobileEditOverlay = document.getElementById('mobileEditOverlay');
+    const mobileEditButton = document.querySelector('.mobileEdit-button');
+
+    if (mobileEditOverlay) {
+        mobileEditButton.style.backgroundColor = '#3498db';
+        mobileEditOverlay.classList.toggle('active');
+        setTimeout(() => {
+            mobileEditButton.style.backgroundColor = '';
+        }, 300);
+    }
+}
+/**
  * Toggles visibility of the left and right columns.
  * Adds/removes the 'hidden' class to the left column and the 'active' class to the right column.
  */
+// Modify toggleColumns() function
 function toggleColumns() {
     const leftColumn = document.querySelector('.left-column');
     const rightColumn = document.querySelector('.right-column');
-    
-    // Toggle visibility
+    const mobileEditButton = document.querySelector('.mobileEdit-button');
+
+    // Toggle column visibility
     leftColumn.classList.toggle('hidden');
     rightColumn.classList.toggle('active');
-    
-    // On mobile, sync the mobileEdit-button with right column state
+
+    // Mobile-specific handling
     if (window.innerWidth <= 1080) {
-        const mobileEditButton = document.querySelector('.mobileEdit-button');
         if (rightColumn.classList.contains('active')) {
-            document.getElementById('showDetails').classList.remove('hidden');
+            // Show in right column
+            rightColumn.appendChild(mobileEditButton);
+            mobileEditButton.style.display = 'flex';
         } else {
-            document.getElementById('showDetails').classList.add('hidden');
+            // Hide completely when left column is shown
+            mobileEditButton.style.display = 'none';
         }
+    } else {
+        // Desktop handling
+        mobileEditButton.style.display = 'none';
     }
 }
-window.addEventListener('resize', function() {
+
+// Add resize handler
+window.addEventListener('resize', () => {
+    const mobileEditButton = document.querySelector('.mobileEdit-button');
     if (window.innerWidth > 1080) {
-        // Force hide on desktop
-        document.querySelector('.mobileEdit-button').style.display = 'none';
-    } else if (document.querySelector('.right-column').classList.contains('active')) {
-        // Show only if right column is active on mobile
-        document.querySelector('.mobileEdit-button').style.display = 'flex';
+        mobileEditButton.style.display = 'none';
     }
 });
 /**

@@ -1,4 +1,32 @@
+@media(max-width:1180px){
+    #showDetails{
+        margin-left: 0;
 
+    }
+    .overlay-content {
+    
+        width: 1000px;
+        height: 400px;
+    
+    }
+    .contact-overlay-content {
+    
+        width: 1000px;
+        height: 400px;
+    
+    }
+    .contact-details-row {
+        display: flex;
+    
+        align-items: center;
+        gap: 40px;
+        margin-top: 40px;
+    }
+    .contact-input-container {
+        
+         margin-bottom: 1px; 
+    }
+}
 @media(max-width:1080px) {
     html {
         overflow: scroll;
@@ -122,13 +150,30 @@
 
 @media (max-width: 1080px) {
 
-   
+    .left-section h2 {
+        font-size: 24px;
+        color: #fff;
+        position: relative;
+    }
+    .left-section p {
+        position: relative;
+        margin: 0;
+        color: #fff;
+      font-size: 18px;
+    }
+    .right-section-flex {
+        display: flex;
+        gap: 25px;
+        position: relative;
+        margin-top: 40px;
+    }
 
     .right-column {
         margin-left: 10px;
         padding: 20px;
 
     }
+  
 
    
 
@@ -251,11 +296,45 @@
         display: block;
         left: 85%;
     }
-
-    #showDetails:not(.hidden) .mobileEdit-button {
-        display: flex;
-    }
 }
+
+    /* Default styles - hidden on all screens */
+
+
+/* Mobile styles */
+@media (max-width: 1080px) {
+    .mobileEdit-button-container {
+        position: fixed;
+        bottom: 80px;
+        right: 20px;
+        z-index: 1000;
+        display: block;
+    }
+    
+    .mobileEdit-button {
+        background-color: #2A3647 !important;
+        height: 60px !important;
+        width: 60px !important;
+        border-radius: 50% !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.2) !important;
+        margin-left: 90%!important;
+        margin-top: 70%;
+        transform: none !important;
+        position: static !important;
+    }
+    .left-column .mobileEdit-button {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        pointer-events: none !important;
+    }
+
+   
+}
+
 
 @media(max-width:990px) {
 
@@ -292,6 +371,17 @@
         width: 600px;
         height: 400px;
     }
+    .right-section-flex {
+        display: flex;
+        gap: 25px;
+        position: relative;
+        margin-top: 5px;
+    }
+    .contact-details-row {
+        
+     margin-top: 0px;
+    }
+
 
     .contact-form {
         display: flex;

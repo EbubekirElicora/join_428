@@ -342,5 +342,7 @@
     z-index: 1000; /* Must be below overlay z-index */
     display: none;
 }
-
+.mobileEdit-button-container {
+    display: none;
+}
 

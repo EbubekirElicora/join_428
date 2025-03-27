@@ -14,7 +14,10 @@
 
 .task:hover {
     transform: rotate(5deg);
-    transition: transform 0.5s;
+}
+
+.task:active {
+    transform: scale(0.98);
 }
 
 .bg_Technical {

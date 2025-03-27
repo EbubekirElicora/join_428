@@ -1,8 +1,7 @@
 /**
  * Wartet, bis das DOM vollständig geladen ist, und führt dann die Initialisierungsfunktionen aus.
  */
-document.addEventListener('DOMContentLoaded', () => {
-    
+document.addEventListener('DOMContentLoaded', () => { 
     initializeCategorySelector();
     initializeTaskForm();
     init();
@@ -15,7 +14,6 @@ document.addEventListener('DOMContentLoaded', () => {
 function openOverlay() {
     document.getElementById('overlay').classList.remove('d_none');
     document.getElementById('popup_container').classList.remove('d_none');
-    document.getElementById('close_img').classList.remove('d_none');
 }
 
 /**
@@ -46,7 +44,6 @@ async function loadAddTaskContent() {
                     document.body.appendChild(script);
                 });
             };
-            await loadScript('../js/addTaskSubTasks.js');
             await loadScript('../js/addTaskCategory.js');
             await loadScript('../js/addTaskDate.js');
             await loadScript('../js/addTaskPriority.js');
@@ -242,10 +239,12 @@ async function moveToStage(targetStage) {
             stage: targetStage
         });
         await fetchTasks();
+        removeHighlight(`${targetStage}_task`);
     } catch (error) {
         console.error("Move error:", error);
     }
 }
+
 
 /**
  * Hebt das Element mit der angegebenen ID hervor, um anzuzeigen, dass es ein Zielbereich für Drag-and-Drop ist.
@@ -342,3 +341,22 @@ function updateEmptyStates() {
         noTaskElement.style.display = hasVisibleTasks ? 'none' : 'block';
     });
 }
+
+
+document.querySelectorAll(".stage-container").forEach(container => {
+    container.addEventListener("dragenter", (ev) => {
+        ev.preventDefault();
+        highlight(container.id);
+    });
+    container.addEventListener("dragleave", () => {
+        removeHighlight(container.id);
+    });
+    container.addEventListener("drop", (ev) => {
+        ev.preventDefault();
+        removeHighlight(container.id);
+        const targetStage = container.id.replace("_task", ""); 
+        moveToStage(targetStage);
+    });
+});
+
+

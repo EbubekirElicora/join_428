@@ -18,13 +18,18 @@ let currentHighlightedStage = null;
 function handleTouchStart(event, taskId) {
     event.preventDefault();
     const taskElement = event.currentTarget;
-    taskElement.style.transform = 'rotate(2deg)'; 
+    taskElement.style.transition = 'transform 0.5s ease';
+    taskElement.style.transform = 'rotate(2deg)';
     touchStartTimeout = setTimeout(() => {
         currentDraggedElement = taskId;
         taskElement.classList.add('dragging');
         taskElement.style.transform = 'rotate(5deg)';
     }, 500);
+    setTimeout(() => {
+        taskElement.style.transform = 'rotate(0deg)';
+    }, 1500);
 }
+
 
 /**
  * Verarbeitet die Bewegung während der Berührung

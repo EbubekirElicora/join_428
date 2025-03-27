@@ -318,7 +318,6 @@ function renderEditMode(id, subtask) {
             </div>
             <div class="rightContainerSubTask">
                 <div>
-                    <img class="subTaskDeleteButtonInput" onclick="deleteSubTaskOverlay('${id}')" src="../assets/icons/delete.png" alt="Delete">
                 </div>
                 <div class="partingLine"></div>
                 <div>

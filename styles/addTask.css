@@ -63,10 +63,14 @@ a {
 
 .headline_addTask_position {
   display: flex;
-  justify-content: flex-start;
-  width: 100%;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 32px;
   margin-top: 32px;
+}
+
+.close_img {
+  display: none;
 }
 
 .headline_txt_addTask {

@@ -64,8 +64,6 @@ window.toggleSubtask = async function (taskId, subtaskId) {
   }
 };
 
-
-
 async function migrateSubtasks() {
   const tasks = await loadData("tasks");
   for (const [taskId, task] of Object.entries(tasks)) {

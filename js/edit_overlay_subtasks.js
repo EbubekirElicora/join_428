@@ -54,6 +54,7 @@ function renderSubtasksOverlay() {
         return subtask.isEditing ? renderEditMode(id, subtask) : renderViewMode(id, subtask);
     }).join('');
 }
+
 function deleteSubTaskOverlay(subtaskId) {
     const subtaskElement = document.querySelector(`.subTask[data-subtask-id="${subtaskId}"]`);
     if (subtaskElement) {

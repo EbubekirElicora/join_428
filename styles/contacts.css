@@ -23,7 +23,6 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    margin: 0 auto;
 }
 
 .contact h1 {
@@ -73,18 +72,21 @@
     height: 100vh;
     max-height: calc(100vh - 100px);
     background-color: #fff;
-    border-right: 2px solid #ccc;
-    box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1, 0);
     padding: 20px;
     overflow-y: auto;
     cursor: pointer;
     margin-bottom: 10px;
     margin-top: 10px;
+<<<<<<< HEAD
     overflow-x: hidden;    
     
 
 
     
+=======
+    overflow-x: hidden;
+    box-shadow: 4px 0px 6px 0px #00000014;
+>>>>>>> 3da3bbefce633aea9a193975354a062c0c473498
 }
 
 
@@ -179,7 +181,7 @@
 }
 
 .right-column {
-    margin-left: 340px;
+    margin-left: 362px;
     padding: 20px;
 }
 
@@ -190,9 +192,9 @@
 #showDetails {
     margin-top: 20px;
     padding: 20px;
-    display: grid;
+    display: flex;
     justify-content: center;
-    margin-left: -170px;
+    flex-direction: column;
     border-radius: 5px;
 }
 

@@ -1,8 +1,33 @@
+<<<<<<< HEAD
 @media(max-width:1180px){
     #showDetails{
         margin-left: 0;
+=======
+@media(max-width:1180px) {
+
+    #showDetails {
+        margin-left: 348px;
+    }
+>>>>>>> 3da3bbefce633aea9a193975354a062c0c473498
 
     }
+<<<<<<< HEAD
+=======
+
+    .right-column {
+        margin-left: 0px;
+        padding: 20px 8px 20px 8px;
+    }
+
+    .separator {
+        margin: 0 10px;
+    }
+
+    .contact-header {
+        margin-left: 362px;
+    }
+
+>>>>>>> 3da3bbefce633aea9a193975354a062c0c473498
     .overlay-content {
     
         width: 1000px;

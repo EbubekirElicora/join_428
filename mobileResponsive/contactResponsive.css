@@ -16,6 +16,10 @@
         margin: 0 10px;
     }
 
+    .contact-header {
+        margin-left: 368px;
+    }
+
     .overlay-content {
         width: 1000px;
         height: 400px;

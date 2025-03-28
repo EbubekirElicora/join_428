@@ -1,6 +1,7 @@
 @media(max-width:1180px) {
+
     #showDetails {
-        margin-left: 220px;
+        margin-left: 348px;
     }
 
     .contact {
@@ -17,7 +18,7 @@
     }
 
     .contact-header {
-        margin-left: 368px;
+        margin-left: 362px;
     }
 
     .overlay-content {

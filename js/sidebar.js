@@ -100,6 +100,7 @@ function modifySidebar() {
 
     // Add login link below logo
     const sidebarLogoContainer = document.querySelector('.sidebar_img_container');
+    const sidefoot = document.getElementById('sidefoot');
     if (sidebarLogoContainer) {
         const loginLinkContainer = document.createElement('div');
         loginLinkContainer.innerHTML = `
@@ -108,7 +109,8 @@ function modifySidebar() {
                 <span>Login</span>
             </a>`;
         loginLinkContainer.style.marginTop = '40px'; 
-        loginLinkContainer.style.marginLeft = '-90px'; 
+        loginLinkContainer.style.marginLeft = '-50px'; 
+        sidefoot.style.paddingRight = '56px';
         sidebarLogoContainer.appendChild(loginLinkContainer);
     }
 }

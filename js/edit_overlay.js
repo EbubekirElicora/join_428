@@ -1,5 +1,11 @@
-
-
+/**
+ * Toggles the edit overlay visibility for a task.
+ * 
+ * If a taskId is provided, the overlay will show and populate with the task details.
+ * If no taskId is provided, the overlay will be hidden and scrolling will be re-enabled on the page.
+ * 
+ * @param {string} taskId - The ID of the task to edit.
+ */
 async function editOverlay(taskId) {
     const overlayRef = document.getElementById('edit_overlay');
     if (!taskId) {
@@ -15,6 +21,14 @@ async function editOverlay(taskId) {
     document.body.classList.add('no-scroll');
 }
 
+/**
+ * Handles the priority selection for a task.
+ * 
+ * Sets the task's priority to the specified value and updates the UI to reflect the selection.
+ * 
+ * @param {Event} event - The event object for the priority selection click event.
+ * @param {string} priority - The priority level to set for the task.
+ */
 function handlePrioritySelection(event, priority) {
     event.stopPropagation();
     currentTask.priority = priority;
@@ -28,6 +42,13 @@ function handlePrioritySelection(event, priority) {
     });
 }
 
+/**
+ * Sets the priority of the current task and updates the UI.
+ * 
+ * Adds the 'active' class to the selected priority button and removes it from the others.
+ * 
+ * @param {string} priority - The priority level to set for the current task.
+ */
 function setPrio(priority) {
     currentTask.priority = priority;
     const priorityButtons = document.querySelectorAll('.prio_btn_container button');
@@ -40,6 +61,11 @@ function setPrio(priority) {
     });
 }
 
+/**
+ * Fetches contacts from the database and returns them as an array.
+ * 
+ * @returns {Promise<Array>} A promise that resolves to an array of contact objects.
+ */
 async function fetchContacts() {
     try {
         const response = await fetch(`${BASE_URL}/contacts.json`);
@@ -56,6 +82,12 @@ async function fetchContacts() {
     }
 }
 
+/**
+ * Populates the dropdown with contact options for the edit task overlay.
+ * 
+ * The dropdown will display a list of contacts, each with their initials and name.
+ * If the current task has assigned contacts, those will be pre-selected.
+ */
 async function populateDropdown() {
     await fetchContacts();
     const dropdownContent = document.getElementById('editDropdownContent');
@@ -76,6 +108,15 @@ async function populateDropdown() {
     }
 }
 
+/**
+ * Handles the selection or deselection of a contact for editing.
+ * 
+ * If the contact is checked, it will be added to the current task's assigned contacts,
+ * and a badge representing the contact will be shown. If unchecked, the contact will 
+ * be removed from the assigned contacts, and the badge will be removed from the UI.
+ * 
+ * @param {string} contactName - The name of the contact being selected or deselected.
+ */
 function selectEditContact(contactName) {
     const selectedContactsInitials = document.getElementById('selectedContactsInitials');
     const contactInput = document.getElementById('editContactInput');
@@ -103,6 +144,11 @@ function selectEditContact(contactName) {
     }
 }
 
+/**
+ * Toggles the visibility of the dropdown for selecting contacts in the task editing overlay.
+ * 
+ * Shows or hides the dropdown menu, depending on its current state.
+ */
 function toggleEditDropdown() {
     const dropdownContent = document.getElementById('editDropdownContent');
     const iconDown = document.getElementById('editDropdownIcon');
@@ -114,6 +160,14 @@ function toggleEditDropdown() {
     iconUp.classList.toggle('d-none', !isOpen);
 }
 
+/**
+ * Opens the task editing overlay and populates it with data from the task being edited.
+ * 
+ * If no task ID is provided, it hides the overlay and re-enables scrolling. 
+ * Otherwise, it fills the overlay with the current task's details and disables scrolling on the page.
+ * 
+ * @param {string} taskId - The ID of the task to edit.
+ */
 async function editOverlay(taskId) {
     const overlayRef = document.getElementById('edit_overlay');
     if (!taskId) {
@@ -139,6 +193,12 @@ async function editOverlay(taskId) {
     }
 }
 
+/**
+ * Saves the changes made to the task in the editing overlay.
+ * 
+ * Updates the task's details (title, description, and due date) in the UI and in the database. 
+ * After saving, the UI is updated and the overlay is closed.
+ */
 async function saveChanges() {
     if (!currentTask) {
         console.error("❌ Fehler: currentTask ist nicht definiert!");
@@ -174,6 +234,14 @@ async function saveChanges() {
     }
 }
 
+/**
+ * Renders the list of tasks and displays them in the task container.
+ * 
+ * Loops through the `todos` array and creates a task element for each task.
+ * Each task includes the title, description, due date, and assigned contacts.
+ * 
+ * The task container's inner HTML is cleared before appending the new task elements.
+ */
 function renderTasks() {
     const taskContainer = document.getElementById('task_main');
     if (!taskContainer) return;
@@ -197,6 +265,14 @@ function renderTasks() {
     });
 }
 
+/**
+ * Opens the task editing overlay and populates it with the data of the task being edited.
+ * 
+ * If no task ID is provided, it hides the overlay and re-enables scrolling. 
+ * Otherwise, it fills the overlay with the current task's details and disables scrolling on the page.
+ * 
+ * @param {string} taskId - The ID of the task to edit.
+ */
 async function editOverlay(taskId) {
     const overlayRef = document.getElementById('edit_overlay');
     if (!taskId) {
@@ -223,6 +299,13 @@ async function editOverlay(taskId) {
     }
 }
 
+/**
+ * Prevents event propagation to stop event bubbling.
+ * 
+ * This is typically used to stop the event from triggering higher-level event listeners.
+ * 
+ * @param {Event} event - The event object that is triggered on the element.
+ */
 function editProtection(event) {
     event.stopPropagation();
 }

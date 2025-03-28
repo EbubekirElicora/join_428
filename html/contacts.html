@@ -14,15 +14,15 @@
     <link rel="stylesheet" href="../mobileResponsive/contactResponsive.css">
     <link rel="stylesheet" href="../mobileResponsive/headerResponsive.css">
     <link rel="stylesheet" href="../mobileResponsive/sidebarResponsive.css">
-    
     <script src="../js/utility.js"></script>
     <script src="../js/header.js"></script>
-    <script  src="../js/contactOverlays.js"></script>
-    <script src="../js/contacts.js"></script>    
+    <script src="../js/contactOverlays.js"></script>
+    <script src="../js/contacts.js"></script>
     <script src="../js/sidebar.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <title>Contacts</title>
 </head>
+
 <body>
     <div w3-include-html="../Templates/sidebar.html"></div>
     <div w3-include-html="../Templates/header.html"></div>
@@ -51,7 +51,7 @@
                         <img src="../assets/icons/arrowLeft.svg" alt="Back Arrow">
                     </div>
                 </div>
-                
+
                 <!-- Show Details Content -->
                 <div id="showDetails" class="hidden">
                     <div style="display: flex;">
@@ -80,20 +80,21 @@
                         <p><strong>Phone:</strong><span id="contactPhone"></span></p>
                     </div>
                 </div>
-                
+
                 <!-- Mobile Edit Button - Moved outside showDetails but still in right-column -->
                 <div class="mobileEdit-button">
                     <img src="../assets/icons/3dots.svg" alt="" onclick="toggleOverlay()">
                     <div id="mobileEditOverlay" class="mobileEdit-overlay">
                         <a href="#" id="editLinkOverlay" class="edit-link"><i class="fas fa-pencil"></i>Edit</a>
-                        <a href="#" id="deleteLinkOverlay" class="delete-link"><i class="fas fa-trash-alt"></i>Delete</a>
+                        <a href="#" id="deleteLinkOverlay" class="delete-link"><i
+                                class="fas fa-trash-alt"></i>Delete</a>
                     </div>
                 </div>
-                
+
             </div>
 
         </div>
-       
+
         <div id="overlay" class="overlay">
             <div class="overlay-content">
                 <div class="left-section">
@@ -115,13 +116,14 @@
                                 </div>
                                 <div class="input-container">
                                     <img src="../assets/icons/email-icon.svg" class="input-icon" alt="Email Icon">
-                                    <input type="email" id="email" placeholder="Email" required 
-                                    title="Email must contain '@' and '.' (e.g., example@domain.com)"/>
+                                    <input type="email" id="email" placeholder="Email" required
+                                        title="Email must contain '@' and '.' (e.g., example@domain.com)" />
                                 </div>
                                 <div class="input-container">
                                     <img src="../assets/icons/call_24dp_D9D9D9_FILL0_wght400_GRAD0_opsz24.svg"
                                         class="input-icon" alt="Phone Icon">
-                                    <input type="tel" id="phone" placeholder="Phone" required pattern="[0-9]*" inputmode="numeric" />
+                                    <input type="tel" id="phone" placeholder="Phone" required pattern="[0-9]*"
+                                        inputmode="numeric" />
                                 </div>
                                 <div class="button-container">
                                     <button type="button" id="cancel" class="form-button cancel">Cancel <i
@@ -155,13 +157,14 @@
                             <div class="contact-input-container">
                                 <img src="../assets/icons/email-icon.svg" class="contact-input-icon" alt="Email Icon">
                                 <input type="email" id="edit-contact-email" class="edit-input"
-                                    placeholder=" Enter Email" required pattern="[^@\s]+@[^@\s]+\.[^@\s]+" 
-                                    title="Email must contain '@' and '.' (e.g., example@domain.com)"/>
+                                    placeholder=" Enter Email" required pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
+                                    title="Email must contain '@' and '.' (e.g., example@domain.com)" />
                             </div>
                             <div class="contact-input-container">
                                 <img src="../assets/icons/call_24dp_D9D9D9_FILL0_wght400_GRAD0_opsz24.svg"
                                     class="contact-input-icon" alt="Phone Icon">
-                                <input type="tel" id="edit-contact-phone" class="edit-input" placeholder="Enter Phone" pattern="[0-9]*" inputmode="numeric"/>
+                                <input type="tel" id="edit-contact-phone" class="edit-input" placeholder="Enter Phone"
+                                    pattern="[0-9]*" inputmode="numeric" />
                             </div>
                         </div>
                     </div>
@@ -174,11 +177,12 @@
             </div>
         </div>
         <div id="toast" class="toast"></div>
-        <div class="mobileEdit-button-container"> 
-            
+        <div class="mobileEdit-button-container">
+
         </div>
     </main>
     <script src="https://www.w3schools.com/lib/w3.js"></script>
     <script>includeHTML();</script>
 </body>
+
 </html>

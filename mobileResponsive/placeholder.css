@@ -3,13 +3,11 @@
     src: url(../assets/fonts/Figtree-VariableFont_wght.ttf);
 }
 
-/* Ensure the body allows scrolling */
 body {
     height: 100vh;
     overflow: hidden;
 }
 
-/* Ensure the content below header is scrollable */
 .summary-content {
     position: absolute;
     top: 90px; 

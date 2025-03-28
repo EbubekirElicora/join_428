@@ -1,17 +1,34 @@
+
+/**
+ * Firebase-link
+ */
 const BASE_URL = "https://join-428-default-rtdb.europe-west1.firebasedatabase.app/";
 
+
+/**
+ * Handles the sign-up process when the user submits the registration form.
+ * Validates the form fields and stores the user data in localStorage if valid.
+ * Redirects the user to a welcome page upon successful sign-up.
+ *
+ * @function
+ */
 document.addEventListener("DOMContentLoaded", function () {
     const signUpForm = document.getElementById("join-form");
-
-    // Attach event listener to form submission
     signUpForm.addEventListener("submit", function (event) {
-        event.preventDefault(); // Prevent form reload
+        event.preventDefault();
         signUp();
     });
 });
 
 /**
- * Toggles the terms checkbox icon and enables/disables the signup button.
+ * Toggles the state of the terms checkbox and enables/disables the signup button accordingly.
+ * 
+ * This function checks whether the terms checkbox is checked or not by inspecting
+ * the icon's classes, and based on that:
+ * 1. It updates the checkbox icon (from unchecked to checked, or vice versa).
+ * 2. It enables or disables the signup button.
+ * 
+ * @function toggleTermsCheckbox
  */
 function toggleTermsCheckbox() {
     const termsIcon = document.getElementById('terms-icon');
@@ -30,47 +47,42 @@ function toggleTermsCheckbox() {
 }
 
 /**
- * Handles the signup process.
+ * Handles the user signup process.
+ * 
+ * 1. Collects and validates form data (name, email, password, confirm password).
+ * 2. Checks if the email is already registered.
+ * 3. Saves the user information to Firebase if the input is valid.
+ * 4. Creates a new contact in the database for the user.
+ * 5. Displays success or error messages based on the outcome.
+ * 
+ * @async
+ * @function signUp
  */
 async function signUp() {
     const name = document.getElementById("name").value.trim();
     const email = document.getElementById("email").value.trim();
     const password = document.getElementById("password").value.trim();
     const confirmPassword = document.getElementById("confirm-password").value.trim();
-
-    // Clear any existing error messages
     clearError();
-
-    // Validate input fields
     if (!name || !email || !password || !confirmPassword) {
         showError("Please fill in all fields.", "name");
         return;
     }
-
-    // Validate email format
     if (!validateEmail(email)) {
         showError("Invalid email format.", "email");
         return;
     }
-
-    // Validate password match
     if (password !== confirmPassword) {
         showError("Passwords do not match.", "confirm-password");
         return;
     }
-
-    // Check if user already exists
     if (await userExists(email)) {
         showError("Email already registered.", "email");
         return;
     }
-
-    // Save user to Firebase
     try {
         const newUser = { name, email, password };
         await saveUserToFirebase(newUser);
-
-        // Save user to contacts list (without phone number)
         const newContact = {
             name: name,
             email: email,
@@ -78,11 +90,9 @@ async function signUp() {
             color: getRandomColor(),
         };
         await saveContact(newContact);
-
         showToast("You signed up successfully", "success");
-
         setTimeout(() => {
-            window.location.href = "./log_in.html"; // Redirect to login page
+            window.location.href = "./log_in.html";
         }, 2000);
     } catch (error) {
         console.error("Error signing up:", error);
@@ -99,14 +109,10 @@ async function signUp() {
 function showError(message, inputId) {
     const inputField = document.getElementById(inputId);
     if (!inputField) return;
-
-    // Remove any existing error message
     const existingError = inputField.nextElementSibling;
     if (existingError && existingError.classList.contains("error-message")) {
         existingError.remove();
     }
-
-    // Create and insert the error message
     const errorMessage = document.createElement("div");
     errorMessage.className = "error-message";
     errorMessage.textContent = message;
@@ -121,12 +127,23 @@ function clearError() {
     errorMessages.forEach(error => error.remove());
 }
 
-// Helper functions
+/**
+ * Validates if the provided email address is in a valid format.
+ * 
+ * @param {string} email The email address to be validated.
+ * @returns {boolean} Returns true if the email is valid, otherwise false.
+ */
 function validateEmail(email) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
 }
 
+/**
+ * Checks if a user with the given email already exists in the database.
+ * 
+ * @param {string} email The email address of the user to check.
+ * @returns {Promise<boolean>} A Promise that resolves to `true` if the user exists, otherwise `false`.
+ */
 async function userExists(email) {
     try {
         const response = await fetch(`${BASE_URL}users.json`);
@@ -140,6 +157,14 @@ async function userExists(email) {
     }
 }
 
+/**
+ * Saves a new user to the Firebase database.
+ * 
+ * @param {Object} user The user object to save.
+ * @param {string} user.email The email address of the user.
+ * @param {string} user.name The name of the user.
+ * @returns {Promise<void>} A Promise that resolves when the user is saved successfully.
+ */
 async function saveUserToFirebase(user) {
     try {
         const response = await fetch(`${BASE_URL}users.json`, {
@@ -155,6 +180,15 @@ async function saveUserToFirebase(user) {
     }
 }
 
+/**
+ * Saves a contact to the Firebase database.
+ * 
+ * @param {Object} contact The contact object to save.
+ * @param {string} contact.name The name of the contact.
+ * @param {string} contact.email The email address of the contact.
+ * @param {string} contact.phone The phone number of the contact.
+ * @returns {Promise<void>} A Promise that resolves when the contact is saved successfully.
+ */
 async function saveContact(contact) {
     try {
         const response = await fetch(`${BASE_URL}contacts.json`, {
@@ -170,10 +204,21 @@ async function saveContact(contact) {
     }
 }
 
+/**
+ * Generates initials from a full name.
+ * 
+ * @param {string} name The full name to extract initials from.
+ * @returns {string} A string containing the initials of the name.
+ */
 function getInitials(name) {
     return name.split(' ').map(part => part[0]).join('').toUpperCase();
 }
 
+/**
+ * Generates a random color in hexadecimal format.
+ * 
+ * @returns {string} A random color in hexadecimal format (e.g., "#A1B2C3").
+ */
 function getRandomColor() {
     const letters = '0123456789ABCDEF';
     let color = '#';
@@ -183,53 +228,64 @@ function getRandomColor() {
     return color;
 }
 
+
+/**
+ * Clears the form by resetting all the fields within it.
+ * 
+ * This function targets the form with the ID "join-form" and resets its contents to 
+ * their default values, effectively clearing any user inputs.
+ * 
+ * @function clearForm
+ */
 function clearForm() {
     document.getElementById("join-form").reset();
 }
 
+/**
+ * Displays a toast message to the user.
+ * 
+ * @param {string} message The message to display in the toast.
+ * @param {string} type The type of toast (e.g., 'success', 'error').
+ */
 function showToast(message, type) {
     const toast = document.createElement("div");
     toast.className = `toast toast-${type}`;
     toast.innerText = message;
     document.body.appendChild(toast);
-
     setTimeout(() => toast.classList.add("show"), 100);
-
     setTimeout(() => {
         toast.classList.add("hide");
         setTimeout(() => toast.remove(), 500);
     }, 2500);
 }
 
-// Toggle password visibility
+/**
+ * Toggles the visibility of a password input field and updates the corresponding icon.
+ * 
+ * @param {string} inputId The ID of the password input field.
+ * @param {string} toggleIconId The ID of the element containing the toggle icon.
+ */
 function togglePasswordVisibility(inputId, toggleIconId) {
     const passwordInput = document.getElementById(inputId);
     const toggleIconElement = document.getElementById(toggleIconId);
-
-    // Check if elements are found
     if (!passwordInput || !toggleIconElement) {
         console.error('Element not found');
         return;
     }
-
     const toggleIcon = toggleIconElement.getElementsByTagName('img')[0];
-
-    // Check if image element is found
     if (!toggleIcon) {
         console.error('Image element not found inside toggleIconId:', toggleIconId);
         return;
     }
-
-    // Toggle password visibility
     if (passwordInput.type === 'password') {
         passwordInput.type = 'text';
-        toggleIcon.src = '/Assets/visibility.svg'; 
+        toggleIcon.src = '/Assets/visibility.svg';
         toggleIcon.alt = 'Hide Password';
-        console.log('Password is now visible.'); 
+        console.log('Password is now visible.');
     } else {
-        passwordInput.type = 'password'; 
-        toggleIcon.src = '/Assets/visibility_off - Copy.svg'; 
-        toggleIcon.alt = 'Show Password'; 
-        console.log('Password is now hidden.'); 
+        passwordInput.type = 'password';
+        toggleIcon.src = '/Assets/visibility_off - Copy.svg';
+        toggleIcon.alt = 'Show Password';
+        console.log('Password is now hidden.');
     }
 }

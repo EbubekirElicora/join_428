@@ -1,5 +1,4 @@
 @media (max-width: 1350px) {
-
     .button_container {
         overflow-y: auto;
         height: calc(100vh - 100px);

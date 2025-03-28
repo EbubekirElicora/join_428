@@ -1,3 +1,12 @@
+/**
+ * Opens the category dropdown and populates it with options if it's not already open.
+ * If the dropdown is already open, it closes the dropdown.
+ * 
+ * This function checks if the task category is already selected, and if not, resets the category selector.
+ * It also listens for clicks outside the dropdown to close it when clicked elsewhere.
+ * 
+ * @returns {void} 
+ */
 function to_open_category_dropdown() {
     let elements = getCategoryElements();
     if (elements.selected_txt.textContent !== 'Select task category') {

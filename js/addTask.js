@@ -1,9 +1,15 @@
-
+// This variable tracks the state of a dropdown menu.
 window.isDropdownClosed = false;
+// This array stores the list of selected contacts.
 window.selectedContacts = [];
 
 
-// Function to save task to Firebase
+/**
+ * Saves a task to Firebase.
+ * 
+ * @param {Object} taskData - The task data to save.
+ * @returns {Object|null} The response data from Firebase, or null if an error occurred.
+ */
 async function saveTaskToFirebase(taskData) {
     const TASKS_ENDPOINT = "tasks.json";
     const BASE_URL = "https://join-428-default-rtdb.europe-west1.firebasedatabase.app/";
@@ -26,7 +32,11 @@ async function saveTaskToFirebase(taskData) {
     }
 }
 
-// Function to collect task data
+/**
+ * Collects task data from the DOM and returns it in a structured format.
+ * 
+ * @returns {Object|null} The collected task data or null if validation fails.
+ */
 function collectTaskData() {
     const title = document.getElementById('title').value;
     const description = document.getElementById('description').value;
@@ -58,6 +68,12 @@ function collectTaskData() {
     };
 }
 
+/**
+ * Generates initials from a full name.
+ * 
+ * @param {string} name - The full name from which to extract initials.
+ * @returns {string} The initials in uppercase.
+ */
 function getInitials(name) {
     if (typeof name !== 'string') {
         console.error("Invalid name:", name);
@@ -68,7 +84,6 @@ function getInitials(name) {
     return initials.toUpperCase();
 }
 
-// Rest of your code...
 document.addEventListener('DOMContentLoaded', function () {
     const BASE_URL = "https://join-428-default-rtdb.europe-west1.firebasedatabase.app/";
     const CONTACTS_ENDPOINT = "contacts.json";
@@ -82,7 +97,11 @@ document.addEventListener('DOMContentLoaded', function () {
         return initials.toUpperCase();
     }
 
-    // Fetch contacts from Firebase
+    /**
+     * Fetches contacts from the Firebase database.
+     * 
+     * @returns {Promise<Object|null>} A promise that resolves to the contacts data from Firebase, or null if an error occurred.
+     */
     async function fetchContacts() {
         try {
             const response = await fetch(`${BASE_URL}${CONTACTS_ENDPOINT}`);
@@ -97,7 +116,14 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // Populate dropdown with contacts
+    /**
+     * Populates the dropdown with contact information fetched from Firebase.
+     * 
+     * This function fetches the contacts, creates HTML elements for each contact,
+     * and adds them to the dropdown content for user selection.
+     * 
+     * @returns {Promise<void>} A promise that resolves when the dropdown has been populated.
+     */
     async function populateDropdown() {
         const contacts = await fetchContacts();
         if (!contacts) {
@@ -148,7 +174,12 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
 
-    // Update the input field with selected contacts
+    /**
+     * Updates the contact input field and initials display based on selected contacts.
+     * 
+     * This function sets the input field's value to a comma-separated list of selected contacts' names,
+     * and updates the initials displayed in the UI.
+     */
     function updateInputField() {
         console.log('Updating input field. Selected contacts:', selectedContacts); // Debugging
         contactInput.value = selectedContacts.join(', ');
@@ -165,6 +196,12 @@ document.addEventListener('DOMContentLoaded', function () {
             selectedContactsInitials.appendChild(initialsContainer);
         });
     }
+
+    /**
+     * Toggles the visibility of the dropdown menu.
+     * 
+     * This function shows or hides the dropdown depending on its current state.
+     */
     function toggleDropdown() {
         if (dropdownContent.style.display === 'block') {
             dropdownContent.style.display = 'none';
@@ -209,7 +246,11 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-// Function to reset the form
+/**
+ * Resets the task creation form to its initial state.
+ * 
+ * This function clears all the input fields, selected contacts, and subtasks, and resets the priority to "medium".
+ */
 function resetForm() {
     document.getElementById('title').value = '';
     document.getElementById('description').value = '';
@@ -223,7 +264,11 @@ function resetForm() {
     setPrio('medium');
 }
 
-// Define getRandomColor in the global scope
+/**
+ * Generates a random color in hexadecimal format.
+ * 
+ * @returns {string} A randomly generated color in the format "#RRGGBB".
+ */
 function getRandomColor() {
     const letters = '0123456789ABCDEF';
     let color = '#';

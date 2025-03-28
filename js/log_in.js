@@ -188,17 +188,25 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
+/**
+ * Toggles the visibility of the password input field.
+ * If the password is currently hidden, it changes the input type to "text" to show the password,
+ * and updates the toggle icon to a visibility icon.
+ * If the password is visible, it changes the input type back to "password" and updates the toggle icon to a lock icon.
+ * 
+ * @returns {void} This function does not return any value.
+ */
 function togglePasswordVisibility() {
     const passwordInput = document.getElementById("password");
     const toggleIcon = document.getElementById("togglePassword");
 
     if (passwordInput && toggleIcon) {
         if (passwordInput.type === "password") {
-            passwordInput.type = "text"; // Show password
-            toggleIcon.src = "../Assets/visibility.svg"; // Change icon to "eye" (visible)
+            passwordInput.type = "text"; 
+            toggleIcon.src = "../Assets/visibility.svg"; 
         } else {
-            passwordInput.type = "password"; // Hide password
-            toggleIcon.src = "../assets/icons/lock.png"; // Change icon back to "lock" (hidden)
+            passwordInput.type = "password"; 
+            toggleIcon.src = "../assets/icons/lock.png"; 
         }
     } else {
         console.error("Password input or toggle icon not found!");

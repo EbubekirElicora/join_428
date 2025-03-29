@@ -34,9 +34,14 @@ async function loadAddTaskContent() {
         const doc = parser.parseFromString(html, 'text/html');
         const addTaskContent = doc.querySelector('.content_container_size');
         if (addTaskContent) {
-            document.getElementById('popup_container').innerHTML = addTaskContent.outerHTML;
+            const popupContainer = document.getElementById('popup_container');
+            popupContainer.replaceChildren(addTaskContent.cloneNode(true));
             const loadScript = (src) => {
                 return new Promise((resolve, reject) => {
+                    if (document.querySelector(`script[src="${src}"]`)) {
+                        resolve();
+                        return;
+                    }
                     const script = document.createElement('script');
                     script.src = src;
                     script.onload = resolve;
@@ -50,6 +55,7 @@ async function loadAddTaskContent() {
             await loadScript('../js/addTaskPriority.js');
             await loadScript('../js/addTaskValidation.js');
             await loadScript('../js/addTask.js');
+
             if (typeof initAddTask === 'function') {
                 initAddTask();
             } else {
@@ -60,6 +66,7 @@ async function loadAddTaskContent() {
         console.error('Error loading addTask.html:', error);
     }
 }
+
 
 /**
  * Öffnet das Overlay und lädt das Formular zur Erstellung einer neuen Aufgabe.
@@ -343,7 +350,15 @@ function updateEmptyStates() {
     });
 }
 
-
+/**
+ * Fügt Drag-and-Drop-Event-Listener zu jedem Stage-Container hinzu.
+ * 
+ * - Für jedes `.stage-container` werden Event-Listener für `dragenter`, `dragleave` und `drop` hinzugefügt.
+ * - Wenn ein gezogenes Element in den Container eintritt, wird das Standardverhalten verhindert und der Container hervorgehoben.
+ * - Wenn ein gezogenes Element den Container verlässt, wird die Hervorhebung entfernt.
+ * - Beim Ablegen des Elements wird das Standardverhalten verhindert, die Hervorhebung entfernt und die Funktion `moveToStage`
+ *   mit dem Ziel-Stage, das aus der ID des Containers abgeleitet wird, aufgerufen.
+ */
 document.querySelectorAll(".stage-container").forEach(container => {
     container.addEventListener("dragenter", (ev) => {
         ev.preventDefault();
@@ -359,5 +374,4 @@ document.querySelectorAll(".stage-container").forEach(container => {
         moveToStage(targetStage);
     });
 });
-
 

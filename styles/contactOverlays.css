@@ -30,7 +30,7 @@
 }
 
 .left-section {
-    background-color: #2A3647;
+    background-color: #2A3649;
     padding: 20px;
     flex-direction: column;
     justify-content: flex-start;
@@ -43,17 +43,12 @@
 
 .left-section img {
     padding-left: 10px;
-    height: 80px;
-    width: 80px;
-    margin-top:40px;
-    
 }
 
 .left-section h2 {
     font-size: 54px;
     color: #fff;
     position: relative;
-    margin-bottom: 5px;
 }
 
 .left-section p {
@@ -140,7 +135,7 @@
 }
 
 .create-contact {
-    background-color:#2A3647;
+    background-color:#1a2b47;
     color:white;     
     border-radius: 8px;
     font-size: medium;
@@ -174,16 +169,16 @@
     top: 15px;
     right: 10px;
     color:black;
-    font-size: 24px; 
-    width: 40px; 
-    height: 40px;
+    font-size: 16px; 
+    width: 32px; 
+    height: 32px;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 50%; 
 }
 .close-button:hover{
-   background-color: #ccc;
+   background-color: rgb(0, 0, 0, 0.1);
    border-radius: 50%;
 }
 
@@ -194,7 +189,7 @@
     left: 50%;
     transform: translate(-50%, -50%); 
     z-index: 1001;
-    transition: transform 0.1s ease-in-out; 
+    transition: transform 0.5s ease-in-out; 
 }
 
 #contact-overlay.active {
@@ -230,8 +225,6 @@
 .contactOverlayLeft img {
     margin-left:10px;
     margin-top: 10%;
-    height: 80px;
-    width: 80px;
 }
 
 .contactOverlayLeft h2::after {
@@ -330,20 +323,6 @@
     outline: none;
 }
 
-.mobileEdit-overlay {
-    display: none;    
-    top: -5px;
-    right: -100%;
-    background-color: white;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    z-index: 1000;
-    padding: 10px;
-    border-radius: 19px 19px 0 19px;
-    transition: right 0.3s ease-in-out;
-}
-
 .mobileEdit-overlay.active {
     display: block;
     right: 0;
@@ -392,8 +371,9 @@
 .mobileEdit-overlay {
     display: none; 
     position: fixed; 
-    top: -5px; 
-    right: -50%; 
+    top: 93%; 
+    right: 5% !important;
+     
     background-color: white;
     border: 1px solid #ddd;
     border-radius: 8px;
@@ -401,12 +381,6 @@
     z-index: 1000;
     padding: 10px;
     border-radius: 19px 19px 0 19px;
-}
-.mobileEdit-button img {
-    height: 80px;
-    width: 80px;
-    justify-content: center;
-    align-items: center;
 }
 
 .mobileEdit-overlay.active {

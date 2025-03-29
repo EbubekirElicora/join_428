@@ -282,11 +282,27 @@ function resetForm() {
     document.getElementById('date').value = '';
     document.getElementById('select_txt').textContent = 'Select task category';
     document.getElementById('added_text').innerHTML = '';
-    
+    selectedContacts = [];
     document.getElementById('contactInput').value = '';
     document.getElementById('selectedContactsInitials').innerHTML = '';
     subtasks = [];
+    setPrio('medium');
+    document.querySelectorAll('.dropdown-item').forEach(item => {
+        item.classList.remove('selected-contact-item');
+    });
 }
+
+/**
+ * Resets all relevant values.
+ * 
+ * - Calls the `resetForm()` function to reset the form.
+ * - Sets the priority to 'medium' by calling the `setPrio('medium')` function.
+ */
+function resetAll() {
+    resetForm();
+    setPrio('medium');
+}
+
 
 /**
  * Speichert die Aufgaben-Daten in Firebase Realtime Database.
@@ -333,6 +349,7 @@ function closeOverlay() {
     const popupContainer = document.getElementById('popup_container');
     overlay.classList.add('d_none');
     popupContainer.classList.add('d_none');
+    resetAll();
 }
 
 

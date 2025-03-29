@@ -1,5 +1,4 @@
 html {
-  overflow: scroll;
   overflow-y: hidden;
 }
 
@@ -88,8 +87,6 @@ a {
   width: 100%;
   justify-content: center;
 }
-
-
 
 .container_pos {
   display: flex;

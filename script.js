@@ -287,10 +287,8 @@ function resetForm() {
     document.getElementById('selectedContactsInitials').innerHTML = '';
     subtasks = [];
     setPrio('medium');
-    document.querySelectorAll('.contact-item').forEach(item => {
-        item.classList.remove('selected-dropdown-item');
-        let checkbox = item.querySelector('.checkbox_class');
-        if (checkbox) { checkbox.checked = false; }
+    document.querySelectorAll('.dropdown-item').forEach(item => {
+        item.classList.remove('selected-contact-item');
     });
 }
 

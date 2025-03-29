@@ -77,16 +77,12 @@
     cursor: pointer;
     margin-bottom: 10px;
     margin-top: 10px;
-<<<<<<< HEAD
-    overflow-x: hidden;    
-    
-
-
-    
-=======
-    overflow-x: hidden;
-    box-shadow: 4px 0px 6px 0px #00000014;
->>>>>>> 3da3bbefce633aea9a193975354a062c0c473498
+       
+       
+}
+.left-column {
+    height: -webkit-calc(100vh - 120px);
+    height: -moz-calc(100vh - 120px);
 }
 
 

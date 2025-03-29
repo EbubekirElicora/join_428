@@ -185,8 +185,6 @@ document.addEventListener('DOMContentLoaded', function () {
      * and updates the initials displayed in the UI.
      */
     function updateInputField() {
-        console.log('Updating input field. Selected contacts:', selectedContacts); // Debugging
-        contactInput.value = selectedContacts.join(', ');
         const selectedContactsInitials = document.getElementById('selectedContactsInitials');
         selectedContactsInitials.innerHTML = '';
         selectedContacts.forEach(contactName => {
@@ -266,8 +264,19 @@ function resetForm() {
     document.getElementById('selectedContactsInitials').innerHTML = '';
     subtasks = [];
     setPrio('medium');
+    document.querySelectorAll('.contact-item').forEach(item => {
+        item.classList.remove('selected-dropdown-item');
+        let checkbox = item.querySelector('.checkbox_class');
+        if (checkbox) { checkbox.checked = false; }
+    });
 }
 
+/**
+ * Resets all relevant values.
+ * 
+ * - Calls the `resetForm()` function to reset the form.
+ * - Sets the priority to 'medium' by calling the `setPrio('medium')` function.
+ */
 function resetAll() {
     resetForm();
     setPrio('medium');

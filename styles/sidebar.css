@@ -58,24 +58,22 @@
     align-items: flex-start;
 }
 
-/* Hover Effect */
-
-
-
 .widget.active {
     background-color: #1A1F2E !important;
-    color: white !important;
+}
+
+.widget.active .sidebarimg {
+    filter: brightness(100);
+}
+
+.widget.active .sidebartext {
+    color: white;
     font-weight: bold;
 }
 
-/* 🔹 Fix: Remove hover effect when active */
 .widget.active:hover {
     background-color: #1A1F2E !important;
-    /* Keeps the active color */
 }
-
-
-
 
 .widget:hover {
     background-color: #2A3D59 !important;
@@ -121,4 +119,3 @@
     width: 20px;
     height: 20px;
 }
-

@@ -343,7 +343,15 @@ function updateEmptyStates() {
     });
 }
 
-
+/**
+ * Fügt Drag-and-Drop-Event-Listener zu jedem Stage-Container hinzu.
+ * 
+ * - Für jedes `.stage-container` werden Event-Listener für `dragenter`, `dragleave` und `drop` hinzugefügt.
+ * - Wenn ein gezogenes Element in den Container eintritt, wird das Standardverhalten verhindert und der Container hervorgehoben.
+ * - Wenn ein gezogenes Element den Container verlässt, wird die Hervorhebung entfernt.
+ * - Beim Ablegen des Elements wird das Standardverhalten verhindert, die Hervorhebung entfernt und die Funktion `moveToStage`
+ *   mit dem Ziel-Stage, das aus der ID des Containers abgeleitet wird, aufgerufen.
+ */
 document.querySelectorAll(".stage-container").forEach(container => {
     container.addEventListener("dragenter", (ev) => {
         ev.preventDefault();

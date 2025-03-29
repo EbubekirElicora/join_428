@@ -3,6 +3,10 @@ body {
     height: 100vh;
 }
 
+html {
+    height: 100vh;
+}
+
 .board_main {
     max-width: 1440px;
     margin-top: 180px;
@@ -117,7 +121,7 @@ h1 {
     border-color: #29abe2;
     filter: brightness(0) saturate(100%) invert(58%) sepia(93%) saturate(339%) hue-rotate(158deg) brightness(95%) contrast(88%);
 }
-
+/* 
 .overlay {
     position: fixed;
     top: 0;
@@ -126,7 +130,7 @@ h1 {
     height: 100%;
     background: rgba(0, 0, 0, 0.5);
     z-index: 1000;
-}
+} */
 
 .popup_container {
     position: fixed;

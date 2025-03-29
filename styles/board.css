@@ -271,32 +271,40 @@ h1 {
     display: none;
 }
 
+
+
+
 .task {
     display: block;
+    touch-action: pan-y;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .task[hidden] {
     display: none !important;
 }
 
-.stage-column {
-    position: relative;
-    min-height: 300px; 
-    transition: background 0.3s;
-}
-
-.nav_board {
-    touch-action: none;
-}
-
 .task.dragging {
     box-shadow: 0 10px 20px rgba(0,0,0,0.1);
     z-index: 100;
+    transform: rotate(5deg) scale(1.02);
 }
 
-.task {
-    touch-action: manipulation;
-    user-select: none;
+.task:active {
+    background-color: transparent !important;
+    transition: background-color 0.001s;
+}
+
+.task:focus {
+    outline: none !important;
+}
+
+.stage-column {
+    position: relative;
+    min-height: 300px;
+    transition: background 0.3s;
+    overflow-y: auto;
 }
 
 .drag-area-highlight {
@@ -304,4 +312,8 @@ h1 {
     border: none;
     transition: background-color 0.1s ease-in-out;
     border-radius: 10px;
+}
+
+.nav_board {
+    touch-action: none;
 }

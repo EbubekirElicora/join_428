@@ -81,21 +81,16 @@
     max-height: calc(100vh - 100px);
     background-color: #fff;
     padding: 20px;
-    overflow-y: auto;
+    overflow-y:auto;
     cursor: pointer;
     margin-bottom: 10px;
     margin-top: 10px;
-<<<<<<< HEAD
        
        
 }
 .left-column {
     height: -webkit-calc(100vh - 120px);
     height: -moz-calc(100vh - 120px);
-=======
-    overflow-x: hidden;
-    box-shadow: 4px 0px 6px 0px #00000014;
->>>>>>> 2d95c35bd84ad840528bfec62cd54d44889c7f54
 }
 
 

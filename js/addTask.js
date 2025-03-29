@@ -85,9 +85,13 @@ function getInitials(name) {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
+    // Base URL for the Firebase Realtime Database
     const BASE_URL = "https://join-428-default-rtdb.europe-west1.firebasedatabase.app/";
+    // Endpoint for retrieving contacts data
     const CONTACTS_ENDPOINT = "contacts.json";
+    // Input field for entering a contact name
     const contactInput = document.getElementById('contactInput');
+    // Dropdown menu elements
     const dropdownContent = document.getElementById('dropdownContent');
     const dropdownIcon = document.getElementById('dropdownIcon');
     const dropdownIconUp = document.getElementById('dropdownIconUp');
@@ -261,6 +265,11 @@ function resetForm() {
     document.getElementById('contactInput').value = '';
     document.getElementById('selectedContactsInitials').innerHTML = '';
     subtasks = [];
+    setPrio('medium');
+}
+
+function resetAll() {
+    resetForm();
     setPrio('medium');
 }
 

@@ -124,10 +124,11 @@
     }
 }
 
-
-
-
 @media (max-width: 600px) {
+
+    .button_container {
+        height: calc(100vh - 100px);
+    }
 
     .txt_container {
         margin-bottom: 0;

@@ -89,7 +89,6 @@
     box-shadow: 4px 0px 6px 0px #00000014;
 }
 
-
 .header-content {
     display: flex;
     align-items: center;
@@ -314,22 +313,6 @@
     overflow: hidden;
 }
 
-/*
-.contact-initials {
-    width: 40px;
-    height: 40px;
-    border: 2px solid white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 24px;
-    margin-right: 15px;
-    border-radius: 100%;
-    overflow: hidden;
-}
-*/
-
-
 #content {
     padding-bottom: 30px !important;
 }
@@ -341,9 +324,7 @@
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.4);
-    /* Adjust 0.4 for dim intensity */
     z-index: 1000;
-    /* Must be below overlay z-index */
     display: none;
 }
 

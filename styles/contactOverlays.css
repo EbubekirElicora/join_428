@@ -12,6 +12,10 @@
     display: block; 
     animation: slideIn 0.5s ease-in-out forwards; 
 }
+#overlay, #contact-overlay {
+    display: none ;
+}
+
 
 @keyframes slideIn {
     from {
@@ -472,5 +476,5 @@
     
 }
 .contact-persona{
-    margin-top: -30px;
+    margin-top: 30px;
 }

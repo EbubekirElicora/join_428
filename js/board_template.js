@@ -205,7 +205,7 @@ function getOverlayEdit(task) {
                     </div>
                     <div class="rightContainerSubTask">
                         <div class="subTaskButtons">
-                            <img class="subTaskEditButton" onclick="editSubTask('${id}')" src="../assets/icons/edit.png" alt="Edit">
+                            <img class="subTaskEditButton" onclick="editSubTaskOverlay('${id}')" src="../assets/icons/edit.png" alt="Edit">
                             <div class="partingLine"></div>
                             <img class="subTaskDeleteButton" onclick="deleteSubTaskOverlay('${id}')" src="../assets/icons/delete.png" alt="Delete">
                         </div>
@@ -338,7 +338,7 @@ function renderViewMode(id, subtask) {
             </div>
             <div class="rightContainerSubTask">
                 <div class="subTaskButtons">
-                    <img class="subTaskEditButton" onclick="editSubTask('${id}')" src="../assets/icons/edit.png" alt="Edit">
+                    <img class="subTaskEditButton" onclick="editSubTaskOverlay('${id}')" src="../assets/icons/edit.png" alt="Edit">
                     <div class="partingLine"></div>
                     <img class="subTaskDeleteButton" onclick="deleteSubTaskOverlay('${id}')" src="../assets/icons/delete.png" alt="Delete">
                 </div>

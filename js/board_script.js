@@ -65,7 +65,7 @@ function selectContact(contact) {
     } else {
         console.log('Contact already selected:', contact.name);
     }
-   
+
 }
 
 /**
@@ -76,14 +76,10 @@ function selectContact(contact) {
  * @function updateSelectedContacts
  */
 function updateSelectedContacts() {
-    const inputField = document.getElementById('contactInput');
     const initialsContainer = document.getElementById('selectedContactsInitials');
-    if (!inputField || !initialsContainer) {
-        console.error('Input field or initials container not found!');
+    if (!initialsContainer) {
         return;
     }
-    const selectedNames = selectedContacts.map(contact => contact.name).join(', ');
-    inputField.value = selectedNames;
     initialsContainer.innerHTML = '';
     selectedContacts.forEach(contact => {
         const span = document.createElement('span');
@@ -96,7 +92,6 @@ function updateSelectedContacts() {
         initialsContainer.appendChild(span);
     });
 }
-
 /**
  * Gibt die Initialen eines Namens zurück.
  * Der Name wird in Wörter aufgeteilt und es werden die ersten Buchstaben jedes Wortes genommen,

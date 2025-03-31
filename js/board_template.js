@@ -89,7 +89,7 @@ function getOverlayHtml(task) {
         <div onclick="overlayProtection(event)" class="inner_content">
             <div class="header_board_overlay">
                 <div class="header_category bg_${task.category}">${task.category}</div>
-                <img onclick="overlayBoard()" src="../assets/icons/close.png" alt="">
+                <img onclick="closeOverlayBoard()" src="../assets/icons/close.png" alt="">
             </div>
             <h1>${task.title}</h1>
             <p class="board_overlay_description">${task.description || ''}</p>
@@ -189,7 +189,7 @@ function getOverlayEdit(task) {
                         </div>
                         <div class="partingLine"></div>
                         <div>
-                            <img class="subTaskSaveButton" onclick="saveSubTask('${id}')" src="../assets/icons/check.png" alt="Save">
+                            <img class="subTaskSaveButton" onclick="saveSubTaskOverlay('${id}')" src="../assets/icons/check.png" alt="Save">
                         </div>
                     </div>
                 </div>
@@ -205,7 +205,7 @@ function getOverlayEdit(task) {
                     </div>
                     <div class="rightContainerSubTask">
                         <div class="subTaskButtons">
-                            <img class="subTaskEditButton" onclick="editSubTask('${id}')" src="../assets/icons/edit.png" alt="Edit">
+                            <img class="subTaskEditButton" onclick="editSubTaskOverlay('${id}')" src="../assets/icons/edit.png" alt="Edit">
                             <div class="partingLine"></div>
                             <img class="subTaskDeleteButton" onclick="deleteSubTaskOverlay('${id}')" src="../assets/icons/delete.png" alt="Delete">
                         </div>
@@ -219,7 +219,7 @@ function getOverlayEdit(task) {
         <div onclick="editProtection(event)" class="inner_content">
             <div class="edit_close">
                 <h2>Bearbeiten der Aufgabe</h2>
-                <img onclick="editOverlay()" src="../assets/icons/close.png" alt="">
+                <img onclick="closeEditOverlay()" src="../assets/icons/close.png" alt="">
             </div>
 
             <form id="edit_form">
@@ -321,7 +321,7 @@ function renderEditMode(id, subtask) {
                 </div>
                 <div class="partingLine"></div>
                 <div>
-                    <img class="subTaskSaveButton" onclick="saveSubTask('${id}')" src="../assets/icons/check.png" alt="Save">
+                    <img class="subTaskSaveButton" onclick="saveSubTaskOverlay('${id}')" src="../assets/icons/check.png" alt="Save">
                 </div>
             </div>
         </div>
@@ -338,7 +338,7 @@ function renderViewMode(id, subtask) {
             </div>
             <div class="rightContainerSubTask">
                 <div class="subTaskButtons">
-                    <img class="subTaskEditButton" onclick="editSubTask('${id}')" src="../assets/icons/edit.png" alt="Edit">
+                    <img class="subTaskEditButton" onclick="editSubTaskOverlay('${id}')" src="../assets/icons/edit.png" alt="Edit">
                     <div class="partingLine"></div>
                     <img class="subTaskDeleteButton" onclick="deleteSubTaskOverlay('${id}')" src="../assets/icons/delete.png" alt="Delete">
                 </div>

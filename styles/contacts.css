@@ -86,7 +86,6 @@
 }
 
 
-
 .header-content {
     display: flex;
     align-items: center;
@@ -310,6 +309,7 @@
     border-radius: 50%;
     overflow: hidden;
 }
+
 /*
 .contact-initials {
     width: 40px;

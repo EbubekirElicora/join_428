@@ -1,25 +1,4 @@
-/**
- * Toggles the edit overlay visibility for a task.
- * 
- * If a taskId is provided, the overlay will show and populate with the task details.
- * If no taskId is provided, the overlay will be hidden and scrolling will be re-enabled on the page.
- * 
- * @param {string} taskId - The ID of the task to edit.
- */
-async function editOverlay(taskId) {
-    const overlayRef = document.getElementById('edit_overlay');
-    if (!taskId) {
-        overlayRef.classList.add('edit_none');
-        document.body.classList.remove('no-scroll');
-        return;
-    }
-    overlayBoard();
-    const task = todos.find(t => t.id === taskId);
-    if (!task) return;
-    overlayRef.classList.remove('edit_none');
-    overlayRef.innerHTML = getOverlayEdit(task);
-    document.body.classList.add('no-scroll');
-}
+
 
 /**
  * Handles the priority selection for a task.
@@ -161,39 +140,6 @@ function toggleEditDropdown() {
 }
 
 /**
- * Opens the task editing overlay and populates it with data from the task being edited.
- * 
- * If no task ID is provided, it hides the overlay and re-enables scrolling. 
- * Otherwise, it fills the overlay with the current task's details and disables scrolling on the page.
- * 
- * @param {string} taskId - The ID of the task to edit.
- */
-async function editOverlay(taskId) {
-    const overlayRef = document.getElementById('edit_overlay');
-    if (!taskId) {
-        overlayRef.classList.add('edit_none');
-        document.body.classList.remove('no-scroll');
-        return;
-    }
-    overlayBoard();
-    currentTask = todos.find(t => t.id === taskId);
-    if (!currentTask) return;
-    overlayRef.classList.remove('edit_none');
-    overlayRef.innerHTML = getOverlayEdit(currentTask);
-    document.body.classList.add('no-scroll');
-    const contactInput = document.getElementById('editContactInput');
-    if (contactInput && currentTask.assignedContacts) {
-        const selectedNames = currentTask.assignedContacts.map(c => c.name).join(', ');
-        contactInput.value = selectedNames;
-    }
-    await populateDropdown();
-    const okButton = overlayRef.querySelector('.ok_button');
-    if (okButton) {
-        okButton.addEventListener('click', saveChanges);
-    }
-}
-
-/**
  * Saves the changes made to the task in the editing overlay.
  * 
  * Updates the task's details (title, description, and due date) in the UI and in the database. 
@@ -274,28 +220,64 @@ function renderTasks() {
  * @param {string} taskId - The ID of the task to edit.
  */
 async function editOverlay(taskId) {
-    const overlayRef = document.getElementById('edit_overlay');
-    if (!taskId) {
-        overlayRef.classList.add('edit_none');
-        document.body.classList.remove('no-scroll');
-        updateHTML();
-        return;
-    }
-    overlayBoard();
-    currentTask = todos.find(t => t.id === taskId);
-    if (!currentTask) return;
-    overlayRef.classList.remove('edit_none');
-    overlayRef.innerHTML = getOverlayEdit(currentTask);
-    document.body.classList.add('no-scroll');
-    const contactInput = document.getElementById('editContactInput');
-    if (contactInput && currentTask.assignedContacts) {
-        const selectedNames = currentTask.assignedContacts.map(c => c.name).join(', ');
-        contactInput.value = selectedNames;
-    }
-    await populateDropdown();
-    const okButton = overlayRef.querySelector('.ok_button');
-    if (okButton) {
-        okButton.addEventListener('click', saveChanges);
+    try {
+        const overlayRef = document.getElementById('edit_overlay');
+        if (!overlayRef) {
+            console.error('Edit overlay element not found');
+            return;
+        }
+        if (!taskId) {
+            closeEditOverlay();
+            return;
+        }
+        closeOverlayBoard();
+        const originalTask = todos.find(t => t.id === taskId);
+        if (!originalTask) {
+            console.warn(`Task with ID ${taskId} not found`);
+            return;
+        }
+        currentTask = JSON.parse(JSON.stringify(originalTask));
+        const overlayHTML = getOverlayEdit(currentTask);
+        if (!overlayHTML.includes('inner_content')) {
+            console.error('HTML template is missing inner_content container');
+            return;
+        }
+        overlayRef.classList.remove('edit_none');
+        overlayRef.innerHTML = overlayHTML;
+        document.body.classList.add('no-scroll');
+        await new Promise(resolve => {
+            requestAnimationFrame(() => {
+                requestAnimationFrame(resolve);
+            });
+        });
+        const initElements = () => {
+            const overlayContent = overlayRef.querySelector('.inner_content');
+            if (!overlayContent) {
+                console.error('Overlay content container not found in DOM after render');
+                console.debug('Rendered HTML:', overlayHTML);
+                return;
+            }
+            overlayContent.addEventListener('click', editProtection);
+            const contactInput = document.getElementById('editContactInput');
+            if (contactInput && currentTask.assignedContacts) {
+                contactInput.value = currentTask.assignedContacts
+                    .map(c => c?.name)
+                    .filter(Boolean)
+                    .join(', ');
+            }
+            const okButton = overlayRef.querySelector('.ok_button');
+            if (okButton) {
+                okButton.addEventListener('click', saveChanges);
+            }
+        };
+        await populateDropdown();
+        initElements();
+        overlayRef.addEventListener('click', (e) => {
+            if (e.target === overlayRef) closeEditOverlay();
+        });
+    } catch (error) {
+        console.error('Error in editOverlay:', error);
+        closeEditOverlay();
     }
 }
 
@@ -310,3 +292,19 @@ function editProtection(event) {
     event.stopPropagation();
 }
 
+/**
+ * Closes the edit overlay and cleans up related state
+ */
+function closeEditOverlay() {
+    const overlayRef = document.getElementById('edit_overlay');
+    if (!overlayRef) return;
+    overlayRef.classList.add('edit_none');
+    document.body.classList.remove('no-scroll');
+    overlayRef.innerHTML = '';
+    if (window.currentTask) {
+        delete window.currentTask;
+    }
+    if (typeof updateHTML === "function") {
+        updateHTML();
+    }
+}

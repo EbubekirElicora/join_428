@@ -35,7 +35,7 @@ function deleteEditText() {
  * 
  * @param {string} id - The ID of the subtask to edit.
  */
-function editSubTask(id) {
+function editSubTaskOverlay(id) {
     if (!editSubtasks) {
         console.error('editSubtasks ist nicht definiert.');
         return;

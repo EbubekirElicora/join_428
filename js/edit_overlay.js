@@ -100,8 +100,10 @@ function selectEditContact(contactName) {
     const selectedContactsInitials = document.getElementById('selectedContactsInitials');
     const contactInput = document.getElementById('editContactInput');
     const contact = contacts.find(c => c.name === contactName);
-    if (contact && selectedContactsInitials && contactInput) {
+    
+    if (contact && selectedContactsInitials) {
         const checkbox = document.getElementById(`contact-${contact.name}`);
+        
         if (checkbox.checked) {
             if (!currentTask.assignedContacts) currentTask.assignedContacts = [];
             currentTask.assignedContacts.push(contact);
@@ -118,10 +120,12 @@ function selectEditContact(contactName) {
                 contactBadge.remove();
             }
         }
-        const selectedNames = currentTask.assignedContacts.map(c => c.name).join(', ');
-        contactInput.value = selectedNames;
+        if (contactInput) {
+            contactInput.value = ''; 
+        }
     }
 }
+
 
 /**
  * Toggles the visibility of the dropdown for selecting contacts in the task editing overlay.
@@ -259,11 +263,8 @@ async function editOverlay(taskId) {
             }
             overlayContent.addEventListener('click', editProtection);
             const contactInput = document.getElementById('editContactInput');
-            if (contactInput && currentTask.assignedContacts) {
-                contactInput.value = currentTask.assignedContacts
-                    .map(c => c?.name)
-                    .filter(Boolean)
-                    .join(', ');
+            if (contactInput) {
+                contactInput.value = '';
             }
             const okButton = overlayRef.querySelector('.ok_button');
             if (okButton) {

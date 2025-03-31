@@ -459,6 +459,7 @@
     font-size: 12px;
     margin-top: -10px;
     display: none;
+    color: red;
 }
 
 .input-container.error .error-message,

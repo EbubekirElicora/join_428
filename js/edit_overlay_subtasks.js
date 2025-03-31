@@ -172,7 +172,7 @@ function loadTaskForEdit(task) {
  * 
  * @param {string} id - The ID of the subtask to save.
  */
-function saveSubTask(id) {
+function saveSubTaskOverlay(id) {
     const input = document.getElementById(`edit_input${id}`);
     const newTitle = input.value.trim();
 

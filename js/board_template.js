@@ -189,7 +189,7 @@ function getOverlayEdit(task) {
                         </div>
                         <div class="partingLine"></div>
                         <div>
-                            <img class="subTaskSaveButton" onclick="saveSubTask('${id}')" src="../assets/icons/check.png" alt="Save">
+                            <img class="subTaskSaveButton" onclick="saveSubTaskOverlay('${id}')" src="../assets/icons/check.png" alt="Save">
                         </div>
                     </div>
                 </div>
@@ -321,7 +321,7 @@ function renderEditMode(id, subtask) {
                 </div>
                 <div class="partingLine"></div>
                 <div>
-                    <img class="subTaskSaveButton" onclick="saveSubTask('${id}')" src="../assets/icons/check.png" alt="Save">
+                    <img class="subTaskSaveButton" onclick="saveSubTaskOverlay('${id}')" src="../assets/icons/check.png" alt="Save">
                 </div>
             </div>
         </div>

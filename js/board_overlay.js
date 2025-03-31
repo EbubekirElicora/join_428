@@ -171,3 +171,27 @@ async function deleteTask(taskId) {
   }
 }
 
+function closeOverlayBoard() {
+  try {
+      const overlayRef = document.getElementById('board_overlay');
+      if (!overlayRef) {
+          console.warn('Board overlay element not found');
+          return;
+      }
+      overlayRef.classList.add('d_none');
+      document.body.classList.remove('no-scroll');
+      if (window.editSubtasks) {
+          editSubtasks = {};
+      }
+      const contentContainer = overlayRef.querySelector('.content-container');
+      if (contentContainer) {
+          contentContainer.innerHTML = '';
+      }
+      const dropdowns = overlayRef.querySelectorAll('.dropdown-content');
+      dropdowns.forEach(dropdown => {
+          dropdown.style.display = 'none';
+      });
+  } catch (error) {
+      console.error('Error closing board overlay:', error);
+  }
+}

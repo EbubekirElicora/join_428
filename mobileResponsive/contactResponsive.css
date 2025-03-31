@@ -4,9 +4,7 @@
         margin-left: 348px;
     }
 
-    .contact {
-        padding: 20px 0 20px 0;
-    }
+    
 
     .right-column {
         margin-left: 0px;
@@ -415,7 +413,7 @@
         display: flex;
         gap: 10px;
         justify-content: center;
-        margin-top: -15px;
+        margin-top: -1px;
     }
 
     .contact-item {
@@ -435,7 +433,7 @@
     }
 
     .mobileEdit-button {
-        transform: translateY(-30PX);
+        transform: translateY(-60PX);
     }
 
     .contact-list .contact-item:last-of-type+.divider {
@@ -488,7 +486,7 @@
 
     .overlay {
         width: 70%;
-        height: 550px;
+        height: 570px;
         padding: 0;
         border-radius: 10px;
         margin: 0 auto;
@@ -528,7 +526,7 @@
     .overlay-content::before {
         content: '';
         position: absolute;
-        top: 40%;
+        top: 37%;
         left: 50%;
         transform: translate(-50%, -50%);
         background-image: url('../assets/icons/person-icon.svg');
@@ -624,7 +622,7 @@
         max-width: 250px;
         box-sizing: border-box;
         padding: 10px;
-        margin-bottom: 30px;
+    
         border-radius: 5px;
         font-size: 16px;
     }

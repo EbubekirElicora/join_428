@@ -454,3 +454,23 @@
 #editLinkOverlay.active i {
     color: #3498db; 
 }
+.error-message {
+    margin-bottom: 20px;
+    font-size: 12px;
+    margin-top: -10px;
+    display: none;
+}
+
+.input-container.error .error-message,
+.contact-input-container.error .error-message {
+    display: block;
+}
+
+.input-container.error input,
+.contact-input-container.error input {
+    border-color: #ff4444 !important;
+    
+}
+.contact-persona{
+    margin-top: -30px;
+}

@@ -11,12 +11,20 @@ let touchStartTimeout = null;
 let currentHighlightedStage = null;
 
 /**
+ * Speichert die vertikale Startposition bei Berührungsbeginn (wird zur Unterscheidung zwischen Scrollen und Drag-Vorgang benötigt)
+ * @type {number}
+ * @description Enthält den Y-Koordinatenwert des ersten Touch-Ereignisses in Pixeln relativ zum oberen Bildschirmrand
+ */
+let touchStartY = 0;
+
+/**
  * Verarbeitet den Beginn einer Berührung auf einer Aufgabe
  * @param {TouchEvent} event - Das Berührungsereignis
  * @param {string} taskId - Die ID der Aufgabe
  */
 function handleTouchStart(event, taskId) {
-    event.preventDefault();
+    const touch = event.touches[0];
+    touchStartY = touch.clientY;
     const taskElement = event.currentTarget;
     taskElement.style.transition = 'transform 0.5s ease';
     taskElement.style.transform = 'rotate(2deg)';
@@ -25,17 +33,22 @@ function handleTouchStart(event, taskId) {
         taskElement.classList.add('dragging');
         taskElement.style.transform = 'rotate(5deg)';
     }, 500);
-    setTimeout(() => {
-        taskElement.style.transform = 'rotate(0deg)';
-    }, 1500);
 }
-
 
 /**
  * Verarbeitet die Bewegung während der Berührung
  * @param {TouchEvent} event - Das Bewegungsereignis
  */
 function handleTouchMove(event) {
+    if (!currentDraggedElement) {
+        const touch = event.touches[0];
+        const deltaY = touch.clientY - touchStartY;
+        if (Math.abs(deltaY) > 5) {
+            clearTimeout(touchStartTimeout);
+            touchStartTimeout = null;
+            return;
+        }
+    }
     if (!currentDraggedElement) return;
     event.preventDefault();
     const touch = event.touches[0];
@@ -84,8 +97,8 @@ function findParentStageColumn(element) {
  * @param {TouchEvent|MouseEvent} event - Das Endereignis
  */
 function handleTouchEnd(event) {
+    const taskElement = event.currentTarget;
     clearTimeout(touchStartTimeout);
-    
     if (currentDraggedElement) {
         event.preventDefault();
         if (currentHighlightedStage) {
@@ -93,12 +106,8 @@ function handleTouchEnd(event) {
             removeHighlight(currentHighlightedStage);
             currentHighlightedStage = null;
         }
-        document.querySelector('.dragging')?.classList.remove('dragging');
+        taskElement.classList.remove('dragging');
         currentDraggedElement = null;
-    } else {
-        if (event.type === 'touchend') {
-            const taskId = event.currentTarget.getAttribute('data-task-id');
-            overlayBoard(taskId);
-        }
     }
+    taskElement.style.transform = 'rotate(0deg)';
 }

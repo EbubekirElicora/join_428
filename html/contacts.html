@@ -111,17 +111,20 @@
                             <form id="contact-form" class="contact-form">
                                 <div class="input-container">
                                     <img src="../assets/icons/person-icon.svg" class="input-icon" alt="Name Icon">
-                                    <input type="text" id="name" placeholder="Name" required />
+                                    <input type="text" id="name" placeholder="Name" />
+                                    <div class="error-message" id="name-error"></div>
                                 </div>
                                 <div class="input-container">
                                     <img src="../assets/icons/email-icon.svg" class="input-icon" alt="Email Icon">
-                                    <input type="email" id="email" placeholder="Email" required 
-                                    title="Email must contain '@' and '.' (e.g., example@domain.com)"/>
+                                    <input type="email" id="email" placeholder="Email"  />
+                                    <div class="error-message" id="email-error"></div>
+
                                 </div>
                                 <div class="input-container">
                                     <img src="../assets/icons/call_24dp_D9D9D9_FILL0_wght400_GRAD0_opsz24.svg"
                                         class="input-icon" alt="Phone Icon">
-                                    <input type="tel" id="phone" placeholder="Phone" required pattern="[0-9]*" inputmode="numeric" />
+                                    <input type="tel" id="phone" placeholder="Phone"  pattern="[0-9]*" inputmode="numeric" />
+                                    <div class="error-message" id="phone-error"></div>
                                 </div>
                                 <div class="button-container">
                                     <button type="button" id="cancel" class="form-button cancel">Cancel <i
@@ -151,17 +154,20 @@
                             <div class="contact-input-container">
                                 <img src="../assets/icons/person-icon.svg" class="contact-input-icon" alt="Name Icon">
                                 <input type="text" id="edit-contact-name" class="edit-input" placeholder="Enter Name">
+                                <div class="error-message" id="edit-contact-name-error"></div>
                             </div>
                             <div class="contact-input-container">
                                 <img src="../assets/icons/email-icon.svg" class="contact-input-icon" alt="Email Icon">
                                 <input type="email" id="edit-contact-email" class="edit-input"
-                                    placeholder=" Enter Email" required pattern="[^@\s]+@[^@\s]+\.[^@\s]+" 
-                                    title="Email must contain '@' and '.' (e.g., example@domain.com)"/>
+                                    placeholder=" Enter Email"  pattern="[^@\s]+@[^@\s]+\.[^@\s]+"/>
+                                    <div class="error-message" id="edit-contact-email-error"></div>
+                                    
                             </div>
                             <div class="contact-input-container">
                                 <img src="../assets/icons/call_24dp_D9D9D9_FILL0_wght400_GRAD0_opsz24.svg"
                                     class="contact-input-icon" alt="Phone Icon">
                                 <input type="tel" id="edit-contact-phone" class="edit-input" placeholder="Enter Phone" pattern="[0-9]*" inputmode="numeric"/>
+                                <div class="error-message" id="edit-contact-phone-error"></div>
                             </div>
                         </div>
                     </div>

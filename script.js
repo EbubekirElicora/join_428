@@ -349,6 +349,7 @@ function closeOverlay() {
     const popupContainer = document.getElementById('popup_container');
     overlay.classList.add('d_none');
     popupContainer.classList.add('d_none');
+    resetAll();
 }
 
 

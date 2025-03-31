@@ -15,7 +15,12 @@ document.addEventListener('DOMContentLoaded', () => {
      * @returns {string} - The initials of the name.
      */
     function getInitials(name) {
-        return name.split(' ').map(part => part[0]).join('').toUpperCase();
+        if (!name || typeof name !== 'string') return '';
+        return name.split(' ')
+                  .filter(part => part.length > 0)
+                  .map(part => part[0])
+                  .join('')
+                  .toUpperCase();
     }
 
     /**
@@ -84,6 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
 * details, including initials, name, and email. Each contact is displayed as a clickable item, 
 * and clicking on a contact will show its detailed information.
 */
+
     function renderContacts() {
         const contentDiv = document.getElementById('content');
         if (!contentDiv) {
@@ -100,7 +106,7 @@ document.addEventListener('DOMContentLoaded', () => {
             contacts.sort((a, b) => a.name.localeCompare(b.name));
             const groupedContacts = {};
             for (const contact of contacts) {
-                const firstLetter = contact.name[0].toUpperCase();
+                const firstLetter = (contact.name && contact.name.length > 0) ? contact.name[0].toUpperCase() : '?';
                 if (!groupedContacts[firstLetter]) {
                     groupedContacts[firstLetter] = [];
                 }
@@ -417,26 +423,87 @@ document.addEventListener('DOMContentLoaded', () => {
      * @param {string} contact.color - The current color of the contact's initials.
      */
     function saveEditedContact(contact) {
-        const editForm = document.querySelector('#contact-overlay .contact-details-inputs');
+        const nameInput = document.getElementById('edit-contact-name');
         const emailInput = document.getElementById('edit-contact-email');
-        const email = emailInput.value;
-        if (!emailInput.checkValidity()) {
-            emailInput.reportValidity();
+        const phoneInput = document.getElementById('edit-contact-phone');
+    
+        // Clear previous errors
+        document.querySelectorAll('#contact-overlay .error-message').forEach(el => el.textContent = '');
+        document.querySelectorAll('#contact-overlay .contact-input-container').forEach(el => el.classList.remove('error'));
+    
+        let isValid = true;
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    
+        // Name validation
+        if (!nameInput.value.trim()) {
+            showEditError(nameInput, 'Name is required');
+            isValid = false;
+        }
+    
+        // Email validation
+        if (!emailInput.value.trim()) {
+            showEditError(emailInput, 'Email is required');
+            isValid = false;
+        } else if (!emailRegex.test(emailInput.value)) {
+            showEditError(emailInput, 'Invalid email format');
+            isValid = false;
+        }
+    
+        // Phone validation
+        if (!phoneInput.value.trim()) {
+            showEditError(phoneInput, 'Phone is required');
+            isValid = false;
+        } else if (!/^\d+$/.test(phoneInput.value)) {
+            showEditError(phoneInput, 'Invalid phone number');
+            isValid = false;
+        }
+    
+        if (!isValid) {
+            console.log('Validation failed - preventing save');
             return;
         }
-        if (!email.includes('@') || !email.includes('.')) {
-            emailInput.setCustomValidity('Email must contain both @ and .');
-            emailInput.reportValidity();
-            return;
-        }
-        emailInput.setCustomValidity('');
-        const updatedContact = gatherUpdatedContactData(contact);
+    
+        const updatedContact = {
+            id: contact.id,
+            name: nameInput.value.trim(),
+            email: emailInput.value.trim(),
+            phone: phoneInput.value.trim(),
+            initials: getInitials(nameInput.value.trim()),
+            color: contact.color
+        };
+    
         updateContactAPI(contact.id, updatedContact)
             .then(() => {
-                console.log('Contact updated successfully!');
+                console.log('Update successful, refreshing contacts...');
                 handleUIUpdates(updatedContact);
+                hideContactOverlay();
             })
-            .catch(handleError);
+            .catch(error => {
+                console.error('Update error:', error);
+                showToast('Failed to update contact');
+            });
+    }
+    function showEditError(inputElement, message) {
+        const container = inputElement.closest('.contact-input-container');
+        const errorId = inputElement.id + '-error';
+        const errorElement = document.getElementById(errorId);
+        
+        if (errorElement) {
+            errorElement.textContent = message;
+            container.classList.add('error');
+        } else {
+            console.error('Error element not found for:', errorId);
+        }
+    }
+    // Add this helper function if you don't have it
+    function showError(inputElement, message) {
+        const inputId = inputElement.id;
+        const errorElement = document.getElementById(`${inputId}-error`);
+        
+        if (errorElement) {
+            errorElement.textContent = message;
+            inputElement.closest('.input-container').classList.add('error');
+        }
     }
 
     /**
@@ -484,19 +551,18 @@ document.addEventListener('DOMContentLoaded', () => {
     * 
     * @param {Event} event - The form submission event.
     */
-    function gatherContactData() {
-        const name = document.getElementById('name').value;
-        const email = document.getElementById('email').value;
-        const phone = document.getElementById('phone').value;
-
+    function gatherUpdatedContactData(contact) {
+        const name = document.getElementById('edit-contact-name').value;
         return {
+            id: contact.id, // Preserve existing ID
             name: name,
-            email: email,
-            phone: phone,
+            email: document.getElementById('edit-contact-email').value,
+            phone: document.getElementById('edit-contact-phone').value,
             initials: getInitials(name),
-            color: getRandomColor(),
+            color: contact.color
         };
     }
+    
 
     /**
      * Saves the new contact and updates the UI accordingly.
@@ -528,28 +594,67 @@ document.addEventListener('DOMContentLoaded', () => {
                 showToast('Error saving contact. Please try again.');
             });
     }
+    function gatherContactData() {
+        return {
+            name: document.getElementById('name').value.trim(),
+            email: document.getElementById('email').value.trim(),
+            phone: document.getElementById('phone').value.trim(),
+            initials: getInitials(document.getElementById('name').value.trim()),
+            color: getRandomColor()
+        };
+    }
 
 /**
  * Handles the creation of a new contact.
- * 
+ *  * 
  * This function is triggered when the contact form is submitted. It validates the email 
  * and ensures it contains both "@" and "." before proceeding to gather contact data 
  * and calling `saveAndUpdateUI` to save the contact and update the UI.
  * 
  * @param {Event} event - The submit event triggered by the form.
  */
-    function createContact(event) {
-        event.preventDefault();
-        const emailInput = document.getElementById('email');
-        if (!emailInput.value.includes('@') || !emailInput.value.includes('.')) {
-            emailInput.setCustomValidity('Email must contain both @ and .');
-            emailInput.reportValidity();
-            return;
-        }
-        emailInput.setCustomValidity('');
-        const newContact = gatherContactData();
-        saveAndUpdateUI(newContact);
+function createContact(event) {
+    event.preventDefault();
+    const nameInput = document.getElementById('name');
+    const emailInput = document.getElementById('email');
+    const phoneInput = document.getElementById('phone');
+    
+    // Reset errors
+    document.querySelectorAll('.error-message').forEach(el => el.textContent = '');
+    document.querySelectorAll('.input-container').forEach(el => el.classList.remove('error'));
+
+    let isValid = true;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    // Name validation
+    if (!nameInput.value.trim()) {
+        showError(nameInput, 'Name is required');
+        isValid = false;
     }
+
+    // Email validation
+    if (!emailInput.value.trim()) {
+        showError(emailInput, 'Email is required');
+        isValid = false;
+    } else if (!emailRegex.test(emailInput.value)) {
+        showError(emailInput, 'Invalid email format');
+        isValid = false;
+    }
+
+    // Phone validation
+    if (!phoneInput.value.trim()) {
+        showError(phoneInput, 'Phone is required');
+        isValid = false;
+    } else if (!/^\d+$/.test(phoneInput.value)) {
+        showError(phoneInput, 'Invalid phone number');
+        isValid = false;
+    }
+
+    if (!isValid) return;
+    const newContact = gatherContactData();
+    saveAndUpdateUI(newContact);
+}
+
     const contactForm = document.getElementById('contact-form');
     if (contactForm) {
         contactForm.addEventListener('submit', createContact);
@@ -557,47 +662,4 @@ document.addEventListener('DOMContentLoaded', () => {
     renderContacts();
     hideOverlay();
 });
-
-/**
- * Sets up the email validation for both the add contact and edit contact forms.
- * 
- * This function listens for input events on the email fields and ensures that the 
- * email contains both "@" and ".", clearing any custom validity messages once 
- * the email is valid.
- */
-function setupEmailValidation() {
-    const emailInput = document.getElementById('email');
-    const editEmailInput = document.getElementById('edit-contact-email');
-    if (emailInput) {
-        emailInput.addEventListener('input', () => {
-            if (emailInput.value.includes('@') && emailInput.value.includes('.')) {
-                emailInput.setCustomValidity('');
-            }
-        });
-    }
-    if (editEmailInput) {
-        editEmailInput.addEventListener('input', () => {
-            if (editEmailInput.value.includes('@') && editEmailInput.value.includes('.')) {
-                editEmailInput.setCustomValidity('');
-            }
-        });
-    }
-}
-
-// Setup email validation when the DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
-    setupEmailValidation();
-});
-
-
-
-
-
-
-
-
-
-
-
-
 

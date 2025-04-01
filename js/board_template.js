@@ -230,7 +230,7 @@ function getOverlayEdit(task) {
                 <textarea id="edit_description">${task.description || ''}</textarea>
 
                 <label for="edit_due_date">Due Date</label>
-                <input value="${task.dueDate}" id="edit_due_date" type="date" required>
+                <input onclick="getDateTodayEdit()" value="${task.dueDate}" id="edit_due_date" type="date" required>
 
                 ${priorityHTML}
 

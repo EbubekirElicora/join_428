@@ -326,5 +326,49 @@ document.querySelectorAll('input').forEach(input => {
         container.classList.remove('error');
         container.querySelector('.error-message').textContent = '';
     });
+    window.openEditOverlay = openEditOverlay;
+
 });
 
+/**
+     * Opens the edit overlay for the contact, allowing the user to edit the contact's details.
+     * 
+     * @param {Object} contact - The contact object.
+     */
+window.openEditOverlay = function(contact) {
+    const editLink = document.getElementById('editLinkOverlay');
+    const overlay = document.getElementById('contact-overlay');
+    const contactInitialsOverlay = document.getElementById('contact-initials-overlay');
+    const editContactName = document.getElementById('edit-contact-name');
+    const editContactEmail = document.getElementById('edit-contact-email');
+    const editContactPhone = document.getElementById('edit-contact-phone');
+    const backdrop = document.createElement('div');
+    backdrop.id = 'overlay-backdrop';
+    backdrop.className = 'overlay-backdrop';
+    backdrop.onclick = hideOverlay;
+    document.body.appendChild(backdrop);
+    backdrop.style.display = 'block';
+    
+    if (editLink) editLink.classList.add('active');
+    if (contactInitialsOverlay) {
+        contactInitialsOverlay.textContent = contact.initials;
+        contactInitialsOverlay.style.backgroundColor = contact.color;
+    }
+    if (editContactName) editContactName.value = contact.name;
+    if (editContactEmail) editContactEmail.value = contact.email;
+    if (editContactPhone) editContactPhone.value = contact.phone;
+
+    setTimeout(() => {
+        if (overlay) {
+            overlay.style.display = 'block';
+            overlay.classList.add('active');
+        }
+        if (editLink) editLink.classList.remove('active');
+    }, 100);
+
+    const saveButton = document.getElementById('save-contact-button');
+    if (saveButton){ saveButton.onclick = () => window.saveEditedContact(contact);
+
+    const deleteButton = document.getElementById('delete-contact-button');
+    if (deleteButton) deleteButton.onclick = () => window.deleteContact(contact);}
+};

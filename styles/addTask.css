@@ -909,6 +909,7 @@ input[type="checkbox"]:checked {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  border-radius: 8px;
 }
 
 .contact-info {

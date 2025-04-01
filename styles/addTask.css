@@ -917,6 +917,11 @@ input[type="checkbox"]:checked {
   gap: 10px;
 }
 
+#contactInput::placeholder {
+  color: black !important;
+  opacity: 1; 
+}
+
 .initials-container {
   width: 40px;
   height: 40px;

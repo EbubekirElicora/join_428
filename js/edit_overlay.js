@@ -75,12 +75,12 @@ async function populateDropdown() {
             <div class="dropdown-item" onclick="selectEditContact('${contact.name}')">
                 <div class="contact-info">
                     <div class="contact-initials-container" style="background-color: ${contact.color}">
-                        ${contact.initials}
+                        <div class="contact-initials">${contact.initials}</div>
                     </div>
                     <span class="contact-name">${contact.name}</span>
-                    <input type="checkbox" id="contact-${contact.name}" class="contact-checkbox" 
-                           ${currentTask.assignedContacts?.some(c => c.name === contact.name) ? 'checked' : ''}>
                 </div>
+                <input type="checkbox" id="contact-${contact.name}" class="contact-checkbox" 
+                   ${currentTask.assignedContacts?.some(c => c.name === contact.name) ? 'checked' : ''}>
             </div>
         `).join('') || '';
         dropdownContent.innerHTML = dropdownContentHTML;

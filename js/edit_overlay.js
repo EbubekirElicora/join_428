@@ -309,3 +309,66 @@ function closeEditOverlay() {
         updateHTML();
     }
 }
+
+/**
+ * Initialisiert das Datumseingabefeld und setzt Validierungsregeln.
+ * - Setzt das minimale Datum auf den aktuellen Tag.
+ * - Fügt Echtzeit-Validierung bei Eingabe hinzu.
+ * - Passt die Textfarbe basierend auf der Gültigkeit des Datums an.
+ * @function
+ * @returns {void}
+ */
+function getDateTodayEdit() {
+    let dateInput = document.getElementById('edit_due_date');
+    if (dateInput) {
+        const today = new Date();
+        const localDate = today.toLocaleDateString('en-CA');
+        dateInput.min = localDate;
+        dateInput.addEventListener('input', function() {
+            validateDate(this);
+            updateDateColor.call(this);
+        });
+        updateDateColor.call(dateInput);
+    }
+}
+
+/**
+ * Validiert das eingegebene Datum:
+ * - Korrigiert Datum in der Vergangenheit auf das aktuelle Datum.
+ * - Begrenzt das Jahr auf maximal 2999.
+ * - Formatiert das Datum in 'YYYY-MM-DD'.
+ * @function
+ * @param {HTMLInputElement} input - Das Datumseingabefeld.
+ * @returns {void}
+ */
+function validateDate(input) {
+    const currentDate = new Date();
+    const maxYear = 2999;
+    const selectedDate = new Date(input.value);
+    if (isNaN(selectedDate)) {
+        input.value = currentDate.toLocaleDateString('en-CA');
+        return;
+    }
+    if (selectedDate.getFullYear() > maxYear) {
+        selectedDate.setFullYear(maxYear);
+    }
+    if (selectedDate < currentDate) {
+        selectedDate.setTime(currentDate.getTime());
+    }
+    const formattedDate = selectedDate.toLocaleDateString('en-CA');
+    if (input.value !== formattedDate) {
+        input.value = formattedDate;
+    }
+}
+
+/**
+ * Aktualisiert die Textfarbe des Eingabefelds:
+ * - Schwarz für gültige Daten.
+ * - Grau (#D1D1D1) für ungültige oder leere Werte.
+ * @function
+ * @returns {void}
+ */
+function updateDateColor() {
+    const isValidDate = !isNaN(new Date(this.value));
+    this.style.color = isValidDate ? 'black' : '#D1D1D1';
+}

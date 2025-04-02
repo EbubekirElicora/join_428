@@ -317,3 +317,7 @@ h1 {
 .nav_board {
     touch-action: none;
 }
+
+.pointer {
+    cursor: pointer;
+}

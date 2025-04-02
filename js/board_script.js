@@ -30,10 +30,12 @@ async function loadContacts() {
                 <input type="checkbox" class="contact-checkbox">
             `;
             const checkbox = contactDiv.querySelector('.contact-checkbox');
-            contactDiv.addEventListener('click', () => {
+            contactDiv.addEventListener('click', (event) => {
+                event.stopPropagation();
                 checkbox.checked = !checkbox.checked;
                 checkbox.dispatchEvent(new Event('change'));
             });
+
             checkbox.addEventListener('change', () => {
                 if (checkbox.checked) {
                     contactDiv.classList.add('selected-contact-item');
@@ -53,7 +55,6 @@ async function loadContacts() {
         dropdownContent.innerHTML = '<div class="dropdown-item">No contacts available</div>';
     }
 }
-
 
 /**
  * Wählt einen Kontakt aus und fügt ihn zur Liste der ausgewählten Kontakte hinzu.

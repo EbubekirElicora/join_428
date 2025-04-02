@@ -40,61 +40,74 @@ function getDateToday() {
 }
 
 /**
- * Initialisiert das Dropdown-Menü und fügt Ereignishandler hinzu, um das Dropdown anzuzeigen oder auszublenden.
- * 
- * Diese Funktion setzt Ereignisse auf das Dropdown-Symbol und das umgekehrte Dropdown-Symbol:
- * 1. Zeigt das Dropdown-Menü an, wenn eines der Symbole geklickt wird.
- * 2. Blendet das Dropdown-Menü aus, wenn außerhalb des Dropdowns oder der Symbole geklickt wird.
- * 3. Wechselt das Dropdown-Symbol zwischen zwei Zuständen (auf und ab).
- * 
- * @function initializeDropdown
+ * Initialisiert das Dropdown-Menü und fügt Event-Listener für das Öffnen und Schließen hinzu.
+ * Diese Funktion wird nach dem Laden des DOMs aufgerufen.
+ */
+document.addEventListener('DOMContentLoaded', () => {
+    const dropdownContent = document.getElementById('dropdownContent');
+    if (!dropdownContent) {
+        return;
+    }
+    initializeDropdown();
+});
+
+/**
+ * Initialisiert das Dropdown und fügt Event-Listener für das Öffnen und Schließen hinzu.
  */
 function initializeDropdown() {
+    const dropdownContent = document.getElementById('dropdownContent');
+    if (!dropdownContent) {
+        return;
+    }
     const dropdownIcon = document.getElementById('dropdownIcon');
     const dropdownIconUp = document.getElementById('dropdownIconUp');
-    const dropdownContent = document.getElementById('dropdownContent');
-    if (dropdownIcon && dropdownIconUp && dropdownContent) {
-        dropdownIcon.addEventListener('click', toggleDropdown);
-        dropdownIconUp.addEventListener('click', toggleDropdown);
-        document.addEventListener('click', (event) => {
-            if (!dropdownContent.contains(event.target) &&
-                !dropdownIcon.contains(event.target) &&
-                !dropdownIconUp.contains(event.target)) {
-                dropdownContent.style.display = 'none';
-                dropdownIcon.classList.remove('d-none');
-                dropdownIconUp.classList.add('d-none');
-            }
-        });
-    } else {
-        console.error('Dropdown elements not found!');
-    }
+    const contactInput = document.getElementById('contactInput');
+    [dropdownIcon, dropdownIconUp, contactInput].forEach(element => {
+        if (element) {
+            element.addEventListener('click', (event) => {
+                event.stopPropagation();
+                toggleDropdown();
+            });
+        }
+    });
+    document.addEventListener('click', (event) => {
+        if (!dropdownContent.contains(event.target)) {
+            closeDropdown();
+        }
+    });
 }
 
 /**
- * Schaltet das Dropdown-Menü um, zeigt es an oder blendet es aus.
- * Diese Funktion überprüft den aktuellen Anzeigestatus des Dropdowns und wechselt diesen.
- * 
- * 1. Wenn das Dropdown-Menü sichtbar ist, wird es ausgeblendet.
- * 2. Wenn das Dropdown-Menü nicht sichtbar ist, wird es angezeigt.
- * 3. Wechselt das Dropdown-Symbol (nach oben und nach unten) je nach Status des Menüs.
- * 
- * @function toggleDropdown
+ * Wechselt die Anzeige des Dropdowns: Öffnet es, wenn es geschlossen ist, und schließt es, wenn es geöffnet ist.
  */
 function toggleDropdown() {
     const dropdownContent = document.getElementById('dropdownContent');
     const dropdownIcon = document.getElementById('dropdownIcon');
     const dropdownIconUp = document.getElementById('dropdownIconUp');
     if (!dropdownContent || !dropdownIcon || !dropdownIconUp) return;
-    if (dropdownContent.style.display === 'block') {
-        dropdownContent.style.display = 'none';
-        dropdownIcon.classList.remove('d-none');
-        dropdownIconUp.classList.add('d-none');
+    const isOpen = dropdownContent.style.display === 'block';
+    if (isOpen) {
+        closeDropdown();
     } else {
         dropdownContent.style.display = 'block';
         dropdownIcon.classList.add('d-none');
         dropdownIconUp.classList.remove('d-none');
     }
 }
+
+/**
+ * Schließt das Dropdown und setzt die Icons zurück.
+ */
+function closeDropdown() {
+    const dropdownContent = document.getElementById('dropdownContent');
+    const dropdownIcon = document.getElementById('dropdownIcon');
+    const dropdownIconUp = document.getElementById('dropdownIconUp');
+    if (!dropdownContent || !dropdownIcon || !dropdownIconUp) return;
+    dropdownContent.style.display = 'none';
+    dropdownIcon.classList.remove('d-none');
+    dropdownIconUp.classList.add('d-none');
+}
+
 
 /**
  * Initialisiert den Kategorien-Selektor, indem ein Klick-Ereignis auf das Element hinzugefügt wird.
@@ -267,42 +280,6 @@ function createTask(title, category, dueDate, priority, assignedContacts, subtas
     };
     return newTask;
 }
-
-/**
- * Setzt das Formular für die Erstellung einer neuen Aufgabe zurück.
- * Diese Funktion löscht die Werte und Textinhalte aller relevanten Felder im Formular,
- * einschließlich des Titels, der Beschreibung, des Fälligkeitsdatums, der Kategorie, der hinzugefügten Texte,
- * der zugewiesenen Kontakte und der Unteraufgaben.
- * 
- * @function resetForm
- */
-function resetForm() {
-    document.getElementById('title').value = '';
-    document.getElementById('description').value = '';
-    document.getElementById('date').value = '';
-    document.getElementById('select_txt').textContent = 'Select task category';
-    document.getElementById('added_text').innerHTML = '';
-    selectedContacts = [];
-    document.getElementById('contactInput').value = '';
-    document.getElementById('selectedContactsInitials').innerHTML = '';
-    subtasks = [];
-    setPrio('medium');
-    document.querySelectorAll('.dropdown-item').forEach(item => {
-        item.classList.remove('selected-contact-item');
-    });
-}
-
-/**
- * Resets all relevant values.
- * 
- * - Calls the `resetForm()` function to reset the form.
- * - Sets the priority to 'medium' by calling the `setPrio('medium')` function.
- */
-function resetAll() {
-    resetForm();
-    setPrio('medium');
-}
-
 
 /**
  * Speichert die Aufgaben-Daten in Firebase Realtime Database.

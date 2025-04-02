@@ -37,8 +37,8 @@
   justify-content: space-between;
 }
 
-.subtask_input_overlay {
-  width: 330px !important;
+.subTaskEditInput {
+  width: 100% !important;
 }
 
 .subTask.deleting {

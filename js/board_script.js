@@ -169,3 +169,4 @@ function resetAllBoard() {
     resetForm();
     setPrio('medium');
 }
+

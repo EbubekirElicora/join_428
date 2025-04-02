@@ -72,7 +72,7 @@ async function populateDropdown() {
     const dropdownContent = document.getElementById('editDropdownContent');
     if (dropdownContent) {
         const dropdownContentHTML = contacts.map(contact => `
-            <div class="dropdown-item" onclick="toggleCheckbox('${contact.name}')">
+            <div class="dropdown-item" onclick="event.stopPropagation(); toggleCheckbox('${contact.name}')">
                 <div class="contact-info">
                     <div class="contact-initials-container" style="background-color: ${contact.color}">
                         <div class="contact-initials">${contact.initials}</div>
@@ -140,16 +140,35 @@ function selectEditContact(contactName) {
  * 
  * Shows or hides the dropdown menu, depending on its current state.
  */
-function toggleEditDropdown() {
+function toggleEditDropdown(event) {
+    event.stopPropagation();
     const dropdownContent = document.getElementById('editDropdownContent');
     const iconDown = document.getElementById('editDropdownIcon');
     const iconUp = document.getElementById('editDropdownIconUp');
     if (!dropdownContent || !iconDown || !iconUp) return;
+
     const isOpen = dropdownContent.style.display === 'block';
-    dropdownContent.style.display = isOpen ? 'none' : 'block';
-    iconDown.classList.toggle('d-none', isOpen);
-    iconUp.classList.toggle('d-none', !isOpen);
+    if (isOpen) {
+        closeEditDropdown();
+    } else {
+        dropdownContent.style.display = 'block';
+        iconDown.classList.add('d-none');
+        iconUp.classList.remove('d-none');
+    }
 }
+
+
+function closeEditDropdown() {
+    const dropdownContent = document.getElementById('editDropdownContent');
+    const iconDown = document.getElementById('editDropdownIcon');
+    const iconUp = document.getElementById('editDropdownIconUp');
+    if (!dropdownContent || !iconDown || !iconUp) return;
+
+    dropdownContent.style.display = 'none';
+    iconDown.classList.remove('d-none');
+    iconUp.classList.add('d-none');
+}
+
 
 /**
  * Saves the changes made to the task in the editing overlay.

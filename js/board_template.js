@@ -222,7 +222,7 @@ function getOverlayEdit(task) {
                 <img onclick="closeEditOverlay()" src="../assets/icons/close.png" alt="">
             </div>
 
-            <form id="edit_form">
+            <form onclick="closeEditDropdown()" id="edit_form">
                 <label for="edit_title">Title</label>
                 <input id="edit_title" value="${task.title}" type="text" required>
 
@@ -237,13 +237,13 @@ function getOverlayEdit(task) {
                 <div class="assigned_container">
                     <div class="dropdown">
                         <div class="input-container">
-                            <input type="text" id="editContactInput" placeholder="Select contacts..." readonly>
+                            <input onclick="toggleEditDropdown(event)" type="text" id="editContactInput" placeholder="Select contacts..." readonly>
                             <div class="icons">
-                                <img onclick="toggleEditDropdown()" 
+                                <img 
                                      src="../assets/icons/arrow_drop_down_icon.png"
                                      id="editDropdownIcon" 
                                      class="cursorPointer dropdownimg">
-                                <img onclick="toggleEditDropdown()" src="../assets/icons/arrow_drop_up_icon.png" 
+                                <img src="../assets/icons/arrow_drop_up_icon.png" 
                                      id="editDropdownIconUp"
                                      class="cursorPointer dropdownimg d-none">
                             </div>
@@ -297,11 +297,11 @@ function getOverlayEdit(task) {
                                 </div>
                             </div>
                         </div>
-                <div class="added_text" id="edit_added_text">
-                    ${subtasksHTML}
-                </div>
-            </div>
-        </section>
+                        <div class="added_text" id="edit_added_text">
+                            ${subtasksHTML}
+                        </div>
+                    </div>
+                </section>
                 <div class="edit_buttons">
                     <button type="button" class="ok_button">OK</button>
                 </div>

@@ -91,18 +91,19 @@ function renderSubtasksOverlay() {
  * @param {string} subtaskId - The ID of the subtask to delete.
  */
 function deleteSubTaskOverlay(subtaskId) {
-    const subtaskElement = document.querySelector(`.subTask[data-subtask-id="${subtaskId}"]`);
+    const subtaskElement = document.querySelector(`.subTask[data-subtask-id="${subtaskId}"], .subTaskEdit[data-subtask-id="${subtaskId}"]`);
     if (subtaskElement) {
         subtaskElement.classList.add('deleting');
         setTimeout(() => {
             delete editSubtasks[subtaskId];
             currentTask.subtasks = { ...editSubtasks };
             renderSubtasksOverlay();
-        }, 300);
+        }, 200);
     } else {
         console.error(`Subtask with ID ${subtaskId} not found.`);
     }
 }
+
 
 /**
  * Saves the edited task by updating its subtasks and syncing the changes with the backend.

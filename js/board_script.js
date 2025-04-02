@@ -130,3 +130,42 @@ function getRandomColor() {
     }
     return color;
 }
+
+/**
+ * Setzt das Formular für die Erstellung einer neuen Aufgabe zurück.
+ * Diese Funktion löscht die Werte und Textinhalte aller relevanten Felder im Formular,
+ * einschließlich des Titels, der Beschreibung, des Fälligkeitsdatums, der Kategorie, der hinzugefügten Texte,
+ * der zugewiesenen Kontakte und der Unteraufgaben.
+ * 
+ * @function resetForm
+ */
+function resetForm() {
+    document.getElementById('title').value = '';
+    document.getElementById('description').value = '';
+    document.getElementById('date').value = '';
+    document.getElementById('select_txt').textContent = 'Select task category';
+    document.getElementById('added_text').innerHTML = '';
+    selectedContacts = [];
+    document.getElementById('contactInput').value = '';
+    document.getElementById('selectedContactsInitials').innerHTML = '';
+    subtasks = [];
+    setPrio('medium');
+    document.querySelectorAll('.contact-checkbox').forEach(checkbox => {
+        checkbox.checked = false;
+    });
+    document.querySelectorAll('.dropdown-item').forEach(item => {
+        item.classList.remove('selected-contact-item');
+    });
+}
+
+/**
+ * Resets all relevant values.
+ * 
+ * - Calls the `resetForm()` function to reset the form.
+ * - Sets the priority to 'medium' by calling the `setPrio('medium')` function.
+ */
+function resetAllBoard() {
+    loadContacts();
+    resetForm();
+    setPrio('medium');
+}

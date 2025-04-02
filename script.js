@@ -269,42 +269,6 @@ function createTask(title, category, dueDate, priority, assignedContacts, subtas
 }
 
 /**
- * Setzt das Formular für die Erstellung einer neuen Aufgabe zurück.
- * Diese Funktion löscht die Werte und Textinhalte aller relevanten Felder im Formular,
- * einschließlich des Titels, der Beschreibung, des Fälligkeitsdatums, der Kategorie, der hinzugefügten Texte,
- * der zugewiesenen Kontakte und der Unteraufgaben.
- * 
- * @function resetForm
- */
-function resetForm() {
-    document.getElementById('title').value = '';
-    document.getElementById('description').value = '';
-    document.getElementById('date').value = '';
-    document.getElementById('select_txt').textContent = 'Select task category';
-    document.getElementById('added_text').innerHTML = '';
-    selectedContacts = [];
-    document.getElementById('contactInput').value = '';
-    document.getElementById('selectedContactsInitials').innerHTML = '';
-    subtasks = [];
-    setPrio('medium');
-    document.querySelectorAll('.dropdown-item').forEach(item => {
-        item.classList.remove('selected-contact-item');
-    });
-}
-
-/**
- * Resets all relevant values.
- * 
- * - Calls the `resetForm()` function to reset the form.
- * - Sets the priority to 'medium' by calling the `setPrio('medium')` function.
- */
-function resetAll() {
-    resetForm();
-    setPrio('medium');
-}
-
-
-/**
  * Speichert die Aufgaben-Daten in Firebase Realtime Database.
  * Diese Funktion sendet die Aufgaben-Daten an Firebase, um sie dort zu speichern.
  * Wenn der Speichervorgang erfolgreich ist, gibt sie die gespeicherten Daten zurück,

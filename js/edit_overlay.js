@@ -72,19 +72,27 @@ async function populateDropdown() {
     const dropdownContent = document.getElementById('editDropdownContent');
     if (dropdownContent) {
         const dropdownContentHTML = contacts.map(contact => `
-            <div class="dropdown-item" onclick="selectEditContact('${contact.name}')">
+            <div class="dropdown-item" onclick="toggleCheckbox('${contact.name}')">
                 <div class="contact-info">
                     <div class="contact-initials-container" style="background-color: ${contact.color}">
                         <div class="contact-initials">${contact.initials}</div>
                     </div>
                     <span class="contact-name">${contact.name}</span>
                 </div>
-                <input type="checkbox" id="contact-${contact.name}" class="contact-checkbox" 
+                <input type="checkbox" id="contact-${contact.name}" class="contact-checkbox"
                    ${currentTask.assignedContacts?.some(c => c.name === contact.name) ? 'checked' : ''}>
             </div>
         `).join('') || '';
         dropdownContent.innerHTML = dropdownContentHTML;
     }
+}
+
+function toggleCheckbox(contactName) {
+    const checkbox = document.getElementById(`contact-${contactName}`);
+    if (!checkbox) return;
+    
+    checkbox.checked = !checkbox.checked;
+    selectEditContact(contactName);
 }
 
 /**

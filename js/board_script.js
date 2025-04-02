@@ -30,7 +30,11 @@ async function loadContacts() {
                 <input type="checkbox" class="contact-checkbox">
             `;
             const checkbox = contactDiv.querySelector('.contact-checkbox');
-            checkbox.addEventListener('change', (event) => {
+            contactDiv.addEventListener('click', () => {
+                checkbox.checked = !checkbox.checked;
+                checkbox.dispatchEvent(new Event('change'));
+            });
+            checkbox.addEventListener('change', () => {
                 if (checkbox.checked) {
                     contactDiv.classList.add('selected-contact-item');
                     if (!selectedContacts.find(c => c.name === contact.name)) {
@@ -42,12 +46,14 @@ async function loadContacts() {
                 }
                 updateSelectedContacts();
             });
+
             dropdownContent.appendChild(contactDiv);
         });
     } else {
         dropdownContent.innerHTML = '<div class="dropdown-item">No contacts available</div>';
     }
 }
+
 
 /**
  * Wählt einen Kontakt aus und fügt ihn zur Liste der ausgewählten Kontakte hinzu.

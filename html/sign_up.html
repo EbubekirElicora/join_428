@@ -28,21 +28,21 @@
                 </a>
             </div>
 
-            <form id="join-form">
+            <form id="join-form" novalidate>
                 <div class="input-group">
-                    <input type="name" id="name" name="name" placeholder="Name" required autocomplete="on">
+                    <input type="name" id="name" name="name" placeholder="Name"  autocomplete="on">
                     <span class="icon">
                         <img id="passwordImg" src="../assets/icons/person-icon.svg" alt="">
                     </span>
                 </div>
                 <div class="input-group">
-                    <input type="email" id="email" name="email" placeholder="Email" required autocomplete="on">
+                    <input type="email" id="email" name="email" placeholder="Email"  autocomplete="on">
                     <span class="icon">
                         <img id="passwordImg" src="../assets/icons/email-icon.svg" alt="">
                     </span>
                 </div>
                 <div class="input-group">
-                    <input type="password" id="password" name="password" placeholder="Password" required
+                    <input type="password" id="password" name="password" placeholder="Password" 
                         autocomplete="new-password">
                     <span class="icon" id="togglePasswordIcon"
                         onclick="togglePasswordVisibility('password', 'togglePasswordIcon')">
@@ -52,7 +52,7 @@
                 </div>
                 <div class="input-group">
                     <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm password"
-                        required autocomplete="new-password">
+                         autocomplete="new-password">
                     <span class="icon" id="toggleConfirmPasswordIcon"
                         onclick="togglePasswordVisibility('confirm-password', 'toggleConfirmPasswordIcon')">
                         <img class="cursorPointer" src="../assets/visibility_off - Copy.svg" alt="Show Password"

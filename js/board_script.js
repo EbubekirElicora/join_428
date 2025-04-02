@@ -124,3 +124,26 @@ function getRandomColor() {
     }
     return color;
 }
+// Add this click handler
+document.addEventListener('click', function(e) {
+    const contactItem = e.target.closest('.edit-contact-item');
+    if (!contactItem) return;
+    
+    const contactName = contactItem.dataset.contact;
+    const checkbox = contactItem.querySelector('.custom-checkbox');
+    const isChecked = checkbox.classList.contains('checked');
+    const contact = contacts.find(c => c.name === contactName);
+
+    // Toggle state
+    checkbox.classList.toggle('checked');
+    checkbox.style.backgroundImage = `url('../assets/icons/${!isChecked ? 'checked' : 'unchecked'}.png')`;
+
+    // Update task contacts
+    if (!isChecked) {
+        currentTask.assignedContacts.push(contact);
+    } else {
+        currentTask.assignedContacts = currentTask.assignedContacts
+            .filter(c => c.name !== contactName);
+    }
+    updateEditContactsDisplay();
+});

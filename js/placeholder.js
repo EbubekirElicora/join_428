@@ -563,6 +563,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     }
     
+    
 
     /**
      * Saves the new contact and updates the UI accordingly.
@@ -661,5 +662,30 @@ function createContact(event) {
     }
     renderContacts();
     hideOverlay();
+});
+
+/**
+ * Sets up the email validation for both the add contact and edit contact forms.
+ * 
+ * This function listens for input events on the email fields and ensures that the 
+ * email contains both "@" and ".", clearing any custom validity messages once 
+ * the email is valid.
+ */
+function showError(inputElement, message) {
+    const container = inputElement.closest('.input-container, .contact-input-container');
+    const errorElement = container.querySelector('.error-message');
+    
+    if (errorElement) {
+        errorElement.textContent = message;
+        container.classList.add('error');
+    }
+}
+// Add input event listeners to clear errors
+document.querySelectorAll('input').forEach(input => {
+    input.addEventListener('input', () => {
+        const container = input.closest('.input-container, .contact-input-container');
+        container.classList.remove('error');
+        container.querySelector('.error-message').textContent = '';
+    });
 });
 

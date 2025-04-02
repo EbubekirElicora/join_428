@@ -321,3 +321,15 @@ h1 {
 .pointer {
     cursor: pointer;
 }
+
+.remaining-contacts-board {
+    background: lightgray;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    border: 2px solid white;
+}

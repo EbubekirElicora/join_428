@@ -87,18 +87,28 @@ function updateSelectedContacts() {
     if (!initialsContainer) {
         return;
     }
+    const contactsToDisplay = selectedContacts.slice(0, 5);
     initialsContainer.innerHTML = '';
-    selectedContacts.forEach(contact => {
+    contactsToDisplay.forEach(contact => {
         const span = document.createElement('span');
         span.classList.add('contact-initial');
-        span.innerHTML = `
+        span.innerHTML = ` 
             <div class="contact-initials-container" style="background-color: ${getRandomColor()}">
                 <div class="contact-initials">${getInitials(contact.name)}</div>
             </div>
         `;
         initialsContainer.appendChild(span);
     });
+    const remainingContacts = selectedContacts.length > 5
+        ? `<div class="remaining-contacts-board">+${selectedContacts.length - 5}</div>`
+        : '';
+    if (remainingContacts) {
+        const remainingDiv = document.createElement('div');
+        remainingDiv.innerHTML = remainingContacts;
+        initialsContainer.appendChild(remainingDiv);
+    }
 }
+
 /**
  * Gibt die Initialen eines Namens zurück.
  * Der Name wird in Wörter aufgeteilt und es werden die ersten Buchstaben jedes Wortes genommen,

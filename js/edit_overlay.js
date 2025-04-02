@@ -345,7 +345,12 @@ function editProtection(event) {
 }
 
 /**
- * Closes the edit overlay and cleans up related state
+ * Closes the edit overlay and restores the original state.
+ * - Hides the overlay by adding a CSS class.
+ * - Enables scrolling on the page again.
+ * - Clears the content of the overlay.
+ * - Removes a global `currentTask` variable if it exists.
+ * - Updates the UI if `updateHTML` is defined.
  */
 function closeEditOverlay() {
     const overlayRef = document.getElementById('edit_overlay');

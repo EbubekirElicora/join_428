@@ -1,8 +1,8 @@
 const BASE_URL = "https://join-428-default-rtdb.europe-west1.firebasedatabase.app/";
 
- /**
+/**
 * Generates initials from a given name.
- * 
+* 
 * @param {string} name - The full name of the contact.
 * @returns {string} - The initials of the name.
 */
@@ -39,15 +39,15 @@ function saveContact(contact) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(contact)
     })
-    .then(response => response.json())
-    .then(data => {
-        console.log('Contact saved successfully:', data);
-        return data;
-    })
-    .catch(error => {
-        console.error('Error saving contact:', error);
-        throw error;
-    });
+        .then(response => response.json())
+        .then(data => {
+            console.log('Contact saved successfully:', data);
+            return data;
+        })
+        .catch(error => {
+            console.error('Error saving contact:', error);
+            throw error;
+        });
 }
 /**
  * Fetches contacts from Firebase.
@@ -122,17 +122,17 @@ function renderContacts() {
         }
     });
 }
- /**
-   * Deletes a contact from the backend database and updates the UI accordingly.
-   * 
-   * This function sends a DELETE request to remove the contact data from the backend.
-   * After successfully deleting the contact, it refreshes the contact list and hides
-   * the contact details overlay. If the window width is less than or equal to 1060px, 
-   * it also toggles the columns in the UI.
-   * 
-   * @param {Object} contact - The contact to be deleted.
-   * @param {string} contact.id - The unique identifier of the contact to be deleted.
-   */
+/**
+  * Deletes a contact from the backend database and updates the UI accordingly.
+  * 
+  * This function sends a DELETE request to remove the contact data from the backend.
+  * After successfully deleting the contact, it refreshes the contact list and hides
+  * the contact details overlay. If the window width is less than or equal to 1060px, 
+  * it also toggles the columns in the UI.
+  * 
+  * @param {Object} contact - The contact to be deleted.
+  * @param {string} contact.id - The unique identifier of the contact to be deleted.
+  */
 
 function deleteContact(contact) {
     fetch(`${BASE_URL}/contacts/${contact.id}.json`, {
@@ -144,10 +144,23 @@ function deleteContact(contact) {
         if (window.innerWidth <= 1060) {
             window.toggleColumns();
         }
-    }).catch(error => {});
+    }).catch(error => { });
 }
 
-
+/**
+ * The `window.core` object provides essential utility functions for managing contacts within the application.
+ * It includes methods for retrieving initials, generating random colors, saving, fetching, rendering, and deleting contacts. 
+ * By exposing these functions globally via `window.core`, they can be easily accessed and used throughout the entire application.
+ * 
+ * - `getInitials(fullName)`: Extracts and returns the initials from a given full name.
+ * - `getRandomColor()`: Generates and returns a random color in hexadecimal format (e.g., "#3b5998").
+ * - `saveContact(contact)`: Saves a new contact, taking a contact object as an argument. Returns a promise.
+ * - `fetchContacts()`: Fetches all contacts from the database or server and returns a promise containing an array of contacts.
+ * - `renderContacts()`: Renders and displays the list of contacts on the user interface (UI).
+ * - `deleteContact(contactId)`: Deletes a contact by its unique ID. Returns a promise upon completion.
+ * 
+ * The functions are organized in a global object, making them easily accessible anywhere in the application for seamless contact management.
+ */
 window.core = {
     getInitials,
     getRandomColor,

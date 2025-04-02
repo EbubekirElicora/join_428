@@ -147,31 +147,6 @@ function getRandomColor() {
     }
     return color;
 }
-<<<<<<< HEAD
-// Add this click handler
-document.addEventListener('click', function(e) {
-    const contactItem = e.target.closest('.edit-contact-item');
-    if (!contactItem) return;
-    
-    const contactName = contactItem.dataset.contact;
-    const checkbox = contactItem.querySelector('.custom-checkbox');
-    const isChecked = checkbox.classList.contains('checked');
-    const contact = contacts.find(c => c.name === contactName);
-
-    // Toggle state
-    checkbox.classList.toggle('checked');
-    checkbox.style.backgroundImage = `url('../assets/icons/${!isChecked ? 'checked' : 'unchecked'}.png')`;
-
-    // Update task contacts
-    if (!isChecked) {
-        currentTask.assignedContacts.push(contact);
-    } else {
-        currentTask.assignedContacts = currentTask.assignedContacts
-            .filter(c => c.name !== contactName);
-    }
-    updateEditContactsDisplay();
-});
-=======
 
 /**
  * Setzt das Formular für die Erstellung einer neuen Aufgabe zurück.
@@ -212,4 +187,3 @@ function resetAllBoard() {
     setPrio('medium');
 }
 
->>>>>>> 0402dccf2eb7e6cc412abbc902ed3c42385b661a

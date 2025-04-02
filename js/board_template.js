@@ -241,7 +241,7 @@ const contactsDropdownHTML = contacts.map(contact => {
                 <img onclick="closeEditOverlay()" src="../assets/icons/close.png" alt="">
             </div>
 
-            <form id="edit_form">
+            <form onclick="closeEditDropdown()" id="edit_form">
                 <label for="edit_title">Title</label>
                 <input id="edit_title" value="${task.title}" type="text" required>
 
@@ -249,20 +249,20 @@ const contactsDropdownHTML = contacts.map(contact => {
                 <textarea id="edit_description">${task.description || ''}</textarea>
 
                 <label for="edit_due_date">Due Date</label>
-                <input value="${task.dueDate}" id="edit_due_date" type="date" required>
+                <input onclick="getDateTodayEdit()" value="${task.dueDate}" id="edit_due_date" type="date" required>
 
                 ${priorityHTML}
 
                 <div class="assigned_container">
                     <div class="dropdown">
                         <div class="input-container">
-                            <input type="text" id="editContactInput" placeholder="Select contacts..." readonly>
+                            <input class="pointer" onclick="toggleEditDropdown(event)" type="text" id="editContactInput" placeholder="Select contacts..." readonly>
                             <div class="icons">
-                                <img onclick="toggleEditDropdown()" 
+                                <img onclick="toggleEditDropdown(event)"
                                      src="../assets/icons/arrow_drop_down_icon.png"
                                      id="editDropdownIcon" 
                                      class="cursorPointer dropdownimg">
-                                <img onclick="toggleEditDropdown()" src="../assets/icons/arrow_drop_up_icon.png" 
+                                <img src="../assets/icons/arrow_drop_up_icon.png" 
                                      id="editDropdownIconUp"
                                      class="cursorPointer dropdownimg d-none">
                             </div>
@@ -311,11 +311,11 @@ const contactsDropdownHTML = contacts.map(contact => {
                                 </div>
                             </div>
                         </div>
-                <div class="added_text" id="edit_added_text">
-                    ${subtasksHTML}
-                </div>
-            </div>
-        </section>
+                        <div class="added_text" id="edit_added_text">
+                            ${subtasksHTML}
+                        </div>
+                    </div>
+                </section>
                 <div class="edit_buttons">
                     <button type="button" class="ok_button">OK</button>
                 </div>
@@ -334,6 +334,7 @@ function renderEditMode(id, subtask) {
             </div>
             <div class="rightContainerSubTask">
                 <div>
+                    <img class="subTaskDeleteButton" onclick="deleteSubTaskOverlay('${id}')" src="../assets/icons/delete.png" alt="Delete">
                 </div>
                 <div class="partingLine"></div>
                 <div>

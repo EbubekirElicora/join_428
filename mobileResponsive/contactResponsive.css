@@ -1,10 +1,8 @@
 @media(max-width:1180px) {
 
     #showDetails {
-        margin-left: 348px;
+        margin-left: 344px;
     }
-
-    
 
     .right-column {
         margin-left: 0px;
@@ -12,11 +10,11 @@
     }
 
     .separator {
-        margin: 0 10px;
+        margin: 0 0;
     }
 
     .contact-header {
-        margin-left: 362px;
+        margin-left: 344px;
     }
 
     .overlay-content {
@@ -34,11 +32,6 @@
         align-items: center;
         gap: 40px;
         margin-top: 40px;
-    }
-
-    .contact-input-container {
-
-        margin-bottom: 1px;
     }
 }
 
@@ -59,6 +52,17 @@
 
     .contact_link_container {
         margin-top: 20px;
+    }
+
+    .right-column .contact-initials {
+        width: 80px;
+        height: 80px;
+        font-size: 24px;
+        font-weight: 400;
+    }
+
+    .add-contact-circle img {
+        display: flex;
     }
 
     .mobileEdit-button img {
@@ -113,7 +117,6 @@
         align-items: center;
         padding: 0px;
         margin-top: 0px;
-        margin-left: 10px;
     }
 
     .header-content {
@@ -124,7 +127,7 @@
         display: none;
         position: fixed;
         top: 50%;
-        left: 47%;
+        left: 50%;
         transform: translate(-50%, -50%);
         z-index: 1001;
     }
@@ -133,7 +136,7 @@
         display: none;
         position: fixed;
         top: 50%;
-        left: 47%;
+        left: 50%;
         transform: translate(-50%, -50%);
         z-index: 1001;
     }
@@ -186,7 +189,7 @@
     }
 
     .right-column {
-        padding: 16px;
+        padding: 16px 10px 10px 10px;
     }
 
     .links {
@@ -216,8 +219,8 @@
 
     #showDetails {
         margin-left: 0px;
-        margin-top: 20px;
-        padding: 20px;
+        margin-top: 32px;
+        padding: 0;
         display: grid;
         justify-content: flex-start;
         border-radius: 5px;
@@ -229,7 +232,7 @@
 
     .left-column {
         width: 100%;
-        padding: 20px;
+        padding: 16px;
         box-sizing: border-box;
         display: flex;
         flex-direction: column;
@@ -357,6 +360,16 @@
         top: 50%;
     }
 
+    .left-section p::after,
+    .contactOverlayLeft h2::after {
+        bottom: -16px;
+    }
+
+    #contactName {
+        font-size: 24px;
+        margin-left: -20px;
+    }
+
     .mobileEdit-overlay {
         top: 0%;
         right: 0% !important;
@@ -383,7 +396,7 @@
         display: flex;
         flex-direction: column;
         width: 110%;
-        margin-top: 40px;
+        margin-top: 0;
         gap: 0 !important;
     }
 
@@ -413,7 +426,7 @@
         display: flex;
         gap: 10px;
         justify-content: center;
-        margin-top: -1px;
+        margin-top: 16px;
     }
 
     .contact-item {
@@ -485,7 +498,7 @@
     }
 
     .overlay {
-        width: 70%;
+        width: 90%;
         height: 570px;
         padding: 0;
         border-radius: 10px;
@@ -594,7 +607,7 @@
     }
 
     .left-section h2 {
-        font-size: 24px;
+        font-size: 32px;
     }
 
     .left-section p {
@@ -622,7 +635,7 @@
         max-width: 250px;
         box-sizing: border-box;
         padding: 10px;
-    
+
         border-radius: 5px;
         font-size: 16px;
     }
@@ -735,7 +748,7 @@
     }
 
     .contactOverlayLeft h2 {
-        font-size: 34px;
+        font-size: 32px;
     }
 
     .contactOverlayLeft p {
@@ -819,8 +832,18 @@
         width: 90%;
     }
 
+    #showDetails .details-columns {
+        margin-top: 24px;
+    }
+
+    h1 {
+        margin-block-start: 0;
+        margin-block-end: 0;
+    }
+
     .contact_link_container {
-        margin-top: 26px;
+        justify-content: center;
+        margin-top: 0;
     }
 
     button .overlay {
@@ -838,12 +861,6 @@
     .contact-initials {
         width: 45px;
         height: 45px;
-    }
-
-    #contactName {
-        font-size: 24px;
-        font-weight: bold;
-        margin-left: -20px;
     }
 
     .mobileEdit-button {
@@ -896,12 +913,8 @@
         max-width: 200px;
         box-sizing: border-box;
         padding: 10px;
-        margin-bottom: 30px;
+        margin-bottom: 16px;
         border-radius: 5px;
         font-size: 16px;
-    }
-
-    .contactOverlayLeft h2 {
-        font-size: 28px;
     }
 }

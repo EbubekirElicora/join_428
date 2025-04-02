@@ -13,6 +13,11 @@ async function loadContacts() {
         console.error('Dropdown content element not found!');
         return;
     }
+    document.addEventListener('click', (event) => {
+        if (!dropdownContent.contains(event.target)) {
+            dropdownContent.style.display = 'none'; // Close dropdown
+        }
+    });
     const contactsData = await loadData('contacts');
     if (contactsData) {
         const contactsArray = Object.values(contactsData);
@@ -30,7 +35,14 @@ async function loadContacts() {
                 <input type="checkbox" class="contact-checkbox">
             `;
             const checkbox = contactDiv.querySelector('.contact-checkbox');
-            checkbox.addEventListener('change', (event) => {
+            contactDiv.addEventListener('click', (event) => {
+                event.stopPropagation();
+                if (event.target !== checkbox) {
+                    checkbox.checked = !checkbox.checked;
+                    checkbox.dispatchEvent(new Event('change'));
+                }
+            });
+            checkbox.addEventListener('change', () => {
                 if (checkbox.checked) {
                     contactDiv.classList.add('selected-contact-item');
                     if (!selectedContacts.find(c => c.name === contact.name)) {
@@ -42,6 +54,7 @@ async function loadContacts() {
                 }
                 updateSelectedContacts();
             });
+
             dropdownContent.appendChild(contactDiv);
         });
     } else {
@@ -80,18 +93,28 @@ function updateSelectedContacts() {
     if (!initialsContainer) {
         return;
     }
+    const contactsToDisplay = selectedContacts.slice(0, 5);
     initialsContainer.innerHTML = '';
-    selectedContacts.forEach(contact => {
+    contactsToDisplay.forEach(contact => {
         const span = document.createElement('span');
         span.classList.add('contact-initial');
-        span.innerHTML = `
+        span.innerHTML = ` 
             <div class="contact-initials-container" style="background-color: ${getRandomColor()}">
                 <div class="contact-initials">${getInitials(contact.name)}</div>
             </div>
         `;
         initialsContainer.appendChild(span);
     });
+    const remainingContacts = selectedContacts.length > 5
+        ? `<div class="remaining-contacts-board">+${selectedContacts.length - 5}</div>`
+        : '';
+    if (remainingContacts) {
+        const remainingDiv = document.createElement('div');
+        remainingDiv.innerHTML = remainingContacts;
+        initialsContainer.appendChild(remainingDiv);
+    }
 }
+
 /**
  * Gibt die Initialen eines Namens zurück.
  * Der Name wird in Wörter aufgeteilt und es werden die ersten Buchstaben jedes Wortes genommen,
@@ -124,6 +147,7 @@ function getRandomColor() {
     }
     return color;
 }
+<<<<<<< HEAD
 // Add this click handler
 document.addEventListener('click', function(e) {
     const contactItem = e.target.closest('.edit-contact-item');
@@ -147,3 +171,45 @@ document.addEventListener('click', function(e) {
     }
     updateEditContactsDisplay();
 });
+=======
+
+/**
+ * Setzt das Formular für die Erstellung einer neuen Aufgabe zurück.
+ * Diese Funktion löscht die Werte und Textinhalte aller relevanten Felder im Formular,
+ * einschließlich des Titels, der Beschreibung, des Fälligkeitsdatums, der Kategorie, der hinzugefügten Texte,
+ * der zugewiesenen Kontakte und der Unteraufgaben.
+ * 
+ * @function resetForm
+ */
+function resetForm() {
+    document.getElementById('title').value = '';
+    document.getElementById('description').value = '';
+    document.getElementById('date').value = '';
+    document.getElementById('select_txt').textContent = 'Select task category';
+    document.getElementById('added_text').innerHTML = '';
+    selectedContacts = [];
+    document.getElementById('contactInput').value = '';
+    document.getElementById('selectedContactsInitials').innerHTML = '';
+    subtasks = [];
+    setPrio('medium');
+    document.querySelectorAll('.contact-checkbox').forEach(checkbox => {
+        checkbox.checked = false;
+    });
+    document.querySelectorAll('.dropdown-item').forEach(item => {
+        item.classList.remove('selected-contact-item');
+    });
+}
+
+/**
+ * Resets all relevant values.
+ * 
+ * - Calls the `resetForm()` function to reset the form.
+ * - Sets the priority to 'medium' by calling the `setPrio('medium')` function.
+ */
+function resetAllBoard() {
+    loadContacts();
+    resetForm();
+    setPrio('medium');
+}
+
+>>>>>>> 0402dccf2eb7e6cc412abbc902ed3c42385b661a

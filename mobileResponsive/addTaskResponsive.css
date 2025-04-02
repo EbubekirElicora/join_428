@@ -1,4 +1,3 @@
-
 @media (max-width: 1420px) {
 
     .content_container_size {
@@ -13,7 +12,7 @@
     .subTaskEditInput {
         width: 100% !important;
     }
-    
+
     .content_container_size {
         width: 896px;
     }
@@ -86,6 +85,12 @@
     .btn_container_addTask {
         margin-block-start: 32px;
     }
+
+    .selected-contacts-initials .initials-container,
+    .remaining_contacts_addTask {
+        height: 40px;
+        width: 40px;
+    }
 }
 
 @media (max-width: 840px) {
@@ -128,7 +133,7 @@
 
     .d-flex,
     .datepicker_container,
-    .category_container  {
+    .category_container {
         margin-block-end: 8px;
     }
 
@@ -189,7 +194,7 @@
     .subtasks_headline,
     .category_select,
     .select_category,
-    .dropdown-content span{
+    .dropdown-content span {
         font-size: 16px;
     }
 
@@ -212,7 +217,7 @@
         height: 20px;
     }
 
-    .selected-contacts-initials .initials-container {
+    .selected-contacts-initials .initials-container .remaining_contacts_addTask {
         width: 32px;
         height: 32px;
     }
@@ -222,17 +227,13 @@
         height: 40px;
     }
 
-    .create_task_btn_container, .clear_task_btn_container{
+    .create_task_btn_container,
+    .clear_task_btn_container {
         width: auto;
     }
 }
 
 @media (max-width: 490px) {
-
-    .selected-contacts-initials .initials-container {
-        width: 26px;
-        height: 26px;
-    }
 
     .headline_addTask_position {
         margin-bottom: 8px;

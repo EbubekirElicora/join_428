@@ -140,7 +140,7 @@ document.addEventListener('DOMContentLoaded', function () {
         Object.keys(contacts).forEach(key => {
             const contact = contacts[key];
             const contactItem = document.createElement('div');
-            contactItem.className = 'contact-item'; // Add a class for styling
+            contactItem.className = 'contact-item';
             const contactInfo = document.createElement('div');
             contactInfo.className = 'contact-info';
             const contactName = document.createElement('span');
@@ -179,15 +179,20 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     /**
-     * Updates the contact input field and initials display based on selected contacts.
-     * 
-     * This function sets the input field's value to a comma-separated list of selected contacts' names,
-     * and updates the initials displayed in the UI.
-     */
+  * Updates the selected contacts display with initials and a count for extra contacts.
+  * 
+  * This function updates the `selectedContactsInitials` container by displaying the initials
+  * of up to `maxInitials` selected contacts. If more than `maxInitials` contacts are selected,
+  * an additional div will be appended, showing the remaining count.
+  * 
+  * @function updateInputField
+  */
     function updateInputField() {
         const selectedContactsInitials = document.getElementById('selectedContactsInitials');
         selectedContactsInitials.innerHTML = '';
-        selectedContacts.forEach(contactName => {
+        const maxInitials = 4;
+        // Display initials for up to maxInitials contacts
+        selectedContacts.slice(0, maxInitials).forEach(contactName => {
             const initialsContainer = document.createElement('div');
             initialsContainer.className = 'initials-container';
             initialsContainer.style.backgroundColor = getRandomColor();
@@ -197,6 +202,14 @@ document.addEventListener('DOMContentLoaded', function () {
             initialsContainer.appendChild(initialsDiv);
             selectedContactsInitials.appendChild(initialsContainer);
         });
+        // If there are more than maxInitials contacts, show a "+X" counter
+        if (selectedContacts.length > maxInitials) {
+            const remainingCount = selectedContacts.length - maxInitials;
+            const remainingDiv = document.createElement('div');
+            remainingDiv.className = 'remaining_contacts_addTask';
+            remainingDiv.textContent = `+${remainingCount}`;
+            selectedContactsInitials.appendChild(remainingDiv);
+        }
     }
 
     /**

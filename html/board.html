@@ -46,8 +46,8 @@
         </div>
         </section>
         <div onclick="closeOverlay()" id="overlay" class="overlay d_none">
-            <div class="popup_container">
-                <div id="popup_container" class="d_none" onclick="event.stopPropagation()"></div>
+            <div onclick="event.stopPropagation()" class="popup_container">
+                <div onclick="closeDropdown()" id="popup_container" class="d_none"></div>
             </div>
         </div>
         <div class="content_board">

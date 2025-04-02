@@ -1,7 +1,7 @@
 /**
  * Initializes the application when the DOM is fully loaded.
  */
- 
+
 document.addEventListener('DOMContentLoaded', () => {
     /**
      * Displays detailed information about a contact.
@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         contactPhone.textContent = contact.phone;
     }
-    
+
     /**
      * Sets up the edit link for the contact, allowing the user to edit the contact's details.
      * 
@@ -80,13 +80,12 @@ document.addEventListener('DOMContentLoaded', () => {
             window.openEditOverlay(contact);
         };
     }
-        /**
-     * Sets up the delete link for the contact, allowing the user to delete the contact.
-     * 
-     * @param {Object} contact - The contact object.
-     */
 
-
+ /**
+ * Sets up the delete link for the contact, allowing the user to delete the contact.
+ * 
+ * @param {Object} contact - The contact object.
+ */
     function setupDeleteLink(contact) {
         const deleteLink = document.getElementById('deleteLink');
         if (!deleteLink) {
@@ -134,7 +133,7 @@ document.addEventListener('DOMContentLoaded', () => {
      * @param {Object} contact - The contact object.
      */
 
-    window.showContactDetails = function(contact) {
+    window.showContactDetails = function (contact) {
         showDetailsContainer();
         updateContactInitials(contact);
         updateContactName(contact);
@@ -146,6 +145,12 @@ document.addEventListener('DOMContentLoaded', () => {
         setupMobileDeleteLink(contact);
     };
 
+/**
+ * Updates a contact via the API.
+ * @param {string} contactId The ID of the contact to update.
+ * @param {Object} updatedContact The updated contact information.
+ * @returns {Promise} The fetch promise.
+ */
     function updateContactAPI(contactId, updatedContact) {
         return fetch(`${core.BASE_URL}/contacts/${contactId}.json`, {
             method: 'PUT',
@@ -154,6 +159,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+/**
+ * Handles UI updates after a contact has been updated.
+ * Fetches the updated contacts, re-renders them, and updates the UI with the updated contact.
+ * @param {Object} updatedContact The updated contact information.
+ */
     function handleUIUpdates(updatedContact) {
         core.fetchContacts().then(contacts => {
             core.renderContacts();
@@ -172,12 +182,12 @@ document.addEventListener('DOMContentLoaded', () => {
             },
             body: JSON.stringify(updatedContact)
         })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            return response.json();
-        });
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            });
     }
     /**
      * Saves the edited contact by validating the form and updating the contact in the backend.
@@ -191,22 +201,22 @@ document.addEventListener('DOMContentLoaded', () => {
      * @param {string} contact.color - The current color of the contact's initials.
      */
 
-    window.saveEditedContact = function(contact) {
+    window.saveEditedContact = function (contact) {
         const nameInput = document.getElementById('edit-contact-name');
         const emailInput = document.getElementById('edit-contact-email');
         const phoneInput = document.getElementById('edit-contact-phone');
-    
+
         document.querySelectorAll('#contact-overlay .error-message').forEach(el => el.textContent = '');
         document.querySelectorAll('#contact-overlay .contact-input-container').forEach(el => el.classList.remove('error'));
-    
+
         let isValid = true;
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    
+
         if (!nameInput.value.trim()) {
             showEditError(nameInput, 'Name is required');
             isValid = false;
         }
-    
+
         if (!emailInput.value.trim()) {
             showEditError(emailInput, 'Email is required');
             isValid = false;
@@ -214,7 +224,7 @@ document.addEventListener('DOMContentLoaded', () => {
             showEditError(emailInput, 'Invalid email format');
             isValid = false;
         }
-    
+
         if (!phoneInput.value.trim()) {
             showEditError(phoneInput, 'Phone is required');
             isValid = false;
@@ -222,12 +232,12 @@ document.addEventListener('DOMContentLoaded', () => {
             showEditError(phoneInput, 'Invalid phone number');
             isValid = false;
         }
-    
+
         if (!isValid) {
             console.log('Validation failed - preventing save');
             return;
         }
-    
+
         const updatedContact = {
             id: contact.id,
             name: nameInput.value.trim(),
@@ -236,7 +246,7 @@ document.addEventListener('DOMContentLoaded', () => {
             initials: core.getInitials(nameInput.value.trim()),
             color: contact.color
         };
-    
+
         updateContactAPI(contact.id, updatedContact)
             .then(() => {
                 console.log('Update successful, refreshing contacts...');
@@ -259,7 +269,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const container = inputElement.closest('.contact-input-container');
         const errorId = inputElement.id + '-error';
         const errorElement = document.getElementById(errorId);
-        
+
         if (errorElement) {
             errorElement.textContent = message;
             container.classList.add('error');
@@ -268,10 +278,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    window.showError = function(inputElement, message) {
+    window.showError = function (inputElement, message) {
         const inputId = inputElement.id;
         const errorElement = document.getElementById(`${inputId}-error`);
-        
+
         if (errorElement) {
             errorElement.textContent = message;
             inputElement.closest('.input-container').classList.add('error');
@@ -294,11 +304,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-     /**
-     * Saves the edited contact details to Firebase.
-     * 
-     * @param {object} contact - The contact object to update.
-     */
+    /**
+    * Saves the edited contact details to Firebase.
+    * 
+    * @param {object} contact - The contact object to update.
+    */
     function gatherUpdatedContactData(contact) {
         const name = document.getElementById('edit-contact-name').value;
         return {
@@ -310,17 +320,17 @@ document.addEventListener('DOMContentLoaded', () => {
             color: contact.color
         };
     }
-     /**
-     * Saves the new contact and updates the UI accordingly.
-     * 
-     * This function first attempts to save the new contact using the `saveContact` function. 
-     * If the contact is successfully saved, it updates the UI by rendering the contacts,      
-     * Additionally, it resets the form and hides the overlay.     * 
-     * @param {Object} newContact - The new contact object to be saved.
-     * @param {string} newContact.name - The name of the contact.
-     * @param {string} newContact.email - The email of the contact.
-     * @param {string} newContact.phone - The phone number of the contact.
-     */
+    /**
+    * Saves the new contact and updates the UI accordingly.
+    * 
+    * This function first attempts to save the new contact using the `saveContact` function. 
+    * If the contact is successfully saved, it updates the UI by rendering the contacts,      
+    * Additionally, it resets the form and hides the overlay.     * 
+    * @param {Object} newContact - The new contact object to be saved.
+    * @param {string} newContact.name - The name of the contact.
+    * @param {string} newContact.email - The email of the contact.
+    * @param {string} newContact.phone - The phone number of the contact.
+    */
     function saveAndUpdateUI(newContact) {
         core.saveContact(newContact)
             .then((data) => {
@@ -362,7 +372,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const nameInput = document.getElementById('name');
         const emailInput = document.getElementById('email');
         const phoneInput = document.getElementById('phone');
-    
+
         document.querySelectorAll('.error-message').forEach(el => el.textContent = '');
         document.querySelectorAll('.input-container').forEach(el => el.classList.remove('error'));
 

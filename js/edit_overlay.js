@@ -71,19 +71,43 @@ async function populateDropdown() {
     await fetchContacts();
     const dropdownContent = document.getElementById('editDropdownContent');
     if (dropdownContent) {
-        const dropdownContentHTML = contacts.map(contact => `
-            <div class="dropdown-item" onclick="selectEditContact('${contact.name}')">
-                <div class="contact-info">
-                    <div class="contact-initials-container" style="background-color: ${contact.color}">
-                        ${contact.initials}
+        const dropdownContentHTML = contacts.map(contact => {
+            const isSelected = currentTask.assignedContacts?.some(c => c.name === contact.name);
+            return `
+                <div class="dropdown-item ${isSelected ? 'selected-contact-item' : ''}" 
+                     onclick="event.stopPropagation(); toggleCheckbox('${contact.name}')">
+                    <div class="contact-info">
+                        <div class="contact-initials-container" style="background-color: ${contact.color}">
+                            <div class="contact-initials">${contact.initials}</div>
+                        </div>
+                        <span class="contact-name">${contact.name}</span>
                     </div>
-                    <span class="contact-name">${contact.name}</span>
-                    <input type="checkbox" id="contact-${contact.name}" class="contact-checkbox" 
-                           ${currentTask.assignedContacts?.some(c => c.name === contact.name) ? 'checked' : ''}>
+                    <input type="checkbox" id="contact-${contact.name}" class="contact-checkbox"
+                        ${isSelected ? 'checked' : ''}>
                 </div>
-            </div>
-        `).join('') || '';
+            `;
+        }).join('') || '';
         dropdownContent.innerHTML = dropdownContentHTML;
+    }
+}
+
+/**
+ * Schaltet das Kontrollkästchen eines Kontakts um und aktualisiert die Auswahl.
+ * 
+ * Falls der Kontakt ausgewählt wird, wird er zur Liste der zugewiesenen Kontakte hinzugefügt
+ * und optisch hervorgehoben. Falls der Kontakt abgewählt wird, wird er entfernt und die 
+ * Hervorhebung verschwindet.
+ * 
+ * @param {string} contactName - Der Name des Kontakts, der ausgewählt oder abgewählt wird.
+ */
+function toggleCheckbox(contactName) {
+    const checkbox = document.getElementById(`contact-${contactName}`);
+    if (!checkbox) return;
+    checkbox.checked = !checkbox.checked;
+    selectEditContact(contactName);
+    const contactItem = checkbox.closest('.dropdown-item');
+    if (contactItem) {
+        contactItem.classList.toggle('selected-contact-item', checkbox.checked);
     }
 }
 
@@ -100,10 +124,10 @@ function selectEditContact(contactName) {
     const selectedContactsInitials = document.getElementById('selectedContactsInitials');
     const contactInput = document.getElementById('editContactInput');
     const contact = contacts.find(c => c.name === contactName);
-    
+
     if (contact && selectedContactsInitials) {
         const checkbox = document.getElementById(`contact-${contact.name}`);
-        
+
         if (checkbox.checked) {
             if (!currentTask.assignedContacts) currentTask.assignedContacts = [];
             currentTask.assignedContacts.push(contact);
@@ -121,7 +145,7 @@ function selectEditContact(contactName) {
             }
         }
         if (contactInput) {
-            contactInput.value = ''; 
+            contactInput.value = '';
         }
     }
 }
@@ -132,16 +156,43 @@ function selectEditContact(contactName) {
  * 
  * Shows or hides the dropdown menu, depending on its current state.
  */
-function toggleEditDropdown() {
+function toggleEditDropdown(event) {
+    event.stopPropagation();
     const dropdownContent = document.getElementById('editDropdownContent');
     const iconDown = document.getElementById('editDropdownIcon');
     const iconUp = document.getElementById('editDropdownIconUp');
     if (!dropdownContent || !iconDown || !iconUp) return;
     const isOpen = dropdownContent.style.display === 'block';
-    dropdownContent.style.display = isOpen ? 'none' : 'block';
-    iconDown.classList.toggle('d-none', isOpen);
-    iconUp.classList.toggle('d-none', !isOpen);
+    if (isOpen) {
+        closeEditDropdown();
+    } else {
+        dropdownContent.style.display = 'block';
+        iconDown.classList.add('d-none');
+        iconUp.classList.remove('d-none');
+    }
 }
+
+/**
+ * Schließt das Dropdown-Menü zur Kontaktauswahl und aktualisiert die UI-Elemente.
+ * 
+ * Führt folgende Aktionen durch:
+ * - Versteckt den Dropdown-Inhalt
+ * - Zeigt das "Nach-unten"-Pfeil-Icon an
+ * - Versteckt das "Nach-oben"-Pfeil-Icon
+ * 
+ * @function closeEditDropdown
+ * @returns {void} Gibt keinen Wert zurück
+ */
+function closeEditDropdown() {
+    const dropdownContent = document.getElementById('editDropdownContent');
+    const iconDown = document.getElementById('editDropdownIcon');
+    const iconUp = document.getElementById('editDropdownIconUp');
+    if (!dropdownContent || !iconDown || !iconUp) return;
+    dropdownContent.style.display = 'none';
+    iconDown.classList.remove('d-none');
+    iconUp.classList.add('d-none');
+}
+
 
 /**
  * Saves the changes made to the task in the editing overlay.
@@ -294,7 +345,12 @@ function editProtection(event) {
 }
 
 /**
- * Closes the edit overlay and cleans up related state
+ * Closes the edit overlay and restores the original state.
+ * - Hides the overlay by adding a CSS class.
+ * - Enables scrolling on the page again.
+ * - Clears the content of the overlay.
+ * - Removes a global `currentTask` variable if it exists.
+ * - Updates the UI if `updateHTML` is defined.
  */
 function closeEditOverlay() {
     const overlayRef = document.getElementById('edit_overlay');
@@ -308,4 +364,67 @@ function closeEditOverlay() {
     if (typeof updateHTML === "function") {
         updateHTML();
     }
+}
+
+/**
+ * Initialisiert das Datumseingabefeld und setzt Validierungsregeln.
+ * - Setzt das minimale Datum auf den aktuellen Tag.
+ * - Fügt Echtzeit-Validierung bei Eingabe hinzu.
+ * - Passt die Textfarbe basierend auf der Gültigkeit des Datums an.
+ * @function
+ * @returns {void}
+ */
+function getDateTodayEdit() {
+    let dateInput = document.getElementById('edit_due_date');
+    if (dateInput) {
+        const today = new Date();
+        const localDate = today.toLocaleDateString('en-CA');
+        dateInput.min = localDate;
+        dateInput.addEventListener('input', function () {
+            validateDate(this);
+            updateDateColor.call(this);
+        });
+        updateDateColor.call(dateInput);
+    }
+}
+
+/**
+ * Validiert das eingegebene Datum:
+ * - Korrigiert Datum in der Vergangenheit auf das aktuelle Datum.
+ * - Begrenzt das Jahr auf maximal 2999.
+ * - Formatiert das Datum in 'YYYY-MM-DD'.
+ * @function
+ * @param {HTMLInputElement} input - Das Datumseingabefeld.
+ * @returns {void}
+ */
+function validateDate(input) {
+    const currentDate = new Date();
+    const maxYear = 2999;
+    const selectedDate = new Date(input.value);
+    if (isNaN(selectedDate)) {
+        input.value = currentDate.toLocaleDateString('en-CA');
+        return;
+    }
+    if (selectedDate.getFullYear() > maxYear) {
+        selectedDate.setFullYear(maxYear);
+    }
+    if (selectedDate < currentDate) {
+        selectedDate.setTime(currentDate.getTime());
+    }
+    const formattedDate = selectedDate.toLocaleDateString('en-CA');
+    if (input.value !== formattedDate) {
+        input.value = formattedDate;
+    }
+}
+
+/**
+ * Aktualisiert die Textfarbe des Eingabefelds:
+ * - Schwarz für gültige Daten.
+ * - Grau (#D1D1D1) für ungültige oder leere Werte.
+ * @function
+ * @returns {void}
+ */
+function updateDateColor() {
+    const isValidDate = !isNaN(new Date(this.value));
+    this.style.color = isValidDate ? 'black' : '#D1D1D1';
 }

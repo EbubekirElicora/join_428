@@ -857,26 +857,26 @@ input[type="checkbox"]:checked {
   max-height: 232px;
   overflow-y: auto;
   z-index: 1;
-  scrollbar-width: thin; 
-  scrollbar-color: #888 #f1f1f1; 
+  scrollbar-width: thin;
+  scrollbar-color: #888 #f1f1f1;
 }
 
 .dropdown-content::-webkit-scrollbar {
-  width: 8px; 
+  width: 8px;
 }
 
 .dropdown-content::-webkit-scrollbar-track {
-  background: #f1f1f1; 
+  background: #f1f1f1;
   border-radius: 5px;
 }
 
 .dropdown-content::-webkit-scrollbar-thumb {
-  background: #888; 
+  background: #888;
   border-radius: 5px;
 }
 
 .dropdown-content::-webkit-scrollbar-thumb:hover {
-  background: #555; 
+  background: #555;
 }
 
 .selected-dropdown-item .checkbox_class {
@@ -903,6 +903,19 @@ input[type="checkbox"]:checked {
   font-size: 20px;
 }
 
+.remaining_contacts_addTask {
+  background: lightgray;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: bold;
+  border: 2px solid white;
+}
+
 .dropdown-content div {
   padding: 5px;
   cursor: pointer;
@@ -915,6 +928,11 @@ input[type="checkbox"]:checked {
   display: flex;
   align-items: center;
   gap: 10px;
+}
+
+#contactInput::placeholder {
+  color: black !important;
+  opacity: 1;
 }
 
 .initials-container {

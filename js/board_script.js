@@ -13,6 +13,11 @@ async function loadContacts() {
         console.error('Dropdown content element not found!');
         return;
     }
+    document.addEventListener('click', (event) => {
+        if (!dropdownContent.contains(event.target)) {
+            dropdownContent.style.display = 'none'; // Close dropdown
+        }
+    });
     const contactsData = await loadData('contacts');
     if (contactsData) {
         const contactsArray = Object.values(contactsData);
@@ -32,10 +37,11 @@ async function loadContacts() {
             const checkbox = contactDiv.querySelector('.contact-checkbox');
             contactDiv.addEventListener('click', (event) => {
                 event.stopPropagation();
-                checkbox.checked = !checkbox.checked;
-                checkbox.dispatchEvent(new Event('change'));
+                if (event.target !== checkbox) {
+                    checkbox.checked = !checkbox.checked;
+                    checkbox.dispatchEvent(new Event('change'));
+                }
             });
-
             checkbox.addEventListener('change', () => {
                 if (checkbox.checked) {
                     contactDiv.classList.add('selected-contact-item');

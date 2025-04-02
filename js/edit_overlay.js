@@ -124,10 +124,10 @@ function selectEditContact(contactName) {
     const selectedContactsInitials = document.getElementById('selectedContactsInitials');
     const contactInput = document.getElementById('editContactInput');
     const contact = contacts.find(c => c.name === contactName);
-    
+
     if (contact && selectedContactsInitials) {
         const checkbox = document.getElementById(`contact-${contact.name}`);
-        
+
         if (checkbox.checked) {
             if (!currentTask.assignedContacts) currentTask.assignedContacts = [];
             currentTask.assignedContacts.push(contact);
@@ -145,7 +145,7 @@ function selectEditContact(contactName) {
             }
         }
         if (contactInput) {
-            contactInput.value = ''; 
+            contactInput.value = '';
         }
     }
 }
@@ -375,7 +375,7 @@ function getDateTodayEdit() {
         const today = new Date();
         const localDate = today.toLocaleDateString('en-CA');
         dateInput.min = localDate;
-        dateInput.addEventListener('input', function() {
+        dateInput.addEventListener('input', function () {
             validateDate(this);
             updateDateColor.call(this);
         });

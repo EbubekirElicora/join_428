@@ -191,6 +191,7 @@ h1 {
     padding: 8px;
     cursor: pointer;
     margin-bottom: 3px;
+    border-radius: 16px;
 }
 
 .contact-info {
@@ -221,8 +222,8 @@ h1 {
 
 .contact-checkbox {
     margin-left: auto;
-    width: 16px;
-    height: 16px;
+    width: 20px;
+    height: 20px;
     cursor: pointer;
 }
 

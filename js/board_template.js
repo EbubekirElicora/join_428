@@ -237,7 +237,7 @@ function getOverlayEdit(task) {
                 <div class="assigned_container">
                     <div class="dropdown">
                         <div class="input-container">
-                            <input onclick="toggleEditDropdown(event)" type="text" id="editContactInput" placeholder="Select contacts..." readonly>
+                            <input class="pointer" onclick="toggleEditDropdown(event)" type="text" id="editContactInput" placeholder="Select contacts..." readonly>
                             <div class="icons">
                                 <img 
                                      src="../assets/icons/arrow_drop_down_icon.png"

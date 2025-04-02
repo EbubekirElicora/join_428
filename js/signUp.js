@@ -63,26 +63,46 @@ async function signUp() {
     const email = document.getElementById("email").value.trim();
     const password = document.getElementById("password").value.trim();
     const confirmPassword = document.getElementById("confirm-password").value.trim();
-    clearError();
-    if (!name || !email || !password || !confirmPassword) {
-        showError("Please fill in all fields.", "name");
-        return;
+
+    clearError(); // Remove any existing errors
+    let errors = []; // Array to collect errors
+
+    // Validate name field
+    if (!name) errors.push({ message: "Name cannot be empty.", inputId: "name" });
+
+    // Validate email
+    if (!email) {
+        errors.push({ message: "Email cannot be empty.", inputId: "email" });
+    } else if (!validateEmail(email)) {
+        errors.push({ message: "Invalid email format.", inputId: "email" });
     }
-    if (!validateEmail(email)) {
-        showError("Invalid email format.", "email");
-        return;
+
+    // Validate password fields
+    if (!password) errors.push({ message: "Password cannot be empty.", inputId: "password" });
+    else if (!hasUppercase(password)) errors.push({ message: "Password must contain at least one uppercase letter.", inputId: "password" });
+    else if (password.length < 6) errors.push({ message: "Password must be at least 6 characters long.", inputId: "password" });
+
+    if (!confirmPassword) errors.push({ message: "Please confirm your password.", inputId: "confirm-password" });
+    if (password && confirmPassword && password !== confirmPassword) {
+        errors.push({ message: "Passwords do not match.", inputId: "confirm-password" });
     }
-    if (password !== confirmPassword) {
-        showError("Passwords do not match.", "confirm-password");
-        return;
+
+    // Check if email is already registered
+    if (email && await userExists(email)) {
+        errors.push({ message: "Email already registered.", inputId: "email" });
     }
-    if (await userExists(email)) {
-        showError("Email already registered.", "email");
-        return;
+
+    // Display all errors at once
+    if (errors.length > 0) {
+        errors.forEach(error => showError(error.message, error.inputId));
+        return; // Stop execution if there are errors
     }
+
+    // Proceed with signup if no errors
     try {
         const newUser = { name, email, password };
         await saveUserToFirebase(newUser);
+
         const newContact = {
             name: name,
             email: email,
@@ -90,6 +110,7 @@ async function signUp() {
             color: getRandomColor(),
         };
         await saveContact(newContact);
+
         showToast("You signed up successfully", "success");
         setTimeout(() => {
             window.location.href = "./log_in.html";
@@ -99,6 +120,20 @@ async function signUp() {
         showError("Error signing up. Try again later.", "confirm-password");
     }
 }
+
+/**
+ * Checks if the password contains at least one uppercase letter.
+ * 
+ * @param {string} password The password to check.
+ * @returns {boolean} True if the password contains at least one uppercase letter, false otherwise.
+ */
+function hasUppercase(password) {
+    const uppercaseRegex = /[A-Z]/;
+    return uppercaseRegex.test(password);
+}
+
+
+
 
 /**
  * Displays an error message below the specified input field.

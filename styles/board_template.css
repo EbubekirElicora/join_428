@@ -256,3 +256,8 @@ p {
     background-color: #d1d1d1;
     margin: 0 2px;
 }
+
+/* Edit overlay specific styles - Add these at the END of your CSS file */
+.custom-checkbox {
+    margin-left: 150px !important;
+}

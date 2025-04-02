@@ -144,14 +144,12 @@ function getOverlayEdit(task) {
         ? `<div class="remaining-contacts">+${task.assignedContacts.length - 5}</div>`
         : '';
 
-    // Priority icons (reuse the same structure as in addTask HTML)
     const priorityIcons = {
         urgent: '<img src="../assets/icons/prio_urgent_icon.png">',
         medium: '<img src="../assets/icons/prio_medium_icon.png">',
         low: '<img src="../assets/icons/prio_low_icon.png">'
     };
 
-    // Priority options (reuse the same structure as in addTask HTML)
     const priorityHTML = `
         <section class="prio_container">
             <label for="prio">Priority</label>
@@ -171,13 +169,35 @@ function getOverlayEdit(task) {
             </div>
         </section>
     `;
+    if (!window.contacts) window.contacts = [];
+
+    // MODIFIED CONTACT DROPDOWN SECTION
+    
+// In getOverlayEdit template
+const contactsDropdownHTML = contacts.map(contact => {
+    const isChecked = task.assignedContacts?.some(c => c.name === contact.name);
+    return `
+    <div class="edit-contact-item" data-contact="${contact.name}">
+        <div class="contact-content">
+            <div class="contact-info">
+                <div class="contact-initials" style="background-color: ${contact.color}">
+                    ${contact.initials}
+                </div>
+                <span class="contact-name">${contact.name}</span>
+            </div>
+            <div class="custom-checkbox ${isChecked ? 'checked' : ''}" 
+                 style="background-image: url('../assets/icons/${isChecked ? 'checked' : 'unchecked'}.png')">
+            </div>
+        </div>
+    </div>
+    `;
+}).join('');
 
     const subtasksHTML = Object.entries(task.subtasks || {}).map(([id, subtask]) => {
         const title = (typeof subtask === 'string') ? subtask : (subtask.title || '');
         const isEditing = editSubtasks[id]?.isEditing || false;
 
         if (isEditing) {
-
             return `
                 <div class="subTaskEdit" data-subtask-id="${id}">
                     <div class="leftContainerSubTask left_container_overlay">
@@ -195,7 +215,6 @@ function getOverlayEdit(task) {
                 </div>
             `;
         } else {
-
             return `
                 <div class="subTask" data-subtask-id="${id}">
                     <div class="leftContainerSubTask">
@@ -249,12 +268,7 @@ function getOverlayEdit(task) {
                             </div>
                         </div>
                         <div class="dropdown-content" id="editDropdownContent">
-                            <div class="dropdown-item">
-                                <div class="contact-info">
-                                    <div class="contact-initials-container">${task.initials}</div>
-                                    <span class="contact-name">${task.name}</span>
-                                </div>
-                            </div>
+                            ${contactsDropdownHTML}
                         </div>
                     </div>
                     <div id="selectedContactsInitials" class="selected-contacts-initials">
@@ -309,6 +323,8 @@ function getOverlayEdit(task) {
         </div>
     `;
 }
+
+
 
 function renderEditMode(id, subtask) {
     return `

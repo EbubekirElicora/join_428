@@ -71,28 +71,44 @@ async function populateDropdown() {
     await fetchContacts();
     const dropdownContent = document.getElementById('editDropdownContent');
     if (dropdownContent) {
-        const dropdownContentHTML = contacts.map(contact => `
-            <div class="dropdown-item" onclick="event.stopPropagation(); toggleCheckbox('${contact.name}')">
-                <div class="contact-info">
-                    <div class="contact-initials-container" style="background-color: ${contact.color}">
-                        <div class="contact-initials">${contact.initials}</div>
+        const dropdownContentHTML = contacts.map(contact => {
+            const isSelected = currentTask.assignedContacts?.some(c => c.name === contact.name);
+            return `
+                <div class="dropdown-item ${isSelected ? 'selected-contact-item' : ''}" 
+                     onclick="event.stopPropagation(); toggleCheckbox('${contact.name}')">
+                    <div class="contact-info">
+                        <div class="contact-initials-container" style="background-color: ${contact.color}">
+                            <div class="contact-initials">${contact.initials}</div>
+                        </div>
+                        <span class="contact-name">${contact.name}</span>
                     </div>
-                    <span class="contact-name">${contact.name}</span>
+                    <input type="checkbox" id="contact-${contact.name}" class="contact-checkbox"
+                        ${isSelected ? 'checked' : ''}>
                 </div>
-                <input type="checkbox" id="contact-${contact.name}" class="contact-checkbox"
-                   ${currentTask.assignedContacts?.some(c => c.name === contact.name) ? 'checked' : ''}>
-            </div>
-        `).join('') || '';
+            `;
+        }).join('') || '';
         dropdownContent.innerHTML = dropdownContentHTML;
     }
 }
 
+/**
+ * Schaltet das Kontrollkästchen eines Kontakts um und aktualisiert die Auswahl.
+ * 
+ * Falls der Kontakt ausgewählt wird, wird er zur Liste der zugewiesenen Kontakte hinzugefügt
+ * und optisch hervorgehoben. Falls der Kontakt abgewählt wird, wird er entfernt und die 
+ * Hervorhebung verschwindet.
+ * 
+ * @param {string} contactName - Der Name des Kontakts, der ausgewählt oder abgewählt wird.
+ */
 function toggleCheckbox(contactName) {
     const checkbox = document.getElementById(`contact-${contactName}`);
     if (!checkbox) return;
-    
     checkbox.checked = !checkbox.checked;
     selectEditContact(contactName);
+    const contactItem = checkbox.closest('.dropdown-item');
+    if (contactItem) {
+        contactItem.classList.toggle('selected-contact-item', checkbox.checked);
+    }
 }
 
 /**
@@ -146,7 +162,6 @@ function toggleEditDropdown(event) {
     const iconDown = document.getElementById('editDropdownIcon');
     const iconUp = document.getElementById('editDropdownIconUp');
     if (!dropdownContent || !iconDown || !iconUp) return;
-
     const isOpen = dropdownContent.style.display === 'block';
     if (isOpen) {
         closeEditDropdown();
@@ -157,13 +172,22 @@ function toggleEditDropdown(event) {
     }
 }
 
-
+/**
+ * Schließt das Dropdown-Menü zur Kontaktauswahl und aktualisiert die UI-Elemente.
+ * 
+ * Führt folgende Aktionen durch:
+ * - Versteckt den Dropdown-Inhalt
+ * - Zeigt das "Nach-unten"-Pfeil-Icon an
+ * - Versteckt das "Nach-oben"-Pfeil-Icon
+ * 
+ * @function closeEditDropdown
+ * @returns {void} Gibt keinen Wert zurück
+ */
 function closeEditDropdown() {
     const dropdownContent = document.getElementById('editDropdownContent');
     const iconDown = document.getElementById('editDropdownIcon');
     const iconUp = document.getElementById('editDropdownIconUp');
     if (!dropdownContent || !iconDown || !iconUp) return;
-
     dropdownContent.style.display = 'none';
     iconDown.classList.remove('d-none');
     iconUp.classList.add('d-none');

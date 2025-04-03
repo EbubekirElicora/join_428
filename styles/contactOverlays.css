@@ -110,7 +110,7 @@
 .input-container input {
     width: 300px;
     padding: 10px; 
-    margin-bottom: 15px; 
+    
     box-sizing: border-box; 
     border: 1px solid #ccc; 
     border-radius: 5px; 
@@ -119,7 +119,7 @@
 .input-container .input-icon {
     position: absolute;
     margin-top: 10px;
-    right:12px; 
+    right:26px; 
     width: 20px; 
     height: 20px;
     pointer-events: none;
@@ -161,6 +161,7 @@
     padding: 10px;
     color:#1a2b47;
     cursor: pointer;
+    font-size: 22px;
 }
 
 .cancel:hover {
@@ -297,7 +298,7 @@
 .contact-input-container {
     position: relative;
     width: 100%;
-    margin-bottom: 15px;
+    margin-bottom: 25px;
 }
 
 .contact-input-container input {
@@ -458,13 +459,7 @@
 #editLinkOverlay.active i {
     color: #3498db; 
 }
-.error-message {
-    margin-bottom: 20px;
-    font-size: 12px;
-    margin-top: -10px;
-    display: none;
-    color: red;
-}
+
 
 .input-container.error .error-message,
 .contact-input-container.error .error-message {
@@ -479,3 +474,16 @@
 .contact-persona{
     margin-top: 30px;
 }
+.input-container {
+    position: relative;  /* Needed for absolute positioning of errors */
+    margin-bottom: 24px; /* Space for error message + spacing */
+  }
+  .error-message {
+    position: absolute;
+    bottom: -4px;       /* Position below input */
+    left: 0;
+    margin: 2px 0;
+    font-size: 12px;
+    color: red;
+    display: none;
+  }

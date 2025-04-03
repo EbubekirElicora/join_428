@@ -77,7 +77,7 @@
     }
 
     .input-group input {
-        font-size: 14px;
+        font-size: 16px;
         padding: 8px 15px;
     }
 
@@ -92,13 +92,13 @@
 
     .signup-button button {
         padding: 10px;
-        font-size: 14px;
+        font-size: 16px;
     }
 
     .legalPolicy {
         gap: 8px;
 
-        font-size: 12px;
+        font-size: 16px;
         margin-bottom: 0;
     }
 
@@ -110,6 +110,6 @@
     }
 
     .checkbox-group span {
-        font-size: 12px;
+        font-size: 16px;
     }
 }

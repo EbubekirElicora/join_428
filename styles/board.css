@@ -305,7 +305,6 @@ h1 {
     position: relative;
     min-height: 300px;
     transition: background 0.3s;
-    overflow-y: auto;
 }
 
 .drag-area-highlight {

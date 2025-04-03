@@ -4,6 +4,10 @@
         margin-top: 150px;
         padding: 24px;
     }
+
+    .content_container_size {
+        height: auto;
+    }
 }
 
 @media(max-width: 1360px) {
@@ -22,15 +26,16 @@
 
     .nav_board {
         width: 216px;
-    }
-
-    .content_container_size {
-        height: auto;
-    }
-    
+    }  
 }
 
 @media(max-width: 1270px) {
+    .board_tasks {
+        min-height: auto;
+        height: fit-content;
+        flex-direction: row;
+        align-items: flex-start;
+    }
 
     .category {
         padding: 5px;
@@ -106,11 +111,6 @@
 }
 
 @media(max-width: 750px) {
- 
-    .popup_container {
-        width: 650px;
-    }
-
     .task_btn {
         display: none;
     }
@@ -151,43 +151,48 @@
 
     .popup_container {
         width: 400px;
+        height: auto;
     }
     
     .content_container_size {
-        height: 600px;
+        height: 700px;
+    }
+
+    .btn_container_addTask {
+        gap: 16px;
     }
 
 }
 
 @media(max-width: 550px) {
     .inner_content {
-        width: 400px;
-        height: 450px;
-    }
-    .content_container_size {
-        height: 500px;
+        margin-left: 16px;
+        margin-right: 16px;
     }
 }
 
 @media(max-width: 450px) {
     .popup_container {
-        width: 270px;
-        padding: 8px;
+        width: 300px;
+    }
+
+    .content_container_size {
+        height: 600px;
     }
 
     .create_task_btn {
         width: auto;
-        font-size: 14px;
+        font-size: 16px;
     }
 
     .clear_btn {
-        font-size: 14px;
+        font-size: 16px;
     }
 
     .prioBtnMedium,
     .prioBtnUrgent,
     .prioBtnLow {
-        font-size: 14px;
+        font-size: 16px;
     }
 
     .prioBtnMedium img,
@@ -208,10 +213,6 @@
         top: 15px;
     }
 
-    .inner_content {
-        width: 250px;
-        height: 450px;
-    }
     h1 {
         font-size: 30px;
     }
@@ -224,5 +225,11 @@
         justify-content: center;
     }
 }
+
+@media(max-width: 350px) {
+    .popup_container {
+        width: 270px;
+    }
+ }
 
 

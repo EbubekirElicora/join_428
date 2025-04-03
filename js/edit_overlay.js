@@ -1,5 +1,4 @@
 
-
 /**
  * Handles the priority selection for a task.
  * 
@@ -70,26 +69,36 @@ async function fetchContacts() {
 async function populateDropdown() {
     await fetchContacts();
     const dropdownContent = document.getElementById('editDropdownContent');
-    if (dropdownContent) {
-        const dropdownContentHTML = contacts.map(contact => {
-            const isSelected = currentTask.assignedContacts?.some(c => c.name === contact.name);
-            return `
-                <div class="dropdown-item ${isSelected ? 'selected-contact-item' : ''}" 
-                     onclick="event.stopPropagation(); toggleCheckbox('${contact.name}')">
-                    <div class="contact-info">
-                        <div class="contact-initials-container" style="background-color: ${contact.color}">
-                            <div class="contact-initials">${contact.initials}</div>
-                        </div>
-                        <span class="contact-name">${contact.name}</span>
-                    </div>
-                    <input type="checkbox" id="contact-${contact.name}" class="contact-checkbox"
-                        ${isSelected ? 'checked' : ''}>
-                </div>
-            `;
-        }).join('') || '';
-        dropdownContent.innerHTML = dropdownContentHTML;
-    }
+    if (dropdownContent) dropdownContent.innerHTML = generateDropdownHTML();
 }
+
+function generateDropdownHTML() {
+    return contacts.map(createDropdownItem).join('') || '';
+}
+
+function createDropdownItem(contact) {
+    const isSelected = currentTask.assignedContacts?.some(c => c.name === contact.name);
+    return `
+        <div class="dropdown-item ${isSelected ? 'selected-contact-item' : ''}" 
+             onclick="event.stopPropagation(); toggleCheckbox('${contact.name}')">
+            ${createContactInfo(contact)}
+            <input type="checkbox" id="contact-${contact.name}" class="contact-checkbox"
+                ${isSelected ? 'checked' : ''}>
+        </div>
+    `;
+}
+
+function createContactInfo(contact) {
+    return `
+        <div class="contact-info">
+            <div class="contact-initials-container" style="background-color: ${contact.color}">
+                <div class="contact-initials">${contact.initials}</div>
+            </div>
+            <span class="contact-name">${contact.name}</span>
+        </div>
+    `;
+}
+
 
 /**
  * Schaltet das Kontrollkästchen eines Kontakts um und aktualisiert die Auswahl.
@@ -112,42 +121,63 @@ function toggleCheckbox(contactName) {
 }
 
 /**
- * Handles the selection or deselection of a contact for editing.
- * 
- * If the contact is checked, it will be added to the current task's assigned contacts,
- * and a badge representing the contact will be shown. If unchecked, the contact will 
- * be removed from the assigned contacts, and the badge will be removed from the UI.
- * 
- * @param {string} contactName - The name of the contact being selected or deselected.
+ * Wählt einen Kontakt zum Bearbeiten aus, fügt ihn hinzu oder entfernt ihn basierend auf der Checkbox.
+ * @function
+ * @param {string} contactName - Der Name des Kontakts, der bearbeitet werden soll.
  */
 function selectEditContact(contactName) {
-    const selectedContactsInitials = document.getElementById('selectedContactsInitials');
-    const contactInput = document.getElementById('editContactInput');
     const contact = contacts.find(c => c.name === contactName);
+    if (!contact) return;
+    const checkbox = document.getElementById(`contact-${contact.name}`);
+    if (!checkbox) return;
+    checkbox.checked ? addEditContact(contact) : removeEditContact(contact);
+    clearEditContactInput();
+}
 
-    if (contact && selectedContactsInitials) {
-        const checkbox = document.getElementById(`contact-${contact.name}`);
+/**
+ * Fügt einen Kontakt zur Liste der zugewiesenen Kontakte der aktuellen Aufgabe hinzu.
+ * @function
+ * @param {Object} contact - Der Kontakt, der hinzugefügt werden soll.
+ */
 
-        if (checkbox.checked) {
-            if (!currentTask.assignedContacts) currentTask.assignedContacts = [];
-            currentTask.assignedContacts.push(contact);
-            const contactBadge = `
-                <div class="contact-badge" style="background-color: ${contact.color}" title="${contact.name}">
-                    ${contact.initials}
-                </div>
-            `;
-            selectedContactsInitials.insertAdjacentHTML('beforeend', contactBadge);
-        } else {
-            currentTask.assignedContacts = currentTask.assignedContacts.filter(c => c.name !== contact.name);
-            const contactBadge = document.querySelector(`.contact-badge[title="${contact.name}"]`);
-            if (contactBadge) {
-                contactBadge.remove();
-            }
-        }
-        if (contactInput) {
-            contactInput.value = '';
-        }
+function addEditContact(contact) {
+    if (!currentTask.assignedContacts) currentTask.assignedContacts = [];
+    currentTask.assignedContacts.push(contact);
+    const selectedContactsInitials = document.getElementById('selectedContactsInitials');
+    if (selectedContactsInitials) {
+        selectedContactsInitials.insertAdjacentHTML('beforeend', createEditContactBadge(contact));
     }
+}
+
+/**
+ * Entfernt einen Kontakt aus der Liste der zugewiesenen Kontakte der aktuellen Aufgabe.
+ * @function
+ * @param {Object} contact - Der Kontakt, der entfernt werden soll.
+ */
+function removeEditContact(contact) {
+    currentTask.assignedContacts = currentTask.assignedContacts.filter(c => c.name !== contact.name);
+    document.querySelector(`.contact-badge[title="${contact.name}"]`)?.remove();
+}
+
+/**
+ * Erstellt das HTML für ein Kontakt-Badge.
+ * @function
+ * @param {Object} contact - Der Kontakt, für den das Badge erstellt werden soll.
+ * @returns {string} HTML-String des Badges.
+ */
+function createEditContactBadge(contact) {
+    return `<div class="contact-badge" style="background-color: ${contact.color}" title="${contact.name}">
+                ${contact.initials}
+            </div>`;
+}
+
+/**
+ * Leert das Eingabefeld für Kontakte.
+ * @function
+ */
+function clearEditContactInput() {
+    const contactInput = document.getElementById('editContactInput');
+    if (contactInput) contactInput.value = '';
 }
 
 

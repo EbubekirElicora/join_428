@@ -243,7 +243,8 @@ const contactsDropdownHTML = contacts.map(contact => {
 
             <form onclick="closeEditDropdown()" id="edit_form">
                 <label for="edit_title">Title</label>
-                <input id="edit_title" value="${task.title}" type="text" required>
+                <input id="edit_title" value="${task.title}" type="text" required
+                    onblur="if(this.value.trim() === '') this.value='${task.title}';">
 
                 <label for="edit_description">Description</label>
                 <textarea id="edit_description">${task.description || ''}</textarea>

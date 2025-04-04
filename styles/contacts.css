@@ -51,22 +51,6 @@
     margin: 0 15px;
 }
 
-.mobileEdit-button {
-    background-color: #2A3647;
-    display: flex;
-    justify-content: center;
-    height: 80px;
-    width: 80px;
-    border-radius: 50%;
-
-    position: fixed;
-    left: 80%;
-    top: 90%;
-    display: none;
-    cursor: pointer;
-    position: relative;
-}
-
 .left-column {
     position: fixed;
     width: 320px;
@@ -79,8 +63,6 @@
     margin-bottom: 10px;
     margin-top: 10px;
     overflow-x: hidden;
-
-
 }
 
 .left-column {
@@ -264,7 +246,7 @@
 }
 
 .details-columns p:first-of-type {
-    font-size: 1.2em;
+    font-size: 16px;
     margin-bottom: 20px;
 }
 
@@ -389,11 +371,6 @@
     text-decoration: underline;
 }
 
-.mobileEdit-button {
-    position: relative;
-    cursor: pointer;
-}
-
 .mobileEdit-overlay {
     display: none;
     position: fixed;
@@ -428,62 +405,4 @@
     to {
         right: 0;
     }
-}
-
-.mobileEdit-overlay a {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 8px 12px;
-    text-decoration: none;
-    color: #333;
-    font-size: 14px;
-}
-
-.mobileEdit-button.blue-background {
-    background-color: #3498db;
-    transition: background-color 0.3s ease;
-}
-
-.mobileEdit-overlay a:hover {
-    background-color: #f5f5f5;
-    border-radius: 8px;
-}
-
-.mobileEdit-overlay.active {
-    display: block;
-}
-
-.edit-link {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 8px 16px;
-    text-decoration: none;
-    color: #000;
-    transition: color 0.3s ease;
-}
-
-#editLinkOverlay {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 8px 16px;
-    text-decoration: none;
-    color: #000;
-    transition: color 0.3s ease;
-}
-
-#editLinkOverlay i {
-    font-size: 16px;
-    color: #000;
-    transition: color 0.3s ease;
-}
-
-#editLinkOverlay.active {
-    color: #3498db;
-}
-
-#editLinkOverlay.active i {
-    color: #3498db;
 }

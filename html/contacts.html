@@ -82,21 +82,18 @@
                         <p><strong>Phone:</strong><span id="contactPhone"></span></p>
                     </div>
                 </div>
-
-                <!-- Mobile Edit Button - Moved outside showDetails but still in right-column -->
-                <div class="mobileEdit-button">
-                    <img src="../assets/icons/3dots.svg" alt="" onclick="toggleOverlay()">
-                    <div id="mobileEditOverlay" class="mobileEdit-overlay">
-                        <a href="#" id="editLinkOverlay" class="edit-link"><i class="fas fa-pencil"></i>Edit</a>
-                        <a href="#" id="deleteLinkOverlay" class="delete-link"><i
-                                class="fas fa-trash-alt"></i>Delete</a>
+                <div class="mobileEdit-container">
+                    <div class="mobileEdit-button">
+                        <img src="../assets/icons/3dots.svg" alt="" onclick="toggleOverlay()">
+                        <div id="mobileEditOverlay" class="mobileEdit-overlay">
+                            <a href="#" id="editLinkOverlay" class="edit-link"><i class="fas fa-pencil"></i>Edit</a>
+                            <a href="#" id="deleteLinkOverlay" class="delete-link"><i
+                                    class="fas fa-trash-alt"></i>Delete</a>
+                        </div>
                     </div>
                 </div>
-
             </div>
-
         </div>
-
         <div id="overlay" class="overlay">
             <div class="overlay-content">
                 <div class="left-section">
@@ -121,7 +118,6 @@
                                     <img src="../assets/icons/email-icon.svg" class="input-icon" alt="Email Icon">
                                     <input type="email" id="email" placeholder="Email" />
                                     <div class="error-message" id="email-error"></div>
-
                                 </div>
                                 <div class="input-container">
                                     <img src="../assets/icons/call_24dp_D9D9D9_FILL0_wght400_GRAD0_opsz24.svg"

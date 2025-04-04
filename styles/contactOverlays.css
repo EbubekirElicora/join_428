@@ -386,8 +386,12 @@
 }
 
 .mobileEdit-button {
-    position: relative;
     cursor: pointer;
+}
+
+.mobileEdit-container {
+    display: none;
+    justify-content: flex-end;
 }
 
 .mobileEdit-overlay {
@@ -427,7 +431,7 @@
     padding: 8px 12px;
     text-decoration: none;
     color: #333;
-    font-size: 14px;
+    font-size: 16px;
 }
 
 .mobileEdit-button.blue-background {

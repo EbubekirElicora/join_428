@@ -52,6 +52,10 @@
         background: white;
     }
 
+    .mobileEdit-container {
+        display: flex;
+    }
+
     .contact_link_container {
         margin-top: 20px;
     }
@@ -86,8 +90,8 @@
     }
 
     .mobileEdit-overlay {
-        top: 85%;
-        right: 2% !important;
+        top: 82%;
+        right: 0.5% !important;
     }
 
     .contactsPage {
@@ -333,10 +337,6 @@
         justify-content: center;
         align-items: center;
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-        margin-left: 90%;
-        margin-top: -5%;
-        transform: none;
-        position: static;
     }
 
     .left-column .mobileEdit-button {
@@ -411,11 +411,6 @@
         margin-left: -20px;
     }
 
-    .mobileEdit-overlay {
-        top: 0%;
-        right: 0% !important;
-    }
-
     .overlay {
         transform: translate(-50%, -50%);
         width: 600px;
@@ -470,10 +465,6 @@
         height: 1px;
         background-color: #ddd;
         margin: 10px 0;
-    }
-
-    .mobileEdit-button {
-        transform: translateY(50PX);
     }
 
     .contact-list .contact-item:last-of-type+.divider {
@@ -877,11 +868,6 @@
         height: 45px;
     }
 
-    .mobileEdit-button {
-        margin-left: 85%;
-    }
-
-
     #editLinkOverlay i,
     #deleteLinkOverlay i {
         font-size: 16px;
@@ -896,12 +882,5 @@
         width: 60px;
         height: 60px;
         left: 80%;
-    }
-}
-
-@media(max-width:400px) {
-
-    .mobileEdit-button {
-        margin-left: 80%;
     }
 }

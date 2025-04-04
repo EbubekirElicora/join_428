@@ -56,6 +56,14 @@
         margin-top: 20px;
     }
 
+    .contact-details-row {
+        gap: 23px;
+    }
+
+    .contactOverlayLeft {
+        width: 30%;
+    }
+
     .left-section {
         width: 30%
     }
@@ -172,15 +180,9 @@
     }
 
     .contact-initials-overlay {
-        width: 100px;
-        height: 100px;
-        color: #fff;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        width: 120px;
+        height: 88px;
         font-size: 32px;
-        border-radius: 50%;
-        overflow: hidden;
     }
 
     .left-section h2 {
@@ -238,7 +240,6 @@
         padding: 0;
         display: grid;
         justify-content: flex-start;
-        border-radius: 5px;
     }
 
     .separator {
@@ -375,6 +376,10 @@
         top: 50%;
     }
 
+    .edit-input {
+        margin-bottom: 0;
+    }
+
     .contact-overlay-buttons {
         justify-content: center
     }
@@ -422,10 +427,13 @@
         gap: 25px;
         position: relative;
         margin-top: 5px;
+        width: 100%;
     }
 
     .contact-details-row {
         margin-top: 0px;
+        width: 100%;
+        justify-content: center;
     }
 
     #cancel {
@@ -652,11 +660,8 @@
     input[type="tel"] {
         width: 100%;
         padding-top: 20px;
-        max-width: 250px;
         box-sizing: border-box;
         padding: 10px;
-
-        border-radius: 5px;
         font-size: 16px;
     }
 
@@ -673,7 +678,6 @@
         background-color: #28a745;
         color: white;
         border: none;
-        border-radius: 5px;
         cursor: pointer;
         margin-bottom: 0;
     }
@@ -743,20 +747,7 @@
 
     .contact-details-inputs {
         margin-top: 20px;
-    }
-
-    .contactOverlayRight input[type="text"],
-    .contactOverlayRight input[type="email"],
-    .contactOverlayRight input[type="tel"] {
         width: 100%;
-        max-width: 300px;
-        padding: 5px;
-        font-size: 16px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        box-sizing: border-box;
-        display: block;
-        margin-top: 5px;
     }
 
     .contact-details-buttons {
@@ -909,20 +900,6 @@
 }
 
 @media(max-width:400px) {
-
-    .contactOverlayRight input[type="text"],
-    .contactOverlayRight input[type="email"],
-    .contactOverlayRight input[type="tel"] {
-        width: 100%;
-        max-width: 200px;
-        padding: 5px;
-        font-size: 16px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        box-sizing: border-box;
-        display: block;
-        margin-top: 5px;
-    }
 
     .mobileEdit-button {
         margin-left: 80%;

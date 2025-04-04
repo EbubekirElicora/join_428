@@ -9,9 +9,6 @@
  */
 function to_open_category_dropdown() {
     let elements = getCategoryElements();
-    if (elements.selected_txt.textContent !== 'Select task category') {
-        resetCategorySelector();
-    }
     if (elements.category_dropdown.classList.contains('show')) {
         closeCategoryDropdown(elements);
         return;
@@ -19,11 +16,15 @@ function to_open_category_dropdown() {
     elements.category_dropdown.innerHTML = '';
     addCategoryOptions(elements.category_dropdown);
     toggleCategoryDropdown(elements);
-    document.addEventListener('click', function closeDropdown(event) {
+    function closeDropdown(event) {
         if (!elements.category_select.contains(event.target) && !elements.category_dropdown.contains(event.target)) {
             closeCategoryDropdown(elements);
             document.removeEventListener('click', closeDropdown);
         }
+    }
+    document.addEventListener('click', closeDropdown);
+    elements.category_select.addEventListener('click', function (event) {
+        event.stopPropagation();
     });
 }
 

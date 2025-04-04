@@ -26,7 +26,7 @@
 
     .nav_board {
         width: 216px;
-    }  
+    }
 }
 
 @media(max-width: 1270px) {
@@ -153,7 +153,7 @@
         width: 400px;
         height: auto;
     }
-    
+
     .content_container_size {
         height: 700px;
     }
@@ -221,7 +221,7 @@
         font-size: 16px;
     }
 
-    .btn_position{
+    .btn_position {
         justify-content: center;
     }
 }
@@ -230,6 +230,8 @@
     .popup_container {
         width: 270px;
     }
- }
 
-
+    .input_img {
+        padding: 12px 10px;
+    }
+}

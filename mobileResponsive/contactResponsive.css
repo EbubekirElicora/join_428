@@ -4,6 +4,15 @@
         margin-left: 344px;
     }
 
+    .right-section-flex {
+        gap: 26px;
+    }
+
+    .contact-persona {
+        width: 132px;
+        height: 102px;
+    }
+
     .right-column {
         margin-left: 0px;
         padding: 20px 8px 20px 8px;
@@ -26,13 +35,6 @@
         width: 1000px;
         height: 400px;
     }
-
-    .contact-details-row {
-        display: flex;
-        align-items: center;
-        gap: 40px;
-        margin-top: 40px;
-    }
 }
 
 @media(max-width:1080px) {
@@ -52,6 +54,10 @@
 
     .contact_link_container {
         margin-top: 20px;
+    }
+
+    .left-section {
+        width: 30%
     }
 
     .right-column .contact-initials {
@@ -79,6 +85,16 @@
     .contactsPage {
         margin-top: 90px;
         margin-left: 0px;
+    }
+
+    .contact-persona {
+        width: 120px;
+        height: 88px;
+    }
+
+    .create-contact,
+    .cancel {
+        font-size: 16px
     }
 
     .contact-header {
@@ -143,27 +159,26 @@
 
     .overlay-content {
         display: flex;
-        width: 700px;
+        width: 780px;
         height: 100%;
         border-radius: 20px;
     }
 
     .contact-overlay-content {
         display: flex;
-        width: 700px;
+        width: 780px;
         height: 100%;
         border-radius: 20px;
     }
 
     .contact-initials-overlay {
         width: 100px;
-        height: 80px;
+        height: 100px;
         color: #fff;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 18px;
-        margin-right: 15px;
+        font-size: 32px;
         border-radius: 50%;
         overflow: hidden;
     }
@@ -360,6 +375,27 @@
         top: 50%;
     }
 
+    .contact-overlay-buttons {
+        justify-content: center
+    }
+
+    .contact-persona {
+        display: none;
+    }
+
+    .error-message {
+        position: absolute;
+        bottom: -18px;
+        left: 0;
+        margin: 2px 0;
+        font-size: 12px;
+        color: red;
+    }
+
+    .contact-input-container {
+        margin-bottom: 24px;
+    }
+
     .left-section p::after,
     .contactOverlayLeft h2::after {
         bottom: -16px;
@@ -392,20 +428,6 @@
         margin-top: 0px;
     }
 
-    .contact-form {
-        display: flex;
-        flex-direction: column;
-        width: 110%;
-        margin-top: 0;
-        gap: 0 !important;
-    }
-
-    .create-contact {
-        padding: 10px;
-        font-size: small;
-        font-weight: 600;
-    }
-
     #cancel {
         display: none;
     }
@@ -423,10 +445,7 @@
     }
 
     .button-container {
-        display: flex;
-        gap: 10px;
         justify-content: center;
-        margin-top:0!important;
     }
 
     .contact-item {
@@ -627,10 +646,11 @@
         color: #fff !important;
     }
 
+
     input[type="text"],
     input[type="email"],
     input[type="tel"] {
-        width: 90%;
+        width: 100%;
         padding-top: 20px;
         max-width: 250px;
         box-sizing: border-box;
@@ -674,7 +694,7 @@
     }
 
     #contact-overlay {
-        width: 70%;
+        width: 97%;
         height: 550px;
         padding: 0;
         border-radius: 10px;
@@ -828,12 +848,10 @@
 }
 
 @media(max-width:480px) {
-    #contact-overlay {
-        width: 97%;
-    }
+
+
     .overlay {
         width: 97%;
-        ;
     }
 
 
@@ -908,18 +926,5 @@
 
     .mobileEdit-button {
         margin-left: 80%;
-    }
-
-    input[type="text"],
-    input[type="email"],
-    input[type="tel"] {
-        width: 90%;
-        padding-top: 20px;
-        max-width: 200px;
-        box-sizing: border-box;
-        padding: 10px;
-        margin-bottom: 16px;
-        border-radius: 5px;
-        font-size: 16px;
     }
 }

@@ -105,7 +105,6 @@
     .sidelinks a {
         display: flex;
         flex-direction: column;
-        font-size: 16px;
         gap: 3px;
     }
 
@@ -119,14 +118,14 @@
     }
 }
 
-@media (max-width: 360px) {
+@media (max-width: 400px) {
 
     #widget_1,
     #widget_2,
     #widget_3,
     #widget_4 {
         width: auto;
-        padding: 8px 12px 8px 12px;
+        padding: 8px 6px 8px 6px;
         margin-right: 6px;
     }
 }

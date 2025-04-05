@@ -302,16 +302,6 @@
     display: none;
 }
 
-@keyframes slideIn {
-    from {
-        transform: translate(50%, -50%);
-    }
-
-    to {
-        transform: translate(-50%, -50%);
-    }
-}
-
 .mobileEdit-overlay {
     display: none;
     top: -5px;
@@ -326,34 +316,12 @@
     transition: right 0.3s ease-in-out;
 }
 
-.mobileEdit-overlay.active {
-    display: block;
-    right: 0;
-}
-
-.mobileEdit-overlay.closing {
-    animation: slideOutToRight 0.3s ease-in-out forwards;
-}
-
-@keyframes slideOutToRight {
-    from {
-        right: 0;
-    }
-
-    to {
-        right: -100%;
-    }
-}
-
-/*sart*/
-
 .addContact-mobile {
     background-color: yellow;
     margin-top: 350px;
     border-radius: 50%;
     width: 80px;
     height: 80px;
-
 }
 
 .back-button {
@@ -369,40 +337,4 @@
 
 .back-button:hover {
     text-decoration: underline;
-}
-
-.mobileEdit-overlay {
-    display: none;
-    position: fixed;
-    top: -5px;
-    right: -50%;
-    background-color: white;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    z-index: 1000;
-    padding: 10px;
-    border-radius: 19px 19px 0 19px;
-}
-
-.mobileEdit-button img {
-    height: 80px;
-    width: 80px;
-    justify-content: center;
-    align-items: center;
-}
-
-.mobileEdit-overlay.active {
-    display: block;
-    animation: slideInFromRight 0.3s ease-in-out forwards;
-}
-
-@keyframes slideInFromRight {
-    from {
-        right: -400%;
-    }
-
-    to {
-        right: 0;
-    }
 }

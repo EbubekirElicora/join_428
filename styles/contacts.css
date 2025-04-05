@@ -323,18 +323,3 @@
     width: 80px;
     height: 80px;
 }
-
-.back-button {
-    cursor: pointer;
-    font-size: 18px;
-    color: #2A3647;
-    display: none;
-    position: fixed;
-    right: 20px;
-    top: 20px;
-    z-index: 1000;
-}
-
-.back-button:hover {
-    text-decoration: underline;
-}

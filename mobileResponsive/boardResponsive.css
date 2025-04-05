@@ -115,6 +115,10 @@
         display: none;
     }
 
+    .input_img {
+        width: 100%;
+    }
+    
     .task_btn {
         flex-direction: column;
     }

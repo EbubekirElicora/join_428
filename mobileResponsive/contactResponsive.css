@@ -52,6 +52,15 @@
         background: white;
     }
 
+    #content {
+        padding-bottom: 30px !important;
+    }    
+
+    .contact-item:last-child {
+        border-bottom: none;
+        margin-bottom: 60px;
+    }
+
     .mobileEdit-container {
         display: flex;
     }

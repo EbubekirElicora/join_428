@@ -50,6 +50,10 @@ a {
   border: 1px solid red !important;
 }
 
+.pointer {
+  cursor: pointer;
+}
+
 .showError {
   display: block;
   height: auto;
@@ -137,8 +141,6 @@ textarea {
   overflow-y: auto;
   scrollbar-width: none;
 }
-
-
 
 label,
 .assigned_headline,
@@ -687,10 +689,6 @@ input[type="checkbox"]:checked {
   display: flex;
   align-items: center;
   margin-right: 12px;
-}
-
-.no-hover {
-  background-color: transparent !important;
 }
 
 .subTaskEditInput {

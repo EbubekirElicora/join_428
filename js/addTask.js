@@ -85,13 +85,9 @@ function getInitials(name) {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-    // Base URL for the Firebase Realtime Database
     const BASE_URL = "https://join-428-default-rtdb.europe-west1.firebasedatabase.app/";
-    // Endpoint for retrieving contacts data
     const CONTACTS_ENDPOINT = "contacts.json";
-    // Input field for entering a contact name
     const contactInput = document.getElementById('contactInput');
-    // Dropdown menu elements
     const dropdownContent = document.getElementById('dropdownContent');
     const dropdownIcon = document.getElementById('dropdownIcon');
     const dropdownIconUp = document.getElementById('dropdownIconUp');
@@ -228,10 +224,17 @@ document.addEventListener('DOMContentLoaded', function () {
             dropdownIconUp.classList.remove('d-none');
         }
     }
+
     dropdownIcon.addEventListener('click', toggleDropdown);
     dropdownIconUp.addEventListener('click', toggleDropdown);
+    contactInput.addEventListener('click', toggleDropdown);
     document.addEventListener('click', function (event) {
-        if (!dropdownIcon.contains(event.target) && !dropdownIconUp.contains(event.target) && !dropdownContent.contains(event.target)) {
+        if (
+            !dropdownIcon.contains(event.target) &&
+            !dropdownIconUp.contains(event.target) &&
+            !dropdownContent.contains(event.target) &&
+            !contactInput.contains(event.target)
+        ) {
             dropdownContent.style.display = 'none';
             dropdownIcon.classList.remove('d-none');
             dropdownIconUp.classList.add('d-none');

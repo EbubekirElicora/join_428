@@ -150,11 +150,6 @@
     margin-left: 0;
 }
 
-.contact-item:last-child {
-    border-bottom: none;
-    margin-bottom: 60px;
-}
-
 .right-column {
     margin-left: 362px;
     padding: 20px;
@@ -290,10 +285,6 @@
     border-radius: 50%;
     overflow: hidden;
     color: white;
-}
-
-#content {
-    padding-bottom: 30px !important;
 }
 
 .overlay-backdrop {

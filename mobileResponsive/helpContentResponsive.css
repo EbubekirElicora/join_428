@@ -1,6 +1,20 @@
 @media (max-width: 1080px) {
-  .help-content {
+  
+  html {
+    overflow: scroll;
+    overflow-x: hidden;
+  }
 
+  ::-webkit-scrollbar {
+    width: 0;
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #f6f7f8;
+  }
+
+  .help-content {
     margin-left: 20px;
     margin-bottom: 100px;
     height: calc(80vh - 8px);

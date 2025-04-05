@@ -293,7 +293,7 @@ const contactsDropdownHTML = contacts.map(contact => {
                                 type="text" 
                                 placeholder="Add new subtask">
                             </div>
-                            <div id="edit_add_subtask_container" class="add_subtask_container no-hover">
+                            <div id="edit_add_subtask_container" class="add_subtask_container">
                                 <img onclick="showEditSubtaskContainerOverlay()" 
                                 id="edit_show_subtask_container"
                                 class="add_subtask_img" 

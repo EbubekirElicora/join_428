@@ -257,7 +257,7 @@ const contactsDropdownHTML = contacts.map(contact => {
                 <div class="assigned_container">
                     <div class="dropdown">
                         <div class="input-container">
-                            <input class="pointer" onclick="toggleEditDropdown(event)" type="text" id="editContactInput" placeholder="Select contacts..." readonly>
+                            <input class="pointer" onclick="toggleEditDropdown(event)" type="text" id="editContactInput" placeholder="Select contacts to assign" readonly>
                             <div class="icons">
                                 <img onclick="toggleEditDropdown(event)"
                                      src="../assets/icons/arrow_drop_down_icon.png"

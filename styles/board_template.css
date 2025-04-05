@@ -247,6 +247,10 @@ p {
     color: #3498db !important;
 }
 
+#editContactInput::placeholder {
+    color: black !important;
+    opacity: 1;
+  }
 
 .shadow_box {
     width: 2px;

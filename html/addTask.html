@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="../styles/header.css">
     <link rel="stylesheet" href="../styles/sidebar.css">
     <link rel="stylesheet" href="../styles/addTask.css">
+    <link rel="stylesheet" href="../styles/addTask_template.css">
     <link rel="stylesheet" href="../styles/summary.css">
     <link rel="stylesheet" href="../styles/template.css">
     <link rel="stylesheet" href="../styles/board_template.css">
@@ -72,8 +73,8 @@
                                 </div>
                                 <div class="dropdown">
                                     <div class="input-container">
-                                        <input class="pointer" type="text" id="contactInput" placeholder="Select contacts to assign"
-                                            readonly>
+                                        <input class="pointer" type="text" id="contactInput"
+                                            placeholder="Select contacts to assign" readonly>
                                         <div class="icons">
                                             <img src="../assets/icons/arrow_drop_down_icon.png" id="dropdownIcon"
                                                 class="cursorPointer dropdownimg">
@@ -172,7 +173,8 @@
                 </div>
                 <div class="btn_position">
                     <div class="clear_task_btn_container">
-                        <button onclick="resetAll(); if (typeof resetAllBoard === 'function') resetAllBoard();" class="clear_btn" type="button">Clear
+                        <button onclick="resetAll(); if (typeof resetAllBoard === 'function') resetAllBoard();"
+                            class="clear_btn" type="button">Clear
                             <img class="clear_icon" src="../assets/icons/clear_icon.png">
                             <img class="clear_icon_blue d-none" src="../assets/icons/clear_icon_blue.png">
                         </button>

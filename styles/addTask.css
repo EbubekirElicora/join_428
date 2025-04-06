@@ -691,17 +691,6 @@ input[type="checkbox"]:checked {
   margin-right: 12px;
 }
 
-.subTaskEditInput {
-  width: 350px !important;
-  padding-left: 8px !important;
-  font-size: 16px !important;
-  border: none !important;
-  outline: none !important;
-  background-color: transparent !important;
-  display: inline-block !important;
-  box-shadow: none !important;
-}
-
 .subTaskInputContainer {
   display: flex;
   align-items: center;
@@ -729,86 +718,6 @@ input[type="checkbox"]:checked {
 
 .subTaskList::-webkit-scrollbar {
   display: none;
-}
-
-.subTaskListContainer {
-  padding-left: 10px;
-  border-radius: 10px;
-  position: relative;
-  margin-block-start: 8px;
-  margin-block-end: 8px;
-}
-
-.listSubTask {
-  font-size: 16px;
-  width: 100%;
-  text-align: start;
-  white-space: normal;
-  overflow-wrap: break-word;
-  word-break: normal;
-}
-
-.subTask {
-  width: 100%;
-  min-height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-radius: 10px;
-}
-
-.leftContainerSubTask {
-  padding-left: 16px;
-}
-
-.subTaskButtons {
-  border-radius: 10px;
-  padding-right: 8px;
-
-}
-
-.subTask .subTaskButtons {
-  display: none;
-}
-
-.subTask:hover .subTaskButtons {
-  display: flex;
-}
-
-.subTask:hover {
-  cursor: pointer;
-  background-color: #d3d3d354;
-}
-
-.subTaskEdit {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 8px;
-  background-color: #d3d3d354;
-  border-bottom: 2px solid #29ABE2;
-  border-radius: 10px;
-}
-
-.rightContainerSubTask {
-  display: flex;
-}
-
-.partingLine {
-  height: 24px;
-  width: 2px;
-  background-color: #D1D1D1;
-  margin-right: 5px;
-  margin-left: 5px;
-}
-
-.subTaskDeleteButton {
-  padding-right: 8px;
-}
-
-.subTaskSaveButton {
-  padding-right: 16px;
 }
 
 .dropdown {
@@ -955,12 +864,3 @@ input[type="checkbox"]:checked {
   cursor: pointer;
 }
 
-.subTaskEditButton:hover,
-.subTaskDeleteButton:hover,
-.subTaskDeleteButtonInput:hover,
-.subTaskSaveButton:hover {
-  -webkit-transform: scale(0.9);
-  -ms-transform: scale(0.9);
-  transform: scale(0.9);
-  transition: 1s ease;
-}

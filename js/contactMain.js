@@ -14,6 +14,7 @@ function getInitials(name) {
         .join('')
         .toUpperCase();
 }
+
 /**
  * Generates a random hex color code.
 * 
@@ -27,6 +28,7 @@ function getRandomColor() {
     }
     return color;
 }
+
 /**
  * Saves a contact to Firebase.
  * 
@@ -41,14 +43,13 @@ function saveContact(contact) {
     })
         .then(response => response.json())
         .then(data => {
-            console.log('Contact saved successfully:', data);
             return data;
         })
         .catch(error => {
-            console.error('Error saving contact:', error);
             throw error;
         });
 }
+
 /**
  * Fetches contacts from Firebase.
  * 
@@ -65,10 +66,10 @@ function fetchContacts() {
             return contacts;
         })
         .catch(error => {
-            console.error('Error fetching contacts:', error);
             return [];
         });
 }
+
 /**
  * Renders the list of contacts on the page, grouping them by the first letter of their names.
  * 
@@ -80,14 +81,9 @@ function fetchContacts() {
 function renderContacts() {
     const contentDiv = document.getElementById('content');
     if (!contentDiv) {
-        console.error('Content div not found!');
         return;
     }
     contentDiv.innerHTML = '';
-    /**
-          * Fetches the list of contacts, sorts them alphabetically by name, and groups them by the 
-          * first letter of their name. Then, it generates HTML for displaying the grouped contacts.
-          */
 
     fetchContacts().then(contacts => {
         contacts.sort((a, b) => a.name.localeCompare(b.name));
@@ -122,6 +118,7 @@ function renderContacts() {
         }
     });
 }
+
 /**
   * Deletes a contact from the backend database and updates the UI accordingly.
   * 
@@ -133,7 +130,6 @@ function renderContacts() {
   * @param {Object} contact - The contact to be deleted.
   * @param {string} contact.id - The unique identifier of the contact to be deleted.
   */
-
 function deleteContact(contact) {
     fetch(`${BASE_URL}/contacts/${contact.id}.json`, {
         method: 'DELETE',

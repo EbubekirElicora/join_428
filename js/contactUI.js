@@ -4,8 +4,7 @@
 
 document.addEventListener('DOMContentLoaded', () => {
     /**
-     * Displays detailed information about a contact.
-     * 
+     * Displays detailed information about a contact.     * 
      * @param {object} contact - The contact object to display.
      */
     function showDetailsContainer() {
@@ -17,8 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
         showDetailsDiv.classList.remove('hidden');
     }
     /**
-     * Updates the contact's initials display in the DOM.
-     * 
+     * Updates the contact's initials display in the DOM.     * 
      * @param {Object} contact - The contact object.
      * @param {string} contact.initials - The initials of the contact.
      * @param {string} contact.color - The background color for the contact's initials.
@@ -64,8 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /**
-     * Sets up the edit link for the contact, allowing the user to edit the contact's details.
-     * 
+     * Sets up the edit link for the contact, allowing the user to edit the contact's details.     * 
      * @param {Object} contact - The contact object.
      */
 
@@ -82,8 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
  /**
- * Sets up the delete link for the contact, allowing the user to delete the contact.
- * 
+ * Sets up the delete link for the contact, allowing the user to delete the contact. * 
  * @param {Object} contact - The contact object.
  */
     function setupDeleteLink(contact) {
@@ -128,11 +124,9 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     }
     /**
-     * Displays the contact's details in the details container and sets up the edit and delete links.
-     * 
+     * Displays the contact's details in the details container and sets up the edit and delete links.     * 
      * @param {Object} contact - The contact object.
      */
-
     window.showContactDetails = function (contact) {
         showDetailsContainer();
         updateContactInitials(contact);
@@ -191,7 +185,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     /**
      * Saves the edited contact by validating the form and updating the contact in the backend.
-     * 
      * @param {Object} contact - The original contact object to be updated.
      * @param {string} contact.id - The unique identifier of the contact.
      * @param {string} contact.name - The current name of the contact.
@@ -200,12 +193,10 @@ document.addEventListener('DOMContentLoaded', () => {
      * @param {string} contact.initials - The current initials of the contact.
      * @param {string} contact.color - The current color of the contact's initials.
      */
-
     window.saveEditedContact = function (contact) {
         const nameInput = document.getElementById('edit-contact-name');
         const emailInput = document.getElementById('edit-contact-email');
         const phoneInput = document.getElementById('edit-contact-phone');
-
         document.querySelectorAll('#contact-overlay .error-message').forEach(el => el.textContent = '');
         document.querySelectorAll('#contact-overlay .contact-input-container').forEach(el => el.classList.remove('error'));
 
@@ -216,15 +207,22 @@ document.addEventListener('DOMContentLoaded', () => {
             showEditError(nameInput, 'Name is required');
             isValid = false;
         }
-
         if (!emailInput.value.trim()) {
             showEditError(emailInput, 'Email is required');
             isValid = false;
-        } else if (!emailRegex.test(emailInput.value)) {
-            showEditError(emailInput, 'Invalid email format');
-            isValid = false;
+        } else {
+            const email = emailInput.value.trim();
+            if (!email.includes('@')) {
+                showEditError(emailInput, 'Please include @');
+                isValid = false;
+            } else if (!email.includes('.')) {
+                showEditError(emailInput, 'Please include .');
+                isValid = false;
+            } else if (!emailRegex.test(email)) {
+                showEditError(emailInput, 'Invalid email format');
+                isValid = false;
+            }
         }
-
         if (!phoneInput.value.trim()) {
             showEditError(phoneInput, 'Phone is required');
             isValid = false;
@@ -232,12 +230,10 @@ document.addEventListener('DOMContentLoaded', () => {
             showEditError(phoneInput, 'Invalid phone number');
             isValid = false;
         }
-
         if (!isValid) {
             console.log('Validation failed - preventing save');
             return;
         }
-
         const updatedContact = {
             id: contact.id,
             name: nameInput.value.trim(),
@@ -249,7 +245,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         updateContactAPI(contact.id, updatedContact)
             .then(() => {
-                console.log('Update successful, refreshing contacts...');
+                
                 handleUIUpdates(updatedContact);
                 window.hideContactOverlay();
             })
@@ -259,8 +255,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
     }
     /**
- * Sets up the email validation for both the add contact and edit contact forms.
- * 
+ * Sets up the email validation for both the add contact and edit contact forms. * 
  * This function listens for input events on the email fields and ensures that the 
  * email contains both "@" and ".", clearing any custom validity messages once 
  * the email is valid.
@@ -305,8 +300,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /**
-    * Saves the edited contact details to Firebase.
-    * 
+    * Saves the edited contact details to Firebase.    * 
     * @param {object} contact - The contact object to update.
     */
     function gatherUpdatedContactData(contact) {
@@ -322,10 +316,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     /**
     * Saves the new contact and updates the UI accordingly.
-    * 
     * This function first attempts to save the new contact using the `saveContact` function. 
-    * If the contact is successfully saved, it updates the UI by rendering the contacts,      
-    * Additionally, it resets the form and hides the overlay.     * 
+    * If the contact is successfully saved, it updates the UI by rendering the contacts, Additionally, it resets the form and hides the overlay.      
     * @param {Object} newContact - The new contact object to be saved.
     * @param {string} newContact.name - The name of the contact.
     * @param {string} newContact.email - The email of the contact.
@@ -360,11 +352,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     /**
  * Handles the creation of a new contact.
- *  * 
- * This function is triggered when the contact form is submitted. It validates the email 
+  * This function is triggered when the contact form is submitted. It validates the email 
  * and ensures it contains both "@" and "." before proceeding to gather contact data 
- * and calling `saveAndUpdateUI` to save the contact and update the UI.
- * 
+ * and calling `saveAndUpdateUI` to save the contact and update the UI. * 
  * @param {Event} event - The submit event triggered by the form.
  */
     function createContact(event) {
@@ -404,12 +394,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const newContact = gatherContactData();
         saveAndUpdateUI(newContact);
     }
-
     const contactForm = document.getElementById('contact-form');
     if (contactForm) {
         contactForm.addEventListener('submit', createContact);
     }
-
     // Initialization
     core.renderContacts();
     window.hideOverlay();

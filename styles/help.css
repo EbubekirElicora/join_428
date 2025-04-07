@@ -5,6 +5,7 @@ body {
 
 .help-content {
   max-height: calc(100vh - 120px);
+  max-width: 1440px;
   margin-left: 270px;
   margin-right: 20px;
   margin-top: 110px;

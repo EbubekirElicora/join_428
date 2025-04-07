@@ -9,6 +9,7 @@ body {
   margin-right: 30px;
   overflow: auto;
   max-height: calc(100vh - 120px);
+  max-width: 1440px;
 }
 
 .d-none {

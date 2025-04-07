@@ -217,7 +217,7 @@ label select {
   display: none;
 }
 
-.add_subtask_container:hover {
+.add_subtask_img:hover {
   background-color: rgba(0, 0, 0, 0.1);
   border-radius: 50%;
 }
@@ -245,14 +245,6 @@ label select {
   background-color: rgba(0, 0, 0, 0.1);
   border-radius: 50%;
   transition: opacity 0.3s ease;
-}
-
-.add_btn {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 25px;
-  height: 25px;
 }
 
 .divider_line {

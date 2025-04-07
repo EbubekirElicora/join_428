@@ -55,7 +55,7 @@
     position: fixed;
     width: 320px;
     height: 100vh;
-    max-height: calc(100vh - 100px);
+    max-height: calc(100vh - 140px);
     background-color: #fff;
     padding: 20px;
     overflow-y: auto;
@@ -64,12 +64,6 @@
     margin-top: 10px;
     overflow-x: hidden;
 }
-
-.left-column {
-    height: -webkit-calc(96vh - 120px);
-    height: -moz-calc(100vh - 120px);
-}
-
 
 .header-content {
     display: flex;

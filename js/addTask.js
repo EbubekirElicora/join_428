@@ -3,6 +3,7 @@ window.isDropdownClosed = false;
 // This array stores the list of selected contacts.
 window.selectedContacts = [];
 
+
 /**
  * Saves a task to Firebase.
  * 
@@ -116,86 +117,62 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     /**
-     * Populates the dropdown menu with contact items.
-     * Fetches contacts, clears existing content, and appends new contact elements.
+     * Populates the dropdown with contact information fetched from Firebase.
+     * 
+     * This function fetches the contacts, creates HTML elements for each contact,
+     * and adds them to the dropdown content for user selection.
+     * 
+     * @returns {Promise<void>} A promise that resolves when the dropdown has been populated.
      */
     async function populateDropdown() {
         const contacts = await fetchContacts();
-        if (!contacts) return console.error('No contacts found or failed to fetch.');
+        if (!contacts) {
+            console.error('No contacts found or failed to fetch.');
+            return;
+        }
         const dropdownContent = document.getElementById('dropdownContent');
         dropdownContent.innerHTML = '';
-        Object.entries(contacts).forEach(([key, contact]) => {
-            const contactItem = createContactItem(key, contact);
+
+        Object.keys(contacts).forEach(key => {
+            const contact = contacts[key];
+            const contactItem = document.createElement('div');
+            contactItem.className = 'contact-item';
+            const contactInfo = document.createElement('div');
+            contactInfo.className = 'contact-info';
+            const contactName = document.createElement('span');
+            contactName.textContent = contact.name;
+            const initialsContainer = document.createElement('div');
+            initialsContainer.className = 'initials-container';
+            initialsContainer.style.backgroundColor = getRandomColor();
+            const initialsDiv = document.createElement('div');
+            initialsDiv.className = 'initials';
+            initialsDiv.textContent = getInitials(contact.name);
+            initialsContainer.appendChild(initialsDiv);
+            contactInfo.appendChild(initialsContainer);
+            contactInfo.appendChild(contactName);
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.className = 'checkbox_class';
+            checkbox.value = contact.email;
+            checkbox.id = `contact-${key}`;
+            contactItem.appendChild(contactInfo);
+            contactItem.appendChild(checkbox);
+            contactItem.addEventListener('click', function (event) {
+                if (event.target !== checkbox) {
+                    checkbox.checked = !checkbox.checked;
+                }
+                contactItem.classList.toggle('selected-dropdown-item');
+                if (checkbox.checked) {
+                    selectedContacts.push(contact.name);
+                } else {
+                    selectedContacts = selectedContacts.filter(name => name !== contact.name);
+                }
+                updateInputField();
+            });
             dropdownContent.appendChild(contactItem);
         });
     }
 
-    /**
-     * Creates a single contact item element including info and checkbox.
-     * Adds event listener to handle selection toggling.
-     * 
-     * @param {string} key - The key or ID of the contact.
-     * @param {Object} contact - The contact object containing name and email.
-     * @returns {HTMLElement} The constructed contact item element.
-     */
-    function createContactItem(key, contact) {
-        const item = document.createElement('div');
-        item.className = 'contact-item';
-        const checkbox = createCheckbox(key, contact.email);
-        const info = createContactInfo(contact.name);
-        item.appendChild(info);
-        item.appendChild(checkbox);
-        item.addEventListener('click', event => {
-            if (event.target !== checkbox) checkbox.checked = !checkbox.checked;
-            item.classList.toggle('selected-dropdown-item');
-            if (checkbox.checked) {
-                selectedContacts.push(contact.name);
-            } else {
-                selectedContacts = selectedContacts.filter(name => name !== contact.name);
-            }
-            updateInputField();
-        });
-        return item;
-    }
-
-    /**
-     * Creates a checkbox input element for the contact item.
-     * 
-     * @param {string} key - The contact's key used as part of the checkbox ID.
-     * @param {string} email - The contact's email address used as the checkbox value.
-     * @returns {HTMLInputElement} The checkbox input element.
-     */
-    function createCheckbox(key, email) {
-        const checkbox = document.createElement('input');
-        checkbox.type = 'checkbox';
-        checkbox.className = 'checkbox_class';
-        checkbox.value = email;
-        checkbox.id = `contact-${key}`;
-        return checkbox;
-    }
-
-    /**
-     * Creates the contact information section including initials and name.
-     * 
-     * @param {string} name - The name of the contact.
-     * @returns {HTMLElement} The contact information container.
-     */
-    function createContactInfo(name) {
-        const info = document.createElement('div');
-        info.className = 'contact-info';
-        const initialsContainer = document.createElement('div');
-        initialsContainer.className = 'initials-container';
-        initialsContainer.style.backgroundColor = getRandomColor();
-        const initials = document.createElement('div');
-        initials.className = 'initials';
-        initials.textContent = getInitials(name);
-        initialsContainer.appendChild(initials);
-        const nameSpan = document.createElement('span');
-        nameSpan.textContent = name;
-        info.appendChild(initialsContainer);
-        info.appendChild(nameSpan);
-        return info;
-    }
 
     /**
   * Updates the selected contacts display with initials and a count for extra contacts.

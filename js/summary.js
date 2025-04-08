@@ -1,16 +1,23 @@
+document.addEventListener('DOMContentLoaded', initPage);
+
 /**
- * Event listener for the DOMContentLoaded event. This function performs various updates 
- * when the page is fully loaded, including greeting the user based on the time of day 
- * and displaying user-specific data from localStorage.
- * It also handles the visibility of mobile greetings based on screen size.
- * 
- * @returns {void} This function does not return any value. It updates UI elements upon page load.
+ * Initializes the page after DOM content is loaded.
+ * Calls all necessary setup functions.
  */
-document.addEventListener('DOMContentLoaded', function () {
+function initPage() {
     updateSummary();
+    greetUser();
+    setGreetingText();
+    hideMobileGreeting();
+}
+
+/**
+ * Retrieves user info from localStorage and updates the UI
+ * to greet either the guest or the saved user by name.
+ */
+function greetUser() {
     const isGuest = localStorage.getItem("isGuest");
     const greetedUserElement = document.getElementById('greeted_user');
-    const greetText = document.getElementById('greets_text');
     if (isGuest === "true") {
         greetedUserElement.textContent = "Guest";
     } else {
@@ -19,7 +26,15 @@ document.addEventListener('DOMContentLoaded', function () {
             greetedUserElement.textContent = userName;
         }
     }
+}
+
+/**
+ * Sets the greeting text based on the current time of day.
+ * Updates the DOM element with an appropriate greeting.
+ */
+function setGreetingText() {
     const hour = new Date().getHours();
+    const greetText = document.getElementById('greets_text');
     let greeting;
     if (hour < 12) {
         greeting = 'Good morning,';
@@ -29,8 +44,14 @@ document.addEventListener('DOMContentLoaded', function () {
         greeting = 'Good evening,';
     }
     greetText.textContent = greeting;
-    const mobileGreetsContainer = document.querySelector('.mobile_greets_container');
+}
 
+/**
+ * Hides the mobile greeting container after a short delay
+ * if the window width is below a certain threshold.
+ */
+function hideMobileGreeting() {
+    const mobileGreetsContainer = document.querySelector('.mobile_greets_container');
     if (window.innerWidth < 760) {
         setTimeout(() => {
             mobileGreetsContainer.classList.add('hide');
@@ -39,7 +60,7 @@ document.addEventListener('DOMContentLoaded', function () {
             mobileGreetsContainer.style.display = 'none';
         }, 1000);
     }
-});
+}
 
 /**
  * Loads the user's name from localStorage and updates the UI to greet the user. 
@@ -107,51 +128,81 @@ function updateElementText(id, value) {
 }
 
 /**
- * Asynchronously loads the task data and updates various summary statistics 
- * including counts of tasks in different stages and with certain priorities.
- * The statistics include the number of tasks in the 'todo', 'done', 'in progress', 
- * and 'awaiting feedback' stages, as well as the total number of tasks and the 
- * number of urgent tasks. It also checks for the next upcoming deadline.
- * 
- * @returns {Promise<void>} This function does not return any value. It handles 
- * the process asynchronously and updates the DOM elements with the gathered statistics.
- * 
- * @throws {Error} If there is an error while loading the data or processing the tasks.
+ * Main function to update all task summary data in the UI.
  */
 async function updateSummary() {
     try {
         const tasks = await loadData("tasks");
         if (!tasks) return;
-        const todos = Object.values(tasks).map(task => {
-            if (!task.stage) {
-                task.stage = 'todo';
-            }
-            return task;
-        });
-        const todoTasks = todos.filter(task => task.stage?.toLowerCase() === 'todo');
-        const todoCount = todoTasks.length;
-        const doneCount = todos.filter(task => task.stage?.toLowerCase() === 'done').length;
-        const urgentCount = todos.filter(task => task.priority === 'urgent').length;
-        const totalTasks = todos.length;
-        const inProgressCount = todos.filter(task => task.stage?.toLowerCase() === 'progress').length;
-        const awaitingFeedbackCount = todos.filter(task => task.stage?.toLowerCase() === 'feedback').length;
-        const upcomingDeadline = todos
-            .filter(task => task.dueDate)
-            .map(task => new Date(task.dueDate))
-            .sort((a, b) => a - b)
-            .find(date => date > new Date());
-        updateElementText('todo_number', todoCount);
-        updateElementText('done_number', doneCount);
-        updateElementText('urgent_number', urgentCount);
-        updateElementText('board_number', totalTasks);
-        updateElementText('progress_number', inProgressCount);
-        updateElementText('feedback_number', awaitingFeedbackCount);
-        if (upcomingDeadline) {
-            updateElementText('date', upcomingDeadline.toLocaleDateString());
-        } else {
-            updateElementText('date', 'No upcoming deadlines');
-        }
+
+        const normalizedTasks = normalizeTasks(tasks);
+        const summary = calculateSummary(normalizedTasks);
+        updateSummaryUI(summary);
     } catch (error) {
         console.error('Error updating summary:', error);
+    }
+}
+
+/**
+ * Ensures each task has a 'stage' and converts tasks to an array.
+ * @param {Object} tasks - Task object from storage
+ * @returns {Array} Array of task objects with normalized stage
+ */
+function normalizeTasks(tasks) {
+    return Object.values(tasks).map(task => {
+        if (!task.stage) {
+            task.stage = 'todo';
+        }
+        return task;
+    });
+}
+
+/**
+ * Calculates task counts and the nearest upcoming deadline.
+ * @param {Array} tasks - Array of task objects
+ * @returns {Object} Summary data
+ */
+function calculateSummary(tasks) {
+    const toStage = stage => stage?.toLowerCase();
+    return {
+        todoCount: tasks.filter(t => toStage(t.stage) === 'todo').length,
+        doneCount: tasks.filter(t => toStage(t.stage) === 'done').length,
+        urgentCount: tasks.filter(t => t.priority === 'urgent').length,
+        totalCount: tasks.length,
+        inProgressCount: tasks.filter(t => toStage(t.stage) === 'progress').length,
+        feedbackCount: tasks.filter(t => toStage(t.stage) === 'feedback').length,
+        nextDeadline: getNextUpcomingDeadline(tasks)
+    };
+}
+
+/**
+ * Finds the next upcoming deadline from tasks.
+ * @param {Array} tasks - Array of task objects
+ * @returns {Date|null} Nearest upcoming deadline or null
+ */
+function getNextUpcomingDeadline(tasks) {
+    const futureDates = tasks
+        .filter(task => task.dueDate)
+        .map(task => new Date(task.dueDate))
+        .filter(date => date > new Date())
+        .sort((a, b) => a - b);
+    return futureDates[0] || null;
+}
+
+/**
+ * Updates DOM elements with summary data.
+ * @param {Object} summary - Summary object from calculateSummary()
+ */
+function updateSummaryUI(summary) {
+    updateElementText('todo_number', summary.todoCount);
+    updateElementText('done_number', summary.doneCount);
+    updateElementText('urgent_number', summary.urgentCount);
+    updateElementText('board_number', summary.totalCount);
+    updateElementText('progress_number', summary.inProgressCount);
+    updateElementText('feedback_number', summary.feedbackCount);
+    if (summary.nextDeadline) {
+        updateElementText('date', summary.nextDeadline.toLocaleDateString());
+    } else {
+        updateElementText('date', 'No upcoming deadlines');
     }
 }

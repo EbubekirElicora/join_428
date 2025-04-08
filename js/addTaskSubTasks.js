@@ -7,10 +7,8 @@ window.subtasks = window.subtasks || {};
 function renderSubtasks(editIndex = null) {
     let subtask_list = document.getElementById('added_text');
     subtask_list.innerHTML = '';
-
     Object.keys(subtasks).forEach(id => {
         let subtask = subtasks[id];
-
         if (typeof subtask === 'string') {
             subtask = { title: subtask, completed: false, isEditing: false };
             subtasks[id] = subtask;

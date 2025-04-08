@@ -1,65 +1,145 @@
 /**
- * Lädt die Kontakte und zeigt sie im Dropdown an.
- * Diese Funktion lädt die Kontaktdaten von einer externen Quelle und zeigt sie im Dropdown-Menü an.
- * Für jeden Kontakt wird ein Kontrollkästchen zum Auswählen angezeigt.
- * Wenn ein Kontakt ausgewählt oder abgewählt wird, wird die Liste der ausgewählten Kontakte aktualisiert.
- * 
- * @async
- * @function loadContacts
+ * Lädt Kontakte und zeigt sie im Dropdown an
  */
 async function loadContacts() {
+    const dropdownContent = getDropdownContent();
+    if (!dropdownContent) return;
+    
+    setupDropdownCloseHandler(dropdownContent);
+    const contactsData = await loadData('contacts');
+    renderContacts(dropdownContent, contactsData);
+}
+
+/**
+ * Holt das Dropdown-Container-Element aus dem DOM
+ * @returns {HTMLElement|null} Dropdown-Container oder null falls nicht gefunden
+ */
+function getDropdownContent() {
     const dropdownContent = document.getElementById('dropdownContent');
-    if (!dropdownContent) {
-        console.error('Dropdown content element not found!');
-        return;
-    }
+    if (!dropdownContent) console.error('Dropdown content element not found!');
+    return dropdownContent;
+}
+
+/**
+ * Setzt den Event-Handler zum Schließen des Dropdowns bei Klick außerhalb
+ * @param {HTMLElement} dropdownContent - Das Dropdown-Container-Element
+ */
+function setupDropdownCloseHandler(dropdownContent) {
     document.addEventListener('click', (event) => {
         if (!dropdownContent.contains(event.target)) {
-            dropdownContent.style.display = 'none'; // Close dropdown
+            dropdownContent.style.display = 'none';
         }
     });
-    const contactsData = await loadData('contacts');
-    if (contactsData) {
-        const contactsArray = Object.values(contactsData);
-        dropdownContent.innerHTML = '';
-        contactsArray.forEach(contact => {
-            const contactDiv = document.createElement('div');
-            contactDiv.classList.add('dropdown-item');
-            contactDiv.innerHTML = `
-                <div class="contact-info">
-                    <div class="contact-initials-container" style="background-color: ${getRandomColor()}">
-                        <div class="contact-initials">${getInitials(contact.name)}</div>
-                    </div>
-                    <span class="contact-name">${contact.name}</span>
-                </div>
-                <input type="checkbox" class="contact-checkbox">
-            `;
-            const checkbox = contactDiv.querySelector('.contact-checkbox');
-            contactDiv.addEventListener('click', (event) => {
-                event.stopPropagation();
-                if (event.target !== checkbox) {
-                    checkbox.checked = !checkbox.checked;
-                    checkbox.dispatchEvent(new Event('change'));
-                }
-            });
-            checkbox.addEventListener('change', () => {
-                if (checkbox.checked) {
-                    contactDiv.classList.add('selected-contact-item');
-                    if (!selectedContacts.find(c => c.name === contact.name)) {
-                        selectedContacts.push(contact);
-                    }
-                } else {
-                    contactDiv.classList.remove('selected-contact-item');
-                    selectedContacts = selectedContacts.filter(c => c.name !== contact.name);
-                }
-                updateSelectedContacts();
-            });
+}
 
-            dropdownContent.appendChild(contactDiv);
-        });
-    } else {
+/**
+ * Rendert die Kontaktliste im Dropdown
+ * @param {HTMLElement} dropdownContent - Container-Element
+ * @param {Object|null} contactsData - Kontaktdaten oder null
+ */
+function renderContacts(dropdownContent, contactsData) {
+    dropdownContent.innerHTML = '';
+    if (!contactsData) {
         dropdownContent.innerHTML = '<div class="dropdown-item">No contacts available</div>';
+        return;
     }
+    Object.values(contactsData).forEach(contact => {
+        createContactElement(dropdownContent, contact);
+    });
+}
+
+/**
+ * Erstellt ein einzelnes Kontakt-Element
+ * @param {HTMLElement} dropdownContent - Container-Element
+ * @param {Object} contact - Kontaktdaten
+ */
+function createContactElement(dropdownContent, contact) {
+    const contactDiv = document.createElement('div');
+    contactDiv.classList.add('dropdown-item');
+    contactDiv.innerHTML = getContactHTML(contact);
+    const checkbox = contactDiv.querySelector('.contact-checkbox');
+    setupContactClickHandler(contactDiv, checkbox, contact);
+    setupCheckboxHandler(contactDiv, checkbox, contact);
+    dropdownContent.appendChild(contactDiv);
+}
+
+/**
+ * Generiert HTML für einen Kontakt-Eintrag
+ * @param {Object} contact - Kontaktdaten
+ * @returns {string} HTML-String
+ */
+function getContactHTML(contact) {
+    return `
+        <div class="contact-info">
+            <div class="contact-initials-container" style="background-color: ${getRandomColor()}">
+                <div class="contact-initials">${getInitials(contact.name)}</div>
+            </div>
+            <span class="contact-name">${contact.name}</span>
+        </div>
+        <input type="checkbox" class="contact-checkbox">
+    `;
+}
+
+/**
+ * Setzt den Klick-Handler für Kontakt-Elemente
+ * @param {HTMLElement} contactDiv - Kontakt-Element
+ * @param {HTMLInputElement} checkbox - Checkbox-Element
+ */
+function setupContactClickHandler(contactDiv, checkbox) {
+    contactDiv.addEventListener('click', (event) => {
+        event.stopPropagation();
+        if (event.target !== checkbox) {
+            checkbox.checked = !checkbox.checked;
+            checkbox.dispatchEvent(new Event('change'));
+        }
+    });
+}
+
+/**
+ * Setzt den Change-Handler für Kontakt-Checkboxen
+ * @param {HTMLElement} contactDiv - Kontakt-Element
+ * @param {HTMLInputElement} checkbox - Checkbox-Element
+ * @param {Object} contact - Kontaktdaten
+ */
+function setupCheckboxHandler(contactDiv, checkbox, contact) {
+    checkbox.addEventListener('change', () => {
+        handleContactSelection(contactDiv, checkbox, contact);
+    });
+}
+
+/**
+ * Verarbeitet die Auswahl/Deselektion eines Kontakts
+ * @param {HTMLElement} contactDiv - Kontakt-Element
+ * @param {HTMLInputElement} checkbox - Checkbox-Element
+ * @param {Object} contact - Kontaktdaten
+ */
+function handleContactSelection(contactDiv, checkbox, contact) {
+    if (checkbox.checked) {
+        contactDiv.classList.add('selected-contact-item');
+        addSelectedContact(contact);
+    } else {
+        contactDiv.classList.remove('selected-contact-item');
+        removeSelectedContact(contact);
+    }
+    updateSelectedContacts();
+}
+
+/**
+ * Fügt einen Kontakt zur Auswahlliste hinzu
+ * @param {Object} contact - Kontaktdaten
+ */
+function addSelectedContact(contact) {
+    if (!selectedContacts.find(c => c.name === contact.name)) {
+        selectedContacts.push(contact);
+    }
+}
+
+/**
+ * Entfernt einen Kontakt von der Auswahlliste
+ * @param {Object} contact - Kontaktdaten
+ */
+function removeSelectedContact(contact) {
+    selectedContacts = selectedContacts.filter(c => c.name !== contact.name);
 }
 
 /**
@@ -82,37 +162,60 @@ function selectContact(contact) {
 }
 
 /**
- * Aktualisiert die angezeigten ausgewählten Kontakte im Eingabefeld und im Container für Initialen.
- * Diese Funktion nimmt die Liste der ausgewählten Kontakte, zeigt ihre Namen im Eingabefeld an 
- * und erstellt für jeden Kontakt ein Initialen-Element im Container.
- * 
- * @function updateSelectedContacts
+ * Aktualisiert die Anzeige der ausgewählten Kontakte
  */
 function updateSelectedContacts() {
-    const initialsContainer = document.getElementById('selectedContactsInitials');
-    if (!initialsContainer) {
-        return;
-    }
-    const contactsToDisplay = selectedContacts.slice(0, 5);
+    const initialsContainer = getInitialsContainer();
+    if (!initialsContainer) return;
+    renderContactInitials(initialsContainer);
+    renderRemainingContacts(initialsContainer);
+}
+
+/**
+ * Holt den Container für Kontaktinitialen
+ * @returns {HTMLElement|null} Initialen-Container oder null
+ */
+function getInitialsContainer() {
+    return document.getElementById('selectedContactsInitials');
+}
+
+/**
+ * Rendert die Initialen der ausgewählten Kontakte
+ * @param {HTMLElement} initialsContainer - Container-Element
+ */
+function renderContactInitials(initialsContainer) {
     initialsContainer.innerHTML = '';
-    contactsToDisplay.forEach(contact => {
-        const span = document.createElement('span');
-        span.classList.add('contact-initial');
-        span.innerHTML = ` 
-            <div class="contact-initials-container" style="background-color: ${getRandomColor()}">
-                <div class="contact-initials">${getInitials(contact.name)}</div>
-            </div>
-        `;
-        initialsContainer.appendChild(span);
+    selectedContacts.slice(0, 5).forEach(contact => {
+        initialsContainer.appendChild(createInitialElement(contact));
     });
-    const remainingContacts = selectedContacts.length > 5
-        ? `<div class="remaining-contacts-board">+${selectedContacts.length - 5}</div>`
-        : '';
-    if (remainingContacts) {
-        const remainingDiv = document.createElement('div');
-        remainingDiv.innerHTML = remainingContacts;
-        initialsContainer.appendChild(remainingDiv);
-    }
+}
+
+/**
+ * Erstellt ein Initialen-Element für einen Kontakt
+ * @param {Object} contact - Kontaktdaten
+ * @returns {HTMLElement} Initialen-Element
+ */
+function createInitialElement(contact) {
+    const span = document.createElement('span');
+    span.classList.add('contact-initial');
+    span.innerHTML = `
+        <div class="contact-initials-container" style="background-color: ${getRandomColor()}">
+            <div class="contact-initials">${getInitials(contact.name)}</div>
+        </div>
+    `;
+    return span;
+}
+
+/**
+ * Rendert die Anzeige für zusätzliche Kontakte
+ * @param {HTMLElement} initialsContainer - Container-Element
+ */
+function renderRemainingContacts(initialsContainer) {
+    if (selectedContacts.length <= 5) return;
+    
+    const remainingDiv = document.createElement('div');
+    remainingDiv.innerHTML = `<div class="remaining-contacts-board">+${selectedContacts.length - 5}</div>`;
+    initialsContainer.appendChild(remainingDiv);
 }
 
 /**
@@ -149,30 +252,53 @@ function getRandomColor() {
 }
 
 /**
- * Setzt das Formular für die Erstellung einer neuen Aufgabe zurück.
- * Diese Funktion löscht die Werte und Textinhalte aller relevanten Felder im Formular,
- * einschließlich des Titels, der Beschreibung, des Fälligkeitsdatums, der Kategorie, der hinzugefügten Texte,
- * der zugewiesenen Kontakte und der Unteraufgaben.
- * 
- * @function resetForm
+ * Setzt das Aufgabenformular vollständig zurück
  */
 function resetForm() {
+    resetInputFields();
+    resetCategorySelection();
+    resetContactSelection();
+    resetSubtasks();
+    setPrio('medium');
+}
+
+/**
+ * Setzt alle Eingabefelder zurück
+ */
+function resetInputFields() {
     document.getElementById('title').value = '';
     document.getElementById('description').value = '';
     document.getElementById('date').value = '';
+    document.getElementById('contactInput').value = '';
+}
+
+/**
+ * Setzt die Kategorieauswahl zurück
+ */
+function resetCategorySelection() {
     document.getElementById('select_txt').textContent = 'Select task category';
     document.getElementById('added_text').innerHTML = '';
+}
+
+/**
+ * Setzt die Kontaktauswahl zurück
+ */
+function resetContactSelection() {
     selectedContacts = [];
-    document.getElementById('contactInput').value = '';
     document.getElementById('selectedContactsInitials').innerHTML = '';
-    subtasks = [];
-    setPrio('medium');
     document.querySelectorAll('.contact-checkbox').forEach(checkbox => {
         checkbox.checked = false;
     });
     document.querySelectorAll('.dropdown-item').forEach(item => {
         item.classList.remove('selected-contact-item');
     });
+}
+
+/**
+ * Setzt die Unteraufgaben zurück
+ */
+function resetSubtasks() {
+    subtasks = [];
 }
 
 /**

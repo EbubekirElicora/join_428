@@ -61,10 +61,14 @@ async function fetchContacts() {
 }
 
 /**
- * Populates the dropdown with contact options for the edit task overlay.
+ * Füllt das Dropdown-Menü mit Kontaktoptionen für das Bearbeiten-Fenster einer Aufgabe.
  * 
- * The dropdown will display a list of contacts, each with their initials and name.
- * If the current task has assigned contacts, those will be pre-selected.
+ * Das Dropdown zeigt eine Liste von Kontakten mit deren Initialen und Namen an.
+ * Bereits zugewiesene Kontakte der aktuellen Aufgabe werden vorselektiert.
+ * 
+ * @async
+ * @function populateDropdown
+ * @returns {Promise<void>} - Verspricht, das Dropdown zu füllen, nachdem die Kontakte geladen wurden.
  */
 async function populateDropdown() {
     await fetchContacts();
@@ -72,10 +76,23 @@ async function populateDropdown() {
     if (dropdownContent) dropdownContent.innerHTML = generateDropdownHTML();
 }
 
+/**
+ * Generiert den HTML-Inhalt für das Dropdown-Menü basierend auf den Kontakten.
+ * 
+ * @function generateDropdownHTML
+ * @returns {string} - Der generierte HTML-String für das Dropdown.
+ */
 function generateDropdownHTML() {
     return contacts.map(createDropdownItem).join('') || '';
 }
 
+/**
+ * Erstellt ein einzelnes Dropdown-Element für einen Kontakt.
+ * 
+ * @function createDropdownItem
+ * @param {Object} contact - Ein Kontaktobjekt mit Name, Initialen und Farbe.
+ * @returns {string} - Der HTML-String für ein Dropdown-Element.
+ */
 function createDropdownItem(contact) {
     const isSelected = currentTask.assignedContacts?.some(c => c.name === contact.name);
     return `
@@ -88,6 +105,13 @@ function createDropdownItem(contact) {
     `;
 }
 
+/**
+ * Erstellt den HTML-Code für die Anzeige der Kontaktinformationen.
+ * 
+ * @function createContactInfo
+ * @param {Object} contact - Ein Kontaktobjekt mit Initialen, Name und Farbe.
+ * @returns {string} - Der HTML-String für die Kontaktanzeige.
+ */
 function createContactInfo(contact) {
     return `
         <div class="contact-info">
@@ -98,7 +122,6 @@ function createContactInfo(contact) {
         </div>
     `;
 }
-
 
 /**
  * Schaltet das Kontrollkästchen eines Kontakts um und aktualisiert die Auswahl.
@@ -180,7 +203,6 @@ function clearEditContactInput() {
     if (contactInput) contactInput.value = '';
 }
 
-
 /**
  * Toggles the visibility of the dropdown for selecting contacts in the task editing overlay.
  * 
@@ -225,39 +247,15 @@ function closeEditDropdown() {
 
 
 /**
- * Saves the changes made to the task in the editing overlay.
- * 
- * Updates the task's details (title, description, and due date) in the UI and in the database. 
- * After saving, the UI is updated and the overlay is closed.
+ * Speichert die Änderungen an einer Aufgabe im Bearbeitungs-Overlay.
+ * Aktualisiert die Aufgabe in der UI und in der Datenbank.
  */
 async function saveChanges() {
-    if (!currentTask) {
-        console.error("❌ Fehler: currentTask ist nicht definiert!");
-        return;
-    }
-    if (!currentTask.id) {
-        console.error("❌ Fehler: currentTask hat keine ID!");
-        return;
-    }
-    const title = document.getElementById('edit_title')?.value || "";
-    const description = document.getElementById('edit_description')?.value || "";
-    const dueDate = document.getElementById('edit_due_date')?.value || "";
-    currentTask.title = title;
-    currentTask.description = description;
-    currentTask.dueDate = dueDate;
-    const taskIndex = todos.findIndex(t => t.id === currentTask.id);
-    if (taskIndex !== -1) {
-        todos[taskIndex] = { ...currentTask };
-    } else {
-        console.warn("⚠️ Warnung: Task wurde in todos nicht gefunden!");
-    }
+    if (!validateCurrentTask()) return;
+    updateCurrentTaskFromInputs();
+    updateTodosArray();
     try {
-        const response = await fetch(`${BASE_URL}/tasks/${currentTask.id}.json`, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(currentTask),
-        });
-        if (!response.ok) throw new Error("Fehler beim Speichern in Firebase");
+        await saveTaskToBackend();
         if (typeof updateHTML === "function") updateHTML();
         if (typeof editOverlay === "function") editOverlay();
     } catch (error) {
@@ -266,101 +264,96 @@ async function saveChanges() {
 }
 
 /**
- * Renders the list of tasks and displays them in the task container.
- * 
- * Loops through the `todos` array and creates a task element for each task.
- * Each task includes the title, description, due date, and assigned contacts.
- * 
- * The task container's inner HTML is cleared before appending the new task elements.
+ * Prüft, ob currentTask gültig ist.
+ * @returns {boolean} - true, wenn gültig, sonst false
+ */
+function validateCurrentTask() {
+    if (!currentTask) return console.error("❌ Fehler: currentTask ist nicht definiert!"), false;
+    if (!currentTask.id) return console.error("❌ Fehler: currentTask hat keine ID!"), false;
+    return true;
+}
+
+/**
+ * Holt die Werte aus den Eingabefeldern und aktualisiert currentTask.
+ */
+function updateCurrentTaskFromInputs() {
+    currentTask.title = document.getElementById('edit_title')?.value || "";
+    currentTask.description = document.getElementById('edit_description')?.value || "";
+    currentTask.dueDate = document.getElementById('edit_due_date')?.value || "";
+}
+
+/**
+ * Aktualisiert das todos-Array mit den Änderungen aus currentTask.
+ */
+function updateTodosArray() {
+    const taskIndex = todos.findIndex(t => t.id === currentTask.id);
+    if (taskIndex !== -1) {
+        todos[taskIndex] = { ...currentTask };
+    } else {
+        console.warn("⚠️ Warnung: Task wurde in todos nicht gefunden!");
+    }
+}
+
+/**
+ * Speichert die aktuelle Aufgabe im Backend (Firebase).
+ * @returns {Promise<Response>} - Die Antwort von fetch
+ */
+function saveTaskToBackend() {
+    return fetch(`${BASE_URL}/tasks/${currentTask.id}.json`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(currentTask),
+    }).then(response => {
+        if (!response.ok) throw new Error("Fehler beim Speichern in Firebase");
+        return response;
+    });
+}
+
+/**
+ * Rendert die Liste der Aufgaben und zeigt sie im Aufgaben-Container an.
  */
 function renderTasks() {
     const taskContainer = document.getElementById('task_main');
     if (!taskContainer) return;
     taskContainer.innerHTML = '';
     todos.forEach(task => {
-        const taskElement = document.createElement('div');
-        taskElement.className = 'task';
-        taskElement.innerHTML = `
-            <h3>${task.title}</h3>
-            <p>${task.description || 'No description'}</p>
-            <p>Due: ${task.dueDate}</p>
-            <div class="assigned-contacts">
-                ${task.assignedContacts?.map(contact => `
-                    <div class="contact-badge" style="background-color: ${contact.color}" title="${contact.name}">
-                        ${contact.initials}
-                    </div>
-                `).join('') || ''}
-            </div>
-        `;
+        const taskElement = createTaskElement(task);
         taskContainer.appendChild(taskElement);
     });
 }
 
 /**
- * Opens the task editing overlay and populates it with the data of the task being edited.
+ * Erstellt ein DOM-Element für eine einzelne Aufgabe.
  * 
- * If no task ID is provided, it hides the overlay and re-enables scrolling. 
- * Otherwise, it fills the overlay with the current task's details and disables scrolling on the page.
- * 
- * @param {string} taskId - The ID of the task to edit.
+ * @param {Object} task - Die Aufgabe mit Titel, Beschreibung, Fälligkeitsdatum und Kontakten.
+ * @returns {HTMLElement} - Das HTML-Element für die Aufgabe.
  */
-async function editOverlay(taskId) {
-    try {
-        const overlayRef = document.getElementById('edit_overlay');
-        if (!overlayRef) {
-            console.error('Edit overlay element not found');
-            return;
-        }
-        if (!taskId) {
-            closeEditOverlay();
-            return;
-        }
-        closeOverlayBoard();
-        const originalTask = todos.find(t => t.id === taskId);
-        if (!originalTask) {
-            console.warn(`Task with ID ${taskId} not found`);
-            return;
-        }
-        currentTask = JSON.parse(JSON.stringify(originalTask));
-        const overlayHTML = getOverlayEdit(currentTask);
-        if (!overlayHTML.includes('inner_content')) {
-            console.error('HTML template is missing inner_content container');
-            return;
-        }
-        overlayRef.classList.remove('edit_none');
-        overlayRef.innerHTML = overlayHTML;
-        document.body.classList.add('no-scroll');
-        await new Promise(resolve => {
-            requestAnimationFrame(() => {
-                requestAnimationFrame(resolve);
-            });
-        });
-        const initElements = () => {
-            const overlayContent = overlayRef.querySelector('.inner_content');
-            if (!overlayContent) {
-                console.error('Overlay content container not found in DOM after render');
-                console.debug('Rendered HTML:', overlayHTML);
-                return;
-            }
-            overlayContent.addEventListener('click', editProtection);
-            const contactInput = document.getElementById('editContactInput');
-            if (contactInput) {
-                contactInput.value = '';
-            }
-            const okButton = overlayRef.querySelector('.ok_button');
-            if (okButton) {
-                okButton.addEventListener('click', saveChanges);
-            }
-        };
-        await populateDropdown();
-        initElements();
-        overlayRef.addEventListener('click', (e) => {
-            if (e.target === overlayRef) closeEditOverlay();
-        });
-    } catch (error) {
-        console.error('Error in editOverlay:', error);
-        closeEditOverlay();
-    }
+function createTaskElement(task) {
+    const taskElement = document.createElement('div');
+    taskElement.className = 'task';
+    taskElement.innerHTML = `
+        <h3>${task.title}</h3>
+        <p>${task.description || 'No description'}</p>
+        <p>Due: ${task.dueDate}</p>
+        <div class="assigned-contacts">
+            ${renderAssignedContacts(task)}
+        </div>
+    `;
+    return taskElement;
+}
+
+/**
+ * Rendert die zugewiesenen Kontakte als HTML-String.
+ * 
+ * @param {Object} task - Die Aufgabe mit `assignedContacts`.
+ * @returns {string} - HTML-String der Kontakt-Badges.
+ */
+function renderAssignedContacts(task) {
+    return task.assignedContacts?.map(contact => `
+        <div class="contact-badge" style="background-color: ${contact.color}" title="${contact.name}">
+            ${contact.initials}
+        </div>
+    `).join('') || '';
 }
 
 /**
@@ -374,87 +367,3 @@ function editProtection(event) {
     event.stopPropagation();
 }
 
-/**
- * Closes the edit overlay and restores the original state.
- * - Hides the overlay by adding a CSS class.
- * - Enables scrolling on the page again.
- * - Clears the content of the overlay.
- * - Removes a global `currentTask` variable if it exists.
- * - Updates the UI if `updateHTML` is defined.
- */
-function closeEditOverlay() {
-    const overlayRef = document.getElementById('edit_overlay');
-    if (!overlayRef) return;
-    overlayRef.classList.add('edit_none');
-    document.body.classList.remove('no-scroll');
-    overlayRef.innerHTML = '';
-    if (window.currentTask) {
-        delete window.currentTask;
-    }
-    if (typeof updateHTML === "function") {
-        updateHTML();
-    }
-}
-
-/**
- * Initialisiert das Datumseingabefeld und setzt Validierungsregeln.
- * - Setzt das minimale Datum auf den aktuellen Tag.
- * - Fügt Echtzeit-Validierung bei Eingabe hinzu.
- * - Passt die Textfarbe basierend auf der Gültigkeit des Datums an.
- * @function
- * @returns {void}
- */
-function getDateTodayEdit() {
-    let dateInput = document.getElementById('edit_due_date');
-    if (dateInput) {
-        const today = new Date();
-        const localDate = today.toLocaleDateString('en-CA');
-        dateInput.min = localDate;
-        dateInput.addEventListener('input', function () {
-            validateDate(this);
-            updateDateColor.call(this);
-        });
-        updateDateColor.call(dateInput);
-    }
-}
-
-/**
- * Validiert das eingegebene Datum:
- * - Korrigiert Datum in der Vergangenheit auf das aktuelle Datum.
- * - Begrenzt das Jahr auf maximal 2999.
- * - Formatiert das Datum in 'YYYY-MM-DD'.
- * @function
- * @param {HTMLInputElement} input - Das Datumseingabefeld.
- * @returns {void}
- */
-function validateDate(input) {
-    const currentDate = new Date();
-    const maxYear = 2999;
-    const selectedDate = new Date(input.value);
-    if (isNaN(selectedDate)) {
-        input.value = currentDate.toLocaleDateString('en-CA');
-        return;
-    }
-    if (selectedDate.getFullYear() > maxYear) {
-        selectedDate.setFullYear(maxYear);
-    }
-    if (selectedDate < currentDate) {
-        selectedDate.setTime(currentDate.getTime());
-    }
-    const formattedDate = selectedDate.toLocaleDateString('en-CA');
-    if (input.value !== formattedDate) {
-        input.value = formattedDate;
-    }
-}
-
-/**
- * Aktualisiert die Textfarbe des Eingabefelds:
- * - Schwarz für gültige Daten.
- * - Grau (#D1D1D1) für ungültige oder leere Werte.
- * @function
- * @returns {void}
- */
-function updateDateColor() {
-    const isValidDate = !isNaN(new Date(this.value));
-    this.style.color = isValidDate ? 'black' : '#D1D1D1';
-}

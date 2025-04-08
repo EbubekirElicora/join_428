@@ -8,35 +8,67 @@
 let editSubTasks = {};
 
 /**
- * Displays the overlay for a task on the board, allowing the user to view and edit the task details.
- * If no taskId is provided, the overlay is hidden and the body scroll is restored.
- * 
- * This function fetches the task by its ID from the `todos` array, processes any subtasks into an editable format,
- * and then updates the overlay's HTML and displays it. It also disables body scrolling while the overlay is visible.
- * 
- * @param {string} taskId - The ID of the task to display in the overlay.
- * @returns {void}
+ * Displays or hides the task overlay based on provided taskId
+ * @param {string} taskId - The ID of the task to display
  */
 async function overlayBoard(taskId) {
   const overlayRef = document.getElementById('board_overlay');
-  if (!taskId) {
-    overlayRef.classList.add('d_none');
-    document.body.classList.remove('no-scroll');
-    return;
-  }
-  const task = todos.find(t => t.id === taskId);
+  if (!taskId) return hideOverlay(overlayRef);
+  const task = findTaskById(taskId);
   if (!task) return;
-  if (Array.isArray(task.subtasks)) {
-    editSubtasks = task.subtasks.reduce((acc, subtask, index) => {
-      acc[`subtask-${index}-${Date.now()}`] = {
-        title: typeof subtask === "string" ? subtask : subtask.title,
-        completed: subtask.completed || false
-      };
-      return acc;
-    }, {});
-  } else {
-    editSubtasks = { ...task.subtasks };
-  }
+  processSubtasks(task);
+  showTaskOverlay(overlayRef, task);
+}
+
+/**
+ * Hides the overlay and enables scrolling
+ * @param {HTMLElement} overlayRef - The overlay element
+ */
+function hideOverlay(overlayRef) {
+  overlayRef.classList.add('d_none');
+  document.body.classList.remove('no-scroll');
+}
+
+/**
+ * Finds a task by ID in the todos array
+ * @param {string} taskId - The task ID to find
+ * @returns {Object|undefined} The found task or undefined
+ */
+function findTaskById(taskId) {
+  return todos.find(t => t.id === taskId);
+}
+
+/**
+ * Processes subtasks into the editSubtasks format
+ * @param {Object} task - The task containing subtasks
+ */
+function processSubtasks(task) {
+  editSubtasks = Array.isArray(task.subtasks)
+    ? convertArraySubtasks(task.subtasks)
+    : { ...task.subtasks };
+}
+
+/**
+ * Converts array format subtasks to object format
+ * @param {Array} subtasks - Array of subtasks
+ * @returns {Object} Subtasks in object format
+ */
+function convertArraySubtasks(subtasks) {
+  return subtasks.reduce((acc, subtask, index) => {
+    acc[`subtask-${index}-${Date.now()}`] = {
+      title: typeof subtask === "string" ? subtask : subtask.title,
+      completed: subtask.completed || false
+    };
+    return acc;
+  }, {});
+}
+
+/**
+ * Displays the task overlay with content
+ * @param {HTMLElement} overlayRef - The overlay element
+ * @param {Object} task - The task to display
+ */
+function showTaskOverlay(overlayRef, task) {
   overlayRef.classList.remove('d_none');
   overlayRef.innerHTML = getOverlayHtml(task);
   document.body.classList.add('no-scroll');
@@ -44,35 +76,75 @@ async function overlayBoard(taskId) {
 }
 
 /**
- * Toggles the completion status of a subtask (checked/unchecked) and updates the task in Firebase.
- * This function finds the task by its ID, checks if the subtask exists, and flips its `completed` status.
- * It then updates the task in Firebase and updates the UI to reflect the change.
- * 
- * @param {string} taskId - The ID of the task containing the subtask to toggle.
- * @param {string} subtaskId - The ID of the subtask whose completion status is being toggled.
- * @returns {Promise<void>} A promise that resolves when the update operation is completed.
+ * Toggles subtask completion status and updates Firebase
+ * @param {string} taskId - Parent task ID
+ * @param {string} subtaskId - Subtask ID to toggle
  */
-window.toggleSubtask = async function (taskId, subtaskId) {
+window.toggleSubtask = async function(taskId, subtaskId) {
   try {
-    const task = todos.find(t => t.id === taskId);
-    if (!task || !task.subtasks || !task.subtasks[subtaskId]) return;
-    if (typeof task.subtasks[subtaskId] === 'string') {
-      task.subtasks[subtaskId] = {
-        title: task.subtasks[subtaskId],
-        completed: false
-      };
-    }
-    task.subtasks[subtaskId].completed = !task.subtasks[subtaskId].completed;
-    await updateData(`tasks/${taskId}`, task);
-    const icon = document.querySelector(`[onclick*="${subtaskId}"] .subtask-icon`);
-    if (icon) {
-      icon.src = `../assets/icons/contact_icon_${task.subtasks[subtaskId].completed ? 'check' : 'uncheck'}.png`;
-    }
+    const task = findTask(taskId);
+    if (!task) return;
+    
+    await processSubtaskToggle(task, subtaskId);
+    updateSubtaskUI(taskId, subtaskId);
     updateHTML();
   } catch (error) {
     console.error("Error:", error);
   }
 };
+
+/**
+ * Finds task by ID in todos array
+ * @param {string} taskId - Task ID to find
+ * @returns {Object|undefined} Found task or undefined
+ */
+function findTask(taskId) {
+  return todos.find(t => t.id === taskId);
+}
+
+/**
+ * Processes subtask toggle and updates Firebase
+ * @param {Object} task - Parent task object
+ * @param {string} subtaskId - Subtask ID to toggle
+ */
+async function processSubtaskToggle(task, subtaskId) {
+  if (!task.subtasks || !task.subtasks[subtaskId]) return;
+  
+  normalizeSubtask(task, subtaskId);
+  task.subtasks[subtaskId].completed = !task.subtasks[subtaskId].completed;
+  await updateData(`tasks/${task.id}`, task);
+}
+
+/**
+ * Normalizes subtask structure if needed
+ * @param {Object} task - Parent task object
+ * @param {string} subtaskId - Subtask ID to normalize
+ */
+function normalizeSubtask(task, subtaskId) {
+  if (typeof task.subtasks[subtaskId] === 'string') {
+    task.subtasks[subtaskId] = {
+      title: task.subtasks[subtaskId],
+      completed: false
+    };
+  }
+}
+
+/**
+ * Updates subtask icon in UI
+ * @param {string} taskId - Parent task ID
+ * @param {string} subtaskId - Subtask ID to update
+ */
+function updateSubtaskUI(taskId, subtaskId) {
+  const icon = document.querySelector(`[onclick*="${subtaskId}"] .subtask-icon`);
+  if (!icon) return;
+  
+  const task = findTask(taskId);
+  if (!task || !task.subtasks || !task.subtasks[subtaskId]) return;
+  
+  icon.src = `../assets/icons/contact_icon_${
+    task.subtasks[subtaskId].completed ? 'check' : 'uncheck'
+  }.png`;
+}
 
 /**
  * Migrates the subtasks in the tasks from a string format to an object format in Firebase and in-memory tasks.
@@ -171,27 +243,64 @@ async function deleteTask(taskId) {
   }
 }
 
+/**
+ * Schließt das Board-Overlay und setzt den Zustand zurück.
+ */
 function closeOverlayBoard() {
   try {
       const overlayRef = document.getElementById('board_overlay');
-      if (!overlayRef) {
-          console.warn('Board overlay element not found');
-          return;
-      }
-      overlayRef.classList.add('d_none');
-      document.body.classList.remove('no-scroll');
-      if (window.editSubtasks) {
-          editSubtasks = {};
-      }
-      const contentContainer = overlayRef.querySelector('.content-container');
-      if (contentContainer) {
-          contentContainer.innerHTML = '';
-      }
-      const dropdowns = overlayRef.querySelectorAll('.dropdown-content');
-      dropdowns.forEach(dropdown => {
-          dropdown.style.display = 'none';
-      });
+      if (!overlayRef) return console.warn('Board overlay element not found');
+      hideOverlay(overlayRef);
+      resetBodyState();
+      clearSubtasks();
+      clearOverlayContent(overlayRef);
+      hideDropdowns(overlayRef);
   } catch (error) {
       console.error('Error closing board overlay:', error);
   }
+}
+
+/**
+* Versteckt das Overlay und entfernt den "no-scroll" Zustand.
+* 
+* @param {HTMLElement} overlayRef - Das Overlay-Element.
+*/
+function hideOverlay(overlayRef) {
+  overlayRef.classList.add('d_none');
+}
+
+/**
+* Setzt den "no-scroll" Zustand des Body zurück.
+*/
+function resetBodyState() {
+  document.body.classList.remove('no-scroll');
+}
+
+/**
+* Löscht die gespeicherten Subtasks.
+*/
+function clearSubtasks() {
+  if (window.editSubtasks) {
+      editSubtasks = {};
+  }
+}
+
+/**
+* Löscht den Inhalt des Overlays.
+* 
+* @param {HTMLElement} overlayRef - Das Overlay-Element.
+*/
+function clearOverlayContent(overlayRef) {
+  const contentContainer = overlayRef.querySelector('.content-container');
+  if (contentContainer) contentContainer.innerHTML = '';
+}
+
+/**
+* Versteckt alle Dropdowns im Overlay.
+* 
+* @param {HTMLElement} overlayRef - Das Overlay-Element.
+*/
+function hideDropdowns(overlayRef) {
+  const dropdowns = overlayRef.querySelectorAll('.dropdown-content');
+  dropdowns.forEach(dropdown => dropdown.style.display = 'none');
 }

@@ -17,56 +17,73 @@ function openOverlay() {
 }
 
 /**
- * Lädt den Inhalt der Datei `addTask.html` und fügt ihn in das Pop-up-Fenster ein.
- * Danach werden die benötigten JavaScript-Dateien dynamisch geladen.
- * Falls `initAddTask` definiert ist, wird es nach dem Laden ausgeführt.
- * 
- * @async
- * @function loadAddTaskContent
- * @returns {Promise<void>} Gibt eine Promise zurück, die nach dem Laden und Initialisieren aufgelöst wird.
+ * Lädt den Inhalt von addTask.html und initialisiert das Formular
  */
 async function loadAddTaskContent() {
     try {
-        const response = await fetch('../html/addTask.html');
-        if (!response.ok) throw new Error('Failed to load addTask.html');
-        const html = await response.text();
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(html, 'text/html');
+        const doc = await fetchAndParseHTML('../html/addTask.html');
         const addTaskContent = doc.querySelector('.content_container_size');
         if (addTaskContent) {
-            const popupContainer = document.getElementById('popup_container');
-            popupContainer.replaceChildren(addTaskContent.cloneNode(true));
-            const loadScript = (src) => {
-                return new Promise((resolve, reject) => {
-                    if (document.querySelector(`script[src="${src}"]`)) {
-                        resolve();
-                        return;
-                    }
-                    const script = document.createElement('script');
-                    script.src = src;
-                    script.onload = resolve;
-                    script.onerror = () => reject(new Error(`Failed to load ${src}`));
-                    document.body.appendChild(script);
-                });
-            };
-            await loadScript('../js/addTaskSubTasks.js');
-            await loadScript('../js/addTaskCategory.js');
-            await loadScript('../js/addTaskDate.js');
-            await loadScript('../js/addTaskPriority.js');
-            await loadScript('../js/addTaskValidation.js');
-            await loadScript('../js/addTask.js');
-
-            if (typeof initAddTask === 'function') {
-                initAddTask();
-            } else {
-                console.error('initAddTask is not defined!');
-            }
+            insertAddTaskContent(addTaskContent);
+            await loadAddTaskScripts();
+            if (typeof initAddTask === 'function') initAddTask();
+            else console.error('initAddTask is not defined!');
         }
     } catch (error) {
         console.error('Error loading addTask.html:', error);
     }
 }
 
+/**
+ * Holt und parst eine HTML-Datei
+ * @param {string} url - Die URL der HTML-Datei
+ * @returns {Document} - Das geparste HTML-Dokument
+ */
+async function fetchAndParseHTML(url) {
+    const response = await fetch(url);
+    if (!response.ok) throw new Error(`Failed to load ${url}`);
+    const html = await response.text();
+    return new DOMParser().parseFromString(html, 'text/html');
+}
+
+/**
+ * Fügt den geladenen Inhalt in den Popup-Container ein
+ * @param {Element} content - Das zu ersetzende DOM-Element
+ */
+function insertAddTaskContent(content) {
+    const popupContainer = document.getElementById('popup_container');
+    popupContainer.replaceChildren(content.cloneNode(true));
+}
+
+/**
+ * Lädt notwendige JS-Dateien für das AddTask-Formular
+ */
+async function loadAddTaskScripts() {
+    const scripts = [
+        '../js/addTaskSubTasks.js',
+        '../js/addTaskCategory.js',
+        '../js/addTaskDate.js',
+        '../js/addTaskPriority.js',
+        '../js/addTaskValidation.js',
+        '../js/addTask.js'
+    ];
+    for (const src of scripts) await loadScript(src);
+}
+
+/**
+ * Lädt ein einzelnes Skript dynamisch
+ * @param {string} src - Der Pfad zur JS-Datei
+ */
+function loadScript(src) {
+    return new Promise((resolve, reject) => {
+        if (document.querySelector(`script[src="${src}"]`)) return resolve();
+        const script = document.createElement('script');
+        script.src = src;
+        script.onload = resolve;
+        script.onerror = () => reject(new Error(`Failed to load ${src}`));
+        document.body.appendChild(script);
+    });
+}
 
 /**
  * Öffnet das Overlay und lädt das Formular zur Erstellung einer neuen Aufgabe.
@@ -138,27 +155,39 @@ async function todosLoaded() {
 
 /**
  * Aktualisiert die HTML-Darstellung der Aufgaben für jede Stage.
- * Weist die Aufgaben basierend auf ihrer Kategorie oder Stage den richtigen Containern zu.
  */
 function updateHTML() {
-    const categoryMapping = {
+    const categoryMapping = getCategoryMapping();
+    stages.forEach(stage => updateStageHTML(stage, categoryMapping));
+}
+
+/**
+ * Gibt die Zuordnung von Kategorien zu Standard-Stages zurück.
+ * @returns {Object} - Kategorie-zu-Stage-Zuordnung
+ */
+function getCategoryMapping() {
+    return {
         "Technical Task": "todo",
         "User Story": "todo",
     };
-    stages.forEach(stage => {
-        const container = document.getElementById(`${stage}_task`);
-        if (container) {
-            const filteredTasks = todos.filter(task => {
-                return task.stage 
-                    ? task.stage === stage
-                    : categoryMapping[task.category] === stage;
-            });
-            container.innerHTML = filteredTasks.length > 0 
-                ? filteredTasks.map(task => generateTodoHTML(task)).join('')
-                : `<div class="tasks">No tasks in ${stage}</div>`;
-        }
-    });
 }
+
+/**
+ * Aktualisiert die HTML-Darstellung für eine bestimmte Stage.
+ * @param {string} stage - Der Name der Stage
+ * @param {Object} categoryMapping - Die Zuordnung der Kategorien zu Stages
+ */
+function updateStageHTML(stage, categoryMapping) {
+    const container = document.getElementById(`${stage}_task`);
+    if (!container) return;
+    const filteredTasks = todos.filter(task =>
+        task.stage ? task.stage === stage : categoryMapping[task.category] === stage
+    );
+    container.innerHTML = filteredTasks.length > 0
+        ? filteredTasks.map(task => generateTodoHTML(task)).join('')
+        : `<div class="tasks">No tasks in ${stage}</div>`;
+}
+
 
 /**
  * Speichert die ID des aktuell gezogenen (dragged) Elements.
@@ -170,38 +199,43 @@ function startDragging(id) {
 
 /**
  * Erstellt eine neue Aufgabe und speichert sie im Backend.
- * Fügt die neue Aufgabe zu `todos` hinzu und aktualisiert die HTML-Darstellung.
- * 
  * @async
- * @function createTask
- * @param {string} title - Der Titel der Aufgabe.
- * @param {string} category - Die Kategorie der Aufgabe.
- * @param {string} dueDate - Das Fälligkeitsdatum der Aufgabe.
- * @param {string} priority - Die Priorität der Aufgabe.
- * @param {Array<string>} assignedContacts - Die Kontakte, die der Aufgabe zugewiesen sind.
- * @param {Array<string>} subtasksArray - Die Unteraufgaben der Aufgabe.
- * @returns {Promise<void>} Eine Promise, die nach dem Erstellen der Aufgabe und dem Aktualisieren der Anzeige aufgelöst wird.
  */
 async function createTask(title, category, dueDate, priority, assignedContacts, subtasksArray) {
-    const newTask = {
-      id: Date.now().toString(),
-      title,
-      category,
-      dueDate,
-      priority,
-      assignedContacts,
-      subtasks: subtasksArray.reduce((acc, title, index) => {
-        acc[index] = {
-          title: title,
-          completed: false
-        };
-        return acc;
-      }, {})
-    };
+    const newTask = buildTaskObject(title, category, dueDate, priority, assignedContacts, subtasksArray);
     await postData("tasks", newTask);
     todos.push(newTask);
     updateHTML();
-  }
+}
+
+/**
+ * Baut ein neues Aufgabenobjekt mit allen erforderlichen Eigenschaften.
+ * @returns {Object} - Das neue Aufgabenobjekt
+ */
+function buildTaskObject(title, category, dueDate, priority, assignedContacts, subtasksArray) {
+    return {
+        id: Date.now().toString(),
+        title,
+        category,
+        dueDate,
+        priority,
+        assignedContacts,
+        subtasks: buildSubtasks(subtasksArray)
+    };
+}
+
+/**
+ * Wandelt ein Array von Subtask-Titeln in ein Objekt um.
+ * @param {Array<string>} subtasksArray - Die Titel der Subtasks
+ * @returns {Object} - Subtasks als Objekt mit Status
+ */
+function buildSubtasks(subtasksArray) {
+    return subtasksArray.reduce((acc, title, index) => {
+        acc[index] = { title, completed: false };
+        return acc;
+    }, {});
+}
+
 
 /**
  * Setzt das Formular zurück, indem alle Eingabefelder und Auswahlmöglichkeiten gelöscht werden.
@@ -276,39 +310,41 @@ function removeHighlight(id) {
 
 /**
  * Lädt die Aufgaben aus dem Backend und aktualisiert das `todos` Array.
- * Überprüft und korrigiert subtasks, falls sie als Strings gespeichert sind.
- * Ruft anschließend `updateHTML()` auf, um die Anzeige zu aktualisieren.
- * 
- * @async
- * @function fetchTasks
- * @returns {Promise<void>} Eine Promise, die nach dem Laden der Aufgaben und dem Aktualisieren der Anzeige aufgelöst wird.
  */
 async function fetchTasks() {
     try {
-      const data = await loadData("tasks");
-      todos = data ? Object.entries(data).map(([id, task]) => {
-        if (task.subtasks) {
-          const fixedSubtasks = {};
-          Object.entries(task.subtasks).forEach(([key, value]) => {
-            if (typeof value === 'string') {
-              fixedSubtasks[key] = { title: value, completed: false };
-            } else {
-              fixedSubtasks[key] = value;
-            }
-          });
-          task.subtasks = fixedSubtasks;
-        }
-        return { id, ...task };
-      }) : [];
-      updateHTML();
+        const data = await loadData("tasks");
+        todos = data ? parseTasks(data) : [];
+        updateHTML();
     } catch (error) {
-      console.error("Task update error:", error);
+        console.error("Task update error:", error);
     }
-  }
-let filteredTasks = todos.filter(task => {
-    const taskCategory = task.category.toLowerCase();
-    return taskCategory === category;
-});
+}
+
+/**
+ * Wandelt die geladenen Aufgaben in ein Array um und korrigiert Subtasks bei Bedarf.
+ * @param {Object} data - Die Daten aus dem Backend
+ * @returns {Array<Object>} - Das formatierte Aufgaben-Array
+ */
+function parseTasks(data) {
+    return Object.entries(data).map(([id, task]) => {
+        if (task.subtasks) task.subtasks = fixSubtasks(task.subtasks);
+        return { id, ...task };
+    });
+}
+
+/**
+ * Korrigiert die Subtasks, falls sie als Strings gespeichert sind.
+ * @param {Object} subtasks - Die Subtasks im ursprünglichen Format
+ * @returns {Object} - Die korrigierten Subtasks
+ */
+function fixSubtasks(subtasks) {
+    const fixed = {};
+    for (const [key, value] of Object.entries(subtasks)) {
+        fixed[key] = typeof value === 'string' ? { title: value, completed: false } : value;
+    }
+    return fixed;
+}
 
 /**
  * Filtert Aufgaben basierend auf dem Suchbegriff, der im Eingabefeld 'find_task' eingegeben wurde.

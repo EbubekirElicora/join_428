@@ -41,21 +41,39 @@ function handleTouchStart(event, taskId) {
  */
 function handleTouchMove(event) {
     if (!currentDraggedElement) {
-        const touch = event.touches[0];
-        const deltaY = touch.clientY - touchStartY;
-        if (Math.abs(deltaY) > 5) {
-            clearTimeout(touchStartTimeout);
-            touchStartTimeout = null;
-            return;
-        }
+        if (shouldCancelTouch(event)) return;
     }
     if (!currentDraggedElement) return;
     event.preventDefault();
     const touch = event.touches[0];
     highlightStageUnderTouch(touch.clientX, touch.clientY);
+    updateDraggedElementStyle(touch.clientX);
+}
+
+/**
+ * Überprüft, ob die Berührung abgebrochen werden soll
+ * @param {TouchEvent} event - Das Bewegungsereignis
+ * @returns {boolean} - True, wenn die Bewegung zu groß war und abgebrochen werden soll
+ */
+function shouldCancelTouch(event) {
+    const touch = event.touches[0];
+    const deltaY = touch.clientY - touchStartY;
+    if (Math.abs(deltaY) > 5) {
+        clearTimeout(touchStartTimeout);
+        touchStartTimeout = null;
+        return true;
+    }
+    return false;
+}
+
+/**
+ * Aktualisiert die Stiltransformation des gezogenen Elements
+ * @param {number} clientX - Die horizontale Position der Berührung
+ */
+function updateDraggedElementStyle(clientX) {
     const taskElement = document.querySelector('.dragging');
     if (taskElement) {
-        const rotation = Math.min(8, Math.max(-8, touch.clientX % 10));
+        const rotation = Math.min(8, Math.max(-8, clientX % 10));
         taskElement.style.transform = `rotate(${rotation}deg) scale(1.02)`;
     }
 }

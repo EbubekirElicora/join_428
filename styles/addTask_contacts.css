@@ -1,0 +1,185 @@
+.assigned_container {
+    position: relative;
+    width: 100%;
+    margin-block-end: 32px;
+}
+
+.dropdown {
+    position: relative;
+    width: 100%;
+}
+
+.input-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.icons {
+    position: absolute;
+    right: 10px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.icons:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+}
+
+
+.dropdownimg {
+    cursor: pointer;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+    max-height: 232px;
+    overflow-y: auto;
+    z-index: 1;
+    scrollbar-width: thin;
+    scrollbar-color: #888 #f1f1f1;
+}
+
+.dropdown-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.dropdown-content::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 5px;
+}
+
+.dropdown-content::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 5px;
+}
+
+.dropdown-content::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.dropdown-content span {
+    font-size: 20px;
+}
+
+.dropdown-content div {
+    padding: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.dropdown-content input[type="checkbox"] {
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.selected-contacts-initials {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-top: 10px;
+}
+
+.selected-contacts-initials .initials-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    color: white;
+    font-weight: bold;
+}
+
+.contact-item {
+    margin-bottom: 2px;
+    padding: 4px;
+    border-radius: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.contact-item:hover:not(.selected-dropdown-item) {
+    background-color: #f0f0f0;
+}
+
+.contact-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#contactInput::placeholder {
+    color: black !important;
+    opacity: 1;
+}
+
+.checkbox_class {
+    height: 20px;
+    width: 20px;
+}
+
+.selected-dropdown-item .checkbox_class {
+    filter: brightness(0) invert(1);
+}
+
+.selected-dropdown-item {
+    background-color: #2A3647;
+    color: white;
+}
+
+input[type="checkbox"] {
+    display: inline-block;
+    border: 0px !important;
+    background-image: url(../assets/icons/contact_icon_uncheck.png);
+    background-size: cover;
+    cursor: pointer;
+    -webkit-appearance: none;
+    appearance: none;
+    border-radius: 0px;
+    margin: 0;
+}
+
+input[type="checkbox"]:checked {
+    background-image: url(../assets/icons/contact_icon_check.png);
+}
+
+.initials-container {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #ccc;
+    position: relative;
+    border: 2px solid white;
+}
+
+.initials {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 14px;
+    font-weight: bold;
+    color: white;
+}
+
+.remaining_contacts_addTask {
+    background: lightgray;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: bold;
+    border: 2px solid white;
+}

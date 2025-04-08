@@ -7,21 +7,27 @@
  * - Displays the overlay with a slight delay for animation effects.
  */
 function showOverlay() {
-    const overlay = document.getElementById('overlay');
-    const addContactCircle = document.querySelector('.add-contact-circle');
-    
-    // Create and show backdrop
+    createOverlayBackdrop();
+    highlightAddButton();
+    activateAddOverlay();
+}
+
+function createOverlayBackdrop() {
     const backdrop = document.createElement('div');
     backdrop.id = 'overlay-backdrop';
     backdrop.className = 'overlay-backdrop';
-    backdrop.onclick = hideOverlay; // Close when clicking backdrop
+    backdrop.onclick = hideOverlay;
     document.body.appendChild(backdrop);
     backdrop.style.display = 'block';
+}
 
-    if (addContactCircle) {
-        addContactCircle.classList.add('clicked');
-    }
+function highlightAddButton() {
+    const addBtn = document.querySelector('.add-contact-circle');
+    if (addBtn) addBtn.classList.add('clicked');
+}
 
+function activateAddOverlay() {
+    const overlay = document.getElementById('overlay');
     setTimeout(() => {
         if (overlay) {
             overlay.style.display = 'block';
@@ -29,6 +35,7 @@ function showOverlay() {
         }
     }, 200);
 }
+
 
 /**
  * Creates and appends a backdrop element to the document body.
@@ -336,28 +343,39 @@ document.querySelectorAll('input').forEach(input => {
      * @param {Object} contact - The contact object.
      */
 window.openEditOverlay = function(contact) {
-    const editLink = document.getElementById('editLinkOverlay');
-    const overlay = document.getElementById('contact-overlay');
-    const contactInitialsOverlay = document.getElementById('contact-initials-overlay');
-    const editContactName = document.getElementById('edit-contact-name');
-    const editContactEmail = document.getElementById('edit-contact-email');
-    const editContactPhone = document.getElementById('edit-contact-phone');
+    prepareOverlayBackdrop();
+    fillOverlayFields(contact);
+    activateOverlay(contact);
+    setOverlayEventHandlers(contact);
+};
+
+function prepareOverlayBackdrop() {
     const backdrop = document.createElement('div');
     backdrop.id = 'overlay-backdrop';
     backdrop.className = 'overlay-backdrop';
     backdrop.onclick = hideOverlay;
     document.body.appendChild(backdrop);
     backdrop.style.display = 'block';
-    
-    if (editLink) editLink.classList.add('active');
-    if (contactInitialsOverlay) {
-        contactInitialsOverlay.textContent = contact.initials;
-        contactInitialsOverlay.style.backgroundColor = contact.color;
-    }
-    if (editContactName) editContactName.value = contact.name;
-    if (editContactEmail) editContactEmail.value = contact.email;
-    if (editContactPhone) editContactPhone.value = contact.phone;
+}
 
+function fillOverlayFields(contact) {
+    const initials = document.getElementById('contact-initials-overlay');
+    const name = document.getElementById('edit-contact-name');
+    const email = document.getElementById('edit-contact-email');
+    const phone = document.getElementById('edit-contact-phone');
+    if (initials) {
+        initials.textContent = contact.initials;
+        initials.style.backgroundColor = contact.color;
+    }
+    if (name) name.value = contact.name;
+    if (email) email.value = contact.email;
+    if (phone) phone.value = contact.phone;
+}
+
+function activateOverlay(contact) {
+    const overlay = document.getElementById('contact-overlay');
+    const editLink = document.getElementById('editLinkOverlay');
+    if (editLink) editLink.classList.add('active');
     setTimeout(() => {
         if (overlay) {
             overlay.style.display = 'block';
@@ -365,10 +383,11 @@ window.openEditOverlay = function(contact) {
         }
         if (editLink) editLink.classList.remove('active');
     }, 100);
+}
 
-    const saveButton = document.getElementById('save-contact-button');
-    if (saveButton){ saveButton.onclick = () => window.saveEditedContact(contact);
-
-    const deleteButton = document.getElementById('delete-contact-button');
-    if (deleteButton) deleteButton.onclick = () => window.deleteContact(contact);}
-};
+function setOverlayEventHandlers(contact) {
+    const saveBtn = document.getElementById('save-contact-button');
+    const deleteBtn = document.getElementById('delete-contact-button');
+    if (saveBtn) saveBtn.onclick = () => window.saveEditedContact(contact);
+    if (deleteBtn) deleteBtn.onclick = () => window.deleteContact(contact);
+}

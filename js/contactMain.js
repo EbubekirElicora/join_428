@@ -80,44 +80,58 @@ function fetchContacts() {
 */
 function renderContacts() {
     const contentDiv = document.getElementById('content');
-    if (!contentDiv) {
-        return;
-    }
+    if (!contentDiv) return;
     contentDiv.innerHTML = '';
 
     fetchContacts().then(contacts => {
-        contacts.sort((a, b) => a.name.localeCompare(b.name));
-        const groupedContacts = {};
-        for (const contact of contacts) {
-            const firstLetter = (contact.name && contact.name.length > 0) ? contact.name[0].toUpperCase() : '?';
-            if (!groupedContacts[firstLetter]) {
-                groupedContacts[firstLetter] = [];
-            }
-            groupedContacts[firstLetter].push(contact);
-        }
-
-        for (const letter in groupedContacts) {
-            const header = document.createElement('div');
-            header.classList.add('letter-header');
-            header.textContent = letter;
-            contentDiv.appendChild(header);
-
-            for (const contact of groupedContacts[letter]) {
-                const newContact = document.createElement('div');
-                newContact.classList.add('contact-item');
-                newContact.innerHTML = `
-                    <div class="contact-initials" style="background-color: ${contact.color};">${contact.initials}</div>
-                    <div class="contact-details">
-                        <h3>${contact.name}</h3>
-                        <p>${contact.email}</p>
-                    </div>
-                `;
-                newContact.addEventListener('click', () => window.showContactDetails(contact));
-                contentDiv.appendChild(newContact);
-            }
-        }
+        const grouped = groupContactsAlphabetically(contacts);
+        renderGroupedContacts(grouped, contentDiv);
     });
 }
+
+function groupContactsAlphabetically(contacts) {
+    contacts.sort((a, b) => a.name.localeCompare(b.name));
+    const groups = {};
+    for (const contact of contacts) {
+        const firstLetter = contact.name?.[0]?.toUpperCase() || '?';
+        if (!groups[firstLetter]) groups[firstLetter] = [];
+        groups[firstLetter].push(contact);
+    }
+    return groups;
+}
+
+function renderGroupedContacts(groups, container) {
+    for (const letter in groups) {
+        const header = createLetterHeader(letter);
+        container.appendChild(header);
+        groups[letter].forEach(contact => {
+            const contactEl = createContactElement(contact);
+            container.appendChild(contactEl);
+        });
+    }
+}
+
+function createLetterHeader(letter) {
+    const div = document.createElement('div');
+    div.classList.add('letter-header');
+    div.textContent = letter;
+    return div;
+}
+
+function createContactElement(contact) {
+    const div = document.createElement('div');
+    div.classList.add('contact-item');
+    div.innerHTML = `
+        <div class="contact-initials" style="background-color: ${contact.color};">${contact.initials}</div>
+        <div class="contact-details">
+            <h3>${contact.name}</h3>
+            <p>${contact.email}</p>
+        </div>
+    `;
+    div.addEventListener('click', () => window.showContactDetails(contact));
+    return div;
+}
+
 
 /**
   * Deletes a contact from the backend database and updates the UI accordingly.

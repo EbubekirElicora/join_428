@@ -199,7 +199,6 @@ document.addEventListener("DOMContentLoaded", function () {
 function togglePasswordVisibility() {
     const passwordInput = document.getElementById("password");
     const toggleIcon = document.getElementById("togglePassword");
-
     if (passwordInput && toggleIcon) {
         if (passwordInput.type === "password") {
             passwordInput.type = "text"; 

@@ -32,6 +32,14 @@ function setPrio(prio) {
     document.querySelector(`.prioBtn${prio.charAt(0).toUpperCase() + prio.slice(1)}`).classList.add('active');
 }
 
+/**
+ * Setzt das minimale Datum des Date-Inputs auf das heutige Datum.
+ * 
+ * Diese Funktion setzt das `min` Attribut des Date-Input-Feldes auf das heutige Datum, 
+ * damit der Benutzer nur Daten ab dem heutigen Datum auswählen kann.
+ * 
+ * @function getDateToday
+ */
 function getDateToday() {
     const dateInput = document.getElementById('date');
     if (dateInput) {
@@ -52,24 +60,53 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /**
- * Initialisiert das Dropdown und fügt Event-Listener für das Öffnen und Schließen hinzu.
+ * Initialisiert das Dropdown-Menü mit allen Event-Listenern
  */
 function initializeDropdown() {
-    const dropdownContent = document.getElementById('dropdownContent');
-    if (!dropdownContent) {
-        return;
-    }
-    const dropdownIcon = document.getElementById('dropdownIcon');
-    const dropdownIconUp = document.getElementById('dropdownIconUp');
-    const contactInput = document.getElementById('contactInput');
-    [dropdownIcon, dropdownIconUp, contactInput].forEach(element => {
+    const dropdownContent = getDropdownElement();
+    if (!dropdownContent) return; 
+    setupToggleListeners();
+    setupCloseListener(dropdownContent);
+}
+
+/**
+ * Holt das Dropdown-Element aus dem DOM
+ * @returns {HTMLElement|null} Dropdown-Content Element
+ */
+function getDropdownElement() {
+    return document.getElementById('dropdownContent');
+}
+
+/**
+ * Setzt die Event-Listener für das Öffnen/Schließen des Dropdowns
+ */
+function setupToggleListeners() {
+    const elements = [
+        document.getElementById('dropdownIcon'),
+        document.getElementById('dropdownIconUp'), 
+        document.getElementById('contactInput')
+    ];
+    elements.forEach(element => {
         if (element) {
-            element.addEventListener('click', (event) => {
-                event.stopPropagation();
-                toggleDropdown();
-            });
+            element.addEventListener('click', handleToggleClick);
         }
     });
+}
+
+/**
+ * Handler für Klick-Events zum Öffnen/Schließen
+ * @param {Event} event - Klick-Event
+ */
+function handleToggleClick(event) {
+    event.stopPropagation();
+    toggleDropdown();
+}
+
+/**
+ * Setzt den Event-Listener zum Schließen bei Klicks außerhalb
+ * @param {HTMLElement} dropdownContent - Dropdown-Container
+ */
+function setupCloseListener(dropdownContent) {
     document.addEventListener('click', (event) => {
         if (!dropdownContent.contains(event.target)) {
             closeDropdown();
@@ -107,7 +144,6 @@ function closeDropdown() {
     dropdownIcon.classList.remove('d-none');
     dropdownIconUp.classList.add('d-none');
 }
-
 
 /**
  * Initialisiert den Kategorien-Selektor, indem ein Klick-Ereignis auf das Element hinzugefügt wird.
@@ -244,74 +280,111 @@ function collectTaskData() {
 }
 
 /**
- * Erstellt eine neue Aufgabe mit den angegebenen Daten.
- * Diese Funktion erstellt ein Aufgabenobjekt mit einem eindeutigen ID (auf Grundlage der aktuellen Zeit),
- * der Titel, Kategorie, das Fälligkeitsdatum, die Priorität, zugewiesene Kontakte, Unteraufgaben und den Status der Aufgabe.
- * 
- * Der Standardwert für den Status ist 'todo', wenn er nicht angegeben wird.
- * 
- * @param {string} title - Der Titel der Aufgabe.
- * @param {string} category - Die Kategorie der Aufgabe (z.B. 'Technical Task', 'User Story').
- * @param {string} dueDate - Das Fälligkeitsdatum der Aufgabe.
- * @param {string} priority - Die Priorität der Aufgabe.
- * @param {Array} assignedContacts - Die Kontakte, die der Aufgabe zugewiesen sind.
- * @param {Array} subtasksArray - Ein Array von Unteraufgaben.
- * @param {string} [stage='todo'] - Der Status der Aufgabe (Standardwert ist 'todo').
- * 
- * @returns {Object} Das erstellte Aufgabenobjekt.
- * @function createTask
+ * Erstellt ein neues Aufgabenobjekt mit Standardwerten
+ * @param {string} title - Titel der Aufgabe
+ * @param {string} category - Kategorie der Aufgabe
+ * @param {string} dueDate - Fälligkeitsdatum
+ * @param {string} priority - Prioritätsstufe
+ * @param {Array} assignedContacts - Zugewiesene Kontakte
+ * @param {Array} subtasksArray - Unteraufgaben
+ * @param {string} [stage='todo'] - Status (default: 'todo')
+ * @returns {Object} Neues Aufgabenobjekt
  */
 function createTask(title, category, dueDate, priority, assignedContacts, subtasksArray, stage = 'todo') {
-    const newTask = {
-        id: Date.now().toString(),
+    return {
+        id: generateTaskId(),
         title,
         category,
         dueDate,
         priority,
         stage,
         assignedContacts,
-        subtasks: subtasksArray.reduce((acc, title, index) => {
-            acc[index] = {
-                title: title,
-                completed: false
-            };
-            return acc;
-        }, {})
+        subtasks: createSubtasksObject(subtasksArray)
     };
-    return newTask;
 }
 
 /**
- * Speichert die Aufgaben-Daten in Firebase Realtime Database.
- * Diese Funktion sendet die Aufgaben-Daten an Firebase, um sie dort zu speichern.
- * Wenn der Speichervorgang erfolgreich ist, gibt sie die gespeicherten Daten zurück,
- * andernfalls gibt sie null zurück.
- * 
- * @param {Object} taskData - Die zu speichernden Aufgaben-Daten.
- * @returns {Promise<Object|null>} Die gespeicherten Daten von Firebase oder null im Fehlerfall.
- * @function saveTaskToFirebase
+ * Generiert eine eindeutige Task-ID
+ * @returns {string} Timestamp als ID
+ */
+function generateTaskId() {
+    return Date.now().toString();
+}
+
+/**
+ * Erstellt ein Unteraufgaben-Objekt
+ * @param {Array} subtasksArray - Array von Unteraufgaben-Titeln
+ * @returns {Object} Unteraufgaben als Objekt
+ */
+function createSubtasksObject(subtasksArray) {
+    return subtasksArray.reduce((acc, title, index) => {
+        acc[index] = createSubtask(title);
+        return acc;
+    }, {});
+}
+
+/**
+ * Erstellt ein einzelnes Unteraufgaben-Objekt
+ * @param {string} title - Titel der Unteraufgabe
+ * @returns {Object} Unteraufgabe mit Standardwerten
+ */
+function createSubtask(title) {
+    return {
+        title: title,
+        completed: false
+    };
+}
+
+/**
+ * Speichert Aufgaben-Daten in Firebase
+ * @param {Object} taskData - Zu speichernde Daten
+ * @returns {Promise<Object|null>} Gespeicherte Daten oder null
  */
 async function saveTaskToFirebase(taskData) {
+    try {
+        const response = await postTaskData(taskData);
+        return handleSuccessResponse(response);
+    } catch (error) {
+        return handleFirebaseError(error);
+    }
+}
+
+/**
+ * Sendet POST-Request an Firebase
+ * @param {Object} taskData - Zu speichernde Daten
+ * @returns {Promise<Response>} Server-Response
+ */
+async function postTaskData(taskData) {
     const BASE_URL = 'https://join-428-default-rtdb.europe-west1.firebasedatabase.app/';
     const TASKS_ENDPOINT = 'tasks.json';
-    try {
-        const response = await fetch(`${BASE_URL}${TASKS_ENDPOINT}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(taskData)
-        });
-        if (!response.ok) {
-            throw new Error('Failed to save task to Firebase');
-        }
-        const data = await response.json();
-        console.log('Task saved successfully:', data);
-        return data;
-    } catch (error) {
-        console.error('Error saving task:', error);
-        return null;
-    }
+    return await fetch(`${BASE_URL}${TASKS_ENDPOINT}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(taskData)
+    });
+}
+
+/**
+ * Verarbeitet erfolgreiche Response
+ * @param {Response} response - Server-Response
+ * @returns {Promise<Object>} JSON-Daten
+ */
+async function handleSuccessResponse(response) {
+    if (!response.ok) throw new Error('Failed to save task to Firebase');
+    
+    const data = await response.json();
+    console.log('Task saved successfully:', data);
+    return data;
+}
+
+/**
+ * Verarbeitet Firebase-Fehler
+ * @param {Error} error - Fehlerobjekt
+ * @returns {null} Immer null
+ */
+function handleFirebaseError(error) {
+    console.error('Error saving task:', error);
+    return null;
 }
 
 /**

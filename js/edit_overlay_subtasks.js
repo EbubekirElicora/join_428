@@ -122,48 +122,80 @@ async function saveEditedTask(taskId) {
 }
 
 /**
- * Loads the task for editing, including its subtasks, into the editing environment.
- * 
- * This function initializes the `editSubtasks` object, ensuring each subtask is represented correctly
- * whether it is in string format or an object containing title and completion status.
- * 
- * @param {Object} task - The task object to load for editing.
+ * Loads task subtasks for editing
+ * @param {Object} task - Task object to load
  */
 function loadTaskForEdit(task) {
     editSubtasks = {};
-    if (!task || !task.subtasks) {
-        return;
-    }
+    if (!task?.subtasks) return;
+    
     if (Array.isArray(task.subtasks)) {
-        task.subtasks.forEach((subtask, index) => {
-            let id = `subtask-${index}-${Date.now()}`;
-            let title = "Unbenannt";
-            let completed = false;
-            if (typeof subtask === "string") {
-                title = subtask;
-            } else if (typeof subtask === "object") {
-                title = subtask.title || "Unbenannt";
-                completed = subtask.completed || false;
-            }
-            editSubtasks[id] = { title, completed, isEditing: false };
-        });
-
+        processArraySubtasks(task.subtasks);
     } else if (typeof task.subtasks === 'object') {
-        Object.entries(task.subtasks).forEach(([id, subtask]) => {
-            let title = "Unbenannt";
-            let completed = false;
-            if (typeof subtask === "string") {
-                title = subtask;
-            } else if (typeof subtask === "object") {
-                title = subtask.title || "Unbenannt";
-                completed = subtask.completed || false;
-            }
-            editSubtasks[id] = { title, completed, isEditing: false };
-        });
+        processObjectSubtasks(task.subtasks);
     } else {
-        console.error("Unerwartetes Format von `subtasks`:", task.subtasks);
+        handleInvalidSubtasks(task.subtasks);
     }
     renderSubtasksOverlay();
+}
+
+/**
+ * Processes array format subtasks
+ * @param {Array} subtasks - Array of subtasks
+ */
+function processArraySubtasks(subtasks) {
+    subtasks.forEach((subtask, index) => {
+        const id = `subtask-${index}-${Date.now()}`;
+        editSubtasks[id] = normalizeSubtask(subtask);
+    });
+}
+
+/**
+ * Processes object format subtasks
+ * @param {Object} subtasks - Subtasks object
+ */
+function processObjectSubtasks(subtasks) {
+    Object.entries(subtasks).forEach(([id, subtask]) => {
+        editSubtasks[id] = normalizeSubtask(subtask);
+    });
+}
+
+/**
+ * Normalizes subtask to standard format
+ * @param {string|Object} subtask - Subtask to normalize
+ * @returns {Object} Normalized subtask
+ */
+function normalizeSubtask(subtask) {
+    const title = getSubtaskTitle(subtask);
+    const completed = getSubtaskCompleted(subtask);
+    return { title, completed, isEditing: false };
+}
+
+/**
+ * Extracts title from subtask
+ * @param {string|Object} subtask - Subtask to process
+ * @returns {string} Subtask title
+ */
+function getSubtaskTitle(subtask) {
+    if (typeof subtask === "string") return subtask;
+    return subtask?.title || "Unbenannt";
+}
+
+/**
+ * Extracts completed status from subtask
+ * @param {string|Object} subtask - Subtask to process
+ * @returns {boolean} Completion status
+ */
+function getSubtaskCompleted(subtask) {
+    return typeof subtask === "object" ? subtask.completed || false : false;
+}
+
+/**
+ * Handles invalid subtasks format
+ * @param {any} subtasks - Invalid subtasks data
+ */
+function handleInvalidSubtasks(subtasks) {
+    console.error("Unerwartetes Format von `subtasks`:", subtasks);
 }
 
 /**
@@ -176,11 +208,9 @@ function loadTaskForEdit(task) {
 function saveSubTaskOverlay(id) {
     const input = document.getElementById(`edit_input${id}`);
     const newTitle = input.value.trim();
-
     if (newTitle) {
         editSubtasks[id].title = newTitle;
         editSubtasks[id].isEditing = false;
-
         currentTask.subtasks = { ...editSubtasks };
         renderSubtasksOverlay();
     }

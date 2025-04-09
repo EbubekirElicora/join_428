@@ -1,14 +1,12 @@
 .join {
     position: relative;
     display: flex;
-    justify-content: center;
     align-items: center;
     width: 100%;
     height: 100vh;
     overflow: hidden;
     flex: 1;
     flex-direction: column;
-    margin-top: 30px;
 }
 
 .joinLogo img {
@@ -30,7 +28,7 @@
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     width: 100%;
     max-width: 500px;
-    margin-top: 70px;
+    margin-top: 200px;
     height: auto;
 }
 

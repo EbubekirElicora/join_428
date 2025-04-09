@@ -1,9 +1,5 @@
 
-/**
- * Firebase-link
- */
 const BASE_URL = "https://join-428-default-rtdb.europe-west1.firebasedatabase.app/";
-
 
 /**
  * Handles the sign-up process when the user submits the registration form.
@@ -21,13 +17,13 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 /**
- * Toggles the state of the terms checkbox and enables/disables the signup button accordingly.
+ * Toggles the checkbox icon for the terms and conditions agreement.
  * 
- * This function checks whether the terms checkbox is checked or not by inspecting
- * the icon's classes, and based on that:
- * 1. It updates the checkbox icon (from unchecked to checked, or vice versa).
- * 2. It enables or disables the signup button.
- * 
+ * This function switches the icon between a checked and unchecked state
+ * by toggling the relevant Font Awesome classes. If the icon is checked,
+ * it becomes unchecked, and vice versa. When the checkbox is checked,
+ * any existing error message with the ID "terms-error" is removed from the DOM.
+ *
  * @function toggleTermsCheckbox
  */
 function toggleTermsCheckbox() {
@@ -44,7 +40,15 @@ function toggleTermsCheckbox() {
     }
 }
 
-
+/**
+ * Displays an error message below the terms and conditions checkbox.
+ *
+ * If an error message element doesn't already exist, it creates one and appends it
+ * to the checkbox container. The message content is then updated with the provided text.
+ *
+ * @function showCheckboxError
+ * @param {string} message - The error message to display.
+ */
 function showCheckboxError(message) {
     let error = document.getElementById("terms-error");
     if (!error) {
@@ -56,11 +60,20 @@ function showCheckboxError(message) {
     }
     error.textContent = message;
 }
+
+/**
+ * Checks whether the terms and conditions checkbox is currently marked as accepted.
+ *
+ * Determines acceptance by checking if the checkbox icon contains the
+ * 'fa-square-check' class.
+ *
+ * @function isTermsAccepted
+ * @returns {boolean} True if the checkbox is checked (terms accepted), false otherwise.
+ */
 function isTermsAccepted() {
     const termsIcon = document.getElementById('terms-icon');
     return termsIcon.classList.contains('fa-square-check');
 }
-
 
 /**
  * Handles the complete sign-up process: validation, user creation, and navigation.
@@ -113,7 +126,7 @@ async function validateSignupForm(name, email, password, confirmPassword) {
     } if (!password) {
         errors.push({ message: "Password cannot be empty.", inputId: "password" });
     } else {
-        if (!hasUppercase(password)) {errors.push({ message: "Password must contain at least one uppercase letter.", inputId: "password" });}
+        if (!hasUppercase(password)) { errors.push({ message: "Password must contain at least one uppercase letter.", inputId: "password" }); }
         if (password.length < 6) {
             errors.push({ message: "Password must be at least 6 characters long.", inputId: "password" });
         }
@@ -121,12 +134,12 @@ async function validateSignupForm(name, email, password, confirmPassword) {
     if (password && !confirmPassword) {
         errors.push({ message: "Please confirm your password.", inputId: "confirm-password" });
     } else if (password && confirmPassword && password !== confirmPassword) {
-        errors.push({ message: "Passwords do not match.", inputId: "confirm-password" });}  
-    if (email && await userExists(email)) {errors.push({ message: "Email already registered.", inputId: "email" });}    
-    if (!isTermsAccepted()) {errors.push({ message: "You must accept the Privacy Policy.", inputId: "terms" }); }
+        errors.push({ message: "Passwords do not match.", inputId: "confirm-password" });
+    }
+    if (email && await userExists(email)) { errors.push({ message: "Email already registered.", inputId: "email" }); }
+    if (!isTermsAccepted()) { errors.push({ message: "You must accept the Privacy Policy.", inputId: "terms" }); }
     return errors;
 }
-
 
 /**
  * Displays all error messages on the form.
@@ -206,7 +219,6 @@ function clearError() {
         termsError.textContent = "";
     }
 }
-
 
 /**
  * Validates if the provided email address is in a valid format.
@@ -308,7 +320,6 @@ function getRandomColor() {
     }
     return color;
 }
-
 
 /**
  * Clears the form by resetting all the fields within it.

@@ -33,7 +33,6 @@ document.addEventListener("DOMContentLoaded", function () {
 function toggleTermsCheckbox() {
     const termsIcon = document.getElementById('terms-icon');
     const isChecked = termsIcon.classList.contains('fa-square-check');
-
     if (isChecked) {
         termsIcon.classList.remove('fa-square-check');
         termsIcon.classList.add('fa-square');

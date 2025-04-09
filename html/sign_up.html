@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="../assets/img/Capa 2.png">
     <link rel="stylesheet" href="../styles/standart.css">
-    <link rel="stylesheet" href="../styles/SignUp.css">
+    <link rel="stylesheet" href="../styles/signUp.css">
     <link rel="stylesheet" href="../styles/template.css">
     <link rel="stylesheet" href="../mobileResponsive/signUpResponsive.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -27,22 +27,21 @@
                     <img src="../assets/icons/arrowLeft.svg" alt="Back to Login">
                 </a>
             </div>
-
             <form id="join-form" novalidate>
                 <div class="input-group">
-                    <input type="name" id="name" name="name" placeholder="Name"  autocomplete="on">
+                    <input type="name" id="name" name="name" placeholder="Name" autocomplete="on">
                     <span class="icon">
                         <img id="passwordImg" src="../assets/icons/person-icon.svg" alt="">
                     </span>
                 </div>
                 <div class="input-group">
-                    <input type="email" id="email" name="email" placeholder="Email"  autocomplete="on">
+                    <input type="email" id="email" name="email" placeholder="Email" autocomplete="on">
                     <span class="icon">
                         <img id="passwordImg" src="../assets/icons/email-icon.svg" alt="">
                     </span>
                 </div>
                 <div class="input-group">
-                    <input type="password" id="password" name="password" placeholder="Password" 
+                    <input type="password" id="password" name="password" placeholder="Password"
                         autocomplete="new-password">
                     <span class="icon" id="togglePasswordIcon"
                         onclick="togglePasswordVisibility('password', 'togglePasswordIcon')">
@@ -52,25 +51,21 @@
                 </div>
                 <div class="input-group">
                     <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm password"
-                         autocomplete="new-password">
+                        autocomplete="new-password">
                     <span class="icon" id="toggleConfirmPasswordIcon"
                         onclick="togglePasswordVisibility('confirm-password', 'toggleConfirmPasswordIcon')">
                         <img class="cursorPointer" src="../assets/visibility_off - Copy.svg" alt="Show Password"
                             style="cursor: pointer;">
                     </span>
-
                 </div>
                 <div id="error-message" class="error-message"></div>
-
                 <div class="checkbox-group" id="terms">
                     <i id="terms-icon" class="far fa-square" onclick="toggleTermsCheckbox()"></i>
-                    <span> I accept the <a href="../html/privacypolicy.html?from=signup" target="_blank">Privacy Policy</a></span>
-                    
+                    <span> I accept the <a href="../html/privacypolicy.html?from=signup" target="_blank">Privacy
+                            Policy</a></span>
                 </div>
-                
-                
                 <div class="signup-button">
-                    <button type="submit" id="signup-btn" class="btn" >Sign up</button>
+                    <button type="submit" id="signup-btn" class="btn">Sign up</button>
                 </div>
             </form>
         </div>

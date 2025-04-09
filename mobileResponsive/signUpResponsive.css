@@ -3,6 +3,11 @@
         overflow: hidden;
     }
 
+    .error-message {
+        padding-left: 10px;
+        width: 110%;
+    }
+
     .signup-joinContainer {
         padding: 30px;
         max-width: 400px;
@@ -21,7 +26,6 @@
     .input-group {
         display: flex;
         align-items: center;
-        margin-bottom: 15px;
         position: relative;
         margin-left: 20px;
         margin-right: 20px;
@@ -30,6 +34,10 @@
     .signup-button button {
         padding: 5px 40px;
         margin-bottom: 0px;
+    }
+
+    .joinLogo img {
+        width: 90px;
     }
 }
 
@@ -51,10 +59,6 @@
         z-index: 3000;
         transform: translateX(0);
     }
-
-    .joinLogo img {
-        width: 90px;
-    }
 }
 
 @media (max-width: 480px) {
@@ -63,9 +67,21 @@
         left: 10%;
     }
 
+    .input-group .icon {
+        right: -1%;
+    }
+
+    .error-message {
+        width: 100%;
+        padding-left: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
     .signup-joinContainer {
         padding: 20px;
-        width: 70%;
+        width: 85%;
         max-width: 100%;
         margin-top: 50px;
         border-radius: 10px;
@@ -99,7 +115,6 @@
 
     .legalPolicy {
         gap: 8px;
-
         font-size: 16px;
         margin-bottom: 0;
     }

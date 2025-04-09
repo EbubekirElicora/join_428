@@ -71,13 +71,12 @@ function fetchContacts() {
 }
 
 /**
- * Renders the list of contacts on the page, grouping them by the first letter of their names.
+ * Renders the contact list by fetching contacts and displaying them alphabetically.
+ * This function fetches the contacts and groups them by the first letter of the name.
+ * It then renders the grouped contacts in the specified container.
  * 
- * This function fetches the list of contacts, sorts them alphabetically, and groups them by the 
- * first letter of their name. It then dynamically creates HTML elements to display the contact 
- * details, including initials, name, and email. Each contact is displayed as a clickable item, 
- * and clicking on a contact will show its detailed information.
-*/
+ * @returns {void}
+ */
 function renderContacts() {
     const contentDiv = document.getElementById('content');
     if (!contentDiv) return;
@@ -89,6 +88,13 @@ function renderContacts() {
     });
 }
 
+/**
+ * Groups the given contacts alphabetically by the first letter of their names.
+ * Each contact is grouped under a letter corresponding to the first letter of their name.
+ * 
+ * @param {Array} contacts - The list of contacts to group.
+ * @returns {Object} The grouped contacts, with the first letter as keys and the contacts as values.
+ */
 function groupContactsAlphabetically(contacts) {
     contacts.sort((a, b) => a.name.localeCompare(b.name));
     const groups = {};
@@ -100,6 +106,14 @@ function groupContactsAlphabetically(contacts) {
     return groups;
 }
 
+/**
+ * Renders the grouped contacts by appending them to the provided container element.
+ * For each group, a letter header is created and the contacts under that letter are displayed.
+ * 
+ * @param {Object} groups - The grouped contacts, with letters as keys.
+ * @param {HTMLElement} container - The container element where the contacts will be rendered.
+ * @returns {void}
+ */
 function renderGroupedContacts(groups, container) {
     for (const letter in groups) {
         const header = createLetterHeader(letter);
@@ -111,6 +125,13 @@ function renderGroupedContacts(groups, container) {
     }
 }
 
+/**
+ * Creates a header element for the specified letter.
+ * This header will be used to group contacts alphabetically by their first letter.
+ * 
+ * @param {string} letter - The letter to display as the header.
+ * @returns {HTMLElement} The created header element.
+ */
 function createLetterHeader(letter) {
     const div = document.createElement('div');
     div.classList.add('letter-header');
@@ -118,6 +139,14 @@ function createLetterHeader(letter) {
     return div;
 }
 
+
+/**
+ * Creates a contact item element displaying the contact's initials, name, and email.
+ * The contact element also adds an event listener to show contact details when clicked.
+ * 
+ * @param {Object} contact - The contact object to create an element for.
+ * @returns {HTMLElement} The created contact element.
+ */
 function createContactElement(contact) {
     const div = document.createElement('div');
     div.classList.add('contact-item');
@@ -131,7 +160,6 @@ function createContactElement(contact) {
     div.addEventListener('click', () => window.showContactDetails(contact));
     return div;
 }
-
 
 /**
   * Deletes a contact from the backend database and updates the UI accordingly.

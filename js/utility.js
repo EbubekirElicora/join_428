@@ -95,7 +95,7 @@ function applyActiveState() {
       activeWidget.style.fontWeight = "bold";
 
     } else {
-      console.error("❌ Active widget not found in DOM!");
+      console.error("Active widget not found in DOM!");
     }
   }
 }

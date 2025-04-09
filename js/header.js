@@ -3,10 +3,10 @@
  * This function adds/removes the 'active' class on the `mobileMenu` element, 
  * controlling the display of the menu.
  */
-function HeaderMenu() {
+function headerMenu() {
     const menu = document.getElementById('mobileMenu');
     const userIcon = document.getElementById('user-initial');
-    menu.classList.toggle('active');   
+    menu.classList.toggle('active');
 }
 
 /**
@@ -17,8 +17,8 @@ function HeaderMenu() {
  */
 function logout() {
     localStorage.removeItem("userName");
-    localStorage.removeItem("userInitials"); 
-    localStorage.removeItem("isGuest"); 
+    localStorage.removeItem("userInitials");
+    localStorage.removeItem("isGuest");
     localStorage.setItem("isLoggedIn", "false");
     window.location.href = "../html/log_in.html";
 }
@@ -51,33 +51,72 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 /**
- * Displays the user's initials in the `name_menu` element if the user is logged in.
- * If the user is not logged in, the initials are hidden. 
- * If no initials are stored, a default value of "G" is used.
- * 
- * @returns {void} This function does not return any value.
+ * Displays the user's initials in the name menu element,
+ * or hides the element depending on login status and origin.
  */
 function displayInitials() {
     const nameMenuElement = document.getElementById("name_menu");
-    if (nameMenuElement) {
-        const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
-        const urlParams = new URLSearchParams(window.location.search);
-        const fromSignup = urlParams.get("from") === "signup";
-        if (isLoggedIn || !fromSignup) {
-            let initials = localStorage.getItem("userInitials");
-            if (!initials) {
-                initials = "G"; 
-                localStorage.setItem("userInitials", initials);
-            }
-            nameMenuElement.textContent = initials;
-            nameMenuElement.style.visibility = "visible"; 
-            nameMenuElement.style.opacity = "1"; 
-            nameMenuElement.style.display = "flex"; 
-        } else {
-            nameMenuElement.style.visibility = "hidden";
-            nameMenuElement.style.opacity = "0";
-        }
-    } else {
+    if (!nameMenuElement) {
         console.error("Element with id 'name_menu' not found!");
+        return;
     }
+    const isLoggedIn = getLoginStatus();
+    const fromSignup = navigatedFromSignup();
+    if (isLoggedIn || !fromSignup) {
+        const initials = getUserInitials();
+        showInitials(nameMenuElement, initials);
+    } else {
+        hideNameMenu(nameMenuElement);
+    }
+}
+
+/**
+ * Checks if the user is currently logged in.
+ * @returns {boolean}
+ */
+function getLoginStatus() {
+    return localStorage.getItem("isLoggedIn") === "true";
+}
+
+/**
+ * Checks whether the user navigated from the signup page.
+ * @returns {boolean}
+ */
+function navigatedFromSignup() {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get("from") === "signup";
+}
+
+/**
+ * Retrieves the user's initials from localStorage or sets a default.
+ * @returns {string}
+ */
+function getUserInitials() {
+    let initials = localStorage.getItem("userInitials");
+    if (!initials) {
+        initials = "G"; // Default value
+        localStorage.setItem("userInitials", initials);
+    }
+    return initials;
+}
+
+/**
+ * Displays the initials in the name menu element.
+ * @param {HTMLElement} element 
+ * @param {string} initials 
+ */
+function showInitials(element, initials) {
+    element.textContent = initials;
+    element.style.visibility = "visible";
+    element.style.opacity = "1";
+    element.style.display = "flex";
+}
+
+/**
+ * Hides the name menu element (used when not logged in after signup).
+ * @param {HTMLElement} element 
+ */
+function hideNameMenu(element) {
+    element.style.visibility = "hidden";
+    element.style.opacity = "0";
 }

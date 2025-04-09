@@ -64,12 +64,12 @@ function createBackdrop() {
 function hideContactOverlay() {
     const contactOverlay = document.getElementById('contact-overlay');
     const backdrop = document.getElementById('overlay-backdrop');
-    
+
     if (contactOverlay) {
         contactOverlay.style.display = 'none';
         contactOverlay.classList.remove('active');
     }
-    
+
     // Add this to remove the backdrop
     if (backdrop) {
         backdrop.remove();
@@ -87,21 +87,21 @@ function hideOverlay() {
     const overlay = document.getElementById('overlay');
     const contactOverlay = document.getElementById('contact-overlay');
     const backdrop = document.getElementById('overlay-backdrop'); // Add this line
-    
+
     function hideElement(overlayElement) {
         if (overlayElement) {
-            overlayElement.style.display = 'none'; 
-            overlayElement.classList.remove('active'); 
+            overlayElement.style.display = 'none';
+            overlayElement.classList.remove('active');
         }
-    }    
-    
+    }
+
     if (overlay && overlay.style.display === 'block') {
         hideElement(overlay);
     }
     if (contactOverlay && contactOverlay.style.display === 'block') {
         hideElement(contactOverlay);
     }
-    
+
     // Only add this backdrop removal part:
     if (backdrop) {
         backdrop.remove();
@@ -157,7 +157,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (contactOverlay) {
             contactOverlay.style.display = 'none';
             contactOverlay.classList.remove('active');
-        } 
+        }
     }
 
     /**
@@ -193,7 +193,7 @@ document.addEventListener('DOMContentLoaded', function () {
  * - Listens for clicks on elements inside `#content` and triggers `toggleColumns`
  *   if the clicked element is a `.contact-item`.
  */
-document.addEventListener('DOMContentLoaded', function () {    
+document.addEventListener('DOMContentLoaded', function () {
     function toggleColumns() {
         const leftColumn = document.querySelector('.left-column');
         const rightColumn = document.querySelector('.right-column');
@@ -211,7 +211,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 toggleColumns();
             }
         });
-    } 
+    }
 });
 
 /**
@@ -240,7 +240,7 @@ function toggleOverlay() {
  */
 function toggleColumns() {
     const leftColumn = document.querySelector('.left-column');
-    const rightColumn = document.querySelector('.right-column'); 
+    const rightColumn = document.querySelector('.right-column');
 
     leftColumn.classList.toggle('hidden');
     rightColumn.classList.toggle('active');
@@ -253,7 +253,7 @@ function toggleColumns() {
      */
 document.addEventListener('DOMContentLoaded', function () {
     const BASE_URL = "https://join-428-default-rtdb.europe-west1.firebasedatabase.app/";
-    
+
     document.getElementById('content').addEventListener('click', function (event) {
         const contactItem = event.target.closest('.contact-item');
         if (contactItem) {
@@ -261,7 +261,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 item.classList.remove('active');
             });
             contactItem.classList.add('active');
-            
+
         }
     });
 });
@@ -282,25 +282,20 @@ document.addEventListener('DOMContentLoaded', function () {
             event.preventDefault();
             hideOverlay();
         });
-    } 
+    }
 });
 
 // Add this to your DOMContentLoaded event listener
 document.addEventListener('DOMContentLoaded', () => {
-    // ... your existing code ...
-    
-    // Restrict phone input to numbers only
     const phoneInput = document.getElementById('phone');
     const editPhoneInput = document.getElementById('edit-contact-phone');
-    
     if (phoneInput) {
         phoneInput.addEventListener('input', restrictToNumbers);
     }
-    
     if (editPhoneInput) {
         editPhoneInput.addEventListener('input', restrictToNumbers);
     }
-    });
+});
 
 /**
  * Restricts input to only numbers
@@ -320,13 +315,13 @@ function restrictToNumbers(event) {
 function showError(inputElement, message) {
     const container = inputElement.closest('.input-container, .contact-input-container');
     const errorElement = container.querySelector('.error-message');
-    
+
     if (errorElement) {
         errorElement.textContent = message;
         container.classList.add('error');
     }
 }
-// Add input event listeners to clear errors
+
 document.querySelectorAll('input').forEach(input => {
     input.addEventListener('input', () => {
         const container = input.closest('.input-container, .contact-input-container');
@@ -338,11 +333,11 @@ document.querySelectorAll('input').forEach(input => {
 });
 
 /**
-     * Opens the edit overlay for the contact, allowing the user to edit the contact's details.
-     * 
-     * @param {Object} contact - The contact object.
-     */
-window.openEditOverlay = function(contact) {
+* Opens the edit overlay for the contact, allowing the user to edit the contact's details.
+ * 
+* @param {Object} contact - The contact object.
+ */
+window.openEditOverlay = function (contact) {
     prepareOverlayBackdrop();
     fillOverlayFields(contact);
     activateOverlay(contact);

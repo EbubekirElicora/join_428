@@ -34,7 +34,6 @@ function toggleTermsCheckbox() {
     const termsIcon = document.getElementById('terms-icon');
     const signupButton = document.getElementById('signup-btn');
     const isChecked = termsIcon.classList.contains('fa-square-check');
-
     if (isChecked) {
         termsIcon.classList.remove('fa-square-check');
         termsIcon.classList.add('fa-square');
@@ -47,78 +46,99 @@ function toggleTermsCheckbox() {
 }
 
 /**
- * Handles the user signup process.
- * 
- * 1. Collects and validates form data (name, email, password, confirm password).
- * 2. Checks if the email is already registered.
- * 3. Saves the user information to Firebase if the input is valid.
- * 4. Creates a new contact in the database for the user.
- * 5. Displays success or error messages based on the outcome.
- * 
- * @async
- * @function signUp
+ * Handles the complete sign-up process: validation, user creation, and navigation.
  */
 async function signUp() {
-    const name = document.getElementById("name").value.trim();
-    const email = document.getElementById("email").value.trim();
-    const password = document.getElementById("password").value.trim();
-    const confirmPassword = document.getElementById("confirm-password").value.trim();
-
-    clearError(); // Remove any existing errors
-    let errors = []; // Array to collect errors
-
-    // Validate name field
-    if (!name) errors.push({ message: "Name cannot be empty.", inputId: "name" });
-
-    // Validate email
-    if (!email) {
-        errors.push({ message: "Email cannot be empty.", inputId: "email" });
-    } else if (!validateEmail(email)) {
-        errors.push({ message: "Invalid email format.", inputId: "email" });
+    const { name, email, password, confirmPassword } = getFormInputValues();
+    clearError();
+    const validationErrors = await validateSignupForm(name, email, password, confirmPassword);
+    if (validationErrors.length > 0) {
+        showErrors(validationErrors);
+        return;
     }
-
-    // Validate password fields
-    if (!password) errors.push({ message: "Password cannot be empty.", inputId: "password" });
-    else if (!hasUppercase(password)) errors.push({ message: "Password must contain at least one uppercase letter.", inputId: "password" });
-    else if (password.length < 6) errors.push({ message: "Password must be at least 6 characters long.", inputId: "password" });
-
-    if (!confirmPassword) errors.push({ message: "Please confirm your password.", inputId: "confirm-password" });
-    if (password && confirmPassword && password !== confirmPassword) {
-        errors.push({ message: "Passwords do not match.", inputId: "confirm-password" });
-    }
-
-    // Check if email is already registered
-    if (email && await userExists(email)) {
-        errors.push({ message: "Email already registered.", inputId: "email" });
-    }
-
-    // Display all errors at once
-    if (errors.length > 0) {
-        errors.forEach(error => showError(error.message, error.inputId));
-        return; // Stop execution if there are errors
-    }
-
-    // Proceed with signup if no errors
     try {
-        const newUser = { name, email, password };
-        await saveUserToFirebase(newUser);
-
-        const newContact = {
-            name: name,
-            email: email,
-            initials: getInitials(name),
-            color: getRandomColor(),
-        };
-        await saveContact(newContact);
-
-        showToast("You signed up successfully", "success");
-        setTimeout(() => {
-            window.location.href = "./log_in.html";
-        }, 2000);
+        await registerNewUser(name, email, password);
+        redirectToLoginWithSuccessMessage();
     } catch (error) {
         console.error("Error signing up:", error);
         showError("Error signing up. Try again later.", "confirm-password");
     }
+}
+
+/**
+ * Retrieves and trims all signup input values from the DOM.
+ * @returns {{ name: string, email: string, password: string, confirmPassword: string }}
+ */
+function getFormInputValues() {
+    return {
+        name: document.getElementById("name").value.trim(),
+        email: document.getElementById("email").value.trim(),
+        password: document.getElementById("password").value.trim(),
+        confirmPassword: document.getElementById("confirm-password").value.trim()
+    };
+}
+
+/**
+ * Validates the sign-up form data and returns any validation errors.
+ * @param {string} name 
+ * @param {string} email 
+ * @param {string} password 
+ * @param {string} confirmPassword 
+ * @returns {Promise<Array<{message: string, inputId: string}>>}
+ */
+async function validateSignupForm(name, email, password, confirmPassword) {
+    const errors = [];
+    if (!name) errors.push({ message: "Name cannot be empty.", inputId: "name" });
+    if (!email) errors.push({ message: "Email cannot be empty.", inputId: "email" });
+    else if (!validateEmail(email)) errors.push({ message: "Invalid email format.", inputId: "email" });
+    if (!password) errors.push({ message: "Password cannot be empty.", inputId: "password" });
+    else {
+        if (!hasUppercase(password)) errors.push({ message: "Password must contain at least one uppercase letter.", inputId: "password" });
+        if (password.length < 6) errors.push({ message: "Password must be at least 6 characters long.", inputId: "password" });
+    }
+    if (!confirmPassword) errors.push({ message: "Please confirm your password.", inputId: "confirm-password" });
+    else if (password !== confirmPassword) errors.push({ message: "Passwords do not match.", inputId: "confirm-password" });
+
+    if (email && await userExists(email)) {
+        errors.push({ message: "Email already registered.", inputId: "email" });
+    }
+    return errors;
+}
+
+/**
+ * Displays all error messages on the form.
+ * @param {Array<{message: string, inputId: string}>} errors 
+ */
+function showErrors(errors) {
+    errors.forEach(error => showError(error.message, error.inputId));
+}
+
+/**
+ * Saves the user to the database and creates a contact.
+ * @param {string} name 
+ * @param {string} email 
+ * @param {string} password 
+ */
+async function registerNewUser(name, email, password) {
+    const newUser = { name, email, password };
+    await saveUserToFirebase(newUser);
+    const newContact = {
+        name: name,
+        email: email,
+        initials: getInitials(name),
+        color: getRandomColor()
+    };
+    await saveContact(newContact);
+}
+
+/**
+ * Shows a success toast and redirects to the login page after a delay.
+ */
+function redirectToLoginWithSuccessMessage() {
+    showToast("You signed up successfully", "success");
+    setTimeout(() => {
+        window.location.href = "./log_in.html";
+    }, 2000);
 }
 
 /**
@@ -131,9 +151,6 @@ function hasUppercase(password) {
     const uppercaseRegex = /[A-Z]/;
     return uppercaseRegex.test(password);
 }
-
-
-
 
 /**
  * Displays an error message below the specified input field.
@@ -295,32 +312,56 @@ function showToast(message, type) {
 }
 
 /**
- * Toggles the visibility of a password input field and updates the corresponding icon.
- * 
- * @param {string} inputId The ID of the password input field.
- * @param {string} toggleIconId The ID of the element containing the toggle icon.
+ * Toggles the visibility of a password input field and updates the icon.
+ * @param {string} inputId - The ID of the password input element.
+ * @param {string} toggleIconId - The ID of the icon container element.
  */
 function togglePasswordVisibility(inputId, toggleIconId) {
     const passwordInput = document.getElementById(inputId);
     const toggleIconElement = document.getElementById(toggleIconId);
-    if (!passwordInput || !toggleIconElement) {
+    if (!validateElements(passwordInput, toggleIconElement)) return;
+    const toggleIcon = getToggleIconImage(toggleIconElement);
+    if (!toggleIcon) return;
+    const isHidden = passwordInput.type === 'password';
+    updatePasswordVisibility(passwordInput, toggleIcon, isHidden);
+}
+
+/**
+ * Validates whether the required elements exist.
+ * @param {HTMLElement} input 
+ * @param {HTMLElement} iconContainer 
+ * @returns {boolean}
+ */
+function validateElements(input, iconContainer) {
+    if (!input || !iconContainer) {
         console.error('Element not found');
-        return;
+        return false;
     }
-    const toggleIcon = toggleIconElement.getElementsByTagName('img')[0];
-    if (!toggleIcon) {
-        console.error('Image element not found inside toggleIconId:', toggleIconId);
-        return;
+    return true;
+}
+
+/**
+ * Retrieves the image element inside the toggle icon container.
+ * @param {HTMLElement} toggleIconElement 
+ * @returns {HTMLImageElement|null}
+ */
+function getToggleIconImage(toggleIconElement) {
+    const img = toggleIconElement.getElementsByTagName('img')[0];
+    if (!img) {
+        console.error('Image element not found inside toggleIconId:', toggleIconElement.id);
+        return null;
     }
-    if (passwordInput.type === 'password') {
-        passwordInput.type = 'text';
-        toggleIcon.src = '/Assets/visibility.svg';
-        toggleIcon.alt = 'Hide Password';
-        console.log('Password is now visible.');
-    } else {
-        passwordInput.type = 'password';
-        toggleIcon.src = '/Assets/visibility_off - Copy.svg';
-        toggleIcon.alt = 'Show Password';
-        console.log('Password is now hidden.');
-    }
+    return img;
+}
+
+/**
+ * Updates the input type and icon based on visibility state.
+ * @param {HTMLInputElement} input 
+ * @param {HTMLImageElement} icon 
+ * @param {boolean} show - Whether to show the password.
+ */
+function updatePasswordVisibility(input, icon, show) {
+    input.type = show ? 'text' : 'password';
+    icon.src = show ? '/Assets/visibility.svg' : '/Assets/visibility_off - Copy.svg';
+    icon.alt = show ? 'Hide Password' : 'Show Password';
 }

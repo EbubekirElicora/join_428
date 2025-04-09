@@ -402,6 +402,6 @@ function getToggleIconImage(toggleIconElement) {
  */
 function updatePasswordVisibility(input, icon, show) {
     input.type = show ? 'text' : 'password';
-    icon.src = show ? '/Assets/visibility.svg' : '/Assets/visibility_off - Copy.svg';
+    icon.src = show ? '../assets/visibility.svg' : '../assets/visibility_off - Copy.svg';
     icon.alt = show ? 'Hide Password' : 'Show Password';
 }

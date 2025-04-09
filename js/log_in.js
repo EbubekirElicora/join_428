@@ -202,7 +202,7 @@ function togglePasswordVisibility() {
     if (passwordInput && toggleIcon) {
         if (passwordInput.type === "password") {
             passwordInput.type = "text"; 
-            toggleIcon.src = "../Assets/visibility.svg"; 
+            toggleIcon.src = "../assets/visibility.svg"; 
         } else {
             passwordInput.type = "password"; 
             toggleIcon.src = "../assets/icons/lock.png"; 

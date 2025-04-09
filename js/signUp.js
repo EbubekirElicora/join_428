@@ -32,18 +32,36 @@ document.addEventListener("DOMContentLoaded", function () {
  */
 function toggleTermsCheckbox() {
     const termsIcon = document.getElementById('terms-icon');
-    const signupButton = document.getElementById('signup-btn');
     const isChecked = termsIcon.classList.contains('fa-square-check');
+
     if (isChecked) {
         termsIcon.classList.remove('fa-square-check');
         termsIcon.classList.add('fa-square');
-        signupButton.disabled = true; // Disable the button if unchecked
     } else {
         termsIcon.classList.remove('fa-square');
         termsIcon.classList.add('fa-square-check');
-        signupButton.disabled = false; // Enable the button if checked
+        const error = document.getElementById("terms-error");
+        if (error) error.remove(); // Clear error when checked
     }
 }
+
+
+function showCheckboxError(message) {
+    let error = document.getElementById("terms-error");
+    if (!error) {
+        error = document.createElement("div");
+        error.id = "terms-error";
+        error.className = "error-message";
+        const checkboxContainer = document.getElementById("terms-checkbox-wrapper");
+        checkboxContainer.appendChild(error);
+    }
+    error.textContent = message;
+}
+function isTermsAccepted() {
+    const termsIcon = document.getElementById('terms-icon');
+    return termsIcon.classList.contains('fa-square-check');
+}
+
 
 /**
  * Handles the complete sign-up process: validation, user creation, and navigation.
@@ -89,21 +107,27 @@ function getFormInputValues() {
 async function validateSignupForm(name, email, password, confirmPassword) {
     const errors = [];
     if (!name) errors.push({ message: "Name cannot be empty.", inputId: "name" });
-    if (!email) errors.push({ message: "Email cannot be empty.", inputId: "email" });
-    else if (!validateEmail(email)) errors.push({ message: "Invalid email format.", inputId: "email" });
-    if (!password) errors.push({ message: "Password cannot be empty.", inputId: "password" });
-    else {
-        if (!hasUppercase(password)) errors.push({ message: "Password must contain at least one uppercase letter.", inputId: "password" });
-        if (password.length < 6) errors.push({ message: "Password must be at least 6 characters long.", inputId: "password" });
+    if (!email) {
+        errors.push({ message: "Email cannot be empty.", inputId: "email" });
+    } else if (!validateEmail(email)) {
+        errors.push({ message: "Invalid email format.", inputId: "email" });
+    } if (!password) {
+        errors.push({ message: "Password cannot be empty.", inputId: "password" });
+    } else {
+        if (!hasUppercase(password)) {errors.push({ message: "Password must contain at least one uppercase letter.", inputId: "password" });}
+        if (password.length < 6) {
+            errors.push({ message: "Password must be at least 6 characters long.", inputId: "password" });
+        }
     }
-    if (!confirmPassword) errors.push({ message: "Please confirm your password.", inputId: "confirm-password" });
-    else if (password !== confirmPassword) errors.push({ message: "Passwords do not match.", inputId: "confirm-password" });
-
-    if (email && await userExists(email)) {
-        errors.push({ message: "Email already registered.", inputId: "email" });
-    }
+    if (password && !confirmPassword) {
+        errors.push({ message: "Please confirm your password.", inputId: "confirm-password" });
+    } else if (password && confirmPassword && password !== confirmPassword) {
+        errors.push({ message: "Passwords do not match.", inputId: "confirm-password" });}  
+    if (email && await userExists(email)) {errors.push({ message: "Email already registered.", inputId: "email" });}    
+    if (!isTermsAccepted()) {errors.push({ message: "You must accept the Privacy Policy.", inputId: "terms" }); }
     return errors;
 }
+
 
 /**
  * Displays all error messages on the form.
@@ -177,7 +201,13 @@ function showError(message, inputId) {
 function clearError() {
     const errorMessages = document.querySelectorAll(".error-message");
     errorMessages.forEach(error => error.remove());
+
+    const termsError = document.getElementById("terms-error");
+    if (termsError) {
+        termsError.textContent = "";
+    }
 }
+
 
 /**
  * Validates if the provided email address is in a valid format.

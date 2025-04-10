@@ -1,36 +1,38 @@
 @media (max-width: 1080px) {
-    html {
-      overflow: scroll;
-      overflow-x: hidden;
-    }
-  
-    ::-webkit-scrollbar {
-      width: 0;
-      background: transparent;
-    }
-  
-    ::-webkit-scrollbar-thumb {
-      background: #f6f7f8;
-    }
-  
-    .policy-content {
-      margin: 120px 16px 100px 16px;
-      max-height: calc(88vh - 96px);
-    }
-  
-    .legalNotice {
-      margin: 90px 16px 120px 16px;
-    }
+  html {
+    overflow: scroll;
+    overflow-x: hidden;
   }
-  
-  
-  @media (max-width: 480px) {
-  
-    h1 {
-      font-size: 40px;
-    }
-  
-    .policy-content {
-      overflow: hidden;
-    }
+
+  ::-webkit-scrollbar {
+    width: 0;
+    background: transparent;
   }
+
+  ::-webkit-scrollbar-thumb {
+    background: #f6f7f8;
+  }
+
+  .policy-content {
+    margin: 120px 16px 100px 16px;
+    max-height: calc(88vh - 96px);
+  }
+
+  .legalNotice {
+    margin: 90px 16px 120px 16px;
+  }
+}
+
+
+@media (max-width: 480px) {
+
+  h1 {
+    font-size: 40px;
+  }
+
+  .policy-content {
+    margin: 120px 0px 100px 0px;
+    padding-right: 16px;
+    padding-left: 16px;
+  }
+}

@@ -1,10 +1,6 @@
 /**
- * Displays an overlay and a backdrop when called.
- * 
- * - Creates a backdrop element that covers the screen.
- * - Adds a click event to the backdrop to close the overlay.
- * - Highlights the "add contact" button if present.
- * - Displays the overlay with a slight delay for animation effects.
+ * Displays the overlay by creating the backdrop,
+ * highlighting the "add" button, and activating the overlay panel.
  */
 function showOverlay() {
     createOverlayBackdrop();
@@ -12,6 +8,10 @@ function showOverlay() {
     activateAddOverlay();
 }
 
+/**
+ * Creates and displays the semi-transparent backdrop behind the overlay.
+ * Adds an event listener to hide the overlay when the backdrop is clicked.
+ */
 function createOverlayBackdrop() {
     const backdrop = document.createElement('div');
     backdrop.id = 'overlay-backdrop';
@@ -21,11 +21,19 @@ function createOverlayBackdrop() {
     backdrop.style.display = 'block';
 }
 
+/**
+ * Highlights the "add" button visually by adding the 'clicked' class.
+ * This may trigger a CSS animation or styling effect.
+ */
 function highlightAddButton() {
     const addBtn = document.querySelector('.add-contact-circle');
     if (addBtn) addBtn.classList.add('clicked');
 }
 
+/**
+ * Activates and displays the main overlay panel after a short delay.
+ * The delay ensures any transition effects can be properly applied.
+ */
 function activateAddOverlay() {
     const overlay = document.getElementById('overlay');
     setTimeout(() => {
@@ -86,23 +94,19 @@ function hideContactOverlay() {
 function hideOverlay() {
     const overlay = document.getElementById('overlay');
     const contactOverlay = document.getElementById('contact-overlay');
-    const backdrop = document.getElementById('overlay-backdrop'); // Add this line
-
+    const backdrop = document.getElementById('overlay-backdrop');
     function hideElement(overlayElement) {
         if (overlayElement) {
             overlayElement.style.display = 'none';
             overlayElement.classList.remove('active');
         }
     }
-
     if (overlay && overlay.style.display === 'block') {
         hideElement(overlay);
     }
     if (contactOverlay && contactOverlay.style.display === 'block') {
         hideElement(contactOverlay);
     }
-
-    // Only add this backdrop removal part:
     if (backdrop) {
         backdrop.remove();
     }
@@ -159,12 +163,6 @@ document.addEventListener('DOMContentLoaded', function () {
             contactOverlay.classList.remove('active');
         }
     }
-
-    /**
-     * Handles clicks outside overlays to close them.
-     * 
-     * @param {Event} event - The click event.
-     */
     document.addEventListener('click', function (event) {
         const overlay = document.getElementById('overlay');
         const contactOverlay = document.getElementById('contact-overlay');
@@ -197,13 +195,11 @@ document.addEventListener('DOMContentLoaded', function () {
     function toggleColumns() {
         const leftColumn = document.querySelector('.left-column');
         const rightColumn = document.querySelector('.right-column');
-
         if (window.innerWidth <= 1080) {
             leftColumn.classList.toggle('hidden');
             rightColumn.classList.toggle('active');
         }
     }
-
     const content = document.getElementById('content');
     if (content) {
         content.addEventListener('click', function (event) {
@@ -224,7 +220,6 @@ document.addEventListener('DOMContentLoaded', function () {
 function toggleOverlay() {
     const mobileEditOverlay = document.getElementById('mobileEditOverlay');
     const mobileEditButton = document.querySelector('.mobileEdit-button');
-
     if (mobileEditOverlay) {
         mobileEditButton.style.backgroundColor = '#3498db';
         mobileEditOverlay.classList.toggle('active');
@@ -241,11 +236,11 @@ function toggleOverlay() {
 function toggleColumns() {
     const leftColumn = document.querySelector('.left-column');
     const rightColumn = document.querySelector('.right-column');
-
     leftColumn.classList.toggle('hidden');
     rightColumn.classList.toggle('active');
 }
-/**
+
+    /**
      * Handles click events on contact items in the content area.
      * Adds the 'active' class to the clicked contact item and removes it from others.
      * 
@@ -253,7 +248,6 @@ function toggleColumns() {
      */
 document.addEventListener('DOMContentLoaded', function () {
     const BASE_URL = "https://join-428-default-rtdb.europe-west1.firebasedatabase.app/";
-
     document.getElementById('content').addEventListener('click', function (event) {
         const contactItem = event.target.closest('.contact-item');
         if (contactItem) {
@@ -261,11 +255,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 item.classList.remove('active');
             });
             contactItem.classList.add('active');
-
         }
     });
 });
-
 
 /**
  * Adds an event listener to the cancel button to hide the overlay when clicked.
@@ -315,13 +307,11 @@ function restrictToNumbers(event) {
 function showError(inputElement, message) {
     const container = inputElement.closest('.input-container, .contact-input-container');
     const errorElement = container.querySelector('.error-message');
-
     if (errorElement) {
         errorElement.textContent = message;
         container.classList.add('error');
     }
 }
-
 document.querySelectorAll('input').forEach(input => {
     input.addEventListener('input', () => {
         const container = input.closest('.input-container, .contact-input-container');
@@ -333,9 +323,9 @@ document.querySelectorAll('input').forEach(input => {
 });
 
 /**
-* Opens the edit overlay for the contact, allowing the user to edit the contact's details.
- * 
-* @param {Object} contact - The contact object.
+ * Opens the contact edit overlay and initializes it with the provided contact data.
+ *
+ * @param {Object} contact - The contact object containing details to pre-fill the overlay.
  */
 window.openEditOverlay = function (contact) {
     prepareOverlayBackdrop();
@@ -344,6 +334,10 @@ window.openEditOverlay = function (contact) {
     setOverlayEventHandlers(contact);
 };
 
+/**
+ * Creates and displays a semi-transparent backdrop behind the overlay.
+ * Clicking the backdrop will trigger hiding the overlay.
+ */
 function prepareOverlayBackdrop() {
     const backdrop = document.createElement('div');
     backdrop.id = 'overlay-backdrop';
@@ -353,6 +347,11 @@ function prepareOverlayBackdrop() {
     backdrop.style.display = 'block';
 }
 
+/**
+ * Fills the overlay fields with the contact's existing information.
+ *
+ * @param {Object} contact - The contact object containing initials, name, email, phone, and color.
+ */
 function fillOverlayFields(contact) {
     const initials = document.getElementById('contact-initials-overlay');
     const name = document.getElementById('edit-contact-name');
@@ -367,6 +366,12 @@ function fillOverlayFields(contact) {
     if (phone) phone.value = contact.phone;
 }
 
+/**
+ * Activates and displays the contact overlay with a short delay.
+ * Temporarily adds and removes an "active" class on the edit link for visual effect.
+ *
+ * @param {Object} contact - The contact being edited (not directly used here but passed for context).
+ */
 function activateOverlay(contact) {
     const overlay = document.getElementById('contact-overlay');
     const editLink = document.getElementById('editLinkOverlay');
@@ -380,6 +385,11 @@ function activateOverlay(contact) {
     }, 100);
 }
 
+/**
+ * Assigns click event handlers for saving or deleting the contact.
+ *
+ * @param {Object} contact - The contact object passed to the event handlers.
+ */
 function setOverlayEventHandlers(contact) {
     const saveBtn = document.getElementById('save-contact-button');
     const deleteBtn = document.getElementById('delete-contact-button');

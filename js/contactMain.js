@@ -139,7 +139,6 @@ function createLetterHeader(letter) {
     return div;
 }
 
-
 /**
  * Creates a contact item element displaying the contact's initials, name, and email.
  * The contact element also adds an event listener to show contact details when clicked.

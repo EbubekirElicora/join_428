@@ -64,38 +64,63 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 /**
- * Applies the active state to the correct sidebar widget based on the current page URL.
- * It checks the current path and matches it with a predefined mapping to highlight the active
- * sidebar widget. It modifies the widget's appearance, including background color, text color, 
- * and font weight.
- * 
- * @returns {void}
+ * Applies the active state to the widget based on the current page.
  */
 function applyActiveState() {
-  const currentPath = window.location.pathname.split("/").pop();
-  const pageMap = {
+  const currentPath = getCurrentPagePath();
+  const pageMap = getPageMap();
+  if (pageMap[currentPath]) {
+    const activeWidget = document.getElementById(pageMap[currentPath]);
+    if (activeWidget) {
+      resetWidgetsState();
+      setActiveWidgetState(activeWidget);
+    } else {
+      console.error("Active widget not found in DOM!");
+    }
+  }
+}
+
+/**
+ * Gets the current page path (last part of the URL).
+ * @returns {string} - The current page path.
+ */
+function getCurrentPagePath() {
+  return window.location.pathname.split("/").pop();
+}
+
+/**
+ * Returns a mapping of page paths to widget IDs.
+ * @returns {Object} - The page to widget mapping.
+ */
+function getPageMap() {
+  return {
     "summary.html": "widget_1",
     "addTask.html": "widget_2",
     "board.html": "widget_3",
     "contacts.html": "widget_4"
   };
-  if (pageMap[currentPath]) {
-    const activeWidget = document.getElementById(pageMap[currentPath]);
-    if (activeWidget) {
-      const allWidgets = document.querySelectorAll('.widget');
-      allWidgets.forEach(widget => {
-        widget.classList.remove('active');
-        widget.style.backgroundColor = '';
-        widget.style.color = '';
-        widget.style.fontWeight = '';
-      });
-      activeWidget.classList.add("active");
-      activeWidget.style.backgroundColor = "#1A1F2E";
-      activeWidget.style.color = "white";
-      activeWidget.style.fontWeight = "bold";
+}
 
-    } else {
-      console.error("Active widget not found in DOM!");
-    }
-  }
+/**
+ * Resets the styles and state of all widgets.
+ */
+function resetWidgetsState() {
+  const allWidgets = document.querySelectorAll('.widget');
+  allWidgets.forEach(widget => {
+    widget.classList.remove('active');
+    widget.style.backgroundColor = '';
+    widget.style.color = '';
+    widget.style.fontWeight = '';
+  });
+}
+
+/**
+ * Sets the active state for a specific widget.
+ * @param {HTMLElement} widget - The widget element to activate.
+ */
+function setActiveWidgetState(widget) {
+  widget.classList.add("active");
+  widget.style.backgroundColor = "#1A1F2E";
+  widget.style.color = "white";
+  widget.style.fontWeight = "bold";
 }

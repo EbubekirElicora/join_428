@@ -149,41 +149,11 @@ document.addEventListener('click', function (event) {
     }
 });
 
-/**
- * Waits for the DOM to fully load, then defines a function to hide the contact overlay.
- * 
- * - `hideContactOverlay` hides the contact overlay if it exists.
- * - Removes the 'active' class and sets `display` to 'none'.
- */
-// document.addEventListener('DOMContentLoaded', function () {
-//     function hideContactOverlay() {
-//         const contactOverlay = document.getElementById('contact-overlay');
-//         if (contactOverlay) {
-//             contactOverlay.style.display = 'none';
-//             contactOverlay.classList.remove('active');
-//         }
-//     }
-//     document.addEventListener('click', function (event) {
-//         const overlay = document.getElementById('overlay');
-//         const contactOverlay = document.getElementById('contact-overlay');
-//         const mobileEditOverlay = document.getElementById('mobileEditOverlay');
-//         if (overlay && overlay.style.display === 'block' && !overlay.contains(event.target)) {
-//             hideOverlay();
-//         }
-//         if (contactOverlay && contactOverlay.style.display === 'block' && !contactOverlay.contains(event.target)) {
-//             hideContactOverlay();
-//         }
-//         if (
-//             mobileEditOverlay &&
-//             !mobileEditOverlay.contains(event.target) &&
-//             !event.target.closest('.mobileEdit-button')
-//         ) {
-//             mobileEditOverlay.classList.remove('active');
-//         }
-//     });
-// });
-
 document.addEventListener('DOMContentLoaded', function () {
+    /**
+     * Hides the contact overlay by setting its display style to 'none'
+     * and removing the 'active' class.
+     */
     function hideContactOverlay() {
         const contactOverlay = document.getElementById('contact-overlay');
         if (contactOverlay) {
@@ -192,6 +162,12 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    /**
+     * Handles the click event on the general overlay.
+     * If the overlay is visible and the click is outside, it hides the overlay.
+     *
+     * @param {Event} event - The click event that triggered the function.
+     */
     function handleOverlayClick(event) {
         const overlay = document.getElementById('overlay');
         if (overlay && overlay.style.display === 'block' && !overlay.contains(event.target)) {
@@ -199,6 +175,12 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    /**
+    * Handles the click event on the contact overlay.
+    * If the contact overlay is visible and the click is outside, it hides the contact overlay.
+    *
+    * @param {Event} event - The click event that triggered the function.
+    */
     function handleContactOverlayClick(event) {
         const contactOverlay = document.getElementById('contact-overlay');
         if (contactOverlay && contactOverlay.style.display === 'block' && !contactOverlay.contains(event.target)) {
@@ -206,6 +188,12 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    /**
+  * Handles the click event for the mobile edit overlay.
+  * If the click occurs outside the overlay or the mobile edit button, it removes the 'active' class from the overlay.
+  *
+  * @param {Event} event - The click event that triggered the function.
+  */
     function handleMobileEditClick(event) {
         const mobileEditOverlay = document.getElementById('mobileEditOverlay');
         if (mobileEditOverlay && !mobileEditOverlay.contains(event.target) && !event.target.closest('.mobileEdit-button')) {
@@ -213,6 +201,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    // Add a click event listener to handle clicks on the document
     document.addEventListener('click', function (event) {
         handleOverlayClick(event);
         handleContactOverlayClick(event);
@@ -277,12 +266,12 @@ function toggleColumns() {
     rightColumn.classList.toggle('active');
 }
 
-    /**
-     * Handles click events on contact items in the content area.
-     * Adds the 'active' class to the clicked contact item and removes it from others.
-     * 
-     * @param {Event} event - The click event.
-     */
+/**
+ * Handles click events on contact items in the content area.
+ * Adds the 'active' class to the clicked contact item and removes it from others.
+ * 
+ * @param {Event} event - The click event.
+ */
 document.addEventListener('DOMContentLoaded', function () {
     const BASE_URL = "https://join-428-default-rtdb.europe-west1.firebasedatabase.app/";
     document.getElementById('content').addEventListener('click', function (event) {

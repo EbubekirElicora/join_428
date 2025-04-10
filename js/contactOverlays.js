@@ -155,6 +155,34 @@ document.addEventListener('click', function (event) {
  * - `hideContactOverlay` hides the contact overlay if it exists.
  * - Removes the 'active' class and sets `display` to 'none'.
  */
+// document.addEventListener('DOMContentLoaded', function () {
+//     function hideContactOverlay() {
+//         const contactOverlay = document.getElementById('contact-overlay');
+//         if (contactOverlay) {
+//             contactOverlay.style.display = 'none';
+//             contactOverlay.classList.remove('active');
+//         }
+//     }
+//     document.addEventListener('click', function (event) {
+//         const overlay = document.getElementById('overlay');
+//         const contactOverlay = document.getElementById('contact-overlay');
+//         const mobileEditOverlay = document.getElementById('mobileEditOverlay');
+//         if (overlay && overlay.style.display === 'block' && !overlay.contains(event.target)) {
+//             hideOverlay();
+//         }
+//         if (contactOverlay && contactOverlay.style.display === 'block' && !contactOverlay.contains(event.target)) {
+//             hideContactOverlay();
+//         }
+//         if (
+//             mobileEditOverlay &&
+//             !mobileEditOverlay.contains(event.target) &&
+//             !event.target.closest('.mobileEdit-button')
+//         ) {
+//             mobileEditOverlay.classList.remove('active');
+//         }
+//     });
+// });
+
 document.addEventListener('DOMContentLoaded', function () {
     function hideContactOverlay() {
         const contactOverlay = document.getElementById('contact-overlay');
@@ -163,23 +191,32 @@ document.addEventListener('DOMContentLoaded', function () {
             contactOverlay.classList.remove('active');
         }
     }
-    document.addEventListener('click', function (event) {
+
+    function handleOverlayClick(event) {
         const overlay = document.getElementById('overlay');
-        const contactOverlay = document.getElementById('contact-overlay');
-        const mobileEditOverlay = document.getElementById('mobileEditOverlay');
         if (overlay && overlay.style.display === 'block' && !overlay.contains(event.target)) {
             hideOverlay();
         }
+    }
+
+    function handleContactOverlayClick(event) {
+        const contactOverlay = document.getElementById('contact-overlay');
         if (contactOverlay && contactOverlay.style.display === 'block' && !contactOverlay.contains(event.target)) {
             hideContactOverlay();
         }
-        if (
-            mobileEditOverlay &&
-            !mobileEditOverlay.contains(event.target) &&
-            !event.target.closest('.mobileEdit-button')
-        ) {
+    }
+
+    function handleMobileEditClick(event) {
+        const mobileEditOverlay = document.getElementById('mobileEditOverlay');
+        if (mobileEditOverlay && !mobileEditOverlay.contains(event.target) && !event.target.closest('.mobileEdit-button')) {
             mobileEditOverlay.classList.remove('active');
         }
+    }
+
+    document.addEventListener('click', function (event) {
+        handleOverlayClick(event);
+        handleContactOverlayClick(event);
+        handleMobileEditClick(event);
     });
 });
 

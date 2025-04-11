@@ -7,15 +7,44 @@
  * 
  * @returns {void} 
  */
+// function to_open_category_dropdown() {
+//     let elements = getCategoryElements();
+//     if (elements.category_dropdown.classList.contains('show')) {
+//         closeCategoryDropdown(elements);
+//         return;
+//     }
+//     elements.category_dropdown.innerHTML = '';
+//     addCategoryOptions(elements.category_dropdown);
+//     toggleCategoryDropdown(elements);
+//     function closeDropdown(event) {
+//         if (!elements.category_select.contains(event.target) && !elements.category_dropdown.contains(event.target)) {
+//             closeCategoryDropdown(elements);
+//             document.removeEventListener('click', closeDropdown);
+//         }
+//     }
+//     document.addEventListener('click', closeDropdown);
+//     elements.category_select.addEventListener('click', function (event) {
+//         event.stopPropagation();
+//     });
+// }
+
 function to_open_category_dropdown() {
     let elements = getCategoryElements();
     if (elements.category_dropdown.classList.contains('show')) {
         closeCategoryDropdown(elements);
         return;
     }
+    prepareCategoryDropdown(elements);
+    addClickListenerForClosing(elements);
+}
+
+function prepareCategoryDropdown(elements) {
     elements.category_dropdown.innerHTML = '';
     addCategoryOptions(elements.category_dropdown);
     toggleCategoryDropdown(elements);
+}
+
+function addClickListenerForClosing(elements) {
     function closeDropdown(event) {
         if (!elements.category_select.contains(event.target) && !elements.category_dropdown.contains(event.target)) {
             closeCategoryDropdown(elements);
@@ -23,10 +52,9 @@ function to_open_category_dropdown() {
         }
     }
     document.addEventListener('click', closeDropdown);
-    elements.category_select.addEventListener('click', function (event) {
-        event.stopPropagation();
-    });
+    elements.category_select.addEventListener('click', event => event.stopPropagation());
 }
+
 
 /**
  * This function initializes the category selector with event listeners

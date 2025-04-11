@@ -1,33 +1,10 @@
 /**
- * Opens the category dropdown and populates it with options if it's not already open.
- * If the dropdown is already open, it closes the dropdown.
+ * Toggles the visibility of the category dropdown. 
+ * If the dropdown is already visible, it closes it. 
+ * Otherwise, it prepares and opens the dropdown.
  * 
- * This function checks if the task category is already selected, and if not, resets the category selector.
- * It also listens for clicks outside the dropdown to close it when clicked elsewhere.
- * 
- * @returns {void} 
+ * @function
  */
-// function to_open_category_dropdown() {
-//     let elements = getCategoryElements();
-//     if (elements.category_dropdown.classList.contains('show')) {
-//         closeCategoryDropdown(elements);
-//         return;
-//     }
-//     elements.category_dropdown.innerHTML = '';
-//     addCategoryOptions(elements.category_dropdown);
-//     toggleCategoryDropdown(elements);
-//     function closeDropdown(event) {
-//         if (!elements.category_select.contains(event.target) && !elements.category_dropdown.contains(event.target)) {
-//             closeCategoryDropdown(elements);
-//             document.removeEventListener('click', closeDropdown);
-//         }
-//     }
-//     document.addEventListener('click', closeDropdown);
-//     elements.category_select.addEventListener('click', function (event) {
-//         event.stopPropagation();
-//     });
-// }
-
 function to_open_category_dropdown() {
     let elements = getCategoryElements();
     if (elements.category_dropdown.classList.contains('show')) {
@@ -38,12 +15,32 @@ function to_open_category_dropdown() {
     addClickListenerForClosing(elements);
 }
 
+/**
+ * Prepares the category dropdown by clearing its current content 
+ * and adding the category options. Then, it toggles the visibility of the dropdown.
+ * 
+ * @param {Object} elements - The elements required for interacting with the dropdown.
+ * @param {HTMLElement} elements.category_dropdown - The category dropdown element.
+ * 
+ * @function
+ */
 function prepareCategoryDropdown(elements) {
     elements.category_dropdown.innerHTML = '';
     addCategoryOptions(elements.category_dropdown);
     toggleCategoryDropdown(elements);
 }
 
+/**
+ * Adds a click event listener to the document that closes the category dropdown 
+ * when clicking outside the dropdown. It also prevents the dropdown from closing 
+ * when clicking inside the category select element.
+ * 
+ * @param {Object} elements - The elements required for interacting with the dropdown.
+ * @param {HTMLElement} elements.category_select - The category select element.
+ * @param {HTMLElement} elements.category_dropdown - The category dropdown element.
+ * 
+ * @function
+ */
 function addClickListenerForClosing(elements) {
     function closeDropdown(event) {
         if (!elements.category_select.contains(event.target) && !elements.category_dropdown.contains(event.target)) {
@@ -54,7 +51,6 @@ function addClickListenerForClosing(elements) {
     document.addEventListener('click', closeDropdown);
     elements.category_select.addEventListener('click', event => event.stopPropagation());
 }
-
 
 /**
  * This function initializes the category selector with event listeners

@@ -26,8 +26,7 @@ function guestLogIn() {
     localStorage.removeItem("userInitials");
     localStorage.removeItem("userName");
     localStorage.setItem("isGuest", "true");
-    localStorage.setItem("isLoggedIn", "true"); // Ensure isLoggedIn is false for guests
-    console.log('Guest logged in. isLoggedIn set to false.'); // Debug log
+    localStorage.setItem("isLoggedIn", "true");
     window.location.href = "../html/summary.html";
 }
 
@@ -113,11 +112,9 @@ function validateUser(users, email, password, alertBox, emailLabel, passwordLabe
     let user = Object.values(users).find(u => u.email === email && u.password === password);
     if (user) {
         saveUserData(user);
-        console.log('Login successful. isLoggedIn set to true.'); // Debug log
         redirectToSummary();
     } else {
         showError(emailLabel, passwordLabel, alertBox);
-        console.log('Login failed. isLoggedIn remains false.'); // Debug log
     }
 }
 
@@ -154,8 +151,7 @@ function resetErrorStyles(emailLabel, passwordLabel, alertBox) {
 function saveUserData(user) {
     localStorage.setItem("userName", user.name);
     localStorage.setItem("userInitials", getInitials(user.name));
-    localStorage.setItem("isLoggedIn", "true"); // Set isLoggedIn to true
-    console.log('User logged in. isLoggedIn set to true.'); // Debug log
+    localStorage.setItem("isLoggedIn", "true");
 }
 
 /**

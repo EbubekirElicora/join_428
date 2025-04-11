@@ -109,36 +109,99 @@ function getFormInputValues() {
 }
 
 /**
- * Validates the sign-up form data and returns any validation errors.
- * @param {string} name 
- * @param {string} email 
- * @param {string} password 
- * @param {string} confirmPassword 
- * @returns {Promise<Array<{message: string, inputId: string}>>}
+ * Validates the signup form by checking the provided inputs for name, email, password, and confirm password.
+ * It checks if the fields are filled, validates the format of the email, checks the password strength, 
+ * and ensures that the password and confirm password match. It also verifies if the terms and conditions 
+ * have been accepted. 
+ * If any validation fails, an error message is pushed to the errors array for each invalid field.
+ * 
+ * @param {string} name - The name of the user being registered.
+ * @param {string} email - The email address of the user being registered.
+ * @param {string} password - The password chosen by the user.
+ * @param {string} confirmPassword - The confirmation of the password chosen by the user.
+ * 
+ * @returns {Promise<Array<Object>>} A promise that resolves to an array of error objects, each containing:
+ *   - `message` (string): The error message describing the validation issue.
+ *   - `inputId` (string): The ID of the input field associated with the error (used for displaying the error in the UI).
+ * 
+ * @async
  */
 async function validateSignupForm(name, email, password, confirmPassword) {
     const errors = [];
-    if (!name) errors.push({ message: "Name cannot be empty.", inputId: "name" });
-    if (!email) {
-        errors.push({ message: "Email cannot be empty.", inputId: "email" });
-    } else if (!validateEmail(email)) {
-        errors.push({ message: "Invalid email format.", inputId: "email" });
-    } if (!password) {
-        errors.push({ message: "Password cannot be empty.", inputId: "password" });
+    addErrorIfEmpty(name, "name", "Name cannot be empty.", errors);
+    if (email) {
+        addErrorIfEmpty(email, "email", "Email cannot be empty.", errors);
+        addErrorIfInvalidEmail(email, errors);
+        if (await userExists(email)) addError("Email already registered.", "email", errors);
     } else {
-        if (!hasUppercase(password)) { errors.push({ message: "Password must contain at least one uppercase letter.", inputId: "password" }); }
-        if (password.length < 6) {
-            errors.push({ message: "Password must be at least 6 characters long.", inputId: "password" });
-        }
+        addErrorIfEmpty(email, "email", "Email cannot be empty.", errors);
+    }
+    if (password) {
+        addErrorIfEmpty(password, "password", "Password cannot be empty.", errors);
+        validatePasswordStrength(password, errors);
+    } else {
+        addErrorIfEmpty(password, "password", "Password cannot be empty.", errors);
     }
     if (password && !confirmPassword) {
-        errors.push({ message: "Please confirm your password.", inputId: "confirm-password" });
+        addError("Please confirm your password.", "confirm-password", errors);
     } else if (password && confirmPassword && password !== confirmPassword) {
-        errors.push({ message: "Passwords do not match.", inputId: "confirm-password" });
+        addError("Passwords do not match.", "confirm-password", errors);
     }
-    if (email && await userExists(email)) { errors.push({ message: "Email already registered.", inputId: "email" }); }
-    if (!isTermsAccepted()) { errors.push({ message: "You must accept the Privacy Policy.", inputId: "terms" }); }
+    if (!isTermsAccepted()) addError("You must accept the Privacy Policy.", "terms", errors);
     return errors;
+}
+
+/**
+ * Adds an error to the errors array if the provided value is empty.
+ * 
+ * @param {string} value - The value to check for emptiness.
+ * @param {string} inputId - The ID of the input field associated with the error.
+ * @param {string} message - The error message to be displayed.
+ * @param {Array<Object>} errors - The array to which the error will be added.
+ */
+function addErrorIfEmpty(value, inputId, message, errors) {
+    if (!value) {
+        addError(message, inputId, errors);
+    }
+}
+
+/**
+ * Adds an error if the provided email is invalid.
+ * 
+ * @param {string} email - The email to validate.
+ * @param {Array<Object>} errors - The array to which the error will be added if the email is invalid.
+ */
+function addErrorIfInvalidEmail(email, errors) {
+    if (!validateEmail(email)) {
+        addError("Invalid email format.", "email", errors);
+    }
+}
+
+/**
+ * Adds an error to the errors array.
+ * 
+ * @param {string} message - The error message to be displayed.
+ * @param {string} inputId - The ID of the input field associated with the error.
+ * @param {Array<Object>} errors - The array to which the error will be added.
+ */
+function addError(message, inputId, errors) {
+    errors.push({ message, inputId });
+}
+
+/**
+ * Validates the strength of the provided password, checking if it contains at least one uppercase letter 
+ * and is at least 6 characters long.
+ * 
+ * @param {string} password - The password to validate.
+ * @param {Array<Object>} errors - The array to which the error will be added if the password is invalid.
+ */
+function validatePasswordStrength(password, errors) {
+    if (!hasUppercase(password)) {
+        addError("Password must contain at least one uppercase letter.", "password", errors);
+    }
+    if (password.length < 6) {
+        addError("Password must be at least 6 characters long.", "password", errors);
+    }
 }
 
 /**

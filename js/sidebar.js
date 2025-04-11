@@ -32,9 +32,34 @@ function addPrivacyLinksToSidebar() {
 }
 
 /**
- * Hides various UI elements that should not be visible 
- * to users who just signed up and are not yet logged in.
- * Also sets up a MutationObserver to hide dynamic elements.
+ * Hides specific elements based on the provided selectors.
+ * 
+ * @param {Array<string>} selectors - An array of CSS selectors to target elements to hide.
+ */
+function hideElements(selectors) {
+    selectors.forEach(selector => {
+        const element = document.querySelector(selector);
+        if (element) element.style.display = "none";
+    });
+}
+
+/**
+ * Observes the DOM for the appearance of the `.pos_cont_head_right` element
+ * and hides it once it is added to the document.
+ */
+function hidePosContHeadRight() {
+    const observer = new MutationObserver(() => {
+        const posContHeadRight = document.querySelector(".pos_cont_head_right");
+        if (posContHeadRight) {
+            posContHeadRight.style.display = "none";
+            observer.disconnect();
+        }
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+}
+
+/**
+ * Main function that hides certain elements by calling helper functions.
  */
 function hideCertainElements() {
     const elementsToHide = [
@@ -44,18 +69,8 @@ function hideCertainElements() {
         ".help_icon",
         ".pos_cont_head_right"
     ];
-    elementsToHide.forEach(selector => {
-        const element = document.querySelector(selector);
-        if (element) element.style.display = "none";
-    });
-    const observer = new MutationObserver(() => {
-        const posContHeadRight = document.querySelector(".pos_cont_head_right");
-        if (posContHeadRight) {
-            posContHeadRight.style.display = "none";
-            observer.disconnect();
-        }
-    });
-    observer.observe(document.body, { childList: true, subtree: true });
+    hideElements(elementsToHide);
+    hidePosContHeadRight();
 }
 
 /**

@@ -163,11 +163,7 @@ function selectContact(contact) {
     if (!selectedContacts.find(c => c.name === contact.name)) {
         selectedContacts.push(contact);
         updateSelectedContacts();
-        console.log('Contact selected:', contact.name);
-    } else {
-        console.log('Contact already selected:', contact.name);
-    }
-
+    } 
 }
 
 /**

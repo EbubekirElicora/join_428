@@ -368,7 +368,6 @@ async function postTaskData(taskData) {
 async function handleSuccessResponse(response) {
     if (!response.ok) throw new Error('Failed to save task to Firebase'); 
     const data = await response.json();
-    console.log('Task saved successfully:', data);
     return data;
 }
 
@@ -396,7 +395,3 @@ function closeOverlay() {
     popupContainer.classList.add('d_none');
     resetAll();
 }
-
-
-
-

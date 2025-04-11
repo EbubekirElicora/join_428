@@ -35,7 +35,6 @@ function validateDate(input) {
     }
 }
 
-
 /**
  * This function updates the color of the date input
  * 

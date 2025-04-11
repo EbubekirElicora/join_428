@@ -1,5 +1,5 @@
 /**
- * Wartet, bis das DOM vollständig geladen ist, und führt dann die Initialisierungsfunktionen aus.
+ * Waits until the DOM is fully loaded, then executes the initialization functions.
  */
 document.addEventListener('DOMContentLoaded', () => { 
     initializeCategorySelector();
@@ -8,8 +8,8 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /**
- * Öffnet das Overlay und zeigt das Pop-up-Fenster an.
- * Entfernt die CSS-Klasse 'd_none', um die Elemente sichtbar zu machen.
+ * Opens the overlay and shows the popup window.
+ * Removes the 'd_none' CSS class to make the elements visible.
  */
 function openOverlay() {
     document.getElementById('overlay').classList.remove('d_none');
@@ -17,7 +17,7 @@ function openOverlay() {
 }
 
 /**
- * Lädt den Inhalt von addTask.html und initialisiert das Formular
+ * Loads the content from addTask.html and initializes the form.
  */
 async function loadAddTaskContent() {
     try {
@@ -35,9 +35,9 @@ async function loadAddTaskContent() {
 }
 
 /**
- * Holt und parst eine HTML-Datei
- * @param {string} url - Die URL der HTML-Datei
- * @returns {Document} - Das geparste HTML-Dokument
+ * Fetches and parses an HTML file.
+ * @param {string} url - The URL of the HTML file.
+ * @returns {Document} - The parsed HTML document.
  */
 async function fetchAndParseHTML(url) {
     const response = await fetch(url);
@@ -47,8 +47,8 @@ async function fetchAndParseHTML(url) {
 }
 
 /**
- * Fügt den geladenen Inhalt in den Popup-Container ein
- * @param {Element} content - Das zu ersetzende DOM-Element
+ * Inserts the loaded content into the popup container.
+ * @param {Element} content - The DOM element to replace.
  */
 function insertAddTaskContent(content) {
     const popupContainer = document.getElementById('popup_container');
@@ -56,7 +56,7 @@ function insertAddTaskContent(content) {
 }
 
 /**
- * Lädt notwendige JS-Dateien für das AddTask-Formular
+ * Loads the necessary JavaScript files for the addTask form.
  */
 async function loadAddTaskScripts() {
     const scripts = [
@@ -71,8 +71,8 @@ async function loadAddTaskScripts() {
 }
 
 /**
- * Lädt ein einzelnes Skript dynamisch
- * @param {string} src - Der Pfad zur JS-Datei
+ * Dynamically loads a single script.
+ * @param {string} src - The path to the JS file.
  */
 function loadScript(src) {
     return new Promise((resolve, reject) => {
@@ -86,9 +86,9 @@ function loadScript(src) {
 }
 
 /**
- * Öffnet das Overlay und lädt das Formular zur Erstellung einer neuen Aufgabe.
- * Ruft `openOverlay()` auf, um das Pop-up-Fenster sichtbar zu machen,
- * und lädt anschließend den Inhalt von `addTask.html` mit `loadAddTaskContent()`.
+ * Opens the overlay and loads the form for creating a new task.
+ * Calls `openOverlay()` to make the popup visible,
+ * then loads the content from `addTask.html` with `loadAddTaskContent()`.
  */
 function addTask() {
     openOverlay();
@@ -96,9 +96,9 @@ function addTask() {
 }
 
 /**
- * Schließt das Overlay und das Pop-up-Fenster.
- * Fügt die CSS-Klasse 'd_none' hinzu, um die Elemente auszublenden,
- * und leert den Inhalt des Pop-up-Containers.
+ * Closes the overlay and the popup window.
+ * Adds the 'd_none' CSS class to hide the elements,
+ * and clears the content of the popup container.
  */
 function closeOverlay() {
     document.getElementById('overlay').classList.add('d_none');
@@ -107,29 +107,29 @@ function closeOverlay() {
 }
 
 /** 
- * Speichert das aktuell gezogene (dragged) Element für die Drag-and-Drop-Funktionalität.
+ * Stores the currently dragged (dragged) element for the drag-and-drop functionality.
  * @type {HTMLElement | null}
  */
 let currentDraggedElement;
 
 /**
- * Enthält die Liste aller Aufgaben (Tasks).
+ * Contains the list of all tasks.
  * @type {Array<Object>}
  */
 let todos = [];
 
 /**
- * Definiert die verschiedenen Phasen (Stages) einer Aufgabe im Workflow.
+ * Defines the different stages of a task in the workflow.
  * @type {Array<string>}
  * @constant
  */
 const stages = ["todo", "progress", "feedback", "done"]; 
 
 /**
- * Initialisiert die Anwendung, indem die Aufgaben geladen und die HTML-Anzeige aktualisiert wird.
+ * Initializes the application by loading the tasks and updating the HTML view.
  * @async
  * @function init
- * @returns {Promise<void>} Eine Promise, die nach der Initialisierung aufgelöst wird.
+ * @returns {Promise<void>} A promise that resolves after initialization.
  */
 async function init() {
     todosLoaded();
@@ -137,11 +137,11 @@ async function init() {
 }
 
 /**
- * Lädt die Aufgaben aus dem Speicher und aktualisiert die Anzeige.
- * Falls keine Daten vorhanden sind, wird `todos` als leeres Array gesetzt.
+ * Loads the tasks from storage and updates the view.
+ * If no data is found, `todos` is set as an empty array.
  * @async
  * @function todosLoaded
- * @returns {Promise<void>} Eine Promise, die nach dem Laden der Daten aufgelöst wird.
+ * @returns {Promise<void>} A promise that resolves after loading the data.
  */
 async function todosLoaded() {
     try {
@@ -154,7 +154,7 @@ async function todosLoaded() {
 }
 
 /**
- * Aktualisiert die HTML-Darstellung der Aufgaben für jede Stage.
+ * Updates the HTML representation of the tasks for each stage.
  */
 function updateHTML() {
     const categoryMapping = getCategoryMapping();
@@ -162,8 +162,8 @@ function updateHTML() {
 }
 
 /**
- * Gibt die Zuordnung von Kategorien zu Standard-Stages zurück.
- * @returns {Object} - Kategorie-zu-Stage-Zuordnung
+ * Returns the category-to-stage mapping.
+ * @returns {Object} - The category-to-stage mapping.
  */
 function getCategoryMapping() {
     return {
@@ -173,9 +173,9 @@ function getCategoryMapping() {
 }
 
 /**
- * Aktualisiert die HTML-Darstellung für eine bestimmte Stage.
- * @param {string} stage - Der Name der Stage
- * @param {Object} categoryMapping - Die Zuordnung der Kategorien zu Stages
+ * Updates the HTML representation for a specific stage.
+ * @param {string} stage - The name of the stage.
+ * @param {Object} categoryMapping - The mapping of categories to stages.
  */
 function updateStageHTML(stage, categoryMapping) {
     const container = document.getElementById(`${stage}_task`);
@@ -188,17 +188,16 @@ function updateStageHTML(stage, categoryMapping) {
         : `<div class="tasks">No tasks in ${stage}</div>`;
 }
 
-
 /**
- * Speichert die ID des aktuell gezogenen (dragged) Elements.
- * @param {string} id - Die ID des zu ziehenden Elements.
+ * Stores the ID of the currently dragged (dragged) element.
+ * @param {string} id - The ID of the element being dragged.
  */
 function startDragging(id) {
     currentDraggedElement = id;
 }
 
 /**
- * Erstellt eine neue Aufgabe und speichert sie im Backend.
+ * Creates a new task and stores it in the backend.
  * @async
  */
 async function createTask(title, category, dueDate, priority, assignedContacts, subtasksArray) {
@@ -209,8 +208,8 @@ async function createTask(title, category, dueDate, priority, assignedContacts, 
 }
 
 /**
- * Baut ein neues Aufgabenobjekt mit allen erforderlichen Eigenschaften.
- * @returns {Object} - Das neue Aufgabenobjekt
+ * Builds a new task object with all required properties.
+ * @returns {Object} - The new task object.
  */
 function buildTaskObject(title, category, dueDate, priority, assignedContacts, subtasksArray) {
     return {
@@ -225,9 +224,9 @@ function buildTaskObject(title, category, dueDate, priority, assignedContacts, s
 }
 
 /**
- * Wandelt ein Array von Subtask-Titeln in ein Objekt um.
- * @param {Array<string>} subtasksArray - Die Titel der Subtasks
- * @returns {Object} - Subtasks als Objekt mit Status
+ * Converts an array of subtask titles into an object.
+ * @param {Array<string>} subtasksArray - The titles of the subtasks.
+ * @returns {Object} - Subtasks as an object with status.
  */
 function buildSubtasks(subtasksArray) {
     return subtasksArray.reduce((acc, title, index) => {
@@ -236,10 +235,9 @@ function buildSubtasks(subtasksArray) {
     }, {});
 }
 
-
 /**
- * Setzt das Formular zurück, indem alle Eingabefelder und Auswahlmöglichkeiten gelöscht werden.
- * Aktualisiert auch die Anzeige der zugewiesenen Kontakte und Unteraufgaben.
+ * Resets the form by clearing all input fields and selections.
+ * Also updates the display of assigned contacts and subtasks.
  * @function resetForm
  */
 function resetForm() {
@@ -253,10 +251,9 @@ function resetForm() {
 }
 
 /**
- * Ermöglicht das Ablegen von Elementen auf einem Zielbereich.
- * Verhindert die Standardaktionen des Browsers, die das Ablegen verhindern würden.
- * 
- * @param {DragEvent} ev - Das Drag-and-Drop-Ereignis.
+ * Allows elements to be dropped onto a target area.
+ * Prevents the default browser actions that would prevent dropping.
+ * @param {DragEvent} ev - The drag-and-drop event.
  * @function allowDrop
  */
 function allowDrop(ev) {
@@ -264,13 +261,12 @@ function allowDrop(ev) {
 }
 
 /**
- * Verschiebt eine Aufgabe in eine neue Stage.
- * Aktualisiert die Aufgabe im Backend und ruft anschließend die Aufgaben erneut ab.
- * 
+ * Moves a task to a new stage.
+ * Updates the task in the backend and then fetches the tasks again. 
  * @async
  * @function moveToStage
- * @param {string} targetStage - Die Ziel-Stage, in die die Aufgabe verschoben werden soll (z.B. "todo", "progress").
- * @returns {Promise<void>} Eine Promise, die aufgelöst wird, wenn die Aufgabe erfolgreich verschoben wurde.
+ * @param {string} targetStage - The target stage to move the task to (e.g. "todo", "progress").
+ * @returns {Promise<void>} A promise that resolves when the task has been successfully moved.
  */
 async function moveToStage(targetStage) {
     if (!currentDraggedElement) return;
@@ -287,29 +283,26 @@ async function moveToStage(targetStage) {
     }
 }
 
-
 /**
- * Hebt das Element mit der angegebenen ID hervor, um anzuzeigen, dass es ein Zielbereich für Drag-and-Drop ist.
- * 
+ * Highlights the element with the specified ID to indicate that it is a drop target for drag-and-drop. 
  * @function highlight
- * @param {string} id - Die ID des Elements, das hervorgehoben werden soll.
+ * @param {string} id - The ID of the element to highlight.
  */
 function highlight(id) {
     document.getElementById(id).classList.add("drag-area-highlight");
 }
 
 /**
- * Entfernt die Hervorhebung vom Element mit der angegebenen ID.
- * 
+ * Removes the highlight from the element with the specified ID. 
  * @function removeHighlight
- * @param {string} id - Die ID des Elements, von dem die Hervorhebung entfernt werden soll.
+ * @param {string} id - The ID of the element to remove the highlight from.
  */
 function removeHighlight(id) {
     document.getElementById(id).classList.remove("drag-area-highlight");
 }
 
 /**
- * Lädt die Aufgaben aus dem Backend und aktualisiert das `todos` Array.
+ * Loads the tasks from the backend and updates the `todos` array.
  */
 async function fetchTasks() {
     try {
@@ -322,9 +315,9 @@ async function fetchTasks() {
 }
 
 /**
- * Wandelt die geladenen Aufgaben in ein Array um und korrigiert Subtasks bei Bedarf.
- * @param {Object} data - Die Daten aus dem Backend
- * @returns {Array<Object>} - Das formatierte Aufgaben-Array
+ * Converts the loaded tasks into an array and fixes subtasks if necessary.
+ * @param {Object} data - The data from the backend.
+ * @returns {Array<Object>} - The formatted tasks array.
  */
 function parseTasks(data) {
     return Object.entries(data).map(([id, task]) => {
@@ -334,9 +327,9 @@ function parseTasks(data) {
 }
 
 /**
- * Korrigiert die Subtasks, falls sie als Strings gespeichert sind.
- * @param {Object} subtasks - Die Subtasks im ursprünglichen Format
- * @returns {Object} - Die korrigierten Subtasks
+ * Fixes the subtasks if they are stored as strings.
+ * @param {Object} subtasks - The subtasks in their original format.
+ * @returns {Object} - The corrected subtasks.
  */
 function fixSubtasks(subtasks) {
     const fixed = {};
@@ -347,9 +340,8 @@ function fixSubtasks(subtasks) {
 }
 
 /**
- * Filtert Aufgaben basierend auf dem Suchbegriff, der im Eingabefeld 'find_task' eingegeben wurde.
- * Zeigt nur die Aufgaben an, deren Titel oder Beschreibung den Suchbegriff enthalten.
- * 
+ * Filters tasks based on the search term entered in the 'find_task' input field.
+ * Only tasks whose title or description contain the search term will be shown.
  * @function taskFilter
  */
 function taskFilter() {
@@ -365,10 +357,9 @@ function taskFilter() {
 }
 
 /**
- * Überprüft, ob in jeder Spalte des Boards Aufgaben angezeigt werden.
- * Wenn keine Aufgaben angezeigt werden, wird eine entsprechende Nachricht angezeigt.
- * Andernfalls wird die Nachricht ausgeblendet.
- * 
+ * Checks if any column on the board has tasks displayed.
+ * If no tasks are displayed, a corresponding message is shown.
+ * Otherwise, the message is hidden. 
  * @function updateEmptyStates
  */
 function updateEmptyStates() {
@@ -387,13 +378,12 @@ function updateEmptyStates() {
 }
 
 /**
- * Fügt Drag-and-Drop-Event-Listener zu jedem Stage-Container hinzu.
- * 
- * - Für jedes `.stage-container` werden Event-Listener für `dragenter`, `dragleave` und `drop` hinzugefügt.
- * - Wenn ein gezogenes Element in den Container eintritt, wird das Standardverhalten verhindert und der Container hervorgehoben.
- * - Wenn ein gezogenes Element den Container verlässt, wird die Hervorhebung entfernt.
- * - Beim Ablegen des Elements wird das Standardverhalten verhindert, die Hervorhebung entfernt und die Funktion `moveToStage`
- *   mit dem Ziel-Stage, das aus der ID des Containers abgeleitet wird, aufgerufen.
+ * Adds drag-and-drop event listeners to each stage container. 
+ * - For each `.stage-container`, event listeners for `dragenter`, `dragleave`, and `drop` are added.
+ * - When a dragged element enters the container, the default behavior is prevented, and the container is highlighted.
+ * - When a dragged element leaves the container, the highlight is removed.
+ * - When the element is dropped, the default behavior is prevented, the highlight is removed, and the `moveToStage`
+ *   function is called with the target stage derived from the container's ID.
  */
 document.querySelectorAll(".stage-container").forEach(container => {
     container.addEventListener("dragenter", (ev) => {

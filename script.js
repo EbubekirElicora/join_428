@@ -1,14 +1,13 @@
 /**
- * Initialisiert die erforderlichen Komponenten auf der Seite für das Hinzufügen einer Aufgabe.
- * Diese Funktion richtet das Datum, Dropdown-Menüs, das Aufgabenkategoriefeld und andere UI-Elemente ein.
- * 
- * 1. Setzt das heutige Datum.
- * 2. Initialisiert die Dropdown-Menüs.
- * 3. Initialisiert den Kategorieselector für Aufgaben.
- * 4. Konfiguriert das Aufgabenformular.
- * 5. Fügt einen Ereignishandler hinzu, um das Eingabefeld für Unteraufgaben auszublenden, wenn außerhalb des Eingabebereichs geklickt wird.
- * 6. Lädt die Liste der Kontakte.
- * 
+ * Initializes the necessary components on the "Add Task" page.
+ * This function sets up the current date, dropdown menus, task category selector, 
+ * and other UI elements. 
+ * 1. Sets today's date.
+ * 2. Initializes dropdown menus.
+ * 3. Initializes the task category selector.
+ * 4. Configures the task form.
+ * 5. Adds an event handler to hide the subtask input when clicking outside.
+ * 6. Loads the contact list.
  * @function initAddTask
  */
 function initAddTask() {
@@ -21,9 +20,8 @@ function initAddTask() {
 }
 
 /**
- * This function sets the button to activated
- * 
- * @param {string} priority - The priority level to set
+ * Activates the selected priority button and deactivates others. 
+ * @param {string} priority - The priority level to set (e.g., "urgent", "medium", "low").
  */
 function setPrio(prio) {
     document.querySelectorAll('.prioBtnUrgent, .prioBtnMedium, .prioBtnLow').forEach(btn => {
@@ -33,11 +31,8 @@ function setPrio(prio) {
 }
 
 /**
- * Setzt das minimale Datum des Date-Inputs auf das heutige Datum.
- * 
- * Diese Funktion setzt das `min` Attribut des Date-Input-Feldes auf das heutige Datum, 
- * damit der Benutzer nur Daten ab dem heutigen Datum auswählen kann.
- * 
+ * Sets the minimum selectable date in the date input field to today. 
+ * This prevents users from selecting past dates. 
  * @function getDateToday
  */
 function getDateToday() {
@@ -48,8 +43,8 @@ function getDateToday() {
 }
 
 /**
- * Initialisiert das Dropdown-Menü und fügt Event-Listener für das Öffnen und Schließen hinzu.
- * Diese Funktion wird nach dem Laden des DOMs aufgerufen.
+ * Initializes the dropdown menu and adds event listeners for opening and closing.
+ * This is triggered once the DOM content is loaded.
  */
 document.addEventListener('DOMContentLoaded', () => {
     const dropdownContent = document.getElementById('dropdownContent');
@@ -60,7 +55,8 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /**
- * Initialisiert das Dropdown-Menü mit allen Event-Listenern
+ * Initializes the dropdown menu by setting up toggle and close event listeners.
+ * @function initializeDropdown
  */
 function initializeDropdown() {
     const dropdownContent = getDropdownElement();
@@ -70,15 +66,16 @@ function initializeDropdown() {
 }
 
 /**
- * Holt das Dropdown-Element aus dem DOM
- * @returns {HTMLElement|null} Dropdown-Content Element
+ * Retrieves the dropdown element from the DOM.
+ * @returns {HTMLElement|null} The dropdown content element or null if not found.
  */
 function getDropdownElement() {
     return document.getElementById('dropdownContent');
 }
 
 /**
- * Setzt die Event-Listener für das Öffnen/Schließen des Dropdowns
+ * Sets up event listeners to toggle the dropdown when specific elements are clicked. 
+ * @function setupToggleListeners
  */
 function setupToggleListeners() {
     const elements = [
@@ -94,8 +91,8 @@ function setupToggleListeners() {
 }
 
 /**
- * Handler für Klick-Events zum Öffnen/Schließen
- * @param {Event} event - Klick-Event
+ * Handles click events to open or close the dropdown. 
+ * @param {Event} event - The click event.
  */
 function handleToggleClick(event) {
     event.stopPropagation();
@@ -103,8 +100,9 @@ function handleToggleClick(event) {
 }
 
 /**
- * Setzt den Event-Listener zum Schließen bei Klicks außerhalb
- * @param {HTMLElement} dropdownContent - Dropdown-Container
+ * Adds a click listener to the document to close the dropdown 
+ * if the user clicks outside the dropdown container. 
+ * @param {HTMLElement} dropdownContent - The dropdown container element.
  */
 function setupCloseListener(dropdownContent) {
     document.addEventListener('click', (event) => {
@@ -115,7 +113,9 @@ function setupCloseListener(dropdownContent) {
 }
 
 /**
- * Wechselt die Anzeige des Dropdowns: Öffnet es, wenn es geschlossen ist, und schließt es, wenn es geöffnet ist.
+ * Toggles the visibility of the dropdown menu.
+ * Opens it if it's closed, and closes it if it's open.
+ * @function toggleDropdown
  */
 function toggleDropdown() {
     const dropdownContent = document.getElementById('dropdownContent');
@@ -133,7 +133,8 @@ function toggleDropdown() {
 }
 
 /**
- * Schließt das Dropdown und setzt die Icons zurück.
+ * Closes the dropdown menu and resets the dropdown icons.
+ * @function closeDropdown
  */
 function closeDropdown() {
     const dropdownContent = document.getElementById('dropdownContent');
@@ -146,9 +147,8 @@ function closeDropdown() {
 }
 
 /**
- * Initialisiert den Kategorien-Selektor, indem ein Klick-Ereignis auf das Element hinzugefügt wird.
- * Beim Klicken wird das Dropdown für die Kategorien angezeigt oder ausgeblendet.
- * 
+ * Initializes the category selector by adding a click event listener.
+ * On click, toggles the category dropdown menu. 
  * @function initializeCategorySelector
  */
 function initializeCategorySelector() {
@@ -162,12 +162,10 @@ function initializeCategorySelector() {
 }
 
 /**
- * Schaltet das Kategorien-Dropdown um, zeigt es an oder blendet es aus.
- * Wenn das Dropdown leer ist, wird es mit den verfügbaren Kategorien befüllt.
- * 
- * 1. Wenn das Dropdown-Menü nicht sichtbar ist oder leer ist, wird es angezeigt und mit den Kategorien "Technical Task" und "User Story" gefüllt.
- * 2. Wenn das Dropdown-Menü bereits sichtbar ist, wird es ausgeblendet.
- * 
+ * Toggles the visibility of the category dropdown menu.
+ * If it's empty, populates it with default category options. 
+ * 1. If the dropdown is hidden or empty, show it and fill it with categories.
+ * 2. If the dropdown is already visible, hide it. 
  * @function toggleCategoryDropdown
  */
 function toggleCategoryDropdown() {
@@ -188,11 +186,9 @@ function toggleCategoryDropdown() {
 }
 
 /**
- * Wählt eine Kategorie aus und zeigt sie im Dropdown-Auswahlbereich an.
- * Diese Funktion aktualisiert den Text des angezeigten Kategorieauswahlbereichs
- * und blendet das Dropdown-Menü aus.
- * 
- * @param {string} category - Die ausgewählte Kategorie, die im Dropdown angezeigt wird.
+ * Selects a category and displays it in the category selection area.
+ * Hides the dropdown after selection. 
+ * @param {string} category - The selected category to be displayed.
  * @function selectCategory
  */
 function selectCategory(category) {
@@ -201,11 +197,9 @@ function selectCategory(category) {
 }
 
 /**
- * Öffnet oder schließt das Kategorien-Dropdown-Menü.
- * Diese Funktion verwendet die CSS-Klasse "visible", um das Dropdown-Menü anzuzeigen oder auszublenden.
- * 
- * Wenn das Dropdown-Element nicht gefunden wird, wird eine Fehlermeldung in der Konsole ausgegeben.
- * 
+ * Toggles the "visible" class on the category dropdown menu.
+ * Used as an alternative visual toggle for the dropdown.
+ * Logs an error if the dropdown element is not found.
  * @function to_open_category_dropdown
  */
 function to_open_category_dropdown() {
@@ -218,9 +212,7 @@ function to_open_category_dropdown() {
 }
 
 /**
- * Initialisiert das Aufgabenformular, sobald die DOM-Inhalte vollständig geladen sind.
- * Diese Funktion wird aufgerufen, wenn das 'DOMContentLoaded'-Ereignis ausgelöst wird.
- * 
+ * Initializes the task form once the DOM content is fully loaded. 
  * @function initializeTaskForm
  */
 document.addEventListener('DOMContentLoaded', () => {
@@ -228,16 +220,14 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /**
- * Initialisiert das Aufgabenformular, indem ein Klick-Ereignis auf die Schaltfläche "Create Task" hinzugefügt wird.
- * Wenn der Benutzer auf die Schaltfläche klickt, wird das Formular überprüft und die Aufgabe im Firebase-Datenbank gespeichert.
- * 
- * 1. Verhindert das Standardverhalten des Buttons (Seitenaktualisierung).
- * 2. Sammelt die Aufgabeninformationen aus dem Formular.
- * 3. Überprüft die gesammelten Daten.
- * 4. Speichert die Aufgabe in Firebase, wenn die Daten gültig sind.
- * 5. Leitet den Benutzer auf das Board weiter, wenn die Aufgabe erfolgreich gespeichert wurde.
- * 6. Zeigt eine Fehlermeldung an, wenn das Speichern der Aufgabe fehlschlägt.
- * 
+ * Initializes the task form by adding a click event to the "Create Task" button.
+ * When the button is clicked, the form is validated and the task is saved to Firebase.
+ * 1. Prevents the default button behavior (page reload).
+ * 2. Collects task data from the form.
+ * 3. Validates the collected data.
+ * 4. Saves the task to Firebase if data is valid.
+ * 5. Redirects the user to the board page upon successful save.
+ * 6. Displays an error message if saving the task fails. 
  * @function initializeTaskForm
  */
 function initializeTaskForm() {
@@ -258,14 +248,12 @@ function initializeTaskForm() {
 }
 
 /**
- * Sammelt die Daten für die Aufgabe aus den Formularfeldern.
- * Diese Funktion liest die Eingabewerte und gibt ein Aufgabenobjekt zurück.
- * 
- * 1. Holt sich den Titel, die Kategorie, das Fälligkeitsdatum, die Priorität, die zugewiesenen Kontakte und die Unteraufgaben.
- * 2. Setzt den Status der Aufgabe auf "todo".
- * 3. Gibt das Aufgabenobjekt zurück.
- * 
- * @returns {Object} Das Aufgabenobjekt mit allen gesammelten Informationen.
+ * Collects task data from the form fields.
+ * This function reads the input values and returns a task object. 
+ * 1. Gets title, category, due date, priority, assigned contacts, and subtasks.
+ * 2. Sets task status to "todo".
+ * 3. Returns the task object.
+ * @returns {Object} Task object with all collected information.
  * @function collectTaskData
  */
 function collectTaskData() {
@@ -280,15 +268,16 @@ function collectTaskData() {
 }
 
 /**
- * Erstellt ein neues Aufgabenobjekt mit Standardwerten
- * @param {string} title - Titel der Aufgabe
- * @param {string} category - Kategorie der Aufgabe
- * @param {string} dueDate - Fälligkeitsdatum
- * @param {string} priority - Prioritätsstufe
- * @param {Array} assignedContacts - Zugewiesene Kontakte
- * @param {Array} subtasksArray - Unteraufgaben
- * @param {string} [stage='todo'] - Status (default: 'todo')
- * @returns {Object} Neues Aufgabenobjekt
+ * Creates a new task object with default values. 
+ * @param {string} title - Task title
+ * @param {string} category - Task category
+ * @param {string} dueDate - Due date
+ * @param {string} priority - Priority level
+ * @param {Array} assignedContacts - Assigned contacts
+ * @param {Array} subtasksArray - Subtask titles
+ * @param {string} [stage='todo'] - Task status (default: 'todo')
+ * @returns {Object} New task object
+ * @function createTask
  */
 function createTask(title, category, dueDate, priority, assignedContacts, subtasksArray, stage = 'todo') {
     return {
@@ -304,17 +293,19 @@ function createTask(title, category, dueDate, priority, assignedContacts, subtas
 }
 
 /**
- * Generiert eine eindeutige Task-ID
- * @returns {string} Timestamp als ID
+ * Generates a unique task ID.
+ * @returns {string} Timestamp as ID
+ * @function generateTaskId
  */
 function generateTaskId() {
     return Date.now().toString();
 }
 
 /**
- * Erstellt ein Unteraufgaben-Objekt
- * @param {Array} subtasksArray - Array von Unteraufgaben-Titeln
- * @returns {Object} Unteraufgaben als Objekt
+ * Creates a subtask object from an array of subtask titles. 
+ * @param {Array} subtasksArray - Array of subtask titles
+ * @returns {Object} Subtasks as an object
+ * @function createSubtasksObject
  */
 function createSubtasksObject(subtasksArray) {
     return subtasksArray.reduce((acc, title, index) => {
@@ -324,9 +315,10 @@ function createSubtasksObject(subtasksArray) {
 }
 
 /**
- * Erstellt ein einzelnes Unteraufgaben-Objekt
- * @param {string} title - Titel der Unteraufgabe
- * @returns {Object} Unteraufgabe mit Standardwerten
+ * Creates a single subtask object. 
+ * @param {string} title - Title of the subtask
+ * @returns {Object} Subtask with default values
+ * @function createSubtask
  */
 function createSubtask(title) {
     return {
@@ -336,9 +328,10 @@ function createSubtask(title) {
 }
 
 /**
- * Speichert Aufgaben-Daten in Firebase
- * @param {Object} taskData - Zu speichernde Daten
- * @returns {Promise<Object|null>} Gespeicherte Daten oder null
+ * Saves task data to Firebase.
+ * @param {Object} taskData - Task data to be saved
+ * @returns {Promise<Object|null>} Saved data or null if an error occurred
+ * @function saveTaskToFirebase
  */
 async function saveTaskToFirebase(taskData) {
     try {
@@ -350,9 +343,10 @@ async function saveTaskToFirebase(taskData) {
 }
 
 /**
- * Sendet POST-Request an Firebase
- * @param {Object} taskData - Zu speichernde Daten
- * @returns {Promise<Response>} Server-Response
+ * Sends a POST request to Firebase.
+ * @param {Object} taskData - Task data to be saved
+ * @returns {Promise<Response>} Server response
+ * @function postTaskData
  */
 async function postTaskData(taskData) {
     const BASE_URL = 'https://join-428-default-rtdb.europe-west1.firebasedatabase.app/';
@@ -365,22 +359,24 @@ async function postTaskData(taskData) {
 }
 
 /**
- * Verarbeitet erfolgreiche Response
- * @param {Response} response - Server-Response
- * @returns {Promise<Object>} JSON-Daten
+ * Handles successful server response.
+ * @param {Response} response - Server response
+ * @returns {Promise<Object>} Parsed JSON data
+ * @throws Will throw an error if response is not ok
+ * @function handleSuccessResponse
  */
 async function handleSuccessResponse(response) {
-    if (!response.ok) throw new Error('Failed to save task to Firebase');
-    
+    if (!response.ok) throw new Error('Failed to save task to Firebase'); 
     const data = await response.json();
     console.log('Task saved successfully:', data);
     return data;
 }
 
 /**
- * Verarbeitet Firebase-Fehler
- * @param {Error} error - Fehlerobjekt
- * @returns {null} Immer null
+ * Handles Firebase save errors.
+ * @param {Error} error - Error object
+ * @returns {null} Always returns null
+ * @function handleFirebaseError
  */
 function handleFirebaseError(error) {
     console.error('Error saving task:', error);
@@ -388,10 +384,9 @@ function handleFirebaseError(error) {
 }
 
 /**
- * Schließt das Overlay und das Popup-Fenster.
- * Diese Funktion blendet das Overlay und das Popup-Fenster aus, indem sie die entsprechenden
- * Klassen hinzufügt, die das Element unsichtbar machen.
- * 
+ * Closes the overlay and popup window.
+ * This function hides the overlay and popup by adding the appropriate
+ * CSS classes that make the elements invisible. 
  * @function closeOverlay
  */
 function closeOverlay() {

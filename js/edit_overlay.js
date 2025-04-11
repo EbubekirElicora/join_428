@@ -61,14 +61,12 @@ async function fetchContacts() {
 }
 
 /**
- * Füllt das Dropdown-Menü mit Kontaktoptionen für das Bearbeiten-Fenster einer Aufgabe.
- * 
- * Das Dropdown zeigt eine Liste von Kontakten mit deren Initialen und Namen an.
- * Bereits zugewiesene Kontakte der aktuellen Aufgabe werden vorselektiert.
- * 
+ * Fills the dropdown menu with contact options for the task edit overlay. 
+ * The dropdown shows a list of contacts with their initials and names.
+ * Contacts already assigned to the current task are pre-selected.
  * @async
  * @function populateDropdown
- * @returns {Promise<void>} - Verspricht, das Dropdown zu füllen, nachdem die Kontakte geladen wurden.
+ * @returns {Promise<void>} - A promise that resolves when the contacts have been loaded and the dropdown is populated.
  */
 async function populateDropdown() {
     await fetchContacts();
@@ -77,21 +75,19 @@ async function populateDropdown() {
 }
 
 /**
- * Generiert den HTML-Inhalt für das Dropdown-Menü basierend auf den Kontakten.
- * 
+ * Generates the HTML content for the dropdown menu based on the contacts. 
  * @function generateDropdownHTML
- * @returns {string} - Der generierte HTML-String für das Dropdown.
+ * @returns {string} - The generated HTML string for the dropdown.
  */
 function generateDropdownHTML() {
     return contacts.map(createDropdownItem).join('') || '';
 }
 
 /**
- * Erstellt ein einzelnes Dropdown-Element für einen Kontakt.
- * 
+ * Creates an individual dropdown item for a contact. 
  * @function createDropdownItem
- * @param {Object} contact - Ein Kontaktobjekt mit Name, Initialen und Farbe.
- * @returns {string} - Der HTML-String für ein Dropdown-Element.
+ * @param {Object} contact - A contact object containing the name, initials, and color.
+ * @returns {string} - The HTML string for a dropdown item.
  */
 function createDropdownItem(contact) {
     const isSelected = currentTask.assignedContacts?.some(c => c.name === contact.name);
@@ -106,11 +102,10 @@ function createDropdownItem(contact) {
 }
 
 /**
- * Erstellt den HTML-Code für die Anzeige der Kontaktinformationen.
- * 
+ * Creates the HTML code for displaying the contact information. 
  * @function createContactInfo
- * @param {Object} contact - Ein Kontaktobjekt mit Initialen, Name und Farbe.
- * @returns {string} - Der HTML-String für die Kontaktanzeige.
+ * @param {Object} contact - A contact object with initials, name, and color.
+ * @returns {string} - The HTML string for the contact information display.
  */
 function createContactInfo(contact) {
     return `
@@ -124,13 +119,10 @@ function createContactInfo(contact) {
 }
 
 /**
- * Schaltet das Kontrollkästchen eines Kontakts um und aktualisiert die Auswahl.
- * 
- * Falls der Kontakt ausgewählt wird, wird er zur Liste der zugewiesenen Kontakte hinzugefügt
- * und optisch hervorgehoben. Falls der Kontakt abgewählt wird, wird er entfernt und die 
- * Hervorhebung verschwindet.
- * 
- * @param {string} contactName - Der Name des Kontakts, der ausgewählt oder abgewählt wird.
+ * Toggles the checkbox of a contact and updates the selection. 
+ * If the contact is selected, it is added to the list of assigned contacts and highlighted.
+ * If the contact is deselected, it is removed and the highlight is removed.
+ * @param {string} contactName - The name of the contact to be selected or deselected.
  */
 function toggleCheckbox(contactName) {
     const checkbox = document.getElementById(`contact-${contactName}`);
@@ -144,9 +136,9 @@ function toggleCheckbox(contactName) {
 }
 
 /**
- * Wählt einen Kontakt zum Bearbeiten aus, fügt ihn hinzu oder entfernt ihn basierend auf der Checkbox.
+ * Selects a contact for editing, adds it or removes it based on the checkbox state.
  * @function
- * @param {string} contactName - Der Name des Kontakts, der bearbeitet werden soll.
+ * @param {string} contactName - The name of the contact to be edited.
  */
 function selectEditContact(contactName) {
     const contact = contacts.find(c => c.name === contactName);
@@ -158,11 +150,10 @@ function selectEditContact(contactName) {
 }
 
 /**
- * Fügt einen Kontakt zur Liste der zugewiesenen Kontakte der aktuellen Aufgabe hinzu.
+ * Adds a contact to the list of assigned contacts for the current task.
  * @function
- * @param {Object} contact - Der Kontakt, der hinzugefügt werden soll.
+ * @param {Object} contact - The contact to be added.
  */
-
 function addEditContact(contact) {
     if (!currentTask.assignedContacts) currentTask.assignedContacts = [];
     currentTask.assignedContacts.push(contact);
@@ -173,9 +164,9 @@ function addEditContact(contact) {
 }
 
 /**
- * Entfernt einen Kontakt aus der Liste der zugewiesenen Kontakte der aktuellen Aufgabe.
+ * Removes a contact from the list of assigned contacts for the current task.
  * @function
- * @param {Object} contact - Der Kontakt, der entfernt werden soll.
+ * @param {Object} contact - The contact to be removed.
  */
 function removeEditContact(contact) {
     currentTask.assignedContacts = currentTask.assignedContacts.filter(c => c.name !== contact.name);
@@ -183,10 +174,10 @@ function removeEditContact(contact) {
 }
 
 /**
- * Erstellt das HTML für ein Kontakt-Badge.
+ * Creates the HTML for a contact badge.
  * @function
- * @param {Object} contact - Der Kontakt, für den das Badge erstellt werden soll.
- * @returns {string} HTML-String des Badges.
+ * @param {Object} contact - The contact for which the badge will be created.
+ * @returns {string} - The HTML string for the badge.
  */
 function createEditContactBadge(contact) {
     return `<div class="contact-badge" style="background-color: ${contact.color}" title="${contact.name}">
@@ -195,7 +186,7 @@ function createEditContactBadge(contact) {
 }
 
 /**
- * Leert das Eingabefeld für Kontakte.
+ * Clears the input field for contacts.
  * @function
  */
 function clearEditContactInput() {
@@ -225,15 +216,13 @@ function toggleEditDropdown(event) {
 }
 
 /**
- * Schließt das Dropdown-Menü zur Kontaktauswahl und aktualisiert die UI-Elemente.
- * 
- * Führt folgende Aktionen durch:
- * - Versteckt den Dropdown-Inhalt
- * - Zeigt das "Nach-unten"-Pfeil-Icon an
- * - Versteckt das "Nach-oben"-Pfeil-Icon
- * 
+ * Closes the dropdown menu for selecting contacts and updates the UI elements. 
+ * Performs the following actions:
+ * - Hides the dropdown content
+ * - Displays the "down-arrow" icon
+ * - Hides the "up-arrow" icon 
  * @function closeEditDropdown
- * @returns {void} Gibt keinen Wert zurück
+ * @returns {void} - Does not return a value
  */
 function closeEditDropdown() {
     const dropdownContent = document.getElementById('editDropdownContent');
@@ -245,10 +234,9 @@ function closeEditDropdown() {
     iconUp.classList.add('d-none');
 }
 
-
 /**
- * Speichert die Änderungen an einer Aufgabe im Bearbeitungs-Overlay.
- * Aktualisiert die Aufgabe in der UI und in der Datenbank.
+ * Saves changes to a task in the edit overlay.
+ * Updates the task in the UI and in the database.
  */
 async function saveChanges() {
     if (!validateCurrentTask()) return;
@@ -264,8 +252,8 @@ async function saveChanges() {
 }
 
 /**
- * Prüft, ob currentTask gültig ist.
- * @returns {boolean} - true, wenn gültig, sonst false
+ * Checks if the currentTask is valid.
+ * @returns {boolean} - true if valid, otherwise false
  */
 function validateCurrentTask() {
     if (!currentTask) return console.error("❌ Fehler: currentTask ist nicht definiert!"), false;
@@ -274,7 +262,7 @@ function validateCurrentTask() {
 }
 
 /**
- * Holt die Werte aus den Eingabefeldern und aktualisiert currentTask.
+ * Retrieves the values from the input fields and updates currentTask.
  */
 function updateCurrentTaskFromInputs() {
     currentTask.title = document.getElementById('edit_title')?.value || "";
@@ -283,7 +271,7 @@ function updateCurrentTaskFromInputs() {
 }
 
 /**
- * Aktualisiert das todos-Array mit den Änderungen aus currentTask.
+ * Updates the todos array with the changes from currentTask.
  */
 function updateTodosArray() {
     const taskIndex = todos.findIndex(t => t.id === currentTask.id);
@@ -295,8 +283,8 @@ function updateTodosArray() {
 }
 
 /**
- * Speichert die aktuelle Aufgabe im Backend (Firebase).
- * @returns {Promise<Response>} - Die Antwort von fetch
+ * Saves the current task to the backend (Firebase).
+ * @returns {Promise<Response>} - The response from fetch
  */
 function saveTaskToBackend() {
     return fetch(`${BASE_URL}/tasks/${currentTask.id}.json`, {
@@ -310,7 +298,7 @@ function saveTaskToBackend() {
 }
 
 /**
- * Rendert die Liste der Aufgaben und zeigt sie im Aufgaben-Container an.
+ * Renders the list of tasks and displays them in the task container.
  */
 function renderTasks() {
     const taskContainer = document.getElementById('task_main');
@@ -323,10 +311,10 @@ function renderTasks() {
 }
 
 /**
- * Erstellt ein DOM-Element für eine einzelne Aufgabe.
+ * Creates a DOM element for a single task.
  * 
- * @param {Object} task - Die Aufgabe mit Titel, Beschreibung, Fälligkeitsdatum und Kontakten.
- * @returns {HTMLElement} - Das HTML-Element für die Aufgabe.
+ * @param {Object} task - The task with title, description, due date, and assigned contacts.
+ * @returns {HTMLElement} - The HTML element for the task.
  */
 function createTaskElement(task) {
     const taskElement = document.createElement('div');
@@ -343,10 +331,10 @@ function createTaskElement(task) {
 }
 
 /**
- * Rendert die zugewiesenen Kontakte als HTML-String.
+ * Renders the assigned contacts as an HTML string.
  * 
- * @param {Object} task - Die Aufgabe mit `assignedContacts`.
- * @returns {string} - HTML-String der Kontakt-Badges.
+ * @param {Object} task - The task with `assignedContacts`.
+ * @returns {string} - HTML string of the contact badges.
  */
 function renderAssignedContacts(task) {
     return task.assignedContacts?.map(contact => `

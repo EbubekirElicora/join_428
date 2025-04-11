@@ -1,26 +1,26 @@
 /**
- * Timeout-Referenz für den Berührungsstart (wird für lange Berührungen benötigt)
+ * Timeout reference for the touch start (needed for long touches)
  * @type {number|null}
  */
 let touchStartTimeout = null;
 
 /**
- * Speichert die aktuell markierte Spalte (Stage), über der sich das gezogene Element befindet
+ * Stores the currently highlighted column (stage) where the dragged element is hovering over
  * @type {string|null}
  */
 let currentHighlightedStage = null;
 
 /**
- * Speichert die vertikale Startposition bei Berührungsbeginn (wird zur Unterscheidung zwischen Scrollen und Drag-Vorgang benötigt)
+ * Stores the vertical starting position when the touch begins (used to differentiate between scrolling and dragging)
  * @type {number}
- * @description Enthält den Y-Koordinatenwert des ersten Touch-Ereignisses in Pixeln relativ zum oberen Bildschirmrand
+ * @description Contains the Y-coordinate value of the first touch event in pixels relative to the top of the screen
  */
 let touchStartY = 0;
 
 /**
- * Verarbeitet den Beginn einer Berührung auf einer Aufgabe
- * @param {TouchEvent} event - Das Berührungsereignis
- * @param {string} taskId - Die ID der Aufgabe
+ * Handles the beginning of a touch event on a task
+ * @param {TouchEvent} event - The touch event
+ * @param {string} taskId - The ID of the task
  */
 function handleTouchStart(event, taskId) {
     const touch = event.touches[0];
@@ -36,8 +36,8 @@ function handleTouchStart(event, taskId) {
 }
 
 /**
- * Verarbeitet die Bewegung während der Berührung
- * @param {TouchEvent} event - Das Bewegungsereignis
+ * Handles the movement during a touch event
+ * @param {TouchEvent} event - The move event
  */
 function handleTouchMove(event) {
     if (!currentDraggedElement) {
@@ -51,9 +51,9 @@ function handleTouchMove(event) {
 }
 
 /**
- * Überprüft, ob die Berührung abgebrochen werden soll
- * @param {TouchEvent} event - Das Bewegungsereignis
- * @returns {boolean} - True, wenn die Bewegung zu groß war und abgebrochen werden soll
+ * Checks if the touch should be canceled
+ * @param {TouchEvent} event - The move event
+ * @returns {boolean} - True if the movement is too large and should be canceled
  */
 function shouldCancelTouch(event) {
     const touch = event.touches[0];
@@ -67,8 +67,8 @@ function shouldCancelTouch(event) {
 }
 
 /**
- * Aktualisiert die Stiltransformation des gezogenen Elements
- * @param {number} clientX - Die horizontale Position der Berührung
+ * Updates the style transformation of the dragged element
+ * @param {number} clientX - The horizontal position of the touch
  */
 function updateDraggedElementStyle(clientX) {
     const taskElement = document.querySelector('.dragging');
@@ -79,9 +79,9 @@ function updateDraggedElementStyle(clientX) {
 }
 
 /**
- * Ermittelt und markiert die Spalte unter der Berührung
- * @param {number} x - X-Koordinate
- * @param {number} y - Y-Koordinate
+ * Determines and highlights the column under the touch
+ * @param {number} x - X-coordinate
+ * @param {number} y - Y-coordinate
  */
 function highlightStageUnderTouch(x, y) {
     const element = document.elementFromPoint(x, y);
@@ -100,8 +100,8 @@ function highlightStageUnderTouch(x, y) {
 }
 
 /**
- * Sucht die übergeordnete Spalte
- * @param {Element} element - Das Startelement
+ * Finds the parent stage column
+ * @param {Element} element - The starting element
  */
 function findParentStageColumn(element) {
     while (element && !element.classList.contains('stage-column')) {
@@ -111,8 +111,8 @@ function findParentStageColumn(element) {
 }
 
 /**
- * Verarbeitet das Ende der Berührung mit Click-Fallback
- * @param {TouchEvent|MouseEvent} event - Das Endereignis
+ * Handles the end of the touch event with a click fallback
+ * @param {TouchEvent|MouseEvent} event - The end event
  */
 function handleTouchEnd(event) {
     const taskElement = event.currentTarget;

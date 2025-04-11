@@ -1,3 +1,13 @@
+/**
+ * An object that stores subtasks being edited, where each key is a task ID
+ * and the value is the subtask data in edit mode.
+ *
+ * @type {Object.<string, {title: string, isCompleted: boolean, isEditing: boolean}>}
+ * @property {Object} [key] - Key is the task ID string
+ * @property {string} key.title - The title of the subtask
+ * @property {boolean} key.isCompleted - Completion status of the subtask
+ * @property {boolean} key.isEditing - Whether the subtask is in edit mode
+ */
 let editSubtasks = {};
 
 /**
@@ -26,7 +36,6 @@ function showEditSubtaskContainerOverlay() {
 function deleteEditText() {
     document.getElementById('edit_subtask_input').value = '';
 }
-
 
 /**
  * Toggles the editing mode for a specific subtask by setting the `isEditing` flag to `true`.
@@ -104,7 +113,6 @@ function deleteSubTaskOverlay(subtaskId) {
     }
 }
 
-
 /**
  * Saves the edited task by updating its subtasks and syncing the changes with the backend.
  * 
@@ -127,8 +135,7 @@ async function saveEditedTask(taskId) {
  */
 function loadTaskForEdit(task) {
     editSubtasks = {};
-    if (!task?.subtasks) return;
-    
+    if (!task?.subtasks) return; 
     if (Array.isArray(task.subtasks)) {
         processArraySubtasks(task.subtasks);
     } else if (typeof task.subtasks === 'object') {

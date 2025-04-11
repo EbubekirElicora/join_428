@@ -84,7 +84,6 @@ window.toggleSubtask = async function(taskId, subtaskId) {
   try {
     const task = findTask(taskId);
     if (!task) return;
-    
     await processSubtaskToggle(task, subtaskId);
     updateSubtaskUI(taskId, subtaskId);
     updateHTML();
@@ -108,8 +107,7 @@ function findTask(taskId) {
  * @param {string} subtaskId - Subtask ID to toggle
  */
 async function processSubtaskToggle(task, subtaskId) {
-  if (!task.subtasks || !task.subtasks[subtaskId]) return;
-  
+  if (!task.subtasks || !task.subtasks[subtaskId]) return; 
   normalizeSubtask(task, subtaskId);
   task.subtasks[subtaskId].completed = !task.subtasks[subtaskId].completed;
   await updateData(`tasks/${task.id}`, task);
@@ -136,11 +134,9 @@ function normalizeSubtask(task, subtaskId) {
  */
 function updateSubtaskUI(taskId, subtaskId) {
   const icon = document.querySelector(`[onclick*="${subtaskId}"] .subtask-icon`);
-  if (!icon) return;
-  
+  if (!icon) return; 
   const task = findTask(taskId);
   if (!task || !task.subtasks || !task.subtasks[subtaskId]) return;
-  
   icon.src = `../assets/icons/contact_icon_${
     task.subtasks[subtaskId].completed ? 'check' : 'uncheck'
   }.png`;
@@ -244,7 +240,8 @@ async function deleteTask(taskId) {
 }
 
 /**
- * Schließt das Board-Overlay und setzt den Zustand zurück.
+ * Closes the board overlay and resets its state. 
+ * @function closeOverlayBoard
  */
 function closeOverlayBoard() {
   try {
@@ -261,24 +258,29 @@ function closeOverlayBoard() {
 }
 
 /**
-* Versteckt das Overlay und entfernt den "no-scroll" Zustand.
-* 
-* @param {HTMLElement} overlayRef - Das Overlay-Element.
-*/
+ * Hides the overlay element and adds the 'd_none' class.
+ * 
+ * @param {HTMLElement} overlayRef - The overlay element.
+ * @function hideOverlay
+ */
 function hideOverlay(overlayRef) {
   overlayRef.classList.add('d_none');
 }
 
 /**
-* Setzt den "no-scroll" Zustand des Body zurück.
-*/
+ * Resets the "no-scroll" state of the body element.
+ * 
+ * @function resetBodyState
+ */
 function resetBodyState() {
   document.body.classList.remove('no-scroll');
 }
 
 /**
-* Löscht die gespeicherten Subtasks.
-*/
+ * Clears any stored subtasks.
+ * 
+ * @function clearSubtasks
+ */
 function clearSubtasks() {
   if (window.editSubtasks) {
       editSubtasks = {};
@@ -286,20 +288,22 @@ function clearSubtasks() {
 }
 
 /**
-* Löscht den Inhalt des Overlays.
-* 
-* @param {HTMLElement} overlayRef - Das Overlay-Element.
-*/
+ * Clears the inner content of the overlay container.
+ * 
+ * @param {HTMLElement} overlayRef - The overlay element.
+ * @function clearOverlayContent
+ */
 function clearOverlayContent(overlayRef) {
   const contentContainer = overlayRef.querySelector('.content-container');
   if (contentContainer) contentContainer.innerHTML = '';
 }
 
 /**
-* Versteckt alle Dropdowns im Overlay.
-* 
-* @param {HTMLElement} overlayRef - Das Overlay-Element.
-*/
+ * Hides all dropdown elements within the overlay.
+ * 
+ * @param {HTMLElement} overlayRef - The overlay element.
+ * @function hideDropdowns
+ */
 function hideDropdowns(overlayRef) {
   const dropdowns = overlayRef.querySelectorAll('.dropdown-content');
   dropdowns.forEach(dropdown => dropdown.style.display = 'none');

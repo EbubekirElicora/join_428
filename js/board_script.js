@@ -1,18 +1,19 @@
 /**
- * Lädt Kontakte und zeigt sie im Dropdown an
+ * Loads contacts and displays them in the dropdown.
+ * @function loadContacts
  */
 async function loadContacts() {
     const dropdownContent = getDropdownContent();
-    if (!dropdownContent) return;
-    
+    if (!dropdownContent) return;  
     setupDropdownCloseHandler(dropdownContent);
     const contactsData = await loadData('contacts');
     renderContacts(dropdownContent, contactsData);
 }
 
 /**
- * Holt das Dropdown-Container-Element aus dem DOM
- * @returns {HTMLElement|null} Dropdown-Container oder null falls nicht gefunden
+ * Retrieves the dropdown container element from the DOM. 
+ * @returns {HTMLElement|null} Dropdown container or null if not found.
+ * @function getDropdownContent
  */
 function getDropdownContent() {
     const dropdownContent = document.getElementById('dropdownContent');
@@ -21,8 +22,9 @@ function getDropdownContent() {
 }
 
 /**
- * Setzt den Event-Handler zum Schließen des Dropdowns bei Klick außerhalb
- * @param {HTMLElement} dropdownContent - Das Dropdown-Container-Element
+ * Sets the event handler to close the dropdown when clicking outside.
+ * @param {HTMLElement} dropdownContent - The dropdown container element.
+ * @function setupDropdownCloseHandler
  */
 function setupDropdownCloseHandler(dropdownContent) {
     document.addEventListener('click', (event) => {
@@ -33,9 +35,10 @@ function setupDropdownCloseHandler(dropdownContent) {
 }
 
 /**
- * Rendert die Kontaktliste im Dropdown
- * @param {HTMLElement} dropdownContent - Container-Element
- * @param {Object|null} contactsData - Kontaktdaten oder null
+ * Renders the contact list inside the dropdown. 
+ * @param {HTMLElement} dropdownContent - The dropdown container element.
+ * @param {Object|null} contactsData - Contact data or null.
+ * @function renderContacts
  */
 function renderContacts(dropdownContent, contactsData) {
     dropdownContent.innerHTML = '';
@@ -49,9 +52,10 @@ function renderContacts(dropdownContent, contactsData) {
 }
 
 /**
- * Erstellt ein einzelnes Kontakt-Element
- * @param {HTMLElement} dropdownContent - Container-Element
- * @param {Object} contact - Kontaktdaten
+ * Creates a single contact element in the dropdown. 
+ * @param {HTMLElement} dropdownContent - The dropdown container element.
+ * @param {Object} contact - Contact data.
+ * @function createContactElement
  */
 function createContactElement(dropdownContent, contact) {
     const contactDiv = document.createElement('div');
@@ -64,9 +68,10 @@ function createContactElement(dropdownContent, contact) {
 }
 
 /**
- * Generiert HTML für einen Kontakt-Eintrag
- * @param {Object} contact - Kontaktdaten
- * @returns {string} HTML-String
+ * Generates HTML for a contact entry.
+ * @param {Object} contact - Contact data.
+ * @returns {string} HTML string.
+ * @function getContactHTML
  */
 function getContactHTML(contact) {
     return `
@@ -81,9 +86,10 @@ function getContactHTML(contact) {
 }
 
 /**
- * Setzt den Klick-Handler für Kontakt-Elemente
- * @param {HTMLElement} contactDiv - Kontakt-Element
- * @param {HTMLInputElement} checkbox - Checkbox-Element
+ * Sets the click handler for the contact element.
+ * @param {HTMLElement} contactDiv - Contact element.
+ * @param {HTMLInputElement} checkbox - Checkbox element.
+ * @function setupContactClickHandler
  */
 function setupContactClickHandler(contactDiv, checkbox) {
     contactDiv.addEventListener('click', (event) => {
@@ -96,10 +102,11 @@ function setupContactClickHandler(contactDiv, checkbox) {
 }
 
 /**
- * Setzt den Change-Handler für Kontakt-Checkboxen
- * @param {HTMLElement} contactDiv - Kontakt-Element
- * @param {HTMLInputElement} checkbox - Checkbox-Element
- * @param {Object} contact - Kontaktdaten
+ * Sets the change handler for the contact checkbox.
+ * @param {HTMLElement} contactDiv - Contact element.
+ * @param {HTMLInputElement} checkbox - Checkbox element.
+ * @param {Object} contact - Contact data.
+ * @function setupCheckboxHandler
  */
 function setupCheckboxHandler(contactDiv, checkbox, contact) {
     checkbox.addEventListener('change', () => {
@@ -108,10 +115,11 @@ function setupCheckboxHandler(contactDiv, checkbox, contact) {
 }
 
 /**
- * Verarbeitet die Auswahl/Deselektion eines Kontakts
- * @param {HTMLElement} contactDiv - Kontakt-Element
- * @param {HTMLInputElement} checkbox - Checkbox-Element
- * @param {Object} contact - Kontaktdaten
+ * Handles selection/deselection of a contact. 
+ * @param {HTMLElement} contactDiv - Contact element.
+ * @param {HTMLInputElement} checkbox - Checkbox element.
+ * @param {Object} contact - Contact data.
+ * @function handleContactSelection
  */
 function handleContactSelection(contactDiv, checkbox, contact) {
     if (checkbox.checked) {
@@ -125,8 +133,9 @@ function handleContactSelection(contactDiv, checkbox, contact) {
 }
 
 /**
- * Fügt einen Kontakt zur Auswahlliste hinzu
- * @param {Object} contact - Kontaktdaten
+ * Adds a contact to the selection list. 
+ * @param {Object} contact - Contact data.
+ * @function addSelectedContact
  */
 function addSelectedContact(contact) {
     if (!selectedContacts.find(c => c.name === contact.name)) {
@@ -135,19 +144,19 @@ function addSelectedContact(contact) {
 }
 
 /**
- * Entfernt einen Kontakt von der Auswahlliste
- * @param {Object} contact - Kontaktdaten
+ * Removes a contact from the selection list. 
+ * @param {Object} contact - Contact data.
+ * @function removeSelectedContact
  */
 function removeSelectedContact(contact) {
     selectedContacts = selectedContacts.filter(c => c.name !== contact.name);
 }
 
 /**
- * Wählt einen Kontakt aus und fügt ihn zur Liste der ausgewählten Kontakte hinzu.
- * Wenn der Kontakt bereits ausgewählt ist, wird keine Änderung vorgenommen.
- * 
- * @param {Object} contact - Der Kontakt, der ausgewählt werden soll.
- * @param {string} contact.name - Der Name des Kontakts.
+ * Selects a contact and adds it to the list of selected contacts.
+ * If the contact is already selected, nothing changes.
+ * @param {Object} contact - The contact to select.
+ * @param {string} contact.name - The name of the contact.
  * @function selectContact
  */
 function selectContact(contact) {
@@ -162,7 +171,8 @@ function selectContact(contact) {
 }
 
 /**
- * Aktualisiert die Anzeige der ausgewählten Kontakte
+ * Updates the display of selected contacts.
+ * @function updateSelectedContacts
  */
 function updateSelectedContacts() {
     const initialsContainer = getInitialsContainer();
@@ -172,16 +182,18 @@ function updateSelectedContacts() {
 }
 
 /**
- * Holt den Container für Kontaktinitialen
- * @returns {HTMLElement|null} Initialen-Container oder null
+ * Retrieves the container for contact initials. 
+ * @returns {HTMLElement|null} Initials container or null if not found.
+ * @function getInitialsContainer
  */
 function getInitialsContainer() {
     return document.getElementById('selectedContactsInitials');
 }
 
 /**
- * Rendert die Initialen der ausgewählten Kontakte
- * @param {HTMLElement} initialsContainer - Container-Element
+ * Renders the initials of selected contacts. 
+ * @param {HTMLElement} initialsContainer - The container element.
+ * @function renderContactInitials
  */
 function renderContactInitials(initialsContainer) {
     initialsContainer.innerHTML = '';
@@ -191,9 +203,10 @@ function renderContactInitials(initialsContainer) {
 }
 
 /**
- * Erstellt ein Initialen-Element für einen Kontakt
- * @param {Object} contact - Kontaktdaten
- * @returns {HTMLElement} Initialen-Element
+ * Creates an element representing the initials of a contact. 
+ * @param {Object} contact - Contact data.
+ * @returns {HTMLElement} Element with contact initials.
+ * @function createInitialElement
  */
 function createInitialElement(contact) {
     const span = document.createElement('span');
@@ -207,24 +220,23 @@ function createInitialElement(contact) {
 }
 
 /**
- * Rendert die Anzeige für zusätzliche Kontakte
- * @param {HTMLElement} initialsContainer - Container-Element
+ * Renders the "+X" indicator for additional selected contacts beyond the first five.
+ * @param {HTMLElement} initialsContainer - The container element.
+ * @function renderRemainingContacts
  */
 function renderRemainingContacts(initialsContainer) {
     if (selectedContacts.length <= 5) return;
-    
     const remainingDiv = document.createElement('div');
     remainingDiv.innerHTML = `<div class="remaining-contacts-board">+${selectedContacts.length - 5}</div>`;
     initialsContainer.appendChild(remainingDiv);
 }
 
 /**
- * Gibt die Initialen eines Namens zurück.
- * Der Name wird in Wörter aufgeteilt und es werden die ersten Buchstaben jedes Wortes genommen,
- * um die Initialen zu bilden. Die Initialen werden in Großbuchstaben zurückgegeben.
- * 
- * @param {string} name - Der Name, dessen Initialen zurückgegeben werden sollen.
- * @returns {string} - Die Initialen des Namens.
+ * Returns the initials of a name.
+ * The name is split into words and the first letter of each word is used
+ * to build the initials, which are returned in uppercase. 
+ * @param {string} name - The name to extract initials from.
+ * @returns {string} - The initials in uppercase.
  * @function getInitials
  */
 function getInitials(name) {
@@ -235,11 +247,9 @@ function getInitials(name) {
 }
 
 /**
- * Generiert eine zufällige Farbe im Hexadezimalformat.
- * Diese Funktion erstellt eine zufällige Farbe, die aus 6 Zeichen im Hexadezimalformat besteht,
- * und gibt diese als Farbwert zurück.
- * 
- * @returns {string} - Eine zufällige Hex-Farbe (z. B. '#F1A2B3').
+ * Generates a random color in hexadecimal format.
+ * This function returns a color string composed of 6 hexadecimal characters. 
+ * @returns {string} - A random hex color (e.g., '#F1A2B3').
  * @function getRandomColor
  */
 function getRandomColor() {
@@ -252,7 +262,8 @@ function getRandomColor() {
 }
 
 /**
- * Setzt das Aufgabenformular vollständig zurück
+ * Fully resets the task form.
+ * @function resetForm
  */
 function resetForm() {
     resetInputFields();
@@ -263,7 +274,8 @@ function resetForm() {
 }
 
 /**
- * Setzt alle Eingabefelder zurück
+ * Resets all input fields.
+ * @function resetInputFields
  */
 function resetInputFields() {
     document.getElementById('title').value = '';
@@ -273,7 +285,8 @@ function resetInputFields() {
 }
 
 /**
- * Setzt die Kategorieauswahl zurück
+ * Resets the category selection.
+ * @function resetCategorySelection
  */
 function resetCategorySelection() {
     document.getElementById('select_txt').textContent = 'Select task category';
@@ -281,7 +294,8 @@ function resetCategorySelection() {
 }
 
 /**
- * Setzt die Kontaktauswahl zurück
+ * Resets the selected contacts.
+ * @function resetContactSelection
  */
 function resetContactSelection() {
     selectedContacts = [];
@@ -295,17 +309,19 @@ function resetContactSelection() {
 }
 
 /**
- * Setzt die Unteraufgaben zurück
+ * Resets the subtasks.
+ * @function resetSubtasks
  */
 function resetSubtasks() {
     subtasks = [];
 }
 
 /**
- * Resets all relevant values.
- * 
- * - Calls the `resetForm()` function to reset the form.
- * - Sets the priority to 'medium' by calling the `setPrio('medium')` function.
+ * Resets all relevant values on the board.
+ * - Loads contacts.
+ * - Resets the form via `resetForm()`.
+ * - Sets priority to 'medium' via `setPrio('medium')`.
+ * @function resetAllBoard
  */
 function resetAllBoard() {
     loadContacts();

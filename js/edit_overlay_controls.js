@@ -1,7 +1,7 @@
 /**
- * Öffnet das Bearbeitungs-Overlay und befüllt es mit den Aufgaben-Daten.
- * Falls keine Task-ID übergeben wird, schließt sich das Overlay.
- * @param {string} taskId - Die ID der zu bearbeitenden Aufgabe
+ * Opens the edit overlay and fills it with task data.
+ * If no task ID is provided, the overlay will be closed.
+ * @param {string} taskId - The ID of the task to edit
  * @async
  */
 async function editOverlay(taskId) {
@@ -15,8 +15,8 @@ async function editOverlay(taskId) {
 }
 
 /**
- * Initialisiert das Bearbeitungs-Overlay mit den notwendigen Daten und Elementen
- * @param {string} taskId - Die ID der zu bearbeitenden Aufgabe
+ * Initializes the edit overlay with the necessary data and elements
+ * @param {string} taskId - The ID of the task to edit
  * @async
  */
 async function setupEditOverlay(taskId) {
@@ -31,8 +31,8 @@ async function setupEditOverlay(taskId) {
 }
 
 /**
- * Holt das Overlay-Element aus dem DOM
- * @returns {HTMLElement|null} Das Overlay-Element oder null falls nicht gefunden
+ * Retrieves the overlay element from the DOM
+ * @returns {HTMLElement|null} The overlay element or null if not found
  */
 function getOverlayElement() {
     const overlayRef = document.getElementById('edit_overlay');
@@ -41,9 +41,9 @@ function getOverlayElement() {
 }
 
 /**
- * Lädt die Aufgaben-Daten basierend auf der Task-ID
- * @param {string} taskId - Die ID der zu ladenden Aufgabe
- * @returns {Object|null} Kopie der Aufgaben-Daten oder null falls nicht gefunden
+ * Loads task data based on the task ID
+ * @param {string} taskId - The ID of the task to load
+ * @returns {Object|null} A copy of the task data or null if not found
  */
 async function loadTaskData(taskId) {
     const originalTask = todos.find(t => t.id === taskId);
@@ -52,9 +52,9 @@ async function loadTaskData(taskId) {
 }
 
 /**
- * Rendert den Inhalt des Overlays mit den Aufgaben-Daten
- * @param {HTMLElement} overlayRef - Das Overlay-Element
- * @param {Object} task - Die Aufgaben-Daten
+ * Renders the content of the overlay with task data
+ * @param {HTMLElement} overlayRef - The overlay element
+ * @param {Object} task - The task data
  */
 function renderOverlayContent(overlayRef, task) {
     const overlayHTML = getOverlayEdit(task);
@@ -67,15 +67,14 @@ function renderOverlayContent(overlayRef, task) {
 }
 
 /**
- * Initialisiert alle notwendigen Overlay-Elemente und Event-Listener
- * @param {HTMLElement} overlayRef - Das Overlay-Element
+ * Initializes all necessary overlay elements and event listeners
+ * @param {HTMLElement} overlayRef - The overlay element
  * @async
  */
 async function initOverlayElements(overlayRef) {
     await populateDropdown();
     const overlayContent = overlayRef.querySelector('.inner_content');
     if (!overlayContent) return;
-    
     overlayContent.addEventListener('click', editProtection);
     setupContactInput();
     setupSaveButton(overlayRef);
@@ -83,7 +82,7 @@ async function initOverlayElements(overlayRef) {
 }
 
 /**
- * Setzt das Kontakt-Eingabefeld zurück
+ * Resets the contact input field
  */
 function setupContactInput() {
     const contactInput = document.getElementById('editContactInput');
@@ -91,8 +90,8 @@ function setupContactInput() {
 }
 
 /**
- * Fügt den Event-Listener zum Speichern-Button hinzu
- * @param {HTMLElement} overlayRef - Das Overlay-Element
+ * Adds the event listener to the save button
+ * @param {HTMLElement} overlayRef - The overlay element
  */
 function setupSaveButton(overlayRef) {
     const okButton = overlayRef.querySelector('.ok_button');
@@ -100,8 +99,8 @@ function setupSaveButton(overlayRef) {
 }
 
 /**
- * Fügt den Klick-Handler für das Overlay hinzu (Schließen bei Klick außerhalb)
- * @param {HTMLElement} overlayRef - Das Overlay-Element
+ * Adds a click handler for the overlay (closes on click outside)
+ * @param {HTMLElement} overlayRef - The overlay element
  */
 function setupOverlayClickHandler(overlayRef) {
     overlayRef.addEventListener('click', (e) => {
@@ -132,10 +131,10 @@ function closeEditOverlay() {
 }
 
 /**
- * Initialisiert das Datumseingabefeld und setzt Validierungsregeln.
- * - Setzt das minimale Datum auf den aktuellen Tag.
- * - Fügt Echtzeit-Validierung bei Eingabe hinzu.
- * - Passt die Textfarbe basierend auf der Gültigkeit des Datums an.
+ * Initializes the date input field and sets validation rules.
+ * - Sets the minimum date to the current day.
+ * - Adds real-time validation when input changes.
+ * - Adjusts the text color based on the validity of the date.
  * @function
  * @returns {void}
  */
@@ -154,8 +153,8 @@ function getDateTodayEdit() {
 }
 
 /**
- * Validiert das eingegebene Datum und korrigiert es falls nötig.
- * @param {HTMLInputElement} input - Das Datumseingabefeld.
+ * Validates the entered date and corrects it if needed.
+ * @param {HTMLInputElement} input - The date input field.
  */
 function validateDate(input) {
     const { correctedDate, needsUpdate } = checkAndCorrectDate(input.value);
@@ -165,9 +164,9 @@ function validateDate(input) {
 }
 
 /**
- * Überprüft und korrigiert das Datum.
- * @param {string} dateString - Das zu prüfende Datum.
- * @returns {Object} Objekt mit korrigiertem Datum und Update-Flag.
+ * Checks and corrects the date.
+ * @param {string} dateString - The date to check.
+ * @returns {Object} Object containing corrected date and update flag.
  */
 function checkAndCorrectDate(dateString) {
     const currentDate = new Date();
@@ -184,11 +183,11 @@ function checkAndCorrectDate(dateString) {
 }
 
 /**
- * Passt das Datum an die Grenzwerte an.
- * @param {Date} date - Zu prüfendes Datum.
- * @param {Date} currentDate - Aktuelles Datum.
- * @param {number} maxYear - Maximal erlaubtes Jahr.
- * @returns {Date} Korrigiertes Datum.
+ * Adjusts the date to the defined limits.
+ * @param {Date} date - The date to check.
+ * @param {Date} currentDate - The current date.
+ * @param {number} maxYear - The maximum allowed year.
+ * @returns {Date} Corrected date.
  */
 function adjustDateLimits(date, currentDate, maxYear) {
     const correctedDate = new Date(date);
@@ -202,18 +201,18 @@ function adjustDateLimits(date, currentDate, maxYear) {
 }
 
 /**
- * Formatiert das Datum als 'YYYY-MM-DD'.
- * @param {Date} date - Zu formatierendes Datum.
- * @returns {string} Formatiertes Datum.
+ * Formats the date as 'YYYY-MM-DD'.
+ * @param {Date} date - The date to format.
+ * @returns {string} The formatted date.
  */
 function formatDate(date) {
     return date.toLocaleDateString('en-CA');
 }
 
 /**
- * Aktualisiert die Textfarbe des Eingabefelds:
- * - Schwarz für gültige Daten.
- * - Grau (#D1D1D1) für ungültige oder leere Werte.
+ * Updates the text color of the input field:
+ * - Black for valid dates.
+ * - Gray (#D1D1D1) for invalid or empty values.
  * @function
  * @returns {void}
  */

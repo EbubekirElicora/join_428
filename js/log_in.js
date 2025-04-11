@@ -1,26 +1,26 @@
 /**
- * Initialisiert die Anwendung.
- * Ruft die Funktion logoMuve auf, um die Animation zu steuern.
+ * Initializes the application.
+ * Calls the logoMuve function to control the animation.
  * 
- * @returns {void} - Keine Rückgabe.
+ * @returns {void}
  */
 function init() {
     logoMuve();
 }
 
 /**
- * Leitet den Benutzer zur Anmeldeseite weiter.
+ * Redirects the user to the sign-up page.
  * 
- * @returns {void} - Keine Rückgabe.
+ * @returns {void}
  */
 function toSignUp() {
     window.location.href = "./sign_up.html";
 }
 
 /**
- * Leitet den Benutzer zur Zusammenfassungsseite weiter, wenn er als Gast einloggt.
+ * Logs the user in as a guest and redirects to the summary page.
  * 
- * @returns {void} - Keine Rückgabe.
+ * @returns {void}
  */
 function guestLogIn() {
     localStorage.removeItem("userInitials");
@@ -32,10 +32,10 @@ function guestLogIn() {
 }
 
 /**
- * Steuert die Anzeige des Logos nach der Animation.
- * Versteckt die Animation und zeigt das Logo nach einer Verzögerung von 1,5 Sekunden.
+ * Controls the display of the logo after the animation.
+ * Hides the animation and shows the logo after a delay of 1.5 seconds.
  * 
- * @returns {void} - Keine Rückgabe.
+ * @returns {void}
  */
 function logoMuve() {
     setTimeout(() => {
@@ -45,8 +45,10 @@ function logoMuve() {
 }
 
 /**
- * Startet den Login-Prozess und überprüft die Benutzereingaben.
+ * Starts the login process and validates user input.
+ * 
  * @async
+ * @returns {Promise<void>}
  */
 async function logIn() {
     let email = getInputValue("email");
@@ -65,27 +67,30 @@ async function logIn() {
 }
 
 /**
- * Holt den Wert eines Eingabefeldes und entfernt führende und nachfolgende Leerzeichen.
- * @param {string} id - Die ID des Eingabefeldes.
- * @returns {string} Der bereinigte Wert des Eingabefeldes.
+ * Retrieves the value of an input field and trims whitespace.
+ * 
+ * @param {string} id - The ID of the input field.
+ * @returns {string} The trimmed value of the input field.
  */
 function getInputValue(id) {
     return document.getElementById(id).value.trim();
 }
 
 /**
- * Holt das Alert-Element.
- * @returns {HTMLElement} Das Alert-Element.
+ * Retrieves the alert element.
+ * 
+ * @returns {HTMLElement} The alert element.
  */
 function getAlertBox() {
     return document.getElementById("alert");
 }
 
 /**
- * Lädt die Benutzerdaten aus der Datenbank.
+ * Loads user data from the database.
+ * 
  * @async
- * @param {HTMLElement} alertBox - Das Alert-Element zur Anzeige von Fehlern.
- * @returns {Promise<Object|null>} Die Benutzerdaten oder `null`, falls ein Fehler auftritt.
+ * @param {HTMLElement} alertBox - The alert element to display errors.
+ * @returns {Promise<Object|null>} The user data or `null` if an error occurs.
  */
 async function fetchUsers(alertBox) {
     let users = await loadData("users");
@@ -96,13 +101,13 @@ async function fetchUsers(alertBox) {
 }
 
 /**
- * Überprüft, ob die eingegebenen Benutzerdaten korrekt sind.
- * @param {Object} users - Die Liste aller Benutzer.
- * @param {string} email - Die eingegebene E-Mail-Adresse.
- * @param {string} password - Das eingegebene Passwort.
- * @param {HTMLElement} alertBox - Das Alert-Element zur Fehleranzeige.
- * @param {HTMLElement} emailLabel - Das Label für das E-Mail-Eingabefeld.
- * @param {HTMLElement} passwordLabel - Das Label für das Passwort-Eingabefeld.
+ * Validates whether the entered user credentials are correct.
+ * @param {Object} users - The list of all users.
+ * @param {string} email - The entered email address.
+ * @param {string} password - The entered password.
+ * @param {HTMLElement} alertBox - The alert element for displaying errors.
+ * @param {HTMLElement} emailLabel - The label for the email input field.
+ * @param {HTMLElement} passwordLabel - The label for the password input field.
  */
 function validateUser(users, email, password, alertBox, emailLabel, passwordLabel) {
     let user = Object.values(users).find(u => u.email === email && u.password === password);
@@ -117,10 +122,10 @@ function validateUser(users, email, password, alertBox, emailLabel, passwordLabe
 }
 
 /**
- * Zeigt eine Fehlermeldung an und hebt die Eingabefelder hervor.
- * @param {HTMLElement} emailLabel - Das Label für das E-Mail-Eingabefeld.
- * @param {HTMLElement} passwordLabel - Das Label für das Passwort-Eingabefeld.
- * @param {HTMLElement} alertBox - Das Alert-Element zur Fehleranzeige.
+ * Displays an error message and highlights the input fields.
+ * @param {HTMLElement} emailLabel - The label for the email input field.
+ * @param {HTMLElement} passwordLabel - The label for the password input field.
+ * @param {HTMLElement} alertBox - The alert element for displaying the error.
  */
 function showError(emailLabel, passwordLabel, alertBox) {
     let errorMessage = "Check your email and password. Please try again.";
@@ -130,10 +135,10 @@ function showError(emailLabel, passwordLabel, alertBox) {
 }
 
 /**
- * Setzt die Fehlerstile für die Eingabefelder zurück.
- * @param {HTMLElement} emailLabel - Das Label für das E-Mail-Eingabefeld.
- * @param {HTMLElement} passwordLabel - Das Label für das Passwort-Eingabefeld.
- * @param {HTMLElement} alertBox - Das Alert-Element.
+ * Resets the error styles for input fields.
+ * @param {HTMLElement} emailLabel - The label for the email input field.
+ * @param {HTMLElement} passwordLabel - The label for the password input field.
+ * @param {HTMLElement} alertBox - The alert element.
  */
 function resetErrorStyles(emailLabel, passwordLabel, alertBox) {
     emailLabel.classList.remove("label_user_red");
@@ -142,8 +147,9 @@ function resetErrorStyles(emailLabel, passwordLabel, alertBox) {
 }
 
 /**
- * Speichert die Benutzerdaten im lokalen Speicher.
- * @param {Object} user - Das Benutzerobjekt.
+ * Saves user data to local storage.
+ * 
+ * @param {Object} user - The user object.
  */
 function saveUserData(user) {
     localStorage.setItem("userName", user.name);
@@ -153,16 +159,17 @@ function saveUserData(user) {
 }
 
 /**
- * Leitet den Benutzer zur Übersichtsseite weiter.
+ * Redirects the user to the summary page.
  */
 function redirectToSummary() {
     window.location.href = "../html/summary.html";
 }
 
 /**
- * Zeigt eine Fehlermeldung im Alert-Feld an.
- * @param {HTMLElement} alertBox - Das Alert-Element.
- * @param {string} message - Die anzuzeigende Nachricht.
+ * Displays an error message inside the alert box.
+ * 
+ * @param {HTMLElement} alertBox - The alert element.
+ * @param {string} message - The message to display.
  */
 function showAlert(alertBox, message) {
     alertBox.textContent = message;
@@ -170,9 +177,10 @@ function showAlert(alertBox, message) {
 }
 
 /**
- * Erstellt Initialen aus einem vollständigen Namen.
- * @param {string} name - Der vollständige Name des Benutzers.
- * @returns {string} Die Initialen des Benutzers.
+ * Generates initials from a full name.
+ * 
+ * @param {string} name - The full name of the user.
+ * @returns {string} The user's initials.
  */
 function getInitials(name) {
     let words = name.split(" ");  
@@ -180,7 +188,6 @@ function getInitials(name) {
 }
 document.addEventListener("DOMContentLoaded", function () {
     const togglePassword = document.getElementById("togglePassword");
-
     if (togglePassword) {
         togglePassword.addEventListener("click", togglePasswordVisibility);
     } else {

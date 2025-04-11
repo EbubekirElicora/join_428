@@ -1,14 +1,17 @@
 /**
- * Basis-URL für die Firebase-Datenbank.
+ * Base URL for the Firebase database.
+ * 
+ * @constant {string}
  */
 const BASE_URL = "https://join-428-default-rtdb.europe-west1.firebasedatabase.app/";
 
 
 /**
- * Lädt Daten von einem angegebenen Pfad aus der Firebase-Datenbank.
+ * Loads data from a given path in the Firebase database.
  * 
- * @param {string} path - Der Pfad in der Datenbank (z.B. "contacts" oder "users").
- * @returns {Object|null} - Gibt die Daten im JSON-Format zurück, wenn der Abruf erfolgreich ist. Andernfalls wird null zurückgegeben.
+ * @param {string} path - The path in the database (e.g., "contacts" or "users").
+ * @returns {Promise<Object|null>} Returns the data in JSON format if successful, otherwise null.
+ * @function loadData
  */
 async function loadData(path = "") {
     try {
@@ -22,11 +25,12 @@ async function loadData(path = "") {
 }
 
 /**
- * Fügt Daten zu einem angegebenen Pfad in der Firebase-Datenbank hinzu.
+ * Adds data to a given path in the Firebase database.
  * 
- * @param {string} path - Der Pfad, an dem die Daten hinzugefügt werden sollen.
- * @param {Object} data - Die zu speichernden Daten.
- * @returns {Object|null} - Gibt die hinzugefügten Daten im JSON-Format zurück, wenn erfolgreich. Andernfalls wird null zurückgegeben.
+ * @param {string} path - The path where the data should be added.
+ * @param {Object} data - The data to be stored.
+ * @returns {Promise<Object|null>} Returns the added data in JSON format if successful, otherwise null.
+ * @function postData
  */
 async function postData(path = "", data = {}) {
     try {
@@ -44,11 +48,12 @@ async function postData(path = "", data = {}) {
 }
 
 /**
- * Aktualisiert Daten an einem angegebenen Pfad in der Firebase-Datenbank.
+ * Updates data at a given path in the Firebase database.
  * 
- * @param {string} path - Der Pfad, an dem die Daten aktualisiert werden sollen.
- * @param {Object} data - Die zu aktualisierenden Daten.
- * @returns {Object|null} - Gibt die aktualisierten Daten im JSON-Format zurück, wenn erfolgreich. Andernfalls wird null zurückgegeben.
+ * @param {string} path - The path where the data should be updated.
+ * @param {Object} data - The data to update.
+ * @returns {Promise<Object|null>} Returns the updated data in JSON format if successful, otherwise null.
+ * @function updateData
  */
 async function updateData(path = "", data = {}) {
     try {
@@ -66,10 +71,11 @@ async function updateData(path = "", data = {}) {
 }
 
 /**
- * Löscht Daten von einem angegebenen Pfad in der Firebase-Datenbank.
+ * Deletes data from a given path in the Firebase database.
  * 
- * @param {string} path - Der Pfad, von dem die Daten gelöscht werden sollen.
- * @returns {Object|null} - Gibt das Ergebnis des Löschvorgangs im JSON-Format zurück, wenn erfolgreich. Andernfalls wird null zurückgegeben.
+ * @param {string} path - The path from which the data should be deleted.
+ * @returns {Promise<Object|null>} Returns the result of the delete operation in JSON format if successful, otherwise null.
+ * @function deleteData
  */
 async function deleteData(path = "") {
     try {
